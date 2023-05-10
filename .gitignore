@@ -2,6 +2,5 @@
 /.vscode
 /.gitee
 *.log
-*.lock
 *.ini
 /runtime/*
