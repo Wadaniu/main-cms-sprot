@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1
+class ComposerStaticInite86b2436798c016021d36de696558db2
 {
     public static $files = array (
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
@@ -75,10 +75,10 @@ class ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1
         ),
         'think\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/framework/src/think',
-            1 => __DIR__ . '/..' . '/topthink/think-filesystem/src',
-            2 => __DIR__ . '/..' . '/topthink/think-helper/src',
-            3 => __DIR__ . '/..' . '/topthink/think-orm/src',
+            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            1 => __DIR__ . '/..' . '/topthink/think-orm/src',
+            2 => __DIR__ . '/..' . '/topthink/framework/src/think',
+            3 => __DIR__ . '/..' . '/topthink/think-filesystem/src',
             4 => __DIR__ . '/..' . '/topthink/think-template/src',
         ),
         'app\\' => 
@@ -155,10 +155,10 @@ class ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr0 = ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite86b2436798c016021d36de696558db2::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite86b2436798c016021d36de696558db2::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr0 = ComposerStaticInite86b2436798c016021d36de696558db2::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInite86b2436798c016021d36de696558db2::$classMap;
 
         }, null, ClassLoader::class);
     }
