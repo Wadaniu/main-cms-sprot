@@ -1,0 +1,26 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">球队详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">赛事id</td>
+			<td>{$detail.competition_id}</td><td class="layui-td-gray-2">赛区id</td>
+			<td>{$detail.conference_id}</td><td class="layui-td-gray-2">场馆id</td>
+			<td>{$detail.venue_id}</td>
+		</tr><tr><td class="layui-td-gray-2">中文名称</td>
+			<td>{$detail.name_zh}</td><td class="layui-td-gray-2">粤语名称</td>
+			<td>{$detail.name_zht}</td><td class="layui-td-gray-2">英文名称</td>
+			<td>{$detail.name_en}</td>
+		</tr><tr><td class="layui-td-gray-2">中文简称</td>
+			<td>{$detail.short_name_zh}</td><td class="layui-td-gray-2">粤语简称</td>
+			<td>{$detail.short_name_zht}</td><td class="layui-td-gray-2">英文简称</td>
+			<td>{$detail.short_name_en}</td>
+		</tr><tr><td class="layui-td-gray-2">球队logo</td>
+			<td>{$detail.logo}</td><td class="layui-td-gray-2">更新时间</td>
+			<td>{$detail.updated_at|date="Y-m-d H:i:s"}</td><td colspan='2'></td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

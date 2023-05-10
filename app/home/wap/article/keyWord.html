@@ -1,0 +1,9 @@
+<?php $datas = getHotKeywords();?>
+<div class="title">
+    <span>热门标签</span>
+</div>
+<div class="cont-box keyword">
+    {foreach $datas as $item}
+    <a href="/news/1/{$item.id}.html">{$item.title}</a>
+    {/foreach}
+</div>

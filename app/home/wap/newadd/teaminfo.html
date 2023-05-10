@@ -1,0 +1,27 @@
+{extend name="common/base"/}
+{block name="body"}
+<section class="container">
+    <div class="main">
+        <div class="teaminfo">
+            <div class="laliga-logo">
+                <img src="{$team.logo}">
+            </div>
+            <div class="laliga-intro">
+                <h3>{$team.name_zh}</h3>
+                <p>{$team.name_zh}足球俱乐部（英文名：{$team.name_en}，粤语名：{$team.name_zht}），是{$team.competition_text}的一支足球俱乐部，当前{$team.name_zh}的市值为：{$team.market_value}{$team.market_value_currency}，{$team.name_zh}成立时间是{$team.foundation_time|date='Y'}年，{$team.name_zh}足球俱乐部总球员数为{$team.total_players}人，其中国家队球员数{$team.national_players}人，非本土球员{$team.foreign_players}人，我们将为你实时更新{$team.name_zh}赛事数据信息。</p>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="title">
+            <span>{$team.name_zh}近期比赛</span>
+        </div>
+        {include file="newadd/playlist" datalist="match"/}
+    </div>
+</section>
+{/block}
+{block name="script"}
+<script>
+
+</script>
+{/block}

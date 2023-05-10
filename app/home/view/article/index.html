@@ -1,0 +1,80 @@
+{extend name="common/base"/}
+{block name="style"}
+
+<link rel="stylesheet" href="{__CSS__}/public.css?v=1{:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/swiper-bundle.css?">
+<link rel="stylesheet" href="{__CSS__}/layui.css">
+<link rel="stylesheet" href="{__CSS__}/jjhf.css">
+<link rel="stylesheet" href="{__CSS__}/index.css">
+
+{/block}
+{block name="title"}
+<title>视频集锦_联赛最新比赛视频录像集锦 -{:get_system_config('web','admin_title')}</title>
+{/block}
+{block name="keywords"}
+<meta name="keywords" content="比赛视频集锦,最新视频集锦,视频集锦" />
+<meta name="description" content="{:get_system_config('web','admin_title')}比赛视频集锦频道,为广大球迷提供最新比赛精彩视频集锦服务,{:get_system_config('web','admin_title')}努力做最好的篮球赛事免费直播平台。" />
+{/block}
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='index' /}
+<div class="main">
+	<div class="main-wrap flex">
+		<!--身体-->
+		<div class="left-box box-w3">
+			<!--篮球-->
+			<div class="lanqiu">
+				<?php $competitions = getHotCompetition();
+					$type=$_GET['type'];
+					$competition=$competitions[$type];
+					$comp = array();
+?>
+				<ul class="lanqiu-ul">
+					<a href="{:url('article/'.$type)}">
+						<li class="leftList"><img src="/static/home/images/guanjun.png" alt="">全部</li>
+					</a>
+
+					{foreach $competition as $key=>$vo}
+					<?php
+					$comp[$vo['id']] = $vo['short_name_zh'];
+?>
+					<a href="{:url('article/'.$type,['cid'=>$vo.id])}">
+						<li class="leftList"><img src="{$vo.logo}" alt="">{$vo.short_name_zh}</li>
+					</a>
+					{/foreach}
+				</ul>
+
+			</div>
+		</div>
+		<div class="right-box box-w4" style="padding: 20px;">
+			<div class="jijin">
+				<div class="qdzx1" > <span style="font-size: 16px;color: #2D3137;">回放专区</span></div>
+				<ul id="qwe">
+					{foreach $voList as $vo}
+					<li class="">
+						<a  href="{:url('article/'.$type,['id'=>$vo.id])}" target="_blank">
+							<p>{$vo.title}</p>
+							<span>{$vo.update_time|date="Y-m-d H:i:s"}</span>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+
+				<div class="layui-btn-group" style="margin-top: 30px;margin-left: 200px;">
+				</div>
+				<div id="test1"></div>
+			</div>
+
+		</div>
+	</div>
+</div>
+{/block}
+<!-- 脚本 -->
+{block name="script"}
+<script src="{__JS__}/public.js"></script>
+<!--<script src="{__JS__}/noreapt.js?v=1"></script>-->
+<script src="{__JS__}/swiper-bundle.js"></script>
+<script src="{__JS__}/move.js"></script>
+
+{/block}
+<!-- /脚本 -->

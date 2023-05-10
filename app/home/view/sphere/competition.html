@@ -1,0 +1,95 @@
+{extend name="common/base"/}
+{block name="title"}
+<title>{$seo["title"]} -{:get_system_config('web','admin_title')}</title>
+{/block}
+{block name="keywords"}
+<meta name="keywords" content="{$seo['keywords']}"/>
+<meta name="description" content="{$seo['description']}"/>
+{/block}
+{block name="style"}
+<link rel="stylesheet" href="{__CSS__}/index.css?v={:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/public.css?v=1{:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/swiper-bundle.css?">
+<link rel="stylesheet" href="{__CSS__}/layui.css">
+<link rel="stylesheet" href="{__CSS__}/jjhf.css">
+{/block}
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='info' /}
+<div class="main">
+    <div class="main-wrap">
+        <!--身体-->
+        <div id="bread">
+            当前位置：
+            <a href="/">首页</a>>
+            <a href="{:url('sphere/'.$type,[],false)}" target="_blank">{$typeText}联赛列表</a>>
+            {$model.name_zh}
+        </div>
+        <div class="box martop">
+            <div class="box-w1">
+                <div class="left-lxsp1 bcgFFF" style="background: none;">
+                    <div class="qdxq">
+                        <img src="{$model['logo']|defaultLogo}" alt="" style="margin-left: 30px;">
+                        <p style="margin-left: 10px;">{$model['name_zh']}</p>
+                    </div>
+                    <div style="padding: 10px;display: flex;justify-content: space-between;background: #fff;margin-top: 10px;padding-left: 30px;">
+                        <span style="color: #999999;font-size: 12px;margin-top: 10px;">球队简介：</span>
+                        <span style="color: #333333;width: 660px;overflow: hidden;display: block;padding: 10px 0;font-size: 12px;">
+                           {$model.name_zh}（{$model.name_en}）简称”{$model.short_name_zh}”,是以{$countryNameText}的{$typeText}赛事，我们将为你实时更新{$model.name_zh}赛事数据信息
+
+                        </span>
+                    </div>
+                </div>
+                <div class="bcgFFF" style="margin-top: 20px; padding: 20px;">
+                    <div class="timeLive1">近期直播</div>
+                    {include file="sphere/recentlylive" list="matchList" /}
+                </div>
+            </div>
+            <div class="box-w2">
+                <div class="right-box box-w2">
+                    <div class="timeLive1">足球资讯</div>
+                    <div class="grayline"></div>
+                    <?php
+                        $cateId = 6;
+                        if($type=="basketball"){
+                            $cateId = 5;
+                        }
+                        $articleType = "detail";
+					?>
+                    {include file="article/hotArticle"  /}
+                </div>
+                <div class="right-box box-w2" style="margin-top: 20px;">
+                    <div class="timeLive1">热门回放</div>
+                    <div class="grayline"></div>
+                    <?php
+                        $jjArticle = toArticle([5,6]);
+                    ?>
+
+                    <ul class="rmhf">
+                        {foreach $jjArticle as $key=>$vo}
+                        <li class="rmhfLi">
+                            <span>{$key+1}</span>
+                            {if $vo.cate_id==5}
+                            <a href="{:url('article/jijindetail',['type'=>'basketball','id'=>$vo.id])}">{$vo.title}</a>
+                            {else}
+                            <a href="{:url('article/jijindetail',['type'=>'football','id'=>$vo.id])}">{$vo.title}</a>
+                            {/if}
+                        </li>
+                        {/foreach}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{/block}
+<!-- /主体 -->
+<!-- 脚本 -->
+{block name="script"}
+<script src="{__JS__}/public.js?v={:get_system_config('web','version')}"></script>
+<!--<script src="{__JS__}/noreapt.js?v={:get_system_config('web','version')}"></script>-->
+<script src="{__JS__}/swiper-bundle.js?v={:get_system_config('web','version')}"></script>
+<script src="{__JS__}/saishi.js?v={:get_system_config('web','version')}"></script>
+{/block}
+<!-- /脚本 -->

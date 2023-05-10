@@ -1,0 +1,46 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">球队详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">赛事id</td>
+			<td>{$detail.competition_id}</td><td class="layui-td-gray-2">国家id</td>
+			<td>{$detail.country_id}</td><td class="layui-td-gray-2">中文名称</td>
+			<td>{$detail.name_zh}</td>
+		</tr><tr><td class="layui-td-gray-2">粤语名称</td>
+			<td>{$detail.name_zht}</td><td class="layui-td-gray-2">英文名称</td>
+			<td>{$detail.name_en}</td><td class="layui-td-gray-2">中文简称</td>
+			<td>{$detail.short_name_zh}</td>
+		</tr><tr><td class="layui-td-gray-2">粤语简称</td>
+			<td>{$detail.short_name_zht}</td><td class="layui-td-gray-2">英文简称</td>
+			<td>{$detail.short_name_en}</td><td class="layui-td-gray-2">是否国家队</td>
+			<td>
+				{eq name="$detail.national" value="0"}否{/eq}
+				{eq name="$detail.national" value="1"}是{/eq}
+			</td>
+		</tr><tr><td class="layui-td-gray-2">成立时间</td>
+			<td>{$detail.foundation_time}</td><td class="layui-td-gray-2">球队官网</td>
+			<td>{$detail.website}</td><td class="layui-td-gray-2">场馆id</td>
+			<td>{$detail.venue_id}</td>
+		</tr><tr><td class="layui-td-gray-2">市值</td>
+			<td>{$detail.market_value}</td><td class="layui-td-gray-2">市值单位</td>
+			<td>{$detail.market_value_currency}</td><td class="layui-td-gray-2">总球员数</td>
+			<td>{$detail.total_players}</td>
+		</tr><tr><td class="layui-td-gray-2">非本土球员数</td>
+			<td>{$detail.foreign_players}</td><td class="layui-td-gray-2">国家队球员数</td>
+			<td>{$detail.national_players}</td><td class="layui-td-gray-2">更新时间</td>
+			<td>{$detail.updated_at|time_format=###,'Y-m-d H:i:s'}</td>
+		</tr><tr><td class="layui-td-gray-2">球队logo</td>
+			<td colspan="5">
+				<img src="{$detail.logo}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px; max-width:200px" />
+			</td>
+		</tr><tr><td class="layui-td-gray-2">国家队logo</td>
+			<td colspan="5">
+				<img src="{$detail.country_logo}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px; max-width:200px" />
+			</td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

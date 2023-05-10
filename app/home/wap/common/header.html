@@ -1,0 +1,36 @@
+<nav class="nav">
+	<h1 class="logo">
+		<a href="/"><img src="{:get_system_config('web','logo')}" alt="爱尚体育" title="{:get_system_config('web','admin_title')}"></a>
+	</h1>
+	<div class="menu">
+		<i></i>
+	</div>
+	<ul class="nav-xl">
+		{foreach $COMMON_NAV as $item}
+		<li>
+			<a href="{:url($item.src . $item.param)}">{$item.title}</a>
+		</li>
+		{/foreach}
+	</ul>
+</nav>
+<script>
+	$(".menu").click(function() {
+		$(".nav-xl").slideToggle("1000");
+	})
+
+	function find(str,cha,num){
+		let x=str.indexOf(cha);
+		for(let i=0;i<num;i++){
+			x=str.indexOf(cha,x+1);
+		}
+		return x;
+	}
+
+	$('.nav-xl li').each(function(i, item) {
+		let liA = $(item).find('a').attr('href')
+		let index = find(liA,'/',1);
+		let word = index>0?liA.substring(1, index):liA;
+		let link = index>0?window.location.pathname.substring(1, index):window.location.pathname;
+		if (word==link) $(item).find('a').addClass('curnav')
+	})
+</script>

@@ -1,0 +1,32 @@
+<div class="cont-list">
+    <?php $weekarray=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"]; ?>
+    {foreach $voList as $key=>$vo}
+    {foreach $vo as $v}
+    <div class="cont-box">
+        <span class="left-tab {$v['status_id']<=1?'ing':''}">{$v['status_id']<=1?'已开始':'未开始'}</span>
+        <div class="start-date"><?php echo $key. " " .$weekarray[date("w",strtotime($key))];?></div>
+        <div class="match">
+            <ul>
+                <li>{$v['match_time']|date='H:i'}</li>
+                <li><a href="{:url('competition/'.$v.sphere_type,['id'=>$v.competition_id])}"
+                       target="_blank">{$v['competition_text']}</a></li>
+                <li><a href="{:url('team/'.$v.sphere_type,['id'=>$v.home_team_id])}"
+                       target="_blank">{$v["home_team_text"]}</a>
+                    <img src="{$v['home_team_logo']|defaultLogo}" alt="">
+                </li>
+                <li>VS</li>
+                <li><img src="{$v['away_team_logo']|defaultLogo}" alt="">
+                    <a href="{:url('team/'.$v.sphere_type,['id'=>$v.away_team_id])}"
+                       target="_blank">{$v['away_team_text']}</a>
+                </li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="play-btn {$v['status_id']<=1?'ing':''}">
+            <img src="../../../../public/static/home/images/{$v['status_id']<=1?'play':'analyse'}.png">
+            {$v['status_id']<=1?'观看比赛':'赛前分析'}
+        </div>
+    </div>
+    {/foreach}
+    {/foreach}
+</div>

@@ -1,0 +1,50 @@
+<!--热点直播-->
+<?php $datas = getHistoryMatch();?>
+<div class="title"><span class="type-name"></span>回放</div>
+<ul class="rdzb" id="rdzb">
+	{foreach $datas as $item}
+	<li class="rdzbbh3">
+		<a href=/info/jjlx/{$item.id}.html target=_blank>
+			<div class="rdzbbh">
+				<div class='rdzbbh1'>
+					<div>
+						<p>{$item.competition_text}</p>
+						<img src={$item.home_team_logo}>
+						<p>{$item.home_team_text}</p>
+					</div>
+					<div>
+						<p>vs</p>
+						<p>{$item.status_text}</p>
+					</div>
+					<div>
+						<p>{$item.match_time|date='m-d H:i'}</p>
+						<img src={$item.away_team_logo}>
+						<p>{$item.away_team_text}</p>
+					</div>
+				</div>
+			</div>
+			<div class='rdzbbh2'>
+				<div class="rdzbbh4">
+					<div>{$item.competition_text}</div>
+					<div>{$item.match_time|date='m-d H:i'}</div>
+					<div>
+						<div class=divEllipsis>{$item.home_team_text}</div>
+						vs
+						<div class=divEllipsis>{$item.away_team_text}</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</li>
+	{/foreach}
+</ul>
+<script>
+
+	$(".rdzbbh3").mouseover(function() {
+		$(this).find('.rdzbbh').show()
+		$(this).find('.rdzbbh2').hide()
+		$(this).siblings().find('.rdzbbh').hide()
+		$(this).siblings().find('.rdzbbh2').show()
+	})
+	$(".rdzbbh3").first().trigger("mouseover")
+</script>

@@ -1,0 +1,136 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑赛事</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">分类id<font>*</font></td>
+			<td><input type="text" name="category_id"  lay-verify="required" lay-reqText="请完善分类id" value="{$detail.category_id}" autocomplete="off" placeholder="请输入分类id" class="layui-input"></td><td class="layui-td-gray-2">分类id<font>*</font></td>
+			<td><input type="text" name="country_id"  lay-verify="required" lay-reqText="请完善分类id" value="{$detail.country_id}" autocomplete="off" placeholder="请输入分类id" class="layui-input"></td><td class="layui-td-gray-2">中文名称<font>*</font></td>
+			<td><input type="text" name="name_zh"  lay-verify="required" lay-reqText="请完善中文名称" value="{$detail.name_zh}" autocomplete="off" placeholder="请输入中文名称" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">粤语名称</td>
+			<td><input type="text" name="name_zht"  value="{$detail.name_zht}" autocomplete="off" placeholder="请输入粤语名称" class="layui-input"></td><td class="layui-td-gray-2">英文名称</td>
+			<td><input type="text" name="name_en"  value="{$detail.name_en}" autocomplete="off" placeholder="请输入英文名称" class="layui-input"></td><td class="layui-td-gray-2">中文简称<font>*</font></td>
+			<td><input type="text" name="short_name_zh"  lay-verify="required" lay-reqText="请完善中文简称" value="{$detail.short_name_zh}" autocomplete="off" placeholder="请输入中文简称" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">粤语简称</td>
+			<td><input type="text" name="short_name_zht"  value="{$detail.short_name_zht}" autocomplete="off" placeholder="请输入粤语简称" class="layui-input"></td><td class="layui-td-gray-2">英文简称</td>
+			<td><input type="text" name="short_name_en"  value="{$detail.short_name_en}" autocomplete="off" placeholder="请输入英文简称" class="layui-input"></td><td class="layui-td-gray-2">赛事类型</td>
+			<td>
+				<select name="type" >
+					<option value="">请选择</option>
+					<option value="0" {eq name="$detail.type" value="0"} selected{/eq}>未知</option>
+					<option value="1" {eq name="$detail.type" value="1"} selected{/eq}>联赛</option>
+					<option value="2" {eq name="$detail.type" value="2"} selected{/eq}>杯赛</option>
+					<option value="3" {eq name="$detail.type" value="3"} selected{/eq}>友谊赛</option>
+				</select>
+			</td>
+
+
+
+		</tr>
+				<tr><td class="layui-td-gray-2">卫冕冠军</td>
+			<td><input type="text" name="title_holder"  value="{$detail.title_holder}" autocomplete="off" placeholder="请输入卫冕冠军" class="layui-input"></td><td class="layui-td-gray-2">夺冠最多球队</td>
+			<td><input type="text" name="most_titles"  value="{$detail.most_titles}" autocomplete="off" placeholder="请输入夺冠最多球队" class="layui-input"></td><td class="layui-td-gray-2">晋级淘汰球队</td>
+			<td><input type="text" name="newcomers"  value="{$detail.newcomers}" autocomplete="off" placeholder="请输入晋级淘汰球队" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">赛事层级</td>
+			<td><input type="text" name="divisions"  value="{$detail.divisions}" autocomplete="off" placeholder="请输入赛事层级" class="layui-input"></td><td class="layui-td-gray-2">东道主</td>
+			<td><input type="text" name="host"  value="{$detail.host}" autocomplete="off" placeholder="请输入东道主" class="layui-input"></td><td class="layui-td-gray-2">主颜色</td>
+			<td><input type="text" name="primary_color"  value="{$detail.primary_color}" autocomplete="off" placeholder="请输入主颜色" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">次颜色</td>
+			<td><input type="text" name="secondary_color"  value="{$detail.secondary_color}" autocomplete="off" placeholder="请输入次颜色" class="layui-input"></td>
+					<td class="layui-td-gray-2">更新时间<font>*</font></td>
+			<td><input type="text" name="updated_at"  lay-verify="required" lay-reqText="请完善更新时间" value="{$detail.updated_at|time_format=###,'Y-m-d H:i:s'}" readonly readonly id="laydate_updated_at" autocomplete="off" placeholder="请选择" class="layui-input"></td>
+					<td class="layui-td-gray-2">是否热门</td>
+					<td>
+						<select name="status" >
+							<option value="">请选择</option>
+							<option value="1" {eq name="$detail.status" value="1"} selected{/eq}>是</option>
+							<option value="0" {eq name="$detail.status" value="0"} selected{/eq}>否</option>
+						</select>
+					</td>
+		</tr>
+		<tr><td class="layui-td-gray-2">顺序</td>
+			<td><input type="text" name="sort"  value="{$detail.sort}" autocomplete="off" placeholder="请输入顺序" class="layui-input"></td>
+		</tr>
+
+
+		<tr><td class="layui-td-gray-2">赛事logo</td>
+			<td colspan="5" style="vertical-align:top">
+				<div class="layui-upload">
+					<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_logo">选择上传图片</button>
+					<div class="layui-upload-list" id="upload_box_logo">
+						<img src="{$detail.logo}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px;max-width:200px" />
+						<input type="hidden" name="logo" value="{$detail.logo}" >
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr><td class="layui-td-gray-2">赛事简介</td>
+			<td colspan="5" style="vertical-align:top"><textarea id="intro" name="intro" style="width: 1000px;height: 200px">{$detail.intro}</textarea></td>
+		</tr>
+	</table>
+	<div class="py-3">
+		<input type="hidden" name="id" value="{$detail.id}"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	var moduleInit = ['tool'];
+
+	function gouguInit() {
+
+		// layui.use('layedit', function(){
+		// 	var layedit = layui.layedit;
+		// 	layedit.build('intro',{
+		// 		height: 180,
+		// 		tool: ['left', 'center', 'right', '|', 'strong','italic','underline']
+		// 	}); //建立编辑器
+		// });
+
+		var form = layui.form, tool = layui.tool;
+		//日期选择
+		layui.laydate.render({
+			type:'datetime',
+			elem: '#laydate_updated_at' //指定元素
+		});
+		//上传赛事logo
+		var upload_logo = layui.upload.render({
+			elem: '#upload_btn_logo',
+			url: '/admin/api/upload',
+			done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					return layer.msg('上传失败');
+				}
+				//上传成功
+				$('#upload_box_logo input').attr('value', res.data.filepath);
+				$('#upload_box_logo img').attr('src', res.data.filepath);
+			}
+		});
+				
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/admin/football_competition/edit", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

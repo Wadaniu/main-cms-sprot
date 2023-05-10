@@ -1,0 +1,35 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">赛程数据详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">赛事id</td>
+			<td>{$detail.competition_id}</td><td class="layui-td-gray-2">主队id</td>
+			<td>{$detail.home_team_id}</td><td class="layui-td-gray-2">客队id</td>
+			<td>{$detail.away_team_id}</td>
+		</tr><tr><td class="layui-td-gray-2">类型id</td>
+			<td>{$detail.kind}</td><td class="layui-td-gray-2">比赛总节数</td>
+			<td>{$detail.period_count}</td><td class="layui-td-gray-2">比赛状态</td>
+			<td>{$detail.status_id}</td>
+		</tr><tr><td class="layui-td-gray-2">比赛时间</td>
+			<td>{$detail.match_time}</td><td class="layui-td-gray-2">是否中立场</td>
+			<td>{$detail.neutral}</td><td class="layui-td-gray-2">主队比分</td>
+			<td>{$detail.home_scores}</td>
+		</tr><tr><td class="layui-td-gray-2">客队比分</td>
+			<td>{$detail.away_scores}</td><td class="layui-td-gray-2">加时赛比分</td>
+			<td>{$detail.over_time_scores}</td><td class="layui-td-gray-2">主队排名</td>
+			<td>{$detail.home_position}</td>
+		</tr><tr><td class="layui-td-gray-2">客队排名</td>
+			<td>{$detail.away_position}</td><td class="layui-td-gray-2">动画、情报</td>
+			<td>{$detail.coverage}</td><td class="layui-td-gray-2">场馆id</td>
+			<td>{$detail.venue_id}</td>
+		</tr><tr><td class="layui-td-gray-2">赛季id</td>
+			<td>{$detail.season_id}</td><td class="layui-td-gray-2">关联信息</td>
+			<td>{$detail.round}</td><td class="layui-td-gray-2">更新时间</td>
+			<td>{$detail.updated_at}</td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

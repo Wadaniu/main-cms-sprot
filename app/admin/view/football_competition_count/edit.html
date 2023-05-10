@@ -1,0 +1,102 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑赛季积分</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">球队id<font>*</font></td>
+			<td><input type="text" name="team_id"  lay-verify="required" lay-reqText="请完善球队id" value="{$detail.team_id}" autocomplete="off" placeholder="请输入球队id" class="layui-input"></td><td class="layui-td-gray-2">升降级id</td>
+			<td><input type="text" name="promotion_id"  value="{$detail.promotion_id}" autocomplete="off" placeholder="请输入升降级id" class="layui-input"></td><td class="layui-td-gray-2">积分<font>*</font></td>
+			<td><input type="text" name="points"  lay-verify="required" lay-reqText="请完善积分" value="{$detail.points}" autocomplete="off" placeholder="请输入积分" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">排名<font>*</font></td>
+			<td><input type="text" name="position"  lay-verify="required" lay-reqText="请完善排名" value="{$detail.position}" autocomplete="off" placeholder="请输入排名" class="layui-input"></td><td class="layui-td-gray-2">扣除积分<font>*</font></td>
+			<td><input type="text" name="deduct_points"  lay-verify="required" lay-reqText="请完善扣除积分" value="{$detail.deduct_points}" autocomplete="off" placeholder="请输入扣除积分" class="layui-input"></td><td class="layui-td-gray-2">赛季年份<font>*</font></td>
+			<td><input type="text" name="note"  lay-verify="required" lay-reqText="请完善赛季年份" value="{$detail.note|time_format=###,'Y-m-d'}" readonly readonly id="laydate_note" autocomplete="off" placeholder="请选择" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">比赛场次<font>*</font></td>
+			<td><input type="text" name="total"  lay-verify="required" lay-reqText="请完善比赛场次" value="{$detail.total}" autocomplete="off" placeholder="请输入比赛场次" class="layui-input"></td><td class="layui-td-gray-2">胜的场次<font>*</font></td>
+			<td><input type="text" name="won"  lay-verify="required" lay-reqText="请完善胜的场次" value="{$detail.won}" autocomplete="off" placeholder="请输入胜的场次" class="layui-input"></td><td class="layui-td-gray-2">平的场次<font>*</font></td>
+			<td><input type="text" name="draw"  lay-verify="required" lay-reqText="请完善平的场次" value="{$detail.draw}" autocomplete="off" placeholder="请输入平的场次" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">负的场次<font>*</font></td>
+			<td><input type="text" name="loss"  lay-verify="required" lay-reqText="请完善负的场次" value="{$detail.loss}" autocomplete="off" placeholder="请输入负的场次" class="layui-input"></td><td class="layui-td-gray-2">进球<font>*</font></td>
+			<td><input type="text" name="goals"  lay-verify="required" lay-reqText="请完善进球" value="{$detail.goals}" autocomplete="off" placeholder="请输入进球" class="layui-input"></td><td class="layui-td-gray-2">失球<font>*</font></td>
+			<td><input type="text" name="goals_against"  lay-verify="required" lay-reqText="请完善失球" value="{$detail.goals_against}" autocomplete="off" placeholder="请输入失球" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">净胜球<font>*</font></td>
+			<td><input type="text" name="goal_diff"  lay-verify="required" lay-reqText="请完善净胜球" value="{$detail.goal_diff}" autocomplete="off" placeholder="请输入净胜球" class="layui-input"></td><td class="layui-td-gray-2">主场积分</td>
+			<td><input type="text" name="home_points"  value="{$detail.home_points}" autocomplete="off" placeholder="请输入主场积分" class="layui-input"></td><td class="layui-td-gray-2">主场排名</td>
+			<td><input type="text" name="home_position"  value="{$detail.home_position}" autocomplete="off" placeholder="请输入主场排名" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">主场比赛场次</td>
+			<td><input type="text" name="home_total"  value="{$detail.home_total}" autocomplete="off" placeholder="请输入主场比赛场次" class="layui-input"></td><td class="layui-td-gray-2">主场胜的场次</td>
+			<td><input type="text" name="home_won"  value="{$detail.home_won}" autocomplete="off" placeholder="请输入主场胜的场次" class="layui-input"></td><td class="layui-td-gray-2">主场平的场次	</td>
+			<td><input type="text" name="home_draw"  value="{$detail.home_draw}" autocomplete="off" placeholder="请输入主场平的场次	" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">主场负的场次	</td>
+			<td><input type="text" name="home_loss"  value="{$detail.home_loss}" autocomplete="off" placeholder="请输入主场负的场次	" class="layui-input"></td><td class="layui-td-gray-2">主场进球	</td>
+			<td><input type="text" name="home_goals"  value="{$detail.home_goals}" autocomplete="off" placeholder="请输入主场进球	" class="layui-input"></td><td class="layui-td-gray-2">主场失球	</td>
+			<td><input type="text" name="home_goals_against"  value="{$detail.home_goals_against}" autocomplete="off" placeholder="请输入主场失球	" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">主场净胜球	</td>
+			<td><input type="text" name="home_goal_diff"  value="{$detail.home_goal_diff}" autocomplete="off" placeholder="请输入主场净胜球	" class="layui-input"></td><td class="layui-td-gray-2">客场积分	</td>
+			<td><input type="text" name="away_points"  value="{$detail.away_points}" autocomplete="off" placeholder="请输入客场积分	" class="layui-input"></td><td class="layui-td-gray-2">客场排名	</td>
+			<td><input type="text" name="away_position"  value="{$detail.away_position}" autocomplete="off" placeholder="请输入客场排名	" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">客场比赛场次	</td>
+			<td><input type="text" name="away_total"  value="{$detail.away_total}" autocomplete="off" placeholder="请输入客场比赛场次	" class="layui-input"></td><td class="layui-td-gray-2">客场胜的场次	</td>
+			<td><input type="text" name="away_won"  value="{$detail.away_won}" autocomplete="off" placeholder="请输入客场胜的场次	" class="layui-input"></td><td class="layui-td-gray-2">客场平的场次	</td>
+			<td><input type="text" name="away_draw"  value="{$detail.away_draw}" autocomplete="off" placeholder="请输入客场平的场次	" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">客场负的场次	</td>
+			<td><input type="text" name="away_loss"  value="{$detail.away_loss}" autocomplete="off" placeholder="请输入客场负的场次	" class="layui-input"></td><td class="layui-td-gray-2">客场进球	</td>
+			<td><input type="text" name="away_goals"  value="{$detail.away_goals}" autocomplete="off" placeholder="请输入客场进球	" class="layui-input"></td><td class="layui-td-gray-2">客场失球	</td>
+			<td><input type="text" name="away_goals_against"  value="{$detail.away_goals_against}" autocomplete="off" placeholder="请输入客场失球	" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">客场净胜球	</td>
+			<td><input type="text" name="away_goal_diff"  value="{$detail.away_goal_diff}" autocomplete="off" placeholder="请输入客场净胜球	" class="layui-input"></td><td class="layui-td-gray-2">更新时间	<font>*</font></td>
+			<td><input type="text" name="updated_at"  lay-verify="required" lay-reqText="请完善更新时间	" value="{$detail.updated_at|time_format=###,'Y-m-d'}" readonly readonly id="laydate_updated_at" autocomplete="off" placeholder="请选择" class="layui-input"></td><td colspan='2'></td>
+		</tr>
+	</table>
+	<div class="py-3">
+		<input type="hidden" name="team_id" value="{$detail.team_id}"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	var moduleInit = ['tool'];
+
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		//日期选择
+		layui.laydate.render({
+			elem: '#laydate_note' //指定元素
+		});//日期选择
+		layui.laydate.render({
+			elem: '#laydate_updated_at' //指定元素
+		});
+		
+				
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/admin/football_competition_count/edit", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

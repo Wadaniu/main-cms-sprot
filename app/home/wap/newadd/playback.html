@@ -1,0 +1,60 @@
+{extend name="common/base"/}
+{block name="body"}
+<section class="container">
+    <div class="main">
+        <div class="title">
+            <ul class="links">
+                <?php $hotCompetition = getHotComp(); ?>
+                {volist name="hotCompetition" id="item" length='4'}
+                <li><a href="{:url('playback' . '/'.$item.id)}" class="alink">{$item.short_name_zh}</a></li>
+                {/volist}
+                <li class="sp">更多直播</li>
+            </ul>
+        </div>
+        <div class="morelink">
+            <div class="list">
+                {volist name="hotCompetition" id="item" offset="4"}
+                <a href="{:url('playback' . '/'.$item.id)}" class="alink">{$item.short_name_zh}</a>
+                {/volist}
+            </div>
+            <p class="close"></p>
+        </div>
+        <div class="type-tab sp play-list">
+            <?php $id = get_params(); ?>
+            {foreach $dateRange as $key=>$item}
+            <p><a href="/playback/{$id.id}/<?php echo str_replace('-','',$item) ?>.html">{$item}</a></p>
+            {/foreach}
+        </div>
+        {include file="newadd/playlist" datalist="match"/}
+    </div>
+    <div class="main">
+        {include file="article/hotNews"/}
+    </div>
+</section>
+{/block}
+{block name="script"}
+<script>
+    let patchname = window.location.pathname.replace('.html', '');
+    let first = true;
+    $('.alink').each(function (i, item) {
+        let href = $(item).attr('href').replace('.html', '');
+        if (patchname.indexOf(href) > -1) $(item).addClass('cur');
+    })
+    $(".play-list p").each(function (i, item) {
+        let link = $(item).find('a').attr('href').replace('.html', '');
+        let txt = $(item).find('a').text();
+        if (patchname.indexOf(link) > -1) {
+            $(item).addClass('cur');
+            first = false;
+        }
+        $(item).find('a').text(txt.slice(5))
+    })
+    if(first) $(".play-list p").eq(0).addClass('cur');
+    $(".links .sp").click(function () {
+        $(".morelink").show()
+    })
+    $(".close").click(function () {
+        $(".morelink").hide()
+    })
+</script>
+{/block}

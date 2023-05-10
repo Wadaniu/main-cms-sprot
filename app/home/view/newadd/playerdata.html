@@ -1,0 +1,72 @@
+{extend name="common/base"/}
+{block name="style"}
+
+<link rel="stylesheet" href="{__CSS__}/public.css?v=1{:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/layui.css">
+<link rel="stylesheet" href="{__CSS__}/newstyle.css">
+{/block}
+
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='index' /}
+<div class="main clearfix">
+    <div class="main-wrap flex">
+        <div class="data-list playerdata">
+            <div class="type-tab">
+                <p><a href="/playerdata/shooter.html">射手榜</a></p>
+                <p><a href="/playerdata/assists.html">助攻榜</a></p>
+            </div>
+            <div class="list-tab">
+                <ul>
+                    <li class="head">
+                        <span>排名</span>
+                        <span>球员</span>
+                        <span>球队</span>
+                        <span>进球（点球）</span>
+                    </li>
+                    {foreach $shooter as $key=>$item}
+                    <li><span><i
+                            class="{$key<3?'top'.($key+1):''}">{$key+1}</i></span><span>{$item.player_name}</span><span><img
+                            src="{$item.team_logo}"><a href=/team/{$item.team_id}.html
+                                                       target=_blank>{$item.team_name}</a></span><span>{$item.goals}({$item.penalty})</span>
+                    </li>
+                    {/foreach}
+                </ul>
+                <ul>
+                    <li class="head">
+                        <span>排名</span>
+                        <span>球员</span>
+                        <span>球队</span>
+                        <span>助攻数</span>
+                    </li>
+                    {foreach $assists as $key=>$item}
+                    <li><span><i
+                            class="{$key<3?'top'.($key+1):''}">{$key+1}</i></span><span>{$item.player_name}</span><span><img
+                            src="{$item.team_logo}"><a href=/team/{$item.team_id}.html
+                                                       target=_blank>{$item.team_name}</a></span><span>{$item.assists}</span>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+<!-- 脚本 -->
+{block name="script"}
+<script>
+    if (window.location.pathname.indexOf('html') < 0) {
+        $(".type-tab p").eq(0).addClass('cur');
+        $(".list-tab>ul").eq(0).addClass('cur')
+    } else {
+        $(".type-tab p").each(function (i, item) {
+            let link = $(item).find('a').attr('href')
+            if (window.location.pathname.indexOf(link) > -1) {
+                $(item).addClass('cur')
+                $(".list-tab>ul").eq(i).addClass('cur')
+            }
+        })
+    }
+</script>
+{/block}
+<!-- /脚本 -->

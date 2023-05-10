@@ -1,0 +1,30 @@
+{extend name="common/base"/}
+{block name="body"}
+<section class="container">
+    <div class="main">
+        <div class="title">
+            <span>集锦/回放</span>
+        </div>
+        <div class="cont-box video">
+            {foreach $video as $key=>$item}
+            <div class="play">
+                <a href={$item.pc_link} rel="nofollow" target=_blank>
+                    <img src="{$item.cover}">
+                    <p class="tit">{$item.title}</p>
+                    <i class="btn"></i>
+                </a>
+            </div>
+            {/foreach}
+        </div>
+        <div class="main">
+            <div class="title">
+                <span>近期比赛</span>
+            </div>
+            {include file="newadd/playlist" datalist="match"/}
+        </div>
+</section>
+{/block}
+{block name="script"}
+<script>
+</script>
+{/block}

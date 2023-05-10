@@ -1,0 +1,125 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑赛程数据</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">赛季id<font>*</font></td>
+			<td><input type="text" name="season_id"  lay-verify="required" lay-reqText="请完善赛季id" value="{$detail.season_id}" autocomplete="off" placeholder="请输入赛季id" class="layui-input"></td><td class="layui-td-gray-2">主队id<font>*</font></td>
+			<td><input type="text" name="home_team_id"  lay-verify="required" lay-reqText="请完善主队id" value="{$detail.home_team_id}" autocomplete="off" placeholder="请输入主队id" class="layui-input"></td><td class="layui-td-gray-2">客队id<font>*</font></td>
+			<td><input type="text" name="away_team_id"  lay-verify="required" lay-reqText="请完善客队id" value="{$detail.away_team_id}" autocomplete="off" placeholder="请输入客队id" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">比赛状态<font>*</font></td>
+			<td>
+				<select name="status_id"  lay-verify="required" lay-reqText="请完善比赛状态">
+					<option value="">请选择</option>
+
+					<option value="0" {eq name="$detail.status_id" value="0"} selected{/eq}>比赛异常</option>
+					<option value="1" {eq name="$detail.status_id" value="1"} selected{/eq}>未开赛</option>
+					<option value="2" {eq name="$detail.status_id" value="2"} selected{/eq}>第一节</option>
+					<option value="3" {eq name="$detail.status_id" value="3"} selected{/eq}>第一节完</option>
+					<option value="4" {eq name="$detail.status_id" value="4"} selected{/eq}>第二节</option>
+					<option value="5" {eq name="$detail.status_id" value="5"} selected{/eq}>第二节完</option>
+					<option value="6" {eq name="$detail.status_id" value="6"} selected{/eq}>第三节</option>
+					<option value="7" {eq name="$detail.status_id" value="7"} selected{/eq}>第三节完</option>
+					<option value="8" {eq name="$detail.status_id" value="8"} selected{/eq}>第四节</option>
+					<option value="9" {eq name="$detail.status_id" value="9"} selected{/eq}>加时</option>
+					<option value="10" {eq name="$detail.status_id" value="10"} selected{/eq}>已结束</option>
+					<option value="11" {eq name="$detail.status_id" value="11"} selected{/eq}>中断</option>
+					<option value="12" {eq name="$detail.status_id" value="12"} selected{/eq}>取消</option>
+
+				</select>
+			</td><td class="layui-td-gray-2">比赛时间<font>*</font></td>
+			<td><input type="text" name="match_time"  lay-verify="required" lay-reqText="请完善比赛时间" value="{$detail.match_time|time_format=###,'Y-m-d'}" readonly readonly id="laydate_match_time" autocomplete="off" placeholder="请选择" class="layui-input"></td><td class="layui-td-gray-2">是否中立场<font>*</font></td>
+			<td>
+				<input type="radio" name="neutral" value="0" title="否" {eq name="$detail.neutral" value="0"} checked{/eq}>
+				<input type="radio" name="neutral" value="1" title="是" {eq name="$detail.neutral" value="1"} checked{/eq}>
+			</td>
+		</tr>
+				<tr><td class="layui-td-gray-2">备注</td>
+			<td><input type="text" name="note"  value="{$detail.note}" autocomplete="off" placeholder="请输入备注" class="layui-input"></td><td class="layui-td-gray-2">主队比分</td>
+			<td><input type="text" name="home_scores"  value="{$detail.home_scores}" autocomplete="off" placeholder="请输入主队比分" class="layui-input"></td><td class="layui-td-gray-2">客队比分</td>
+			<td><input type="text" name="away_scores"  value="{$detail.away_scores}" autocomplete="off" placeholder="请输入客队比分" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">主队排名</td>
+			<td><input type="text" name="home_position"  value="{$detail.home_position}" autocomplete="off" placeholder="请输入主队排名" class="layui-input"></td><td class="layui-td-gray-2">客队排名</td>
+			<td><input type="text" name="away_position"  value="{$detail.away_position}" autocomplete="off" placeholder="请输入客队排名" class="layui-input"></td><td class="layui-td-gray-2">动画、情报、阵容</td>
+			<td><input type="text" name="coverage"  value="{$detail.coverage}" autocomplete="off" placeholder="请输入动画、情报、阵容" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">场馆id</td>
+			<td><input type="text" name="venue_id"  value="{$detail.venue_id}" autocomplete="off" placeholder="请输入场馆id" class="layui-input"></td><td class="layui-td-gray-2">裁判id</td>
+			<td><input type="text" name="referee_id"  value="{$detail.referee_id}" autocomplete="off" placeholder="请输入裁判id" class="layui-input"></td><td class="layui-td-gray-2">回合比赛id</td>
+			<td><input type="text" name="related_id"  value="{$detail.related_id}" autocomplete="off" placeholder="请输入回合比赛id" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">双回合常规时间</td>
+			<td><input type="text" name="agg_score"  value="{$detail.agg_score}" autocomplete="off" placeholder="请输入双回合常规时间" class="layui-input"></td><td class="layui-td-gray-2">关联信息</td>
+			<td><input type="text" name="round"  value="{$detail.round}" autocomplete="off" placeholder="请输入关联信息" class="layui-input"></td><td class="layui-td-gray-2">比赛环境</td>
+			<td><input type="text" name="environment"  value="{$detail.environment}" autocomplete="off" placeholder="请输入比赛环境" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">更新时间</td>
+			<td><input type="text" name="updated_at"  value="{$detail.updated_at|time_format=###,'Y-m-d'}" readonly readonly id="laydate_updated_at" autocomplete="off" placeholder="请选择" class="layui-input"></td><td class="layui-td-gray-2">赛事</td>
+			<td><input type="text" name="comp"  value="{$detail.comp}" autocomplete="off" placeholder="请输入赛事" class="layui-input"></td><td class="layui-td-gray-2">主队</td>
+			<td><input type="text" name="home"  value="{$detail.home}" autocomplete="off" placeholder="请输入主队" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">客队</td>
+			<td><input type="text" name="away"  value="{$detail.away}" autocomplete="off" placeholder="请输入客队" class="layui-input"></td>
+					<td class="layui-td-gray-2">wap直播地址</td>
+			<td><input type="text" name="mobile_link"  value="<?php echo empty($detail['mobile_link']) ? '' :  implode(',',json_decode($detail['mobile_link'])) ?>" autocomplete="off" placeholder="请输入wap直播地址" class="layui-input"></td><td class="layui-td-gray-2">web直播地址</td>
+			<td><input type="text" name="pc_link"  value="<?php echo empty($detail['pc_link']) ? '' : implode(',',json_decode($detail['pc_link'])) ?>" autocomplete="off" placeholder="请输入web直播地址" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">类型</td>
+			<td>
+				<select name="type" >
+					<option value="">请选择</option>
+					<option value="1" {eq name="$detail.type" value="1"} selected{/eq}>选项一</option>
+					<option value="2" {eq name="$detail.type" value="2"} selected{/eq}>选项二</option>
+				</select>
+			</td><td class="layui-td-gray-2">名称</td>
+			<td><input type="text" name="title"  value="{$detail.title}" autocomplete="off" placeholder="请输入名称" class="layui-input"></td><td class="layui-td-gray-2">图片</td>
+			<td><input type="text" name="cover"  value="{$detail.cover}" autocomplete="off" placeholder="请输入图片" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">时长-秒</td>
+			<td><input type="text" name="duration"  value="{$detail.duration}" autocomplete="off" placeholder="请输入时长-秒" class="layui-input"></td><td colspan='4'></td>
+		</tr>
+	</table>
+	<div class="py-3">
+		<input type="hidden" name="id" value="{$detail.id}"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	var moduleInit = ['tool'];
+
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		//日期选择
+		layui.laydate.render({
+			elem: '#laydate_match_time' //指定元素
+		});//日期选择
+		layui.laydate.render({
+			elem: '#laydate_updated_at' //指定元素
+		});
+		
+				
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/admin/football_match/edit", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

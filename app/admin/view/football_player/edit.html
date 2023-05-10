@@ -1,0 +1,143 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑球员列表</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">中文名称</td>
+			<td><input type="text" name="name_zh"  value="{$detail.name_zh}" autocomplete="off" placeholder="请输入中文名称" class="layui-input"></td><td class="layui-td-gray-2">粤语名称</td>
+			<td><input type="text" name="name_zht"  value="{$detail.name_zht}" autocomplete="off" placeholder="请输入粤语名称" class="layui-input"></td><td class="layui-td-gray-2">英文名称</td>
+			<td><input type="text" name="name_en"  value="{$detail.name_en}" autocomplete="off" placeholder="请输入英文名称" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">中文简称</td>
+			<td><input type="text" name="short_name_zh"  value="{$detail.short_name_zh}" autocomplete="off" placeholder="请输入中文简称" class="layui-input"></td><td class="layui-td-gray-2">粤语简称</td>
+			<td><input type="text" name="short_name_zht"  value="{$detail.short_name_zht}" autocomplete="off" placeholder="请输入粤语简称" class="layui-input"></td><td class="layui-td-gray-2">英文简称</td>
+			<td><input type="text" name="short_name_en"  value="{$detail.short_name_en}" autocomplete="off" placeholder="请输入英文简称" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">国家id<font>*</font></td>
+			<td>
+				<input type="radio" name="country_id" value="0" title="选项一" {eq name="$detail.country_id" value="1"} checked{/eq}>
+				<input type="radio" name="country_id" value="1" title="选项二" {eq name="$detail.country_id" value="2"} checked{/eq}>
+			</td><td class="layui-td-gray-2">国籍<font>*</font></td>
+			<td><input type="text" name="nationality"  lay-verify="required" lay-reqText="请完善国籍" value="{$detail.nationality}" autocomplete="off" placeholder="请输入国籍" class="layui-input"></td><td class="layui-td-gray-2">生日</td>
+			<td><input type="text" name="birthday"  value="{$detail.birthday|time_format=###,'Y-m-d'}" readonly readonly id="laydate_birthday" autocomplete="off" placeholder="请选择" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">年龄<font>*</font></td>
+			<td><input type="text" name="age"  lay-verify="required" lay-reqText="请完善年龄" value="{$detail.age}" autocomplete="off" placeholder="请输入年龄" class="layui-input"></td><td class="layui-td-gray-2">身高</td>
+			<td><input type="text" name="height"  value="{$detail.height}" autocomplete="off" placeholder="请输入身高" class="layui-input"></td><td class="layui-td-gray-2">体重</td>
+			<td><input type="text" name="weight"  value="{$detail.weight}" autocomplete="off" placeholder="请输入体重" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">市值</td>
+			<td><input type="text" name="market_value"  value="{$detail.market_value}" autocomplete="off" placeholder="请输入市值" class="layui-input"></td><td class="layui-td-gray-2">市值单位</td>
+			<td><input type="text" name="market_value_currency"  value="{$detail.market_value_currency}" autocomplete="off" placeholder="请输入市值单位" class="layui-input"></td><td class="layui-td-gray-2">合同截止时间<font>*</font></td>
+			<td><input type="text" name="contract_until"  lay-verify="required" lay-reqText="请完善合同截止时间" value="{$detail.contract_until}" autocomplete="off" placeholder="请输入合同截止时间" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">惯用脚<font>*</font></td>
+			<td>
+				<select name="preferred_foot"  lay-verify="required" lay-reqText="请完善惯用脚">
+					<option value="">请选择</option>
+					<option value="1" {eq name="$detail.preferred_foot" value="1"} selected{/eq}>选项一</option>
+					<option value="2" {eq name="$detail.preferred_foot" value="2"} selected{/eq}>选项二</option>
+				</select>
+			</td><td class="layui-td-gray-2">擅长位置</td>
+			<td>
+				<select name="position" >
+					<option value="">请选择</option>
+					<option value="1" {eq name="$detail.position" value="1"} selected{/eq}>选项一</option>
+					<option value="2" {eq name="$detail.position" value="2"} selected{/eq}>选项二</option>
+				</select>
+			</td><td class="layui-td-gray-2">详细位置字段说明</td>
+			<td>
+				<select name="positions" >
+					<option value="">请选择</option>
+					<option value="1" {eq name="$detail.positions" value="1"} selected{/eq}>选项一</option>
+					<option value="2" {eq name="$detail.positions" value="2"} selected{/eq}>选项二</option>
+				</select>
+			</td>
+		</tr>
+				<tr><td class="layui-td-gray-2">球员logo<font>*</font></td>
+			<td colspan="5" style="vertical-align:top">
+				<div class="layui-upload">
+					<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_logo">选择上传图片</button>
+					<div class="layui-upload-list" id="upload_box_logo">
+						<img src="{$detail.logo}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px;max-width:200px" />
+						<input type="hidden" name="logo" value="{$detail.logo}"  lay-verify="required" lay-reqText="请完善球员logo">
+					</div>
+				</div>
+			</td>
+		</tr><tr><td class="layui-td-gray-2">球员logo(国家队)</td>
+			<td colspan="5" style="vertical-align:top">
+				<div class="layui-upload">
+					<button type="button" class="layui-btn layui-btn-sm" id="upload_btn_national_logo">选择上传图片</button>
+					<div class="layui-upload-list" id="upload_box_national_logo">
+						<img src="{$detail.national_logo}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px;max-width:200px" />
+						<input type="hidden" name="national_logo" value="{$detail.national_logo}" >
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div class="py-3">
+		<input type="hidden" name="id" value="{$detail.id}"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	var moduleInit = ['tool'];
+
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		//日期选择
+		layui.laydate.render({
+			elem: '#laydate_birthday' //指定元素
+		});
+		//上传球员logo
+		var upload_logo = layui.upload.render({
+			elem: '#upload_btn_logo',
+			url: '/admin/api/upload',
+			done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					return layer.msg('上传失败');
+				}
+				//上传成功
+				$('#upload_box_logo input').attr('value', res.data.filepath);
+				$('#upload_box_logo img').attr('src', res.data.filepath);
+			}
+		});//上传球员logo(国家队)
+		var upload_national_logo = layui.upload.render({
+			elem: '#upload_btn_national_logo',
+			url: '/admin/api/upload',
+			done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					return layer.msg('上传失败');
+				}
+				//上传成功
+				$('#upload_box_national_logo input').attr('value', res.data.filepath);
+				$('#upload_box_national_logo img').attr('src', res.data.filepath);
+			}
+		});
+				
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/admin/football_player/edit", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

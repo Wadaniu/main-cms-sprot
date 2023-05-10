@@ -1,0 +1,147 @@
+/*.logo {
+    font-size: 25px;
+    color: #fff;
+    line-height: 70px;
+    font-family: FZShangKuS-R-GB-Regular, FZShangKuS-R-GB;
+    margin-left: 70px;
+}
+.ul-wrap {
+    display: flex;
+    align-items: center;
+}
+.ul-wrap a {
+    height: 70px;
+    line-height: 70px;
+    padding: 0 20px;
+    display: block;
+    
+}
+.ul-wrap a:nth-child(1) {
+    margin-left: 34px;
+}*/
+.zbtu{
+    width: 100%;
+    height: 376px;
+    background:  url(../images/newBG_live_banner.png);
+    background-size: 100% 100%;
+    border-radius: 0px 0px 0px 0px;
+    opacity: 1;
+}
+.team img {
+    width: 86px;
+}
+.zbtu-btn{
+    height: 37px;
+    background: #141414;
+    border-radius: 0px 0px 0px 0px;
+    opacity: 1;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    line-height: 37px;
+}
+.bssm{
+    width: 100%;
+    background: #fff;
+    border-radius: 0px 0px 0px 0px;
+    opacity: 1;
+    font-size: 14px;
+}
+.ljsp{
+    width: 100%;
+    background: #fff;
+    border-radius: 0px 0px 0px 0px;
+    opacity: 1;
+    padding: 20px;
+}
+.qdjs{
+    width: 560px;
+    background: #FFFFFF;
+    border-radius: 4px 4px 4px 4px;
+    opacity: 1;
+}
+.qdjs:nth-child(2){
+    margin-left: 10px;
+}
+.qdjs-box{
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+
+}
+.bssm-top{
+    height: 48px;
+    line-height: 48px;
+    border-bottom: 1px solid #EEF3F8;
+    margin:0 27px;
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+}
+.bssm-top::after{
+    position: absolute;
+    width: 3px;
+    height: 16px;
+    background:#3a84ff;
+    border-radius: 0px 0px 0px 0px;
+    opacity: 1;
+    content: "";
+    left: -27px;
+    top: 16px;
+}
+.bsxx{
+    margin-top: 30px;
+    margin:20px 27px;
+}
+.bsfl{
+    margin:22px 27px;
+}
+.bssj{
+    margin:16px 27px;
+}
+.dzsf{
+    margin:16px 27px;
+    padding-bottom: 15px;
+}
+.bssm-zw{
+    font-size: 14px;
+    margin-top: 20px;
+    color: #373737;
+    padding:0 20px 20px 20px;
+}
+.team{
+    display: flex;
+    padding: 45px 0;
+    align-items: center;
+    justify-content: space-around;
+    height: 210px;
+}
+.team h1{
+    color: white;
+    font-size: 24px;
+}
+.status {
+    font-size: 20px;
+    line-height: 20px;
+    color: white;
+    display: block;
+    font-style: normal;
+    margin-bottom: 5px;
+}
+.sig-list{
+    width: 82px;
+    padding: 0 12px;
+    height: 28px;
+    line-height: 26px;
+    border: solid 1px #3A84FF;
+    color: #3A84FF;
+    border-radius: 14px;
+    cursor: pointer;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+.team-time{
+    font-size: 40px;
+    color: white;
+    margin-top: 20px;
+}

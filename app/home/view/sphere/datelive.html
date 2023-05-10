@@ -1,0 +1,62 @@
+<div class="timenav">
+    <?php $weekarray=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"]; ?>
+    {foreach $voList as $key=>$vo}
+    <div class="timenavs">
+        <p >{$key}</p>
+        <p><?php echo $weekarray[date("w",strtotime($key))];?></p>
+    </div>
+    {/foreach}
+</div>
+<div id="saishiover">
+    {foreach $voList as $key=>$vo}
+    <div class="saishi">
+        <p><?php echo $key. " " .$weekarray[date("w",strtotime($key))];?></p>
+        <ul>
+            {foreach $vo as $v}
+            <li class="rightList">
+                <div>{$v['match_time']|date='H:i'}</div>
+                <div class="saishi-1 sai-left">
+                     <span>
+                      <a href="{:url('team/'.$v.sphere_type,['id'=>$v.home_team_id])}" target="_blank">{$v["home_team_text"]}</a>
+                     </span>
+                    <img src="{$v['home_team_logo']|defaultLogo}" alt="">
+                </div>
+                <div class="saishi-2">
+                    {if $v['status_id']<=1}
+                    -
+                    {else}
+                    {$v['home_scores']|scoresCount}
+                    {/if}
+                </div>
+                <div class="saishi-3">
+                    <span>
+                      <a href="{:url('competition/'.$v.sphere_type,['id'=>$v.competition_id])}" target="_blank">{$v['competition_text']}</a>
+                    </span>
+                    <span>{$v['status_text']}</span>
+                </div>
+
+                <div class="saishi-2">
+                    {if $v['status_id']<=1}
+                    -
+                    {else}
+                    {$v['away_scores']|scoresCount}
+                    {/if}
+                </div>
+
+                <div class="saishi-1 sai-right">
+                    <img src="{$v['away_team_logo']|defaultLogo}" alt="">
+                    <span>
+                       <a href="{:url('team/'.$v.sphere_type,['id'=>$v.away_team_id])}"  target="_blank">{$v['away_team_text']}</a>
+                     </span>
+                </div>
+                <div>
+                    <div class="{$v['status_id']<=1?'saishi-4-wks':'saishi-4-jj'}  saishi-4">
+                        <a href="{:url('match/'.$v.sphere_type,['id'=>$v.id])}" target="_blank"> {$v['status_text']} </a>
+                    </div>
+                </div>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+    {/foreach}
+</div>

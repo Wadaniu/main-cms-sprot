@@ -1,0 +1,73 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">新建赛程数据</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">赛事id<font>*</font></td>
+			<td><input type="text" name="competition_id"  lay-verify="required" lay-reqText="请完善赛事id" value="" autocomplete="off" placeholder="请输入赛事id" class="layui-input"></td><td class="layui-td-gray-2">主队id<font>*</font></td>
+			<td><input type="text" name="home_team_id"  lay-verify="required" lay-reqText="请完善主队id" value="" autocomplete="off" placeholder="请输入主队id" class="layui-input"></td><td class="layui-td-gray-2">客队id<font>*</font></td>
+			<td><input type="text" name="away_team_id"  lay-verify="required" lay-reqText="请完善客队id" value="" autocomplete="off" placeholder="请输入客队id" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">类型id</td>
+			<td><input type="text" name="kind"  value="" autocomplete="off" placeholder="请输入类型id" class="layui-input"></td><td class="layui-td-gray-2">比赛总节数</td>
+			<td><input type="text" name="period_count"  value="" autocomplete="off" placeholder="请输入比赛总节数" class="layui-input"></td><td class="layui-td-gray-2">比赛状态<font>*</font></td>
+			<td><input type="text" name="status_id"  lay-verify="required" lay-reqText="请完善比赛状态" value="" autocomplete="off" placeholder="请输入比赛状态" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">比赛时间<font>*</font></td>
+			<td><input type="text" name="match_time"  lay-verify="required" lay-reqText="请完善比赛时间" value="" autocomplete="off" placeholder="请输入比赛时间" class="layui-input"></td><td class="layui-td-gray-2">是否中立场</td>
+			<td><input type="text" name="neutral"  value="" autocomplete="off" placeholder="请输入是否中立场" class="layui-input"></td><td class="layui-td-gray-2">主队比分</td>
+			<td><input type="text" name="home_scores"  value="" autocomplete="off" placeholder="请输入主队比分" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">客队比分</td>
+			<td><input type="text" name="away_scores"  value="" autocomplete="off" placeholder="请输入客队比分" class="layui-input"></td><td class="layui-td-gray-2">加时赛比分</td>
+			<td><input type="text" name="over_time_scores"  value="" autocomplete="off" placeholder="请输入加时赛比分" class="layui-input"></td><td class="layui-td-gray-2">主队排名</td>
+			<td><input type="text" name="home_position"  value="" autocomplete="off" placeholder="请输入主队排名" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">客队排名</td>
+			<td><input type="text" name="away_position"  value="" autocomplete="off" placeholder="请输入客队排名" class="layui-input"></td><td class="layui-td-gray-2">动画、情报</td>
+			<td><input type="text" name="coverage"  value="" autocomplete="off" placeholder="请输入动画、情报" class="layui-input"></td><td class="layui-td-gray-2">场馆id</td>
+			<td><input type="text" name="venue_id"  value="" autocomplete="off" placeholder="请输入场馆id" class="layui-input"></td>
+		</tr>
+				<tr><td class="layui-td-gray-2">赛季id</td>
+			<td><input type="text" name="season_id"  value="" autocomplete="off" placeholder="请输入赛季id" class="layui-input"></td><td class="layui-td-gray-2">关联信息</td>
+			<td><input type="text" name="round"  value="" autocomplete="off" placeholder="请输入关联信息" class="layui-input"></td><td class="layui-td-gray-2">更新时间</td>
+			<td><input type="text" name="updated_at"  value="" autocomplete="off" placeholder="请输入更新时间" class="layui-input"></td>
+		</tr>
+				
+	</table>
+	<div class="pt-3">
+		<input type="hidden" name="id" value="0"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	var moduleInit = ['tool'];
+
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		
+		
+				
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/admin/basketball_match/add", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

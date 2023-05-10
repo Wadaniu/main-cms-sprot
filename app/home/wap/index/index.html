@@ -1,0 +1,47 @@
+{extend name="common/base"/}
+{block name="body"}
+<section class="container">
+    <div class="main">
+        <div class="title">
+            <ul class="links">
+                <?php $hotCompetition = getHotComp(); ?>
+                <li><a href="/" class="alink">热门赛事</a></li>
+                {volist name="hotCompetition" id="item" length='3'}
+                <li><a href="/comp/{$item.id}.html" class="alink">{$item.short_name_zh}</a></li>
+                {/volist}
+				<li class="sp">更多直播</li>
+            </ul>
+        </div>
+        <div class="morelink">
+            <div class="list">
+                {volist name="hotCompetition" id="item" offset="3"}
+                <a href="/comp/{$item.id}.html" class="alink">{$item.short_name_zh}</a>
+                {/volist}
+            </div>
+            <p class="close"></p>
+        </div>
+        {include file="newadd/playlist" datalist="match"/}
+    </div>
+    <div class="main">
+        {include file="article/hotNews"/}
+    </div>
+    <div class="main">
+        {include file="sphere/hotLive"/}
+    </div>
+</section>
+{/block}
+{block name="script"}
+<script>
+    let patchname = window.location.pathname;
+    $('.alink').each(function (i, item) {
+        let href = $(item).attr('href');
+        if (href == patchname) $(item).addClass('cur');
+    })
+    $(".links .sp").click(function () {
+        $(".morelink").show()
+    })
+    $(".close").click(function () {
+        $(".morelink").hide()
+    })
+</script>
+{/block}

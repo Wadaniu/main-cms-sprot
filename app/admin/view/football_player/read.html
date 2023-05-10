@@ -1,0 +1,30 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">球员列表详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">中文名称</td>
+			<td>{$detail.name_zh}</td><td class="layui-td-gray-2">粤语名称</td>
+			<td>{$detail.name_zht}</td><td class="layui-td-gray-2">英文名称</td>
+			<td>{$detail.name_en}</td>
+		</tr><tr><td class="layui-td-gray-2">国籍</td>
+			<td>{$detail.nationality}</td><td class="layui-td-gray-2">生日</td>
+			<td>{$detail.birthday|time_format=###,'Y-m-d'}</td><td class="layui-td-gray-2">年龄</td>
+			<td>{$detail.age}</td>
+		</tr><tr><td class="layui-td-gray-2">合同截止时间</td>
+			<td>{$detail.contract_until}</td><td class="layui-td-gray-2">能力评分</td>
+			<td>{$detail.ability}</td><td class="layui-td-gray-2">擅长位置</td>
+			<td>
+			{eq name="$detail.position" value="1"}选项一{/eq}
+			{eq name="$detail.position" value="2"}选项二{/eq}
+			</td>
+		</tr><tr><td class="layui-td-gray-2">球员logo</td>
+			<td colspan="5">
+				<img src="{$detail.logo}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px; max-width:200px" />
+			</td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

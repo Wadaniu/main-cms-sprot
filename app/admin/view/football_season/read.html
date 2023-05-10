@@ -1,0 +1,29 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">足球赛季列表详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">赛事id</td>
+			<td>{$detail.competition_id}</td><td class="layui-td-gray-2">赛事年份</td>
+			<td>{$detail.year}</td><td class="layui-td-gray-2">是否最新赛季</td>
+			<td>
+				{eq name="$detail.is_current" value="0"}选项一{/eq}
+				{eq name="$detail.is_current" value="1"}选项二{/eq}
+			</td>
+		</tr><tr><td class="layui-td-gray-2">是否有球员统计</td>
+			<td>
+			{eq name="$detail.has_player_stats" value="1"}选项一{/eq}
+			{eq name="$detail.has_player_stats" value="2"}选项二{/eq}
+			</td><td class="layui-td-gray-2">是否有球队统计</td>
+			<td>{$detail.has_team_stats}</td><td class="layui-td-gray-2">是否有积分榜</td>
+			<td>{$detail.has_table}</td>
+		</tr><tr><td class="layui-td-gray-2">开始时间</td>
+			<td>{$detail.start_time|time_format=###,'Y-m-d'}</td><td class="layui-td-gray-2">结束时间</td>
+			<td>{$detail.end_time|time_format=###,'Y-m-d'}</td><td class="layui-td-gray-2">更新时间</td>
+			<td>{$detail.updated_at|time_format=###,'Y-m-d'}</td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

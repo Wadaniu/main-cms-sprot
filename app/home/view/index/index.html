@@ -1,0 +1,72 @@
+{extend name="common/base"/}
+{block name="style"}
+<link rel="stylesheet" href="{__CSS__}/index.css?v={:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/public.css?v={:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/swiper-bundle.css?">
+<link rel="stylesheet" href="{__CSS__}/layui.css">
+<link rel="stylesheet" href="{__CSS__}/newstyle.css">
+{/block}
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='info' /}
+<div class="main clearfix">
+	<div class="main-wrap flex">
+		<div class="left-main">
+			<div class="laliga-info" id="laliga-info">
+				<div class="laliga-logo">
+					<img src="{$compInfo.logo}">
+				</div>
+				<div class="laliga-intro">
+					<h1>{$compInfo.name_zh}</h1>
+					<p>{$compInfo.intro}</p>
+				</div>
+			</div>
+			<div class="play-list">
+				<div class="play-title">
+					<?php $hotCompetition = getHotComp(); ?>
+					<p><a href="/">热门赛事</a></p>
+					{volist name="hotCompetition" id="item" length='7'}
+					<p><a href="/comp/{$item.id}.html">{$item.short_name_zh}</a></p>
+					{/volist}
+					<div class="select">更多直播<span class="arrow"></span>
+						<ul>
+							{volist name="hotCompetition" id="item" offset="7"}
+							<li><a href="/comp/{$item.id}.html">{$item.short_name_zh}</a></li>
+							{/volist}
+						</ul>
+					</div>
+				</div>
+				{include file="newadd/playlist" datalist="match"/}
+			</div>
+		</div>
+		<div class="right-main">
+			<div class="right-box">
+				{include file="article/hotNews"/}
+			</div>
+			<div class="right-box">
+				{include file="sphere/hotLive"/}
+			</div>
+		</div>
+	</div>
+</div>
+{/block}
+<!-- /主体 -->
+<!-- 脚本 -->
+{block name="script"}
+<script src="{__JS__}/index.js?v={:get_system_config('web','version')}"></script>
+<script>
+let patchname = window.location.pathname;
+$(".play-title>p").each(function(i,item){
+	let href = $(item).find('a').attr('href');
+	if (href==patchname) $(item).addClass('title');
+})
+</script>
+{/block}
+<!-- /脚本 -->
+{block name="footer"}
+{empty name="$id"}
+{include file="common/footer_index" /}
+{else}
+{include file="common/footer" /}
+{/empty}
+{/block}

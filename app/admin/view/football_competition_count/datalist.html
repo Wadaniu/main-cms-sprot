@@ -1,0 +1,193 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-t border-x">
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="keywords" placeholder="请输入关键字" class="layui-input" autocomplete="off" />
+		</div>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">提交搜索</button>
+	</form>
+	<table class="layui-hide" id="football_competition_count" lay-filter="football_competition_count"></table>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+	<div class="layui-btn-container">
+		<span class="layui-btn layui-btn-sm" lay-event="add" data-title="添加赛季积分">+ 添加赛季积分</span>
+	</div>
+</script>
+
+<script type="text/html" id="barDemo">
+<div class="layui-btn-group"><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></div>
+</script>
+
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table,tool = layui.tool, form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#football_competition_count',
+			title: '赛季积分列表',
+			toolbar: '#toolbarDemo',
+			url: '/admin/football_competition_count/datalist',
+			page: true,
+			limit: 20,
+			cellMinWidth: 300,
+			cols: [
+				[
+				{
+					fixed: 'left',
+					field: 'id',
+					title: '编号',
+					align: 'center',
+					width: 80
+				},{
+					field: 'team_id',
+					title: '球队id',
+					align: 'center',
+					width: 100
+				},{
+					field: 'promotion_id',
+					title: '升降级id',
+					align: 'center',
+					width: 100
+				},{
+					field: 'points',
+					title: '积分',
+					align: 'center',
+					width: 100
+				},{
+					field: 'position',
+					title: '排名',
+					align: 'center',
+					width: 100
+				},{
+					field: 'deduct_points',
+					title: '扣除积分',
+					align: 'center',
+					width: 100
+				},{
+					field: 'note',
+					title: '赛季年份',
+					align: 'center',
+					width: 100
+				},{
+					field: 'total',
+					title: '比赛场次',
+					align: 'center',
+					width: 100
+				},{
+					field: 'goals',
+					title: '进球',
+					align: 'center',
+					width: 100
+				},{
+					field: 'goals_against',
+					title: '失球',
+					align: 'center',
+					width: 100
+				},{
+					field: 'goal_diff',
+					title: '净胜球',
+					align: 'center',
+					width: 100
+				},{
+					field: 'home_points',
+					title: '主场积分',
+					align: 'center',
+					width: 100
+				},{
+					field: 'home_position',
+					title: '主场排名',
+					align: 'center',
+					width: 100
+				},{
+					field: 'home_total',
+					title: '主场比赛场次',
+					align: 'center',
+					width: 100
+				},{
+					field: 'away_points',
+					title: '客场积分	',
+					align: 'center',
+					width: 100
+				},{
+					field: 'away_position',
+					title: '客场排名	',
+					align: 'center',
+					width: 100
+				},{
+					field: 'updated_at',
+					title: '更新时间	',
+					align: 'center',
+					width: 100
+				},
+				{
+					fixed: 'right',
+					field: 'right',
+					title: '操作',
+					toolbar: '#barDemo',
+					width: 136,
+					align: 'center'
+				}				
+				]
+			]
+		});
+		
+		//监听表头工具栏事件
+		table.on('toolbar(football_competition_count)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/admin/football_competition_count/add");
+				return false;
+			}
+		});
+
+		//监听表格行工具事件
+		table.on('tool(football_competition_count)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'read') {
+				tool.side('/admin/football_competition_count/read?team_id='+obj.data.team_id);
+			}
+			else if (obj.event === 'edit') {
+				tool.side('/admin/football_competition_count/edit?team_id='+obj.data.team_id);
+			}
+			else if (obj.event === 'del') {
+				layer.confirm('确定要删除该记录吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/admin/football_competition_count/del", { team_id: data.team_id }, callback);
+					layer.close(index);
+				});
+			}
+			return false;
+		});
+
+		//监听搜索提交
+		form.on('submit(searchform)', function(data) {
+			layui.pageTable.reload({
+				where: {
+					keywords: data.field.keywords
+				},
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

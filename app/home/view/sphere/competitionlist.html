@@ -1,0 +1,80 @@
+{extend name="common/base"/}
+{block name="title"}
+<title>联赛列表页 -{:get_system_config('web','admin_title')}</title>
+{/block}
+{block name="keywords"}
+<meta name="keywords" content="联赛列表页"/>
+<meta name="description" content="联赛列表页"/>
+{/block}
+{block name="style"}
+<link rel="stylesheet" href="{__CSS__}/index.css?v={:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/public.css?v=22{:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/swiper-bundle.css?">
+<link rel="stylesheet" href="{__CSS__}/layui.css">
+<link rel="stylesheet" href="{__CSS__}/jjhf.css">
+<style type="text/css">
+   /* .rdzbbh:hover{display:block;}*/
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='info' /}
+<div class="main">
+    <div class="main-wrap">
+        <div id="bread">
+            当前位置： <a href="/">首页</a> &gt; 联赛类型
+        </div>
+        <!--身体-->
+
+        <div class="box martop">
+            <div class="bcgFFF  box-w1" style="width: 100%">
+                <div class="">
+                    <ul class="ztz_fllieb" style="display: block;">
+                        {foreach name="items" item="v"}
+                        <li>
+                            <a href="{:url('competition/'.$type,['id'=>$v['id']])}" target="_blank">
+                                <span><img src="{$v.logo|defaultLogo}" alt="{$v.name_zh}"></span>
+                                <span class="ztz_dwmc">{$v.short_name_zh}</span>
+                            </a>
+                        </li>
+                        {/foreach}
+
+                    </ul>
+
+                    {$model|raw}
+                </div>
+            </div>
+            <div class="box-w2">
+                <div class="right-box box-w2">
+                    <div class="hotlive"><img src="{__IMG__}/tizi.png" alt="">
+                        <span style="margin-left: 10px;">热点直播</span>
+                        <div class="grayline"></div>
+                    </div>
+                    {include file="sphere/hotLive"  /}
+                </div>
+                <div class="right-box box-w2" style="margin-top: 20px;">
+                    <div class="timeLive1">{:sphereText($type)}资讯</div>
+                    <div class="grayline"></div>
+                    <?php
+					$cateId = 6;
+					if($type=="basketball"){
+						$cateId = 5;
+					}
+					$articleType = "detail";
+					?>
+                    {include file="article/hotArticle"  /}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{/block}
+<!-- /主体 -->
+<!-- 脚本 -->
+{block name="script"}
+<script src="{__JS__}/public.js?v={:get_system_config('web','version')}"></script>
+<!--<script src="{__JS__}/noreapt.js?v={:get_system_config('web','version')}"></script>-->
+<script src="{__JS__}/swiper-bundle.js?v={:get_system_config('web','version')}"></script>
+{/block}
+<!-- /脚本 -->

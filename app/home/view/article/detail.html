@@ -1,0 +1,115 @@
+{extend name="common/base"/}
+{block name="style"}
+<link rel="stylesheet" href="{__CSS__}/public.css">
+<link rel="stylesheet" href="{__CSS__}/swiper-bundle.css?">
+<link rel="stylesheet" href="{__CSS__}/layui.css">
+<link rel="stylesheet" href="{__CSS__}/jjhf.css">
+<link rel="shortcut icon" href="/storage/202303/a791387dfd07fa2e5d065349d3db0b3c.png" type="image/x-icon">
+
+{/block}
+{block name="title"}
+<title>{$detail.title} -{:get_system_config('web','admin_title')}</title>
+{/block}
+{block name="keywords"}
+<meta name="keywords" content="{$detail.keyword_names}" />
+<meta name="description" content="{$detail.desc}" />
+<meta property="bytedance:published_time" content="{$detail.create_time|date='Y-m-dTH:i:s'}+08:00" />
+<meta property="bytedance:lrDate_time" content="{$detail.update_time|date='Y-m-dTH:i:s'}+08:00" />
+{/block}
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='index' /}
+<?php
+$type = $_GET["type"];
+?>
+<div class="main">
+	<div class="main-wrap">
+		<!--身体-->
+		<div id="bread">
+			当前位置：
+			<a href="{:url('index/index')}">首页</a> &gt;
+			<a href="{:url('jijin',['type'=>$type])}">{:sphereText()}资讯</a> &gt;
+			{$detail.title}
+		</div>
+		<div class="box martop">
+			<div class="box-w1 ">
+
+
+				<div class=" bcgFFF marBtm20 box-outside" >
+
+					<div class="left-box-centent">
+						<h1 class="bt">{$detail.title}</h1>
+						<div class="ly"> 阅读：{$detail.read} | {$detail.update_time|date="Y-m-d H:i:s"}</div>
+						<!--<div class="img">
+						<img src="https://img1.gtimg.com/19/1994/199473/19947340_980x1200_292.jpg" alt="">
+						</div>-->
+						<div class="zw">
+							{$detail.content|raw}
+						</div>
+					</div>
+				</div>
+				<?php
+				$articlePrev = articlePrev($detail["id"],$detail["cate_id"]);
+				$articleNext = articleNext($detail["id"]);
+
+?>
+				<div class="fy  marBtm20" >
+
+					{notempty name="$articlePrev"}
+					<div class="fy1 bcgFFF">
+						<a href="{:url('article/'.$type,['id'=>$articlePrev.id])}"> &lt; 上一篇</a>
+						<a href="{:url('article/'.$type,['id'=>$articlePrev.id])}">
+							<p>{$articlePrev.title}</p>
+						</a>
+					</div>
+					{/notempty}
+					{notempty name="$articleNext"}
+					<div class="fy1 bcgFFF">
+						<a href="{:url('article/'.$type,['id'=>$articleNext.id])}">下一篇 ></a>
+						<a href="{:url('article/'.$type,['id'=>$articleNext.id])}">
+							<p>{$articleNext.title}</p>
+						</a>
+					</div>
+					{/notempty}
+				</div>
+			</div>
+
+			<div class="box-w2">
+				<div class="right-box box-w2">
+					<div class="rightTitle">
+						<div class="hotlive"><img src="{__IMG__}/tizi.png" alt="">
+							<span style="margin-left: 10px;">热点直播</span>
+						</div>
+					</div>
+					<div class="grayline"></div>
+					{include file="sphere/hotLive" /}
+				</div>
+
+				<div class="right-box box-w2" style="margin-top: 20px;">
+					<div class="timeLive1">{:sphereText()}集锦</div>
+					<div class="grayline"></div>
+
+					<?php
+					$cateId = 6;
+					if($type=="basketball"){
+						$cateId = 5;
+					}
+					$articleType = "jijindetail";
+					?>
+					{include file="article/hotArticle"  /}
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+{/block}
+<!-- 脚本 -->
+{block name="script"}
+<script src="{__JS__}/public.js"></script>
+<!--<script src="{__JS__}/noreapt.js?v=1"></script>-->
+<script src="{__JS__}/swiper-bundle.js"></script>
+<script src="{__JS__}/move.js"></script>
+
+{/block}
+<!-- /脚本 -->

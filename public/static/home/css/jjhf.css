@@ -1,0 +1,135 @@
+.nrxq {
+    color: #000000;
+    font-size: 16px;
+    width: 450px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 152px;
+
+}
+
+.rdzb li {
+    width: 360px;
+    /* height: 40px; */
+    /* line-height: 40px; */
+    background: #F3F4F7;
+    border-radius: 4px 4px 4px 4px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.rdzb li span:nth-child(1) {
+    color: #EF0166;
+    margin-left: 20px;
+
+}
+
+.rdzb li span:nth-child(2) {
+    color: #707070;
+    margin-left: 10px;
+
+}
+
+.rdzb li span:nth-child(3) {
+    color: #707070;
+    margin-left: 10px;
+
+}
+
+.ly {
+    font-size: 12px;
+    font-family: Source Han Sans CN-Regular, Source Han Sans CN;
+    font-weight: 400;
+    margin-top: 20px;
+    color: #999999;
+    padding-bottom: 24px;
+}
+
+.bt {
+    font-size: 24px;
+    font-family: Source Han Sans CN-Regular, Source Han Sans CN;
+    font-weight: 400;
+    color: #000000;
+    margin-top: 10px;
+}
+
+.jg {
+    font-size: 16px;
+    margin-top: 20px;
+    color: black;
+    font-weight: 800;
+}
+
+.img {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.img img {
+    width: 100%;
+}
+
+.ms {
+    font-size: 16px;
+    margin-top: 40px;
+    color: black;
+    font-weight: 800;
+}
+
+.zw {
+    font-size: 16px;
+    margin-top: 30px;
+}
+
+.zw img {
+    width: 100%;
+}
+
+.zw p {
+    line-height: 33px;
+    color: #333333;
+    font-size: 16px;
+}
+
+.jjtp {
+    width: 13px;
+    height: 13px;
+}
+
+.jjjj {
+    display: flex;
+    align-items: center;
+    width: 78px;
+    margin-left: -8px;
+}
+
+.jjjj p {
+    margin-left: 10px;
+    color: #F21646;
+}
+
+.jde1 {
+    width: 94px;
+    height: 60px;
+    border-radius: 3px;
+    margin-left: 16px;
+}
+
+.jde2 {
+    width: 173px;
+    margin-left: 10px;
+    color: #707070;
+    max-height: 55px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.lanqiu .lanqiu-ul a {
+    margin-left: 0px;
+}

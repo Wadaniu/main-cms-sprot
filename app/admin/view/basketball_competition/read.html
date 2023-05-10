@@ -1,0 +1,26 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">联赛详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">分类id</td>
+			<td>{$detail.category_id}</td><td class="layui-td-gray-2">分类id</td>
+			<td>{$detail.country_id}</td><td class="layui-td-gray-2">分类id</td>
+			<td>{$detail.name_zh}</td>
+		</tr><tr><td class="layui-td-gray-2">粤语名称</td>
+			<td>{$detail.name_zht}</td><td class="layui-td-gray-2">英文名称</td>
+			<td>{$detail.name_en}</td><td class="layui-td-gray-2">中文简称</td>
+			<td>{$detail.short_name_zh}</td>
+		</tr><tr><td class="layui-td-gray-2">粤语简称</td>
+			<td>{$detail.short_name_zht}</td><td class="layui-td-gray-2">英文简称</td>
+			<td>{$detail.short_name_en}</td><td class="layui-td-gray-2">赛事logo</td>
+			<td>{$detail.logo}</td>
+		</tr><tr><td class="layui-td-gray-2">更新时间</td>
+			<td>{$detail.updated_at}</td><td class="layui-td-gray-2">顺序</td>
+			<td>{$detail.sort}</td><td colspan='2'></td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

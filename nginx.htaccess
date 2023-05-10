@@ -1,0 +1,4 @@
+location / {
+    rewrite ^/admin/(.*)$ /admin.php?s=$1 last; 
+    rewrite  ^/(.*)$  /index.php?s=$1  last;
+    }

@@ -1,0 +1,22 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">国家地区详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">分类id</td>
+			<td>{$detail.category_id}</td><td class="layui-td-gray-2">中文名称</td>
+			<td>{$detail.name_zh}</td><td class="layui-td-gray-2">粤语名称</td>
+			<td>{$detail.name_zht}</td>
+		</tr><tr><td class="layui-td-gray-2">英文名称</td>
+			<td>{$detail.name_en}</td><td class="layui-td-gray-2">更新时间</td>
+			<td>{$detail.updated_at|time_format=###,'Y-m-d'}</td><td colspan='2'></td>
+		</tr><tr><td class="layui-td-gray-2">国家logo</td>
+			<td colspan="5">
+				<img src="{$detail.logo}" onerror="javascript:this.src='{__GOUGU__}/gougu/images/nonepic600x360.jpg';this.onerror=null;" style="width:200px; max-width:200px" />
+			</td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

@@ -1,0 +1,29 @@
+<div class="botm">
+	<div class="main-wrap">
+		<div class="botm1">
+			<h3>友情链接</h3>
+			<ul class="botm1-ul">
+			</ul>
+		</div>
+		<div class="botm2">
+			<div class="botm2-ul">
+				{foreach :getLink() as $vo}
+					<a href="{$vo.src}" target="_blank">{$vo.name}</a>
+				{/foreach}
+
+			</div>
+		</div>
+		<div class="botm3">
+			<p>
+				{:get_system_config('web','desc')}
+			</p>
+			<p>
+				<a href="javascript:0">点此联系我们</a>
+				<a href="/sitemap.xml">网站地图</a>
+			</p>
+			<p>
+				<a href="https://beian.miit.gov.cn/" rel="nofollow" target="_blank">{:get_system_config('web','icp')}</a>
+			</p>
+		</div>
+	</div>
+</div>

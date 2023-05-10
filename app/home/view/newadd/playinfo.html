@@ -1,0 +1,208 @@
+{extend name="common/base"/}
+{block name="style"}
+
+<link rel="stylesheet" href="{__CSS__}/public.css?v=1{:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/layui.css">
+<link rel="stylesheet" href="{__CSS__}/newstyle.css">
+{/block}
+
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='index' /}
+<div class="main clearfix">
+    <div class="main-wrap flex">
+        <div class="left-main">
+            <div class="match-info">
+                <div class="team">
+                    <p class="team-logo"><img src="{$analysis.info.home_team_logo}"></p>
+                    <p class="team-name">{$analysis.info.home_team_text}</p>
+                </div>
+                <div class="info">
+                    <p>{$analysis.info.competition_text}</p>
+                    <p>{$analysis.info.match_time|date='H:i'}</p>
+                    <p class="score">{$analysis.info.home_scores[0]} : {$analysis.info.away_scores[0]}</p>
+                    <p>{$analysis.info.status_text}</p>
+                </div>
+                <div class="team">
+                    <p class="team-logo"><img src="{$analysis.info.away_team_logo}"></p>
+                    <p class="team-name">{$analysis.info.away_team_text}</p>
+                </div>
+            </div>
+            <div class="zblink">
+                <p class="title">直播信号源</p>
+
+                <div class="links">
+                    <?php $MainMatchLive = getMainMatchLive(); ?>
+                    {foreach $MainMatchLive as $item}
+                    <a href={$item.live_link} rel="nofollow" target=_blank>{$item.title}</a>
+                    {/foreach}
+                    <?php if(!empty($matchLive) && is_array($matchLive['pc_link'])&&count($matchLive['pc_link'])>0): ?>
+                    {foreach $matchLive.pc_link as $key=>$item}
+                    <a href={$item} rel="nofollow" target=_blank>直播信号{$key+1}</a>
+                    {/foreach}
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="match-cont">
+                <div class="type-tab">
+                    <p data-name="sqfx"><a href=/info/sqfx/{$id}.html>赛前分析</a></p>
+                    <p data-name="zbxx"><a href=/info/zbxx/{$id}.html>直播信息</a></p>
+                    <p data-name="jstj"><a href=/info/jstj/{$id}.html>技术统计</a></p>
+                    <p data-name="jjlx"><a href=/info/jjlx/{$id}.html>集锦/录像</a></p>
+                </div>
+                <div id="tab-cont">
+                    <div class="tab-cont">
+                        <ul class="name-tab">
+                            <li class="cur">{$analysis.info.home_team_text}</li>
+                            <li>{$analysis.info.away_team_text}</li>
+                        </ul>
+                        <div class="name-cont">
+                            <ul>
+                                <li class=head>
+                                    <span>交锋历史</span><span>赛事</span><span>主队</span><span>比分结果</span><span>客队</span>
+                                </li>
+                                {foreach $analysis.history.vs as $key=>$item}
+                                <li>
+                                    <span>{$item.match_time|date='Y-m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$item.home_scores[0]} : {$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
+                                </li>
+                                {/foreach}
+                            </ul>
+                            <ul>
+                                <li class=head>
+                                    <span>主队近期战绩</span><span>赛事</span><span>主队</span><span>比分结果</span><span>客队</span>
+                                </li>
+                                {foreach $analysis.history.home as $key=>$item}
+                                <li>
+                                    <span>{$item.match_time|date='Y-m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$item.home_scores[0]} : {$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
+                                </li>
+                                {/foreach}
+                            </ul>
+                            <ul>
+                                <li class=head>
+                                    <span>主队未来赛程</span><span>赛事</span><span>主队</span><span>比分结果</span><span>客队</span>
+                                </li>
+                                {foreach $analysis.future.home as $key=>$item}
+                                <li>
+                                    <span>{$item.match_time|date='Y-m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$item.home_scores[0]} : {$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
+                                </li>
+                                {/foreach}
+                            </ul>
+                        </div>
+                        <div class="name-cont">
+                            <ul>
+                                <li class=head>
+                                    <span>交锋历史</span><span>赛事</span><span>主队</span><span>比分结果</span><span>客队</span>
+                                </li>
+                                {foreach $analysis.history.vs as $key=>$item}
+                                <li>
+                                    <span>{$item.match_time|date='Y-m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$item.home_scores[0]} : {$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
+                                </li>
+                                {/foreach}
+                            </ul>
+                            <ul>
+                                <li class=head>
+                                    <span>客队近期战绩</span><span>赛事</span><span>主队</span><span>比分结果</span><span>客队</span>
+                                </li>
+                                {foreach $analysis.history.away as $key=>$item}
+                                <li>
+                                    <span>{$item.match_time|date='Y-m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$item.home_scores[0]} : {$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
+                                </li>
+                                {/foreach}
+                            </ul>
+                            <ul>
+                                <li class=head>
+                                    <span>客队未来赛程</span><span>赛事</span><span>主队</span><span>比分结果</span><span>客队</span>
+                                </li>
+                                {foreach $analysis.future.away as $key=>$item}
+                                <li>
+                                    <span>{$item.match_time|date='Y-m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$item.home_scores[0]} : {$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
+                                </li>
+                                {/foreach}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-cont">
+                        <ul class=playtxt>
+                            <li>赛事名称：{$analysis.info.competition_text}</li>
+                            <li>比赛队伍：{$analysis.info.home_team_text}vs{$analysis.info.away_team_text}</li>
+                            <li>比赛时间：{$analysis.info.match_time|date='Y-m-d H:i'}</li>
+                            <li>
+                                赛事信息：本场包含了{$analysis.info.home_team_text}vs{$analysis.info.away_team_text}直播信息,{$web_name}直播将对本场进行免费视频直播。
+                            </li>
+                            <li>{$web_name}直播为您提供{$analysis.info.home_team_text}对阵
+                                {$analysis.info.away_team_text}高清无插件直播地址，
+                                {$analysis.info.home_team_text}直播和{$analysis.info.away_team_text}直播信号将在开赛前实时更新，
+                                刷新本页面或进入{$web_name}直播首页即可获取最新直播信号。
+                                喜欢看{$analysis.info.home_team_text}VS{$analysis.info.away_team_text}比赛的朋友可以提前收藏本页面以免错过您喜欢的赛事直播。
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-cont">
+                        <?php
+						$keylist=["ball_possession","shots","shots_on_target","passes","passes_accuracy","freekicks","corner_kicks","offsides","fouls","yellow_cards","red_cards","yellow2red_cards","goals_against","tackles","interceptions"];
+						$namelist=["控球率","射门","射正","传球","传球成功","任意球","角球","越位","角球","犯规","黄牌","红牌","两黄变红","失球","抢断","拦截"];
+						if(is_array($teamStats)&&count($teamStats)>0): ?>
+                        <div class="census">
+                            <p class="left"><span>{$teamStats.0.team_name_text}</span><img
+                                    src="{$teamStats.0.team_name_logo}"></p>
+                            <p class="center">数据对比</p>
+                            <p class="right"><img src="{$teamStats.1.team_name_logo}"><span>{$teamStats.1.team_name_text}</span>
+                            </p>
+                        </div>
+                        {foreach $keylist as $key=>$item}
+                        <div class="census contrast">
+                            <p class="left"><i <?php echo getstyle($teamStats[0][$item],$teamStats[1][$item]) ?>></i>
+                                <span>{$teamStats.0[$item]}{$key==0?'%':''}</span></p>
+                            <p class="center">{$namelist[$key]}</p>
+                            <p class="right">
+                                <span>{$teamStats.1[$item]}{$key==0?'%':''}</span><i <?php echo getstyle($teamStats[1][$item],$teamStats[0][$item]) ?>
+                                ></i></p>
+                        </div>
+                        {/foreach}
+                        <?php else: ?>
+                        <p class=nodata>暂无数据</p>
+                        <?php endif; ?>
+                    </div>
+                    <div class="tab-cont">
+                        <?php if(is_array($video)&&count($video)>0): ?>
+                        <ol class="linklist">
+                            {foreach $video as $key=>$item}
+                            <li><a href=/video/{$id}.html target=_blank>{$item.title}</a></li>
+                            {/foreach}
+                        </ol>
+                        <?php else: ?>
+                        <p class=nodata>暂无数据</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-main">
+            <div class="right-box">
+                {include file="article/hotNews" /}
+            </div>
+            <div class="right-box">
+                {include file="sphere/hotLive" /}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    $(".type-tab p").each(function (i, item) {
+        let name = $(item).data("name");
+        if (window.location.pathname.indexOf(name) > 0) {
+            $(item).addClass('cur')
+            $("#tab-cont>div").eq(i).addClass('cur')
+        }
+    })
+
+    $(".name-tab li").click(function () {
+        let index = $(this).index();
+        $(this).addClass("cur").siblings().removeClass();
+        $(".tab-cont .name-cont").slideUp().eq(index).slideDown();
+    })
+</script>
+{/block}

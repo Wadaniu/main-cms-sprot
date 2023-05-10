@@ -1,0 +1,64 @@
+{extend name="common/base"/}
+{block name="style"}
+
+<link rel="stylesheet" href="{__CSS__}/public.css?v=1{:get_system_config('web','version')}">
+<link rel="stylesheet" href="{__CSS__}/layui.css">
+<link rel="stylesheet" href="{__CSS__}/newstyle.css">
+{/block}
+
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='index' /}
+<div class="main clearfix">
+	<div class="main-wrap flex">
+		<div class="video">
+			{foreach $video as $key=>$item}
+			<div class="play {$key==0?'cur':''}">
+				<img src="{$item.cover}">
+				<p class="title">{$item.title}</p>
+				<a href={$item.pc_link} rel="nofollow" target=_blank><i class="btn"></i></a>
+			</div>
+			{/foreach}
+			<div class="lists">
+				<p>集锦/回放</p>
+				<ul>
+					{foreach $video as $key=>$item}
+					<li class="{$key==0?'cur':''}">
+						<img src="{$item.cover}">
+						<p class="title">{$item.title}</p>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="main-wrap flex">
+		<div class="left-main">
+			<div class="play-list">
+				<div class="play-title">
+					<p class="title"><span>近期比赛</span></p>
+				</div>
+				{include file="newadd/playlist" datalist="match"/}
+			</div>
+		</div>
+		<div class="right-main">
+			<div class="right-box">
+				{include file="article/hotNews" /}
+			</div>
+			<div class="right-box">
+				{include file="sphere/hotLive" /}
+			</div>
+		</div>
+	</div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+	$(".lists li").click(function(x, y) {
+		let index = $(this).index()
+		$(this).addClass("cur").siblings().removeClass("cur");
+		$(".video .play").eq(index).addClass("cur").siblings().removeClass("cur");
+	})
+</script>
+{/block}

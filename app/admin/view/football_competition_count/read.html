@@ -1,0 +1,54 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">赛季积分详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">球队id</td>
+			<td>{$detail.team_id}</td><td class="layui-td-gray-2">升降级id</td>
+			<td>{$detail.promotion_id}</td><td class="layui-td-gray-2">积分</td>
+			<td>{$detail.points}</td>
+		</tr><tr><td class="layui-td-gray-2">排名</td>
+			<td>{$detail.position}</td><td class="layui-td-gray-2">扣除积分</td>
+			<td>{$detail.deduct_points}</td><td class="layui-td-gray-2">赛季年份</td>
+			<td>{$detail.note|time_format=###,'Y-m-d'}</td>
+		</tr><tr><td class="layui-td-gray-2">比赛场次</td>
+			<td>{$detail.total}</td><td class="layui-td-gray-2">胜的场次</td>
+			<td>{$detail.won}</td><td class="layui-td-gray-2">平的场次</td>
+			<td>{$detail.draw}</td>
+		</tr><tr><td class="layui-td-gray-2">负的场次</td>
+			<td>{$detail.loss}</td><td class="layui-td-gray-2">进球</td>
+			<td>{$detail.goals}</td><td class="layui-td-gray-2">失球</td>
+			<td>{$detail.goals_against}</td>
+		</tr><tr><td class="layui-td-gray-2">净胜球</td>
+			<td>{$detail.goal_diff}</td><td class="layui-td-gray-2">主场积分</td>
+			<td>{$detail.home_points}</td><td class="layui-td-gray-2">主场排名</td>
+			<td>{$detail.home_position}</td>
+		</tr><tr><td class="layui-td-gray-2">主场比赛场次</td>
+			<td>{$detail.home_total}</td><td class="layui-td-gray-2">主场胜的场次</td>
+			<td>{$detail.home_won}</td><td class="layui-td-gray-2">主场平的场次	</td>
+			<td>{$detail.home_draw}</td>
+		</tr><tr><td class="layui-td-gray-2">主场负的场次	</td>
+			<td>{$detail.home_loss}</td><td class="layui-td-gray-2">主场进球	</td>
+			<td>{$detail.home_goals}</td><td class="layui-td-gray-2">主场失球	</td>
+			<td>{$detail.home_goals_against}</td>
+		</tr><tr><td class="layui-td-gray-2">主场净胜球	</td>
+			<td>{$detail.home_goal_diff}</td><td class="layui-td-gray-2">客场积分	</td>
+			<td>{$detail.away_points}</td><td class="layui-td-gray-2">客场排名	</td>
+			<td>{$detail.away_position}</td>
+		</tr><tr><td class="layui-td-gray-2">客场比赛场次	</td>
+			<td>{$detail.away_total}</td><td class="layui-td-gray-2">客场胜的场次	</td>
+			<td>{$detail.away_won}</td><td class="layui-td-gray-2">客场平的场次	</td>
+			<td>{$detail.away_draw}</td>
+		</tr><tr><td class="layui-td-gray-2">客场负的场次	</td>
+			<td>{$detail.away_loss}</td><td class="layui-td-gray-2">客场进球	</td>
+			<td>{$detail.away_goals}</td><td class="layui-td-gray-2">客场失球	</td>
+			<td>{$detail.away_goals_against}</td>
+		</tr><tr><td class="layui-td-gray-2">客场净胜球	</td>
+			<td>{$detail.away_goal_diff}</td><td class="layui-td-gray-2">更新时间	</td>
+			<td>{$detail.updated_at|time_format=###,'Y-m-d'}</td><td colspan='2'></td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->
