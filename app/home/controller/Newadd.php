@@ -394,8 +394,10 @@ class Newadd extends BaseController
             //联赛历史七天赛程
             $match = $model->getBeWeekData([$id]);
 
+            preg_match_all('/(?<=\[)[^\]]+/', $video[0]['title'], $arrMatches);
+            $title = str_replace($arrMatches[0],$this->webCommonTitle,$video[0]['title']);
             $seo = [
-                'title' => $video[0]['title'],
+                'title' => $title,
                 'keywords'=> '',
                 'description'=>$video[0]['title']
             ];

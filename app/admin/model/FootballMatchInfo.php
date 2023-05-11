@@ -67,12 +67,13 @@ class FootballMatchInfo extends Model
 
         foreach ($videoMatchIds as $matchId){
             $videos = $FootballMatchCount->getMatchVideoCollection($matchId);
-            foreach ($videos as &$video){
+            foreach ($videos as $video){
                 $video['match_id'] = $matchId;
                 $video['video_type'] = 0;
-            }
-            if (!empty($videos)){
-                Db::connect('compDataDb')->name('match_vedio')->insertAll($videos);
+                if(!empty($video['title'])){
+                    $vedioModel = MatchVedio::where('title',$video['title'])->findOrEmpty();
+                    $vedioModel->save($video);
+                }
             }
         }
 
