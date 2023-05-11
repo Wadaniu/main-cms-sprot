@@ -10,14 +10,10 @@ declare (strict_types = 1);
 namespace app\home;
 
 use think\App;
+use think\exception\HttpResponseException;
 use think\facade\Request;
 use think\facade\View;
-use think\exception\HttpResponseException;
 
-use app\admin\model\BasketballMatch;
-use app\admin\model\BasketballTeam;
-use app\admin\model\FootballCompetition;
-use app\admin\model\FootballMatch;
 /**
  * 控制器基础类
  */

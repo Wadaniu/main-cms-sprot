@@ -3,11 +3,10 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 
-use app\admin\model\BasketballCompetition;
-use app\admin\model\FootballCompetition;
 use app\api\BaseController;
+use app\commonModel\BasketballCompetition;
+use app\commonModel\FootballCompetition;
 use app\commonModel\FootballCompetitionCount as FootballCompetitionCountModel;
-use http\Env;
 use think\Exception;
 use think\facade\Request;
 

@@ -5,7 +5,7 @@
  * @link https://www.gougucms.com
  */
 
-namespace app\admin\model;
+namespace app\commonModel;
 
 use think\Model;
 

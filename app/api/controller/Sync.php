@@ -9,9 +9,9 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 
-use app\admin\model\BasketballMatch;
-use app\admin\model\FootballMatch;
 use app\api\BaseController;
+use app\commonModel\BasketballMatch;
+use app\commonModel\FootballMatch;
 
 
 class Sync extends BaseController
@@ -39,14 +39,14 @@ class Sync extends BaseController
      * 篮球团队
      */
     public function basketballTeam(){
-        $team = new \app\admin\model\BasketballTeam();
+        $team = new \app\commonModel\BasketballTeam();
         $team->autoSync();
     }
     /**
      * 联赛篮球
      */
     public function basketballCompetition(){
-        $competition = new \app\admin\model\BasketballCompetition();
+        $competition = new \app\commonModel\BasketballCompetition();
         $competition->autoSync();
     }
 
@@ -83,14 +83,14 @@ class Sync extends BaseController
      * 足球团队
      */
     public function footballTeam(){
-        $team = new \app\admin\model\FootballTeam();
+        $team = new \app\commonModel\FootballTeam();
         $team->autoSync();
     }
     /**
      * 足球联赛
      */
     public function footballCompetition(){
-        $competition = new \app\admin\model\FootballCompetition();
+        $competition = new \app\commonModel\FootballCompetition();
         $competition->autoSync();
     }
 
@@ -99,7 +99,7 @@ class Sync extends BaseController
      * @return void
      */
     public function footballPlayer(){
-        $footballPlayer = new \app\admin\model\FootballPlayer();
+        $footballPlayer = new \app\commonModel\FootballPlayer();
         $footballPlayer->autoSync();
     }
 
@@ -108,7 +108,7 @@ class Sync extends BaseController
      * @return void
      */
     public function footballMatchInfo(){
-        $FootballMatchInfo = new \app\admin\model\FootballMatchInfo();
+        $FootballMatchInfo = new \app\commonModel\FootballMatchInfo();
         $FootballMatchInfo->autoSync();
     }
 
@@ -117,7 +117,7 @@ class Sync extends BaseController
      * @return void
      */
     public function addFootballMatchInfoByLast(){
-        $FootballMatchInfo = new \app\admin\model\FootballMatchInfo();
+        $FootballMatchInfo = new \app\commonModel\FootballMatchInfo();
         $FootballMatchInfo->addMatchByLast();
     }
 

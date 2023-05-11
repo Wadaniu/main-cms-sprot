@@ -1,10 +1,10 @@
 <?php
 
 namespace app\api\controller;
-use app\admin\model\ArticleCate;
 use app\api\BaseController;
+use app\commonModel\Article as ArticleModel;
+use app\commonModel\ArticleCate;
 use think\facade\Request;
-use app\admin\model\Article AS ArticleModel;
 
 class Article extends BaseController
 {

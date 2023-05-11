@@ -27,6 +27,7 @@ class Api extends BaseController
 		if(isset($param['sourse'])){
 			$sourse = $param['sourse'];
 		}
+
 		if($sourse == 'file' || $sourse == 'tinymce'){
 			if(request()->file('file')){
 				$file = request()->file('file');
@@ -42,6 +43,8 @@ class Api extends BaseController
 				return to_assign(1, '没有选择上传文件');
 			}
 		}
+        $file_type = $param['file_type'] ?? '';
+
         // 获取上传文件的hash散列值
         $sha1 = $file->hash('sha1');
         $md5 = $file->hash('md5');
@@ -70,9 +73,17 @@ class Api extends BaseController
         // 日期前綴
         $dataPath = date('Ym');
         $use = 'thumb';
-        $filename = \think\facade\Filesystem::disk('public')->putFile($dataPath, $file, function () use ($md5) {
-            return $md5;
-        });
+
+        //判断是否上传模板文件
+        if ($file_type == 'temp'){
+            $filename = \think\facade\Filesystem::disk('view_temp')->putFile($dataPath, $file, function () use ($md5) {
+                return $md5;
+            });
+        }else{
+            $filename = \think\facade\Filesystem::disk('public')->putFile($dataPath, $file, function () use ($md5) {
+                return $md5;
+            });
+        }
         if ($filename) {
             //写入到附件表
             $data = [];

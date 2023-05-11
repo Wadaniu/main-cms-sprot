@@ -1,7 +1,8 @@
 <?php
 
-namespace app\admin\model;
+namespace app\commonModel;
 use think\model;
+
 class FootballIntelligence extends Model
 {
     protected $connection = 'compDataDb';

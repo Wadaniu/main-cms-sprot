@@ -5,7 +5,9 @@
  * @link https://www.gougucms.com
  */
 namespace app\admin\model;
+use app\commonModel\Keywords;
 use think\model;
+
 class Pages extends Model
 {
 	//插入关键字

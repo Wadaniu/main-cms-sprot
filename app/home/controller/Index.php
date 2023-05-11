@@ -9,12 +9,9 @@ declare (strict_types = 1);
 
 namespace app\home\controller;
 
-use app\admin\model\BasketballCompetition;
-use app\admin\model\FootballCompetition;
 use app\home\BaseController;
 use think\facade\Cache;
 use think\facade\Env;
-use think\facade\Request;
 use think\facade\View;
 
 class Index extends BaseController
@@ -42,7 +39,7 @@ class Index extends BaseController
             $data['hotCompetition'] = getHotComp();
 
             //获取首页赛程
-            $model = new \app\admin\model\FootballMatch();
+            $model = new \app\commonModel\FootballMatch();
             if (empty($id)){
                 $id = Env::get('Home.HOME_SPACE');
                 $compIds = array_column($data['hotCompetition'],'id');
@@ -75,7 +72,7 @@ class Index extends BaseController
             }
 
             //联赛信息,默认env配置联赛
-            $footballCompetition = new  \app\admin\model\FootballCompetition();
+            $footballCompetition = new  \app\commonModel\FootballCompetition();
             $data['compInfo'] = $footballCompetition->info($id);
 
             //缓存

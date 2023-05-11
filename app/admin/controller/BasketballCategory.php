@@ -10,10 +10,9 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\admin\BaseController;
-use app\admin\model\BasketballCategory as BasketballCategoryModel;
 use app\admin\validate\BasketballCategoryValidate;
+use app\commonModel\BasketballCategory as BasketballCategoryModel;
 use think\exception\ValidateException;
-use think\facade\Db;
 use think\facade\View;
 
 class BasketballCategory extends BaseController

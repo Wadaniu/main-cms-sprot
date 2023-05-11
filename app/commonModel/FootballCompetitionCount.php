@@ -5,9 +5,7 @@
  * @link https://www.gougucms.com
  */
 namespace app\commonModel;
-use app\admin\model\FootballPlayer;
 use think\facade\Cache;
-use app\admin\model\FootballTeam;
 
 class FootballCompetitionCount
 {

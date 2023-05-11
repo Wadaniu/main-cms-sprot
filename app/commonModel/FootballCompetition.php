@@ -4,11 +4,12 @@
  * @license https://opensource.org/licenses/Apache-2.0
  * @link https://www.gougucms.com
  */
-namespace app\admin\model;
+namespace app\commonModel;
+use think\facade\Cache;
 use think\facade\Db;
 use think\facade\Env;
 use think\model;
-use think\facade\Cache;
+
 class FootballCompetition extends Model
 {
     protected $connection = 'compDataDb';

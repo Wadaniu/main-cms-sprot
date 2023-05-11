@@ -9,7 +9,6 @@ declare (strict_types = 1);
 
 namespace app\home\controller;
 use app\home\BaseController;
-use think\facade\Cache;
 use think\facade\Db;
 use think\facade\Env;
 use think\facade\View;
@@ -58,12 +57,12 @@ class Newadd extends BaseController
         $label = $param['label'] ?? 0;
         if ($id > 0){
             //获取列表文章
-            $model = new \app\admin\model\Article();
+            $model = new \app\commonModel\Article();
             $where = 'a.competition_id = '.$id;
 
             if (!empty($label)){
                 //获取标签对应关键字id
-                $articleKeywordsModel = new \app\admin\model\ArticleKeywords();
+                $articleKeywordsModel = new \app\commonModel\ArticleKeywords();
                 $aid = $articleKeywordsModel->getByKeywordId($label);
 
                 if ($aid){
@@ -72,7 +71,7 @@ class Newadd extends BaseController
                     $where = 'a.id IN ('.$airStr.')';
                 }
 
-                $keywordsModel = new \app\admin\model\Keywords();
+                $keywordsModel = new \app\commonModel\Keywords();
                 $keyword = $keywordsModel->find($label);
 
                 $seo = [
@@ -97,7 +96,7 @@ class Newadd extends BaseController
         $id = $param['id'] ?? 0;
         if($id > 0){
             //文章获取
-            $articleModel = new \app\admin\model\Article();
+            $articleModel = new \app\commonModel\Article();
             $data = $articleModel->getArticleById($id);
             $keywords = $data->articleKeywords->toArray();
 
@@ -175,7 +174,7 @@ class Newadd extends BaseController
         $date = $param['date'] ?? date('Ymd',time());
 
         $id = $param['id'] ?? Env::get('Home.HOME_SPACE');
-        $model = new \app\admin\model\FootballMatch();
+        $model = new \app\commonModel\FootballMatch();
         //联赛历史七天赛程
         $matchBack = $model->getMatchByDate([$id],$date,$date);
 
@@ -197,7 +196,7 @@ class Newadd extends BaseController
             }
         }
 
-        $cmpModel = new \app\admin\model\FootballCompetition();
+        $cmpModel = new \app\commonModel\FootballCompetition();
         $cmpInfo = $cmpModel->info($id);
 
         if (!empty($param['id'])){
@@ -248,14 +247,14 @@ class Newadd extends BaseController
 
         if ($id > 0){
             //直播
-            $model = new \app\admin\model\FootballMatch();
+            $model = new \app\commonModel\FootballMatch();
             $matchLive = $model->getMatchLive($id)->toArray();
 
             if ($matchLive){
                 $matchLive['mobile_link'] = json_decode($matchLive['mobile_link']??'',true);
                 $matchLive['pc_link'] = json_decode($matchLive['pc_link']??'',true);
             }
-            $footballMatchInfoModel = new \app\admin\model\FootballMatchInfo();
+            $footballMatchInfoModel = new \app\commonModel\FootballMatchInfo();
             $matchInfo = $footballMatchInfoModel->getByMatchId($id);
             //历史交锋
             $analysis = [
@@ -267,7 +266,7 @@ class Newadd extends BaseController
             $teamStats = is_null($matchInfo['team_stats']) ? [] : json_decode($matchInfo['team_stats'],true);
 
             //集锦/录像
-            $matchVedioModel = new \app\admin\model\MatchVedio();
+            $matchVedioModel = new \app\commonModel\MatchVedio();
             $video = $matchVedioModel->getByMatchId($id,0);
 
             //seo
@@ -346,14 +345,14 @@ class Newadd extends BaseController
 
         if ($id > 0){
             //队伍信息
-            $teamModel = new \app\admin\model\FootballTeam();
+            $teamModel = new \app\commonModel\FootballTeam();
             $data = $teamModel->getFootballTeamById($id);
-            $cmpModel = new \app\admin\model\FootballCompetition();
+            $cmpModel = new \app\commonModel\FootballCompetition();
             $cmpInfo = $cmpModel->info($data->competition_id);
             $data->competition_text = $cmpInfo->name_zh ?? '';
             $data->competition_short_text = $cmpInfo->short_name_zh ?? '';
 
-            $model = new \app\admin\model\FootballMatch();
+            $model = new \app\commonModel\FootballMatch();
             $match = $model->getByTeam($id);
 
             //西甲【球队名称】球队简介_【球队名称】积分榜_【球队名称】赛程表 -【网站名称】
@@ -390,12 +389,14 @@ class Newadd extends BaseController
             $video = $footballMatchCountModel->getMatchVideoCollection($id);
 
             $id = Env::get('Home.HOME_SPACE');
-            $model = new \app\admin\model\FootballMatch();
+            $model = new \app\commonModel\FootballMatch();
             //联赛历史七天赛程
             $match = $model->getBeWeekData([$id]);
 
+            preg_match_all('/(?<=\[)[^\]]+/', $video[0]['title'], $arrMatches);
+            $title = str_replace($arrMatches[0],$this->webCommonTitle,$video[0]['title']);
             $seo = [
-                'title' => $video[0]['title'],
+                'title' => $title,
                 'keywords'=> '',
                 'description'=>$video[0]['title']
             ];

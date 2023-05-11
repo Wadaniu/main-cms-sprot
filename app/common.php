@@ -8,8 +8,8 @@
 use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Db;
-use think\facade\Request;
 use think\facade\Env;
+use think\facade\Request;
 
 //设置缓存
 function set_cache($key, $value, $date = 86400)
@@ -511,7 +511,7 @@ function getHotCompetition(){
 //    $basketballCompetition = new  \app\admin\model\BasketballCompetition();
 //    $basketballHotData = $basketballCompetition->getHotData();
 //    $data["basketball"]=$basketballHotData;
-    $football = new  \app\admin\model\FootballCompetition();
+    $football = new  \app\commonModel\FootballCompetition();
     $footballHotData = $football->getHotData();
     $data["football"]=$footballHotData;
     return $data;
@@ -619,26 +619,26 @@ function defaultLogo($picUrl){
  * 篮球
  */
 function autoSyncBasketball(){
-    $match = new \app\admin\model\BasketballMatch();
+    $match = new \app\commonModel\BasketballMatch();
     $match->autoSync();
     $match->autoSyncUrlsFree();
-    $team = new \app\admin\model\BasketballTeam();
+    $team = new \app\commonModel\BasketballTeam();
     $team->autoSync();
-    $competition = new \app\admin\model\BasketballCompetition();
+    $competition = new \app\commonModel\BasketballCompetition();
     $competition->autoSync();
 }
 /**
  * 足球
  */
 function autoSyncFootball(){
-    $match = new \app\admin\model\FootballMatch();
+    $match = new \app\commonModel\FootballMatch();
     $match->autoSync();
     $match->autoSyncUrlsFree();
 
-    $team = new \app\admin\model\BasketballTeam();
+    $team = new \app\commonModel\BasketballTeam();
     $team->autoSync();
 
-    $competition = new \app\admin\model\FootballCompetition();
+    $competition = new \app\commonModel\FootballCompetition();
     $competition->autoSync();
 }
 

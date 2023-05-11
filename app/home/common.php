@@ -93,114 +93,6 @@ function articleNext($id, $cateId = 0)
     return $article;
 }
 
-function toArticle($cateId, $limit = 6)
-{
-    $map = array();
-    if (!empty($cateId)) {
-        if (is_array($cateId)) {
-            $map[] = ["cate_id", 'in', $cateId];
-        } else {
-            $map[] = ["cate_id", '=', $cateId];
-        }
-    }
-    $map[] = ["thumb", '>', 0];
-
-    $article = \think\facade\Db::name('article')
-        ->where($map)
-        ->field("id,cate_id,desc,thumb,competition_id,title,update_time")
-        ->order("id asc")
-        ->limit($limit)
-        ->cache(true, 300)
-        ->select()
-        ->toArray();
-    return $article;
-}
-
-function sphereText($type = "")
-{
-    if (empty($type)) {
-        $type = $_GET['type'];
-    }
-    if ($type == "football") {
-        return "足球";
-    }
-    return "蓝球";
-}
-
-function competitionText($competitionId)
-{
-    $basketballCompetition = new  \app\admin\model\BasketballCompetition();
-    $basketballHotData = $basketballCompetition->getHotData();
-    $football = new  \app\admin\model\FootballCompetition();
-    $footballHotData = $football->getHotData();
-    $data = array_merge($basketballHotData, $footballHotData);
-    if (isset($data[$competitionId])) {
-        $zh = $data[$competitionId]["short_name_zh"];
-        if (empty($zh)) {
-            $zh = $data[$competitionId]["name_zh"];;
-        }
-        return $zh;
-    }
-
-    return "";
-}
-
-/*function getHotCompetition(){
-    $data = array();
-    $basketballCompetition = new  \app\admin\model\BasketballCompetition();
-    $basketballHotData = $basketballCompetition->getHotData();
-    $data["basketball"]=$basketballHotData;
-    $football = new  \app\admin\model\FootballCompetition();
-    $footballHotData = $football->getHotData();
-    $data["football"]=$footballHotData;
-    return $data;
-}*/
-
-
-function hotLive()
-{
-    $basketballCompetition = new  \app\admin\model\BasketballCompetition();
-    $basketballHotData = $basketballCompetition->getHotData();
-    $footballCompetition = new  \app\admin\model\FootballCompetition();
-    $footballHotData = $footballCompetition->getHotData();
-    $basketballIds = array();
-    $footballIds = array();
-    foreach ($basketballHotData as $vo) {
-        $basketballIds[] = $vo["id"];
-    }
-    foreach ($footballHotData as $vo) {
-        $footballIds[] = $vo["id"];
-    }
-    $basketballMatch = new \app\admin\model\BasketballMatch();
-    $footballMatch = new \app\admin\model\FootballMatch();
-    $startTime = strtotime(date('Y-m-d', strtotime('-2 days')));
-    $endTime = strtotime(date("Y-m-d", strtotime("+1 days"))) - 1;
-    $where[] = ['match_time', 'between', [$startTime, $endTime]];
-    $basketball = $basketballMatch->getMatchInfo($where, $basketballIds, 6, "match_time desc");
-    $football = $footballMatch->getMatchInfo($where, $footballIds, 6, "match_time desc");
-    $voList = array_merge($basketball, $football);
-    $data = [];
-    foreach ($voList as $key => $vo) {
-        if ($key < 6) {
-            $data[] = $vo;
-        } else {
-            break;
-        }
-
-    }
-    return $data;
-}
-
-function scoresCount($scores)
-{
-    $data = json_decode($scores, true);
-    $count = 0;
-    foreach ($data as $val) {
-        $count = $count + intval($val);
-    }
-    return $count;
-}
-
 function getzt($id, $type): string
 {
     $back = '';
@@ -238,7 +130,7 @@ function getstyle($num1, $num2): string
 function getHistoryMatch(): array
 {
     $id = Env::get('Home.HOME_SPACE');
-    $model = new \app\admin\model\FootballMatch();
+    $model = new \app\commonModel\FootballMatch();
     //联赛历史七天赛程
     $matchBack = $model->getWeekHistoryData([$id], 7);
     return $matchBack;
@@ -248,7 +140,7 @@ function getNewsShort()
 {
     $id = Env::get('Home.HOME_SPACE');
     //首页文章
-    $articleModel = new \app\admin\model\Article();
+    $articleModel = new \app\commonModel\Article();
     $where = 'a.competition_id = ' . $id;
     $articleList = $articleModel->getListByCompId($where, ['limit' => 6]);
 
@@ -258,7 +150,7 @@ function getNewsShort()
 function getHotKeywords()
 {
     //获取热门标签
-    $keywordModel = new \app\admin\model\Keywords();
+    $keywordModel = new \app\commonModel\Keywords();
     $labels = $keywordModel->getHot();
     if (!$labels) {
         $labels = [];
@@ -267,11 +159,30 @@ function getHotKeywords()
 }
 
 function getHotComp(){
-    $footballCompetition = new  \app\admin\model\FootballCompetition();
+    $footballCompetition = new  \app\commonModel\FootballCompetition();
     return $footballCompetition->getHotData();
 }
 
 function getMainMatchLive(){
-    $footballCompetition = new  \app\admin\model\MatchliveLink();
+    $footballCompetition = new  \app\commonModel\MatchliveLink();
     return $footballCompetition->getList();
+}
+
+function getHomeRule()
+{
+    $route = \think\facade\Route::getRuleList();
+    $level = [];
+    foreach ($route as $item){
+        if ($item['name'] == '/'){
+            $level[$item['name']] = [];
+            continue;
+        }
+        $routes = explode('/',$item['name']);
+        if (array_key_exists($routes[0],$level)){
+            $level[$routes[0]]['child'][] = $item['name'];
+        }else{
+            $level[$routes[0]]['child'] = [];
+        }
+    }
+    return $level;
 }

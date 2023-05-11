@@ -3,11 +3,11 @@ declare (strict_types=1);
 
 namespace app\api\controller;
 
-use app\admin\model\BasketballCompetition;
-use app\admin\model\BasketballMatch;
-use app\admin\model\FootballCompetition;
-use app\admin\model\FootballMatch;
 use app\api\BaseController;
+use app\commonModel\BasketballCompetition;
+use app\commonModel\BasketballMatch;
+use app\commonModel\FootballCompetition;
+use app\commonModel\FootballMatch;
 use app\commonModel\FootballMatchCount;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;

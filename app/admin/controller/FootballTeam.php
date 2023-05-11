@@ -10,10 +10,9 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\admin\BaseController;
-use app\admin\model\FootballTeam as FootballTeamModel;
 use app\admin\validate\FootballTeamValidate;
+use app\commonModel\FootballTeam as FootballTeamModel;
 use think\exception\ValidateException;
-use think\facade\Db;
 use think\facade\View;
 
 class FootballTeam extends BaseController

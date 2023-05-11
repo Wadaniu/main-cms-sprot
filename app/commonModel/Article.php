@@ -4,15 +4,15 @@
  * @license https://opensource.org/licenses/Apache-2.0
  * @link https://www.gougucms.com
  */
-namespace app\admin\model;
-use think\model;
-use app\admin\model\Keywords;
+namespace app\commonModel;
 use think\facade\Db;
+use think\model;
+
 class Article extends Model
 {
     public function articleKeywords()
     {
-        return $this->belongsToMany(\app\admin\model\Keywords::class,\app\admin\model\ArticleKeywords::class,'keywords_id','aid');
+        return $this->belongsToMany(\app\commonModel\Keywords::class, \app\commonModel\ArticleKeywords::class,'keywords_id','aid');
     }
 	
 	public static $Type = ['普通','精华','热门','推荐'];

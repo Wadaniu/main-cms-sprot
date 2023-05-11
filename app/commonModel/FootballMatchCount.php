@@ -1,10 +1,6 @@
 <?php
 
 namespace app\commonModel;
-use app\admin\model\FootballCompetition;
-use app\admin\model\FootballMatch;
-use app\admin\model\FootballTeam;
-use think\facade\Cache;
 
 class FootballMatchCount
 {

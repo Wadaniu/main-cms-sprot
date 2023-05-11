@@ -4,27 +4,21 @@
  * @license https://opensource.org/licenses/Apache-2.0
  * @link https://www.gougucms.com
  */
-namespace app\admin\model;
+namespace app\commonModel;
 use think\model;
-class FootballCategory extends Model
-{
-    protected $connection = 'compDataDb';
 
+class MatchliveLink extends Model
+{
     /**
     * 获取分页列表
     * @param $where
     * @param $param
     */
-    public function getFootballCategoryList($where, $param)
+    public function getMatchliveLinkList($where, $param)
     {
 		$rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
 		$order = empty($param['order']) ? 'id desc' : $param['order'];
-        $list = self::where($where)->field('id,name_zh,name_zht,name_en,updated_at')
-            ->order($order)
-            ->paginate($rows, false, ['query' => $param])
-            ->each(function ($item, $key) {
-                $item->updated_at = date("Y-m-d H:i:s",$item->updated_at);
-            });
+        $list = self::where($where)->field('id,title,live_link,status')->order($order)->paginate($rows, false, ['query' => $param]);
 		return $list;
     }
 
@@ -32,7 +26,7 @@ class FootballCategory extends Model
     * 添加数据
     * @param $param
     */
-    public function addFootballCategory($param)
+    public function addMatchliveLink($param)
     {
 		$insertId = 0;
         try {
@@ -49,7 +43,7 @@ class FootballCategory extends Model
     * 编辑信息
     * @param $param
     */
-    public function editFootballCategory($param)
+    public function editMatchliveLink($param)
     {
         try {
             $param['update_time'] = time();
@@ -66,7 +60,7 @@ class FootballCategory extends Model
     * 根据id获取信息
     * @param $id
     */
-    public function getFootballCategoryById($id)
+    public function getMatchliveLinkById($id)
     {
         $info = self::where('id', $id)->find();
 		return $info;
@@ -77,7 +71,7 @@ class FootballCategory extends Model
     * @param $id
     * @return array
     */
-    public function delFootballCategoryById($id,$type=0)
+    public function delMatchliveLinkById($id,$type=0)
     {
 		if($type==0){
 			//逻辑删除
@@ -101,34 +95,9 @@ class FootballCategory extends Model
 		return to_assign();
     }
 
-    public function sync(){
-        $info = self::where([])->select();
-        $ids = [];
-        foreach ($info as $row){
-            $ids[] = $row->id;
-        }
-
-        $getApiInfo = getApiInfo("/api/v5/football/category/list");
-
-        if($getApiInfo["code"]==0){
-            $param = [];
-
-            foreach ($getApiInfo["results"] as $vo){
-                if(!in_array($vo["id"],$ids)){
-                    $param[] = $vo;
-                }
-            }
-            if(!empty($param)){
-                try {
-                    self::strict(false)->field(true)->insertAll($param);
-
-                } catch(\Exception $e) {
-                    return to_assign(1, '操作失败，原因：'.$e->getMessage());
-                }
-            }
-            return to_assign(0,'已成功同步');
-        }
-
+    public function getList()
+    {
+        return self::where('status',1)->select()->toArray();
     }
 }
 

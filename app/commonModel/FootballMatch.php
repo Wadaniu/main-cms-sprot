@@ -4,12 +4,10 @@
  * @license https://opensource.org/licenses/Apache-2.0
  * @link https://www.gougucms.com
  */
-namespace app\admin\model;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
+namespace app\commonModel;
 use think\facade\Cache;
 use think\model;
+
 class FootballMatch extends Model
 {
     protected $connection = 'compDataDb';

@@ -10,8 +10,8 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\admin\BaseController;
-use app\admin\model\Article as ArticleModel;
 use app\admin\validate\ArticleValidate;
+use app\commonModel\Article as ArticleModel;
 use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\View;

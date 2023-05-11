@@ -5,7 +5,9 @@
  * @link https://www.gougucms.com
  */
 namespace app\admin\model;
+use app\commonModel\Keywords;
 use think\model;
+
 class Goods extends Model
 {
 	public static $Type = ['普通','精华','热门','推荐'];

@@ -5,9 +5,10 @@
  * @link https://www.gougucms.com
  */
 namespace app\admin\model;
-use think\model;
-use app\admin\model\Keywords;
+use app\commonModel\Keywords;
 use think\facade\Db;
+use think\model;
+
 class Gallery extends Model
 {
 	public static $Type = ['普通','精华','热门','推荐'];

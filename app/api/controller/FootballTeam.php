@@ -1,12 +1,11 @@
 <?php
 
 namespace app\api\controller;
-use app\admin\model\FootballCompetition;
-use app\admin\model\FootballTeam as FootballTeamModel;
 use app\api\BaseController;
+use app\commonModel\FootballCompetition;
+use app\commonModel\FootballTeam as FootballTeamModel;
 use think\Exception;
 use think\facade\Request;
-use think\View;
 
 class FootballTeam extends BaseController
 {

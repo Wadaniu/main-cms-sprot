@@ -9,18 +9,16 @@ declare (strict_types = 1);
 
 namespace app\home\controller;
 
+use app\commonModel\BasketballCompetition;
+use app\commonModel\BasketballCountry;
+use app\commonModel\BasketballMatch;
+use app\commonModel\BasketballTeam;
+use app\commonModel\FootballCompetition;
+use app\commonModel\FootballCountry;
+use app\commonModel\FootballMatch;
+use app\commonModel\FootballTeam;
 use app\home\BaseController;
-use think\facade\Db;
 use think\facade\View;
-use app\admin\model\BasketballMatch;
-use app\admin\model\BasketballTeam;
-use app\admin\model\BasketballCompetition;
-use app\admin\model\BasketballCountry;
-
-use app\admin\model\FootballCompetition;
-use app\admin\model\FootballMatch;
-use app\admin\model\FootballCountry;
-use app\admin\model\FootballTeam;
 
 class Sphere extends BaseController
 {

@@ -55,6 +55,11 @@
 			</td>
 			<td class="layui-td-gray">状态<font>*</font>
 			</td>
+			<select name="pid" lay-verify="required" lay-reqText="请选择父级导航">
+				{volist name=":set_recursion(get_nav($nav_id))" id="v"}
+					<option value="{$v.id}" {eq name="pid" value="$v.id" }selected="" {/eq}>{$v.title} </option>
+				{/volist}
+			</select>
 			<td>
 				{if condition="$id eq 0"}
 				<input type="radio" name="status" value="1" title="正常" checked>

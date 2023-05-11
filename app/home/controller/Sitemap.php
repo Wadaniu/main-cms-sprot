@@ -6,7 +6,7 @@ use app\exception\Sitemap as SitemapVendor;
 use DOMDocument;
 use think\facade\Db;
 use think\facade\Env;
-use \think\facade\Request;
+use think\facade\Request;
 use think\facade\Route;
 use XSLTProcessor;
 
@@ -45,9 +45,9 @@ class Sitemap
                     break;
                 case 'comp':
                     //获取热门联赛id
-                    $footballCompetition = new  \app\admin\model\FootballCompetition();
+                    $footballCompetition = new  \app\commonModel\FootballCompetition();
                     $footballHotData = $footballCompetition->getHotData();
-                    $model = new \app\admin\model\FootballMatch();
+                    $model = new \app\commonModel\FootballMatch();
                     //热门联赛ids
                     $compIds = array_column($footballHotData,'id');
                     $compIdArr = array_merge($compIdArr,$compIds);
@@ -81,7 +81,7 @@ class Sitemap
                         $sitemap->addItem("/news/$i.html",'0.8','always', date('Y-m-d H:i:s'));
                     }
                     //获取所有标签页
-                    $keywordsModel = new \app\admin\model\Keywords();
+                    $keywordsModel = new \app\commonModel\Keywords();
                     $keywords = $keywordsModel->getHot();
                     foreach ($keywords as $keyword){
                         $count = Db::name('article_keywords')->where(['status'=>1,'keywords_id'=>$keyword['id']])->count();
@@ -117,7 +117,7 @@ class Sitemap
                     }
 
                     //获取近两个月赛程
-                    $model = new \app\admin\model\FootballMatch();
+                    $model = new \app\commonModel\FootballMatch();
                     //获取赛程
                     $match = $model->getMatchByDate([Env::get('HOME.HOME_SPACE')],$startDate,$endDate);
                     //赛程ids

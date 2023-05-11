@@ -9,9 +9,8 @@ declare (strict_types = 1);
 
 namespace app\home\controller;
 
+use app\commonModel\Article as ArticleModel;
 use app\home\BaseController;
-use app\admin\model\Article as ArticleModel;
-use think\facade\Db;
 use think\facade\View;
 
 class Article extends BaseController
