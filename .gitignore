@@ -5,3 +5,5 @@
 *.ini
 /runtime/*
 *.htaccess
+.env
+/config/cache.php
