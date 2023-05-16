@@ -1,0 +1,138 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-t border-x">
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="keywords" placeholder="请输入关键字" class="layui-input" autocomplete="off" />
+		</div>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchform">提交搜索</button>
+	</form>
+	<table class="layui-hide" id="home_temp_route" lay-filter="home_temp_route"></table>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+	<div class="layui-btn-container">
+		<span class="layui-btn layui-btn-sm" lay-event="add" data-title="添加模组配置管理">+ 添加模组配置管理</span>
+	</div>
+</script>
+
+<script type="text/html" id="barDemo">
+<div class="layui-btn-group"><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">查看</a><a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></div>
+</script>
+
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table,tool = layui.tool, form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#home_temp_route',
+			title: '模组配置管理列表',
+			toolbar: '#toolbarDemo',
+			url: '/admin/home_temp_route/datalist',
+			page: true,
+			limit: 20,
+			cellMinWidth: 300,
+			cols: [
+				[
+				{
+					fixed: 'left',
+					field: 'id',
+					title: '编号',
+					align: 'center',
+					width: 80
+				},{
+					field: 'temp_name',
+					title: '模板名称',
+					align: 'center',
+					width: 100
+				},{
+					field: 'temp_path',
+					title: '模板路径',
+					align: 'center',
+					width: 100
+				},{
+					field: 'ab_route',
+					title: '对应路由',
+					align: 'center',
+					width: 100
+				},{
+					field: 'temp_AP',
+					title: '模板绝对路径',
+					align: 'center',
+					width: 100
+				},{
+					field: 'created_time',
+					title: '创建时间',
+					align: 'center',
+					width: 100
+				},
+				{
+					fixed: 'right',
+					field: 'right',
+					title: '操作',
+					toolbar: '#barDemo',
+					width: 136,
+					align: 'center'
+				}				
+				]
+			]
+		});
+		
+		//监听表头工具栏事件
+		table.on('toolbar(home_temp_route)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/admin/home_temp_route/add");
+				return false;
+			}
+		});
+
+		//监听表格行工具事件
+		table.on('tool(home_temp_route)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'read') {
+				tool.side('/admin/home_temp_route/read?id='+obj.data.id);
+			}
+			else if (obj.event === 'edit') {
+				tool.side('/admin/home_temp_route/edit?id='+obj.data.id);
+			}
+			else if (obj.event === 'del') {
+				layer.confirm('确定要删除该记录吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/admin/home_temp_route/del", { id: data.id }, callback);
+					layer.close(index);
+				});
+			}
+			return false;
+		});
+
+		//监听搜索提交
+		form.on('submit(searchform)', function(data) {
+			layui.pageTable.reload({
+				where: {
+					keywords: data.field.keywords
+				},
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

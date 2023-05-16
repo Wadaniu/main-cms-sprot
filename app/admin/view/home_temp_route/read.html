@@ -1,0 +1,18 @@
+{extend name="common/base"/}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">模组配置管理详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr><td class="layui-td-gray-2">模板名称</td>
+			<td>{$detail.temp_name}</td><td class="layui-td-gray-2">模板路径</td>
+			<td>{$detail.temp_path}</td><td class="layui-td-gray-2">对应路由</td>
+			<td>{$detail.ab_route}</td>
+		</tr><tr><td class="layui-td-gray-2">模板绝对路径</td>
+			<td>{$detail.temp_AP}</td><td class="layui-td-gray-2">创建时间</td>
+			<td>{$detail.created_time}</td><td colspan='2'></td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->
