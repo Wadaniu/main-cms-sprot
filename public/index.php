@@ -27,7 +27,7 @@ define('CMS_ROOT', __DIR__ . '/../');
 $http = (new App())->http;
 
 $response = $http->name("home")->run();
-
+echo 123;die;
 $response->send();
 
 $http->end($response);
