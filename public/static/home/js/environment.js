@@ -1,10 +1,25 @@
 $(function () {
+	$(window).scroll(function() {
+		if ($(document).scrollTop() > 400) {
+			$(".gotop").fadeIn(500);
+		} else {
+			$(".gotop").fadeOut(500);
+		}
+	});
+	$(".gotop").click(function() {
+		$("body,html").animate({
+			scrollTop: 0
+		}, 500);
+	});
+	
     if (localStorage.getItem('theme')) {
         $("body").attr('style', localStorage.getItem('theme'))
     }
+	
     //获取默认配色
     $.get('/api/FootballCompetitionCount/info', res => {
-        let color = `--main-color:${res.data.primary_color};${torgb(res.data.primary_color)}`;
+        //let color = `--main-color:${res.data.primary_color};${torgb(res.data.primary_color)}`;
+		let color = `--main-color:#3f86c4;${torgb('#3f86c4')}`;
         if (localStorage.getItem('theme') != color) {
             $("body").attr('style', color)
             localStorage.setItem('theme', color)
