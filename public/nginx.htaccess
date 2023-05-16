@@ -1,6 +1,6 @@
 location / {
           rewrite "/static/(.*)$" /static/$1 break;
-          rewrite ^/admin/(.*)$ /admin.php?s=$1 last; 
-          rewrite ^/api/(.*)$ /api.php?s=$1 last; 
+          rewrite ^/admin/(.*)$ /admin.php?s=$1 last;
+          rewrite ^/api/(.*)$ /api.php?s=$1 last;
           rewrite  ^/(.*)$  /index.php?s=$1  last;
     }
