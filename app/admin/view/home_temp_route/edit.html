@@ -12,6 +12,12 @@
 				<tr><td class="layui-td-gray-2">模板绝对路径<font>*</font></td>
 			<td><input type="text" name="temp_AP"  lay-verify="required" lay-reqText="请完善模板绝对路径" value="{$detail.temp_AP}" autocomplete="off" placeholder="请输入模板绝对路径" class="layui-input"></td><td colspan='4'></td>
 		</tr>
+		<tr>
+			<button type="button" class="layui-btn" id="test1">
+				<i class="layui-icon">&#xe67c;</i>上传模板
+			</button>
+			<span style="color:red">(以zip压缩格式上传)</span>
+		</tr>
 	</table>
 	<div class="py-3">
 		<input type="hidden" name="id" value="{$detail.id}"/>
@@ -29,8 +35,32 @@
 
 	function gouguInit() {
 		var form = layui.form, tool = layui.tool;
-		
-		
+
+		layui.use('upload', function(){
+			var upload = layui.upload;
+
+			//执行实例
+			var uploadInst = upload.render({
+				elem: '#test1' //绑定元素
+				,url: '/admin/api/upload' //上传接口
+				,accept:'file'
+				,data:{
+					file_type:'temp'
+				}
+				,done: function(res){
+					//上传完毕回调
+					if (res.code == 1) {
+						return layer.msg(res.msg);
+					}
+					//上传成功
+					$('#temp_path').attr('value', res.data.filepath);
+					$('#temp_AP').attr('value', '/app/home' + res.data.filepath);
+				}
+				,error: function(){
+					//请求异常回调
+				}
+			});
+		});
 				
 		//监听提交
 		form.on('submit(webform)', function (data) {

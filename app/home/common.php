@@ -186,3 +186,22 @@ function getHomeRule()
     }
     return $level;
 }
+
+function getFatherRule()
+{
+    $route = \think\facade\Route::getRuleList();
+    $level = [];
+    foreach ($route as $item){
+        if ($item['name'] == '/'){
+            $level[] = $item['name'];
+            continue;
+        }
+        $routes = explode('/',$item['name']);
+        if (array_key_exists($routes[0],$level)){
+            continue;
+        }else{
+            $level[]= $routes[0];
+        }
+    }
+    return $level;
+}

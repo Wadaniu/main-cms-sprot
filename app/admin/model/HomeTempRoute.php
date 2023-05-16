@@ -17,7 +17,7 @@ class HomeTempRoute extends Model
     {
 		$rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
 		$order = empty($param['order']) ? 'id desc' : $param['order'];
-        $list = self::where($where)->field('id,temp_name,temp_path,ab_route,temp_AP,created_time')->order($order)->paginate($rows, false, ['query' => $param]);
+        $list = self::where('delete_time',0)->where($where)->field('id,temp_name,temp_path,ab_route,temp_AP,created_time')->order($order)->paginate($rows, false, ['query' => $param]);
 		return $list;
     }
 

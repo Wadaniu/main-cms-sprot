@@ -59,7 +59,10 @@ class HomeTempRoute extends BaseController
                 // 验证失败 输出错误信息
                 return to_assign(1, $e->getError());
             }
-			
+
+            //将模板压缩包解压
+            $res = uzip($param['temp_AP'],get_config('filesystem.disks.view_temp.root'));
+var_dump($res);die;
             $this->model->addHomeTempRoute($param);
         }else{
 			return view();

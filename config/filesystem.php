@@ -25,9 +25,9 @@ return [
             // 磁盘类型
             'type'       => 'local',
             // 磁盘路径
-            'root'       => app()->getRootPath() . 'home/view',
+            'root'       => app()->getRootPath() . 'app/home/view',
             // 磁盘路径对应的外部URL路径
-            'url'        => '/storage',
+            'url'        => '/view',
             // 可见性
             'visibility' => 'public',
         ],

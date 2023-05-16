@@ -51,7 +51,7 @@ class Api extends BaseController
         $rule = [
             'image' => 'jpg,png,jpeg,gif',
             'doc' => 'doc,docx,ppt,pptx,xls,xlsx,pdf',
-            'file' => 'zip,gz,7z,rar,tar',
+            'file' => 'zip',
             'video' => 'mpg,mp4,mpeg,avi,wmv,mov,flv,m4v',
         ];
         $fileExt = $rule['image'] . ',' . $rule['doc'] . ',' . $rule['file'] . ',' . $rule['video'];
@@ -79,15 +79,17 @@ class Api extends BaseController
             $filename = \think\facade\Filesystem::disk('view_temp')->putFile($dataPath, $file, function () use ($md5) {
                 return $md5;
             });
+            $path = get_config('filesystem.disks.view_temp.url');
         }else{
             $filename = \think\facade\Filesystem::disk('public')->putFile($dataPath, $file, function () use ($md5) {
                 return $md5;
             });
+            $path = get_config('filesystem.disks.public.url');
         }
         if ($filename) {
             //写入到附件表
             $data = [];
-            $path = get_config('filesystem.disks.public.url');
+
             $data['filepath'] = $path . '/' . $filename;
             $data['name'] = $file->getOriginalName();
             $data['mimetype'] = $file->getOriginalMime();

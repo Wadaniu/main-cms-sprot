@@ -797,3 +797,52 @@ if (!function_exists('trim_space')) {
         return $str;
     }
 }
+
+/**
+
+ * 解压缩
+
+ * @method unzip_file
+
+ * @param string $zipName 压缩包名称
+
+ * @param string $dest 解压到指定目录
+
+ * @return boolean true|false
+
+ */
+function uzip($filename,$toDir){
+    //解压缩 php自带的解压类
+    $zip = new \ZipArchive;
+    //要解压的文件
+    $zipfile = dirname(__FILE__).$filename;
+    $res = $zip->open($zipfile);
+    if($res!==true){
+        return false;
+    }
+    if(!file_exists($toDir)) {
+        mkdir($toDir,755);
+    }
+    //获取压缩包中的文件数（含目录）
+    $docnum = $zip->numFiles;
+    $addonname="";
+    //遍历压缩包中的文件
+    for($i = 0; $i < $docnum; $i++) {
+        $statInfo = $zip->statIndex($i);
+        if($statInfo['crc'] == 0) {
+            if($i==0){
+                if(is_dir($toDir.'/'.substr($statInfo['name'], 0,-1))){
+                    return false;
+                }
+                $addonname=substr($statInfo['name'], 0,-1);
+            }
+
+            //新建目录
+            mkdir($toDir.'/'.substr($statInfo['name'], 0,-1));
+        } else {
+            //拷贝文件
+            copy('zip://'.$zipfile.'#'.$statInfo['name'], $toDir.'/'.$statInfo['name']);
+        }
+    }
+    return $addonname;
+}

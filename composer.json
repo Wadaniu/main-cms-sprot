@@ -32,7 +32,8 @@
 		"symfony/var-exporter": "^5.4",
       "ext-dom": "*",
       "ext-xsl": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+      "ext-zip": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
