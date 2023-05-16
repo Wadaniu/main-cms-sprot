@@ -1,31 +1,8 @@
-<div class="botm">
-	<div class="main-wrap">
-		<div class="botm1">
-			<h3>热门联赛</h3>
-			<ul class="botm1-ul">
-			</ul>
-		</div>
-		<div class="botm2">
-			<div class="botm2-ul">
-				{foreach :getHotCompetition() as $key=>$value}
-					{foreach $value as $vo}
-						<a href="{:url('comp',['id'=>$vo.id])}" target="_blank">{$vo.short_name_zh}</a>
-					{/foreach}
-				{/foreach}
-			</div>
-		</div>
-		<div class="botm3">
-			<p>
-				{:get_system_config('web','desc')}
-			</p>
-			<p>
-				<a href="javascript:0">点此联系我们</a>
-				<a href="/sitemap.xml">网站地图</a>
-			</p>
-			<p>
-				<a href="https://beian.miit.gov.cn/" rel="nofollow" target="_blank">{:get_system_config('web','icp')}</a>
-			<!--	<a href="https://beian.miit.gov.cn" title="湘ICP备2023001468号" target="_blank">湘ICP备2023001468号</a>-->
-			</p>
-		</div>
+<div class="copyright">
+	<div class="main">
+		<p class="info">{:get_system_config('web','desc')}</p>
+		<p class="link">
+			<a href="javascript:0">联系我们</a>|<a href="/sitemap.xml">网站地图</a>|<a href="https://beian.miit.gov.cn/">{:get_system_config('web','icp')}</a>
+		</p>
 	</div>
 </div>

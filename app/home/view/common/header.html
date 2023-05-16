@@ -1,36 +1,44 @@
-<header class="header">
-	<div class="top">
-		<div class="main-wrap">
-			<div class="flex">
-				<div class="logo" style="-webkit-mask-image: url({:get_system_config('web','logo')});">
-					<a href="/">
-					<img src="{:get_system_config('web','logo')}" alt="{:get_system_config('web','admin_title')}" title="{:get_system_config('web','admin_title')}">
-					</a>
-				</div>
-				<!--头部TAB-->
-				<div class="ul-wrap">
-					{foreach $COMMON_NAV as $item}
-					<li><a class="navList" href="{:url($item.src . $item.param)}">{$item.title}</a></li>
-					{/foreach}
-				</div>
-			</div>
-		</div>
-	</div>
-</header>
+<div id="header">
+    <div class="right-tool">
+        <p class="gotop"><i class="iconfont icon-shang"></i></p>
+    </div>
+    <div class="head">
+        <h1 class="logo" style="-webkit-mask-image: url({:get_system_config('web','logo')});">
+            <a href="/">
+                <img src="{:get_system_config('web','logo')}" alt="{:get_system_config('web','admin_title')}"
+                     title="{:get_system_config('web','admin_title')}">
+            </a>
+        </h1>
+        <nav class="nav">
+            <ul>
+                {foreach $COMMON_NAV as $item}
+                <li><a href="{:url($item.src . $item.param)}">{$item.title}<i class="iconfont icon-xia"></i></a></li>
+                {/foreach}
+            </ul>
+        </nav>
+        <div class="search">
+            <form action="//www.runoob.com/" target="_blank" onsubmit="return isEmpty()">
+                <input id="keyword" name="s" autocomplete="off">
+                <button type="submit"><i class="iconfont icon-sousuo"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
-	function find(str,cha,num){
-		let x=str.indexOf(cha);
-		for(let i=0;i<num;i++){
-			x=str.indexOf(cha,x+1);
-		}
-		return x;
-	}
+    let curlink = window.location.pathname;
+    $(".nav a").each(function (i, item) {
+        let thelink = $(item).attr('href') ? $(item).attr('href') : false;
+        if (thelink && curlink.indexOf(thelink) > -1) $(item).parents('li').addClass('cur').siblings().removeClass(
+            'cur');
+    })
 
-	$('.ul-wrap li').each(function(i, item) {
-		let liA = $(item).find('a').attr('href')
-		let index = find(liA,'/',1);
-		let word = index>0?liA.substring(1, index):liA;
-		let link = index>0?window.location.pathname.substring(1, index):window.location.pathname;
-		if (word==link) $(item).find('a').addClass('curnav')
-	})
+    function isEmpty() {
+        let txt = $.trim($("#keyword").val());
+        if (txt != "") {
+            $("#keyword").val(txt);
+            return true;
+        } else {
+            return false;
+        }
+    }
 </script>
