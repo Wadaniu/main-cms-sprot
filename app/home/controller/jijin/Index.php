@@ -8,7 +8,7 @@ use think\facade\View;
 class Index extends BaseController
 {
     public function index(){
-        //var_dump(getHomeRule());die;
+        //获取模板路径
         return View::fetch('/jijin/index');
     }
 }

@@ -28,11 +28,35 @@
 					{notempty name="$nav.param" }value="{$nav.param}" {/notempty}>
 			</td>
 		</tr>
+
+		<tr>
+			<td class="layui-td-gray">选择路由<font>*</font>
+			</td>
+			<td colspan="3">
+				<select name="route_tag" id="routeChange" lay-verify="required" lay-reqText="请选择路由" lay-filter="oneLeverChange">
+				<?php $routeMap = get_config('homeRouteMap');?>
+					{foreach $routeMap as $key=>$vo }
+						<option value="{$key}" data-path="{$vo.route_path}" {eq name="route_tag" value="$key" }selected="" {/eq}>{$vo.route_name} </option>
+					{/foreach}
+				</select>
+			</td>
+			<td class="layui-td-gray">选择模板<font>*</font>
+			</td>
+			<td colspan="2">
+				<select name="temp_id" lay-verify="required" lay-reqText="请选择模板">
+					<?php $temp = getTempList();?>
+					{foreach $temp as $vo}
+						<option value="{$vo.id}" {eq name="temp_id" value="$vo.id" }selected="" {/eq}>{$vo.temp_name} </option>
+					{/foreach}
+				</select>
+			</td>
+		</tr>
+
 		<tr>
 			<td class="layui-td-gray">导航名称<font>*</font>
 			</td>
 			<td colspan="3">
-				<input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入名称"
+				<input type="text" name="title" id="title" lay-verify="required" autocomplete="off" placeholder="请输入名称"
 					lay-reqText="请输入名称" class="layui-input" {notempty name="$nav.title" }value="{$nav.title}"
 					{/notempty}>
 			</td>
@@ -50,7 +74,7 @@
 		<tr>
 			<td class="layui-td-gray">网址链接</td>
 			<td colspan="3">
-				<input type="text" name="src" placeholder="请输入导航网址链接，可空" autocomplete="off" class="layui-input"
+				<input type="text" name="src" id="src" placeholder="请输入导航网址链接，可空" autocomplete="off" class="layui-input"
 					{notempty name="$nav.src" }value="{$nav.src}" {/notempty}>
 			</td>
 			<td class="layui-td-gray">状态<font>*</font>
@@ -116,7 +140,21 @@
 			tool.post("/admin/nav/nav_info_add", data.field, callback);
 			return false;
 		});
+
+		form.on('select(oneLeverChange)',
+				function(data){
+					var val=data.value;
+					let sz = document.getElementsByTagName("option");
+					[...sz].forEach(function (item){
+						if(item.value==val){
+							document.getElementById('title').value=item.innerText
+							document.getElementById('src').value=item.getAttribute("data-path")
+						}
+					})
+
+				});
 	}
 </script>
+
 {/block}
 <!-- /脚本 -->

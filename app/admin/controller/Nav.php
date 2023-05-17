@@ -15,6 +15,7 @@ use app\admin\model\NavInfo;
 use app\admin\validate\NavCheck;
 use think\exception\ValidateException;
 use think\facade\Db;
+use think\facade\Env;
 use think\facade\View;
 
 class Nav extends BaseController
@@ -149,16 +150,23 @@ class Nav extends BaseController
                 return to_assign();
             }	
 		} else {
-            $id = isset($param['id']) ? $param['id'] : 0;
-            $nid = isset($param['nid']) ? $param['nid'] : 0;
-            $pid = isset($param['pid']) ? $param['pid'] : 0;
+            $id = $param['id'] ?? 0;
+            $nid = $param['nid'] ?? 0;
+            $pid = $param['pid'] ?? 0;
+            $route_tag = 'index';
+            $temp_id = 0;
+
 			if ($id > 0) {
 				$nav = Db::name('NavInfo')->where(['id' => $id])->find();
 				View::assign('nav', $nav);
 				$nid = $nav['nav_id'];
 				$pid = $nav['pid'];
+                $route_tag = $nav['route_tag'];
+                $temp_id = $nav['temp_id'];
 			}
 			View::assign('id', $id);
+			View::assign('route_tag', $route_tag);
+			View::assign('temp_id', $temp_id);
 			View::assign('nav_id', $nid);
 			View::assign('pid', $pid);
 			return view();

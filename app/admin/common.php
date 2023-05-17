@@ -319,3 +319,6 @@ function add_log($type, $param_id = '', $param = [])
     Db::name('AdminLog')->strict(false)->field(true)->insert($data);
 }
 
+function getTempList(){
+    return Db::name('home_temp_route')->field('id,temp_name')->select()->toArray();
+}
