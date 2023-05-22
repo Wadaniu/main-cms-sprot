@@ -29,14 +29,14 @@ Route::get('jijin/zuqiu/[:compname]/[:v_id]', CommonSpace.'\jijin\Zuqiu::index')
 Route::get('jijin/lanqiu/[:compname]/[:v_id]', CommonSpace.'\jijin\Lanqiu@index')->name('jijin/lanqiu/');
 
 //足球资讯
-Route::get('zixun/zuqiu/:id?', CommonSpace.'\zixun\Zuqiu@index')->name('zixun/zuqiu/');
+Route::get('zixun/zuqiu/[:id]', CommonSpace.'\zixun\Zuqiu@index')->name('zixun/zuqiu/');
 //篮球资讯
-Route::get('zixun/lanqiu/:id?', CommonSpace.'\zixun\Lanqiu@index')->name('zixun/lanqiu/');
+Route::get('zixun/lanqiu/[:id]', CommonSpace.'\zixun\Lanqiu@index')->name('zixun/lanqiu/');
 //足球联赛
-Route::get('liansai/zuqiu/:id?', CommonSpace.'\liansai\Zuqiu@index')->name('liansai/zuqiu/');
+Route::get('liansai/zuqiu/[:id]', CommonSpace.'\liansai\Zuqiu@index')->name('liansai/zuqiu/');
 //篮球联赛
-Route::get('liansai/lanqiu/:id?', CommonSpace.'\liansai\Lanqiu@index')->name('liansai/lanqiu/');
+Route::get('liansai/lanqiu/[:id]', CommonSpace.'\liansai\Lanqiu@index')->name('liansai/lanqiu/');
 //足球球队
-Route::get('qiudui/zuqiu/:id?', CommonSpace.'\qiudui\Zuqiu@index')->name('qiudui/zuqiu/');
+Route::get('qiudui/zuqiu/[:id]', CommonSpace.'\qiudui\Zuqiu@index')->name('qiudui/zuqiu/');
 //篮球球队
-Route::get('qiudui/lanqiu/:id?', CommonSpace.'\qiudui\Lanqiu@index')->name('qiudui/lanqiu/');
+Route::get('qiudui/lanqiu/[:id]', CommonSpace.'\qiudui\Lanqiu@index')->name('qiudui/lanqiu/');
