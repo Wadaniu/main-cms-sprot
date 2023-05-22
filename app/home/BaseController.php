@@ -102,7 +102,7 @@ abstract class BaseController
             'keywords' => $this->webKeywords,
             'description' => $this->webDesc,
         ];
-
+        
         View::assign('web_name',$this->web_common_title);
         View::assign('COMMON_NAV', $COMMON_NAV);
         View::assign('seo', $seo);
