@@ -53,7 +53,7 @@ class Login
         $session_admin = get_config('app.session_admin');
         Session::set($session_admin, $admin);
         $token = make_token();
-        set_cache($token, $admin, 7200);
+//        set_cache($token, $admin, 7200);
         $admin['token'] = $token;
         add_log('login', $admin['id'], $data);
         return to_assign(0, '登录成功', ['uid' => $admin['id']]);

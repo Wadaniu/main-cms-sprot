@@ -6,21 +6,28 @@ const CommonSpace = '\app\home\controller';
 
 //首页
 Route::get('/', 'index/index')->name('/');
+
+//直播首页
+Route::get('live/', CommonSpace.'\live\Index@index')->name('live/');
 //直播足球
-Route::get('live/zuqiu/:id?', CommonSpace.'\live\Zuqiu@index')->name('live/zuqiu/');
+Route::get('live/zuqiu/[:compname]/[:matchid]', CommonSpace.'\live\Zuqiu@index')->name('live/zuqiu/');
 //直播篮球
-Route::get('live/lanqiu/:id?', CommonSpace.'\live\Lanqiu@index')->name('live/lanqiu/');
+Route::get('live/lanqiu/[:compname]/[:matchid]', CommonSpace.'\live\Lanqiu@index')->name('live/lanqiu/');
+
+//录像首页
+Route::get('luxiang/', CommonSpace.'\luxiang\Index@index')->name('luxiang/');
 //足球录像
-Route::get('luxiang/zuqiu/:id?', CommonSpace.'\luxiang\Zuqiu@index')->name('luxiang/zuqiu/');
+Route::get('luxiang/zuqiu/[:compname]/[:vid]', CommonSpace.'\luxiang\Zuqiu@index')->name('luxiang/zuqiu/');
 //篮球录像
-Route::get('luxiang/lanqiu/:id?', CommonSpace.'\luxiang\Lanqiu@index')->name('luxiang/lanqiu/');
+Route::get('luxiang/lanqiu/[:compname]/[:vid]', CommonSpace.'\luxiang\Lanqiu@index')->name('luxiang/lanqiu/');
 
 //集锦主页
 Route::get('jijin/', CommonSpace.'\jijin\Index::index')->name('jijin/');
 //足球集锦
-Route::get('jijin/zuqiu/[:comp_name]/[:match_id]', CommonSpace.'\jijin\Zuqiu::index')->name('jijin/zuqiu/');
+Route::get('jijin/zuqiu/[:compname]/[:v_id]', CommonSpace.'\jijin\Zuqiu::index')->name('jijin/zuqiu/');
 //篮球集锦
-Route::get('jijin/lanqiu/:id?', CommonSpace.'\jijin\Lanqiu@index')->name('jijin/lanqiu/');
+Route::get('jijin/lanqiu/[:compname]/[:v_id]', CommonSpace.'\jijin\Lanqiu@index')->name('jijin/lanqiu/');
+
 //足球资讯
 Route::get('zixun/zuqiu/:id?', CommonSpace.'\zixun\Zuqiu@index')->name('zixun/zuqiu/');
 //篮球资讯

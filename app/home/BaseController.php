@@ -11,6 +11,7 @@ namespace app\home;
 
 use think\App;
 use think\exception\HttpResponseException;
+use think\facade\Cache;
 use think\facade\Request;
 use think\facade\View;
 
@@ -61,6 +62,8 @@ abstract class BaseController
 
     protected $webKeywords = '';
     protected $webDesc = '';
+
+    protected $nav = [];
     /**
      * 构造方法
      * @access public
@@ -78,13 +81,17 @@ abstract class BaseController
     // 初始化
     protected function initialize()
     {
-
-        $COMMON_NAV = get_navs('NAV_HOME');
+        $this->nav = Cache::get('nav');
+        if ($this->nav){
+            $this->nav = get_navs('NAV_HOME');
+            $this->nav = array_column($this->nav,null,'route_tag');
+            Cache::set('nav',$this->nav);
+        }
         $seo = Request::rule();
         //动态渲染title
         $this->webCommonTitle = get_system_config('web','title');
         $this->webAdminTitle = get_system_config('web','admin_title');
-        foreach ($COMMON_NAV as $item){
+        foreach ($this->nav as $item){
             if ($item['src'] == $seo->getName() ){
                 $this->webTitle = $item['web_title'];
                 $this->webKeywords = $item['web_keywords'];
@@ -102,7 +109,7 @@ abstract class BaseController
         ];
 
         View::assign('web_name',$this->webCommonTitle);
-        View::assign('COMMON_NAV', $COMMON_NAV);
+        View::assign('COMMON_NAV', $this->nav);
         View::assign('seo', $seo);
         View::assign('webconfig', get_config('webconfig'));
 

@@ -55,7 +55,6 @@
 						return layer.msg(res.msg);
 					}
 					//上传成功
-					$('#temp_path').attr('value', res.data.filepath);
 					$('#temp_AP').attr('value', '/home' + res.data.filepath);
 				}
 				,error: function(){
