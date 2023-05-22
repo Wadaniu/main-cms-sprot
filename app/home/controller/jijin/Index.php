@@ -22,7 +22,7 @@ class Index extends BaseController
     public function index(){
         //获取模板路径
         $titleTemp = $this->nav[self::RouteTag]['web_title'];
-var_dump($titleTemp);die;
+
         return View::fetch($this->tempPath);
     }
 }
