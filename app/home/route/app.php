@@ -28,6 +28,8 @@ Route::get('jijin/zuqiu/[:compname]/[:v_id]', CommonSpace.'\jijin\Zuqiu::index')
 //篮球集锦
 Route::get('jijin/lanqiu/[:compname]/[:v_id]', CommonSpace.'\jijin\Lanqiu@index')->name('jijin/lanqiu/');
 
+//集锦主页
+Route::get('zixun/', CommonSpace.'\zixun\Index::index')->name('zixun/');
 //足球资讯
 Route::get('zixun/zuqiu/[:id]', CommonSpace.'\zixun\Zuqiu@index')->name('zixun/zuqiu/');
 //篮球资讯

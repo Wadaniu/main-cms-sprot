@@ -117,6 +117,11 @@ return [
         ]
     ],
 
+    'zixun'           => [
+        'route_name'    => '资讯主页',
+        'route_path'    =>  'zixun/',
+        'keywords'      =>  []
+    ],
     'zixun_zuqiu'       => [
         'route_name'    => '足球资讯',
         'route_path'    =>  'zixun/zuqiu/',
