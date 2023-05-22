@@ -27,6 +27,16 @@ function get_navs($name)
     return $navs;
 }
 
+function get_navs_es($name)
+{
+    if (!get_cache('homeNavEs' . $name)) {
+        $nav = \think\facade\Db::name('NavInfo')->where('status' , 1)->order('sort asc')->select()->toArray();
+        \think\facade\Cache::set('homeNavEs' . $name, $nav);
+    }
+    $navs = get_cache('homeNavEs' . $name);
+    return $navs;
+}
+
 //读取指定文章的详情
 function get_article_detail($id)
 {

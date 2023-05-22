@@ -11,7 +11,6 @@ namespace app\home;
 
 use think\App;
 use think\exception\HttpResponseException;
-use think\facade\Cache;
 use think\facade\Request;
 use think\facade\View;
 
@@ -53,7 +52,7 @@ abstract class BaseController
      * 网站名称
      * @var string
      */
-    protected $webCommonTitle = '';
+    protected $web_common_title = '';
     /**
      * 系统名称
      * @var string
@@ -81,17 +80,13 @@ abstract class BaseController
     // 初始化
     protected function initialize()
     {
-        $this->nav = Cache::get('nav');
-        if ($this->nav){
-            $this->nav = get_navs('NAV_HOME');
-            $this->nav = array_column($this->nav,null,'route_tag');
-            Cache::set('nav',$this->nav);
-        }
+        $this->nav = array_column(get_navs_es('NAV_HOME'),null,'route_tag');
+        $COMMON_NAV = get_navs('NAV_HOME');
         $seo = Request::rule();
         //动态渲染title
-        $this->webCommonTitle = get_system_config('web','title');
+        $this->web_common_title = get_system_config('web','title');
         $this->webAdminTitle = get_system_config('web','admin_title');
-        foreach ($this->nav as $item){
+        foreach ($COMMON_NAV as $item){
             if ($item['src'] == $seo->getName() ){
                 $this->webTitle = $item['web_title'];
                 $this->webKeywords = $item['web_keywords'];
@@ -108,8 +103,8 @@ abstract class BaseController
             'description' => $this->webDesc,
         ];
 
-        View::assign('web_name',$this->webCommonTitle);
-        View::assign('COMMON_NAV', $this->nav);
+        View::assign('web_name',$this->web_common_title);
+        View::assign('COMMON_NAV', $COMMON_NAV);
         View::assign('seo', $seo);
         View::assign('webconfig', get_config('webconfig'));
 
@@ -121,14 +116,38 @@ abstract class BaseController
         throw new HttpResponseException(redirect(...$args));
     }
 
+    /**
+     * 替换tkd模板
+     * @param $tempStr
+     * @param $tdkObj
+     * @return array|mixed|string|string[]
+     */
+    protected function replaceTDK($tempStr,$tdkObj){
+        preg_match_all('/(\[).*?(\])/', $tempStr, $matches);
 
-//    protected function autoSync(){
-//        if(time() %5 == 0){
-//            autoSyncBasketball();
-//        }else{
-//            autoSyncFootball();
-//        }
-//    }
+        foreach ($matches[0] as $field){
+            $temp = trim($field,'[]');
+
+            $replace = $tdkObj->$temp ?? '';
+
+            //用#分割判断是否为日期
+            $tempArr = explode('#',$temp);
+            if (count($tempArr) > 1){
+                if (in_array('date',$tempArr)){
+                    $replace = date($tempArr[1],time());
+                }else{
+                    $replace = date($tempArr[1],$tdkObj->$temp);
+                }
+            }
+            //判断是否为网站名称
+            if ($temp == 'web_common_title'){
+                $replace = $this->web_common_title;
+            }
+            $tempStr = str_replace($field,$replace,$tempStr);
+        }
+
+        return $tempStr;
+    }
 
 
 }

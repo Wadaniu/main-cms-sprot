@@ -10,10 +10,9 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\admin\BaseController;
-use app\admin\model\HomeTempRoute as HomeTempRouteModel;
 use app\admin\validate\HomeTempRouteValidate;
+use app\commonModel\HomeTempRoute as HomeTempRouteModel;
 use think\exception\ValidateException;
-use think\facade\Db;
 use think\facade\View;
 
 class HomeTempRoute extends BaseController

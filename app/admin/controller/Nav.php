@@ -131,6 +131,7 @@ class Nav extends BaseController
                     // 验证失败 输出错误信息
                     return to_assign(1, $e->getError());
                 }
+                //var_dump($param);die;
                 NavInfo::strict(false)->field(true)->update($param);
                 // 删除导航缓存
                 clear_cache('homeNav');
