@@ -72,7 +72,7 @@ class BasketballCompetition extends Model
         try {
             $param['updated_at'] = time();
             self::where('id', $param['id'])->strict(false)->field(true)->update($param);
-            $sortConf = Db::name('comp_sort')->find($param['id']);
+            $sortConf = Db::name('comp_sort')->where('comp_id',$param['id'])->find();
             $sort = [
                 'comp_id'    =>  $param['id'],
                 'sort'  =>  $param['sort'],
@@ -134,7 +134,7 @@ class BasketballCompetition extends Model
         if(!empty($data)){
             return $data;
         }
-        $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','id');
+        $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','comp_id');
         $ids = array_keys($sort);
         $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
         foreach ($data as &$item){

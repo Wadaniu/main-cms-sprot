@@ -111,7 +111,7 @@ class FootballCompetition extends Model
     {
         $info = self::where('id', $id)->find();
         //获取项目排序字段
-        $sortConf = Db::name('comp_sort')->where('type',0)->find($id);
+        $sortConf = Db::name('comp_sort')->where('type',0)->where('comp_id',$id)->find();
 
         $info->sort = $sortConf['sort'] ?? 0;
         $info->status = $sortConf['is_hot'] ?? 0;
@@ -146,7 +146,8 @@ class FootballCompetition extends Model
         if(!empty($data)){
             return $data;
         }
-        $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','id');
+        $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','comp_id');
+        var_dump($sort);die;
         $ids = array_keys($sort);
         $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
         foreach ($data as &$item){
