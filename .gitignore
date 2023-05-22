@@ -5,7 +5,7 @@
 *.ini
 /runtime/*
 *.htaccess
-.env
-*.env
+/.env
+/*.env
 /config/cache.php
 /public/storage/*
