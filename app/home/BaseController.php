@@ -101,7 +101,7 @@ abstract class BaseController
             'title' => $this->webTitle,
             'keywords' => $this->webKeywords,
             'description' => $this->webDesc,
-        ];
+        ];var_dump($COMMON_NAV);die;
 
         View::assign('web_name',$this->web_common_title);
         View::assign('COMMON_NAV', $COMMON_NAV);
