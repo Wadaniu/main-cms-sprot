@@ -168,9 +168,14 @@ function getHotKeywords()
     return $labels;
 }
 
-function getHotComp(){
-    $footballCompetition = new  \app\commonModel\FootballCompetition();
-    return $footballCompetition->getHotData();
+function getFootballHotComp(){
+    $Competition = new  \app\commonModel\FootballCompetition();
+    return $Competition->getHotData();
+}
+
+function getBasketballHotComp(){
+    $Competition = new  \app\commonModel\BasketballCompetition();
+    return $Competition->getHotData();
 }
 
 function getMainMatchLive(){

@@ -80,20 +80,17 @@ class FootballCompetition extends Model
         try {
             $param['updated_at'] = time();
             self::where('id', $param['id'])->strict(false)->field(true)->update($param);
-            $sortConf = Db::name('football_comp_sort')->find($param['id']);
+            $sortConf = Db::name('comp_sort')->find($param['id']);
             $sort = [
-                'id'    =>  $param['id'],
+                'comp_id'    =>  $param['id'],
                 'sort'  =>  $param['sort'],
-                'is_hot'=>  $param['status']
+                'is_hot'=>  $param['status'],
+                'type'=>  0
             ];
             if ($sortConf){
-                Db::name('football_comp_sort')->update($sort);
+                Db::name('comp_sort')->update($sort);
             }else{
-                Db::name('football_comp_sort')->insert([
-                    'id'    =>  $param['id'],
-                    'sort'  =>  $param['sort'],
-                    'is_hot'=>  $param['status']
-                ]);
+                Db::name('comp_sort')->insert($sort);
             }
 
 			add_log('edit', $param['id'], $param);
@@ -114,7 +111,7 @@ class FootballCompetition extends Model
     {
         $info = self::where('id', $id)->find();
         //获取项目排序字段
-        $sortConf = Db::name('football_comp_sort')->find($id);
+        $sortConf = Db::name('comp_sort')->where('type',0)->find($id);
 
         $info->sort = $sortConf['sort'] ?? 0;
         $info->status = $sortConf['is_hot'] ?? 0;
@@ -149,7 +146,7 @@ class FootballCompetition extends Model
         if(!empty($data)){
             return $data;
         }
-        $sort = Db::name('football_comp_sort')->where('is_hot',1)->column('*','id');
+        $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','id');
         $ids = array_keys($sort);
         $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
         foreach ($data as &$item){

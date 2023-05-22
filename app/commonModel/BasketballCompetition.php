@@ -6,6 +6,8 @@
  */
 namespace app\commonModel;
 use think\facade\Cache;
+use think\facade\Db;
+use think\facade\Env;
 use think\model;
 
 class BasketballCompetition extends Model
@@ -62,21 +64,34 @@ class BasketballCompetition extends Model
     }
 
     /**
-    * 编辑信息
-    * @param $param
-    */
-    public function editBasketballCompetition($param)
+     * 编辑信息
+     * @param $param
+     */
+    public function editFootballCompetition($param)
     {
         try {
             $param['updated_at'] = time();
             self::where('id', $param['id'])->strict(false)->field(true)->update($param);
-			add_log('edit', $param['id'], $param);
+            $sortConf = Db::name('comp_sort')->find($param['id']);
+            $sort = [
+                'comp_id'    =>  $param['id'],
+                'sort'  =>  $param['sort'],
+                'is_hot'=>  $param['status'],
+                'type'=>  0
+            ];
+            if ($sortConf){
+                Db::name('comp_sort')->update($sort);
+            }else{
+                Db::name('comp_sort')->insert($sort);
+            }
+
+            add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {
-			return to_assign(1, '操作失败，原因：'.$e->getMessage());
+            return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }
-        Cache::delete(self::$HOT_DATA);
+        Cache::delete(self::$HOT_DATA.Env::get('HOME.HOME_SPACE'));
         Cache::delete(self::$CACHE_SHORT_NAME_ZH);
-		return to_assign();
+        return to_assign();
     }
 	
 
@@ -114,13 +129,18 @@ class BasketballCompetition extends Model
      * 获取热点数据
      */
     public function getHotData(){
-        $key = self::$HOT_DATA;
+        $key = self::$HOT_DATA.Env::get('HOME.HOME_SPACE');
         $data = Cache::get($key);
         if(!empty($data)){
             return $data;
         }
-        $info = self::where(["status"=>1])->field("id,name_zh,short_name_zh,logo")->order("sort asc,id desc")->select();
-        $data = $info->toArray();
+        $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','id');
+        $ids = array_keys($sort);
+        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
+        foreach ($data as &$item){
+            $item['sort'] = $sort[$item['id']]['sort'];
+        }
+        array_multisort(array_column($data,'sort'),SORT_DESC,$data);
         Cache::set($key,$data);
         return $data;
     }
