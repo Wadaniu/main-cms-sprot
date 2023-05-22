@@ -23,7 +23,7 @@ Route::get('luxiang/lanqiu/[:compname]/[:vid]', CommonSpace.'\luxiang\Lanqiu@ind
 
 //集锦主页
 Route::get('jijin/', CommonSpace.'\jijin\Index::index')->name('jijin/');
-//足球集锦
+////足球集锦
 Route::get('jijin/zuqiu/[:compname]/[:v_id]', CommonSpace.'\jijin\Zuqiu::index')->name('jijin/zuqiu/');
 //篮球集锦
 Route::get('jijin/lanqiu/[:compname]/[:v_id]', CommonSpace.'\jijin\Lanqiu@index')->name('jijin/lanqiu/');
