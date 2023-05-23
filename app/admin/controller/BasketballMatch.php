@@ -135,11 +135,4 @@ class BasketballMatch extends BaseController
    }
 
 
-    /**
-     * 同步数据
-     */
-    public function sync(){
-        $this->model->sync();
-    }
-
 }

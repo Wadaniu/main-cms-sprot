@@ -63,6 +63,13 @@ abstract class BaseController
     protected $webDesc = '';
 
     protected $nav = [];
+
+    /**
+     * 模板路径
+     * @var mixed
+     */
+    protected $tempPath;
+
     /**
      * 构造方法
      * @access public
@@ -149,5 +156,16 @@ abstract class BaseController
         return $tempStr;
     }
 
+    protected function getTdk($routeTag,$tdk){
+        $seo['title'] = $this->replaceTDK($this->nav[$routeTag]['web_title'],$tdk);
+        $seo['keywords'] = $this->replaceTDK($this->nav[$routeTag]['web_keywords'],$tdk);
+        $seo['description'] = $this->replaceTDK($this->nav[$routeTag]['web_desc'],$tdk);
+        View::assign('seo',$seo);
+    }
 
+    protected function getTempPath($routeTag){
+        $temp_id = $this->nav[$routeTag]['temp_id'];
+        $temp_info = (new \app\commonModel\HomeTempRoute)->getHomeTempRouteById($temp_id);
+        $this->tempPath = $temp_info->temp_path;
+    }
 }

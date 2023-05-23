@@ -62,7 +62,7 @@ class HomeTempRoute extends Model
     */
     public function getHomeTempRouteById($id)
     {
-        $info = self::where('id', $id)->find();
+        $info = self::where('id', $id)->cache(true,300)->find();
 		return $info;
     }
 

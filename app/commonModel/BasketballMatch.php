@@ -144,10 +144,10 @@ class BasketballMatch extends Model
      * 获取一周数据
      */
     public function getWeekData($competitionIds = []){
-
-        $startTime =  strtotime(date('Y-m-d', strtotime('-2 days')));
-        $endTime = strtotime(date("Y-m-d",strtotime("+5 days")))-1;
+        $startTime =  strtotime(date('Y-m-d', strtotime('-1 days')));
+        $endTime = strtotime(date("Y-m-d",strtotime("+4 days")))-1;
         $where[] = ['match_time','between',[$startTime,$endTime]];
+        $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
 
         return $this->getMatchInfo($where,$competitionIds);
     }
@@ -248,7 +248,7 @@ class BasketballMatch extends Model
                 $item->sphere_type="basketball";
             })
             ->toArray();
-        Cache::set($key,$data,300);
+        Cache::store('common_redis')->set($key,$data,300);
         return $data;
     }
 

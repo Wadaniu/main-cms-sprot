@@ -136,7 +136,6 @@ class FootballMatch extends Model
      */
     public function getWeekData($competitionIds = []): array
     {
-
         $startTime =  strtotime(date('Y-m-d', strtotime('-1 days')));
         $endTime = strtotime(date("Y-m-d",strtotime("+4 days")))-1;
         $where[] = ['match_time','between',[$startTime,$endTime]];
@@ -150,9 +149,6 @@ class FootballMatch extends Model
      */
     public function getBeWeekData($competitionIds = []): array
     {
-
-//        $startTime =  strtotime(date('Y-m-d', strtotime('-2 days')));
-//        $endTime = strtotime(date("Y-m-d",strtotime("+5 days")))-1;
         $startTime =  strtotime(date('Y-m-d', time()));
         $endTime = strtotime(date("Y-m-d",strtotime("+7 days")))-1;
         $where[] = ['match_time','between',[$startTime,$endTime]];
@@ -214,13 +210,13 @@ class FootballMatch extends Model
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
-                $basketballCompetition = new  FootballCompetition();
-                $item->competition_text = $basketballCompetition->getShortNameZh($item->competition_id);
-                $basketballTeam = new  FootballTeam();
-                $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
+                $footballCompetition = new  FootballCompetition();
+                $item->competition_text = $footballCompetition->getShortNameZh($item->competition_id);
+                $footballTeam = new  FootballTeam();
+                $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
                 $item->home_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
                 $item->home_team_logo = isset($info["logo"])?$info["logo"]:"";
-                $info = $basketballTeam->getShortNameZhLogo($item->away_team_id);
+                $info = $footballTeam->getShortNameZhLogo($item->away_team_id);
                 $item->away_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
                 $item->away_team_logo = isset($info["logo"])?$info["logo"]:"";
                 $item->sphere_type="football";
