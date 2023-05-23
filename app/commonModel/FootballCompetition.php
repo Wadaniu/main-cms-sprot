@@ -147,7 +147,7 @@ class FootballCompetition extends Model
             return $data;
         }
         $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','comp_id');
-        var_dump($sort);die;
+
         $ids = array_keys($sort);
         $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
         foreach ($data as &$item){

@@ -25,8 +25,10 @@ class Index extends BaseController
         $footballComp = getFootballHotComp();
 
         $hotFootballId = array_column($footballComp,'id');
-        var_dump($footballComp);die;
-        //获取x天内
+        $hotBasketballId = array_column($basketballComp,'id');
+
+        //获取热门联赛X天内数据
+
 
         //处理tdk
         $tdk = new Tdk();

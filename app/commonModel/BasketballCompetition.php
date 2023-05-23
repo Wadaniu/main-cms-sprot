@@ -67,7 +67,7 @@ class BasketballCompetition extends Model
      * 编辑信息
      * @param $param
      */
-    public function editFootballCompetition($param)
+    public function editBasketballCompetition($param)
     {
         try {
             $param['updated_at'] = time();
@@ -77,7 +77,7 @@ class BasketballCompetition extends Model
                 'comp_id'    =>  $param['id'],
                 'sort'  =>  $param['sort'],
                 'is_hot'=>  $param['status'],
-                'type'=>  0
+                'type'=>  1
             ];
             if ($sortConf){
                 Db::name('comp_sort')->update($sort);
@@ -102,6 +102,12 @@ class BasketballCompetition extends Model
     public function getBasketballCompetitionById($id,$field="*")
     {
         $info = self::where('id', $id)->field($field)->find();
+        //获取项目排序字段
+        $sortConf = Db::name('comp_sort')->where('type',1)->where('comp_id',$id)->find();
+
+        $info->sort = $sortConf['sort'] ?? 0;
+        $info->status = $sortConf['is_hot'] ?? 0;
+
 		return $info;
     }
 
@@ -134,7 +140,7 @@ class BasketballCompetition extends Model
         if(!empty($data)){
             return $data;
         }
-        $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','comp_id');
+        $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',1)->column('*','comp_id');
         $ids = array_keys($sort);
         $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
         foreach ($data as &$item){
