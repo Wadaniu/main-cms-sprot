@@ -7,5 +7,4 @@
 *.htaccess
 /.env
 /*.env
-/config/cache.php
 /public/storage/*
