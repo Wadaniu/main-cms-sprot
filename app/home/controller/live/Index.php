@@ -32,7 +32,7 @@ class Index extends BaseController
         //篮球数据
         $basketballModel = new BasketballMatch();
         $basketballData = $basketballModel->getWeekData($hotBasketballCompId);
-var_dump($basketballData);die;
+
         $matchData = array_merge($footballData,$basketballData);
 
         $res = [];
