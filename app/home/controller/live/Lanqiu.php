@@ -13,7 +13,6 @@ use think\facade\View;
 
 class Lanqiu extends BaseController
 {
-    private $tdk;
     public function __construct(App $app)
     {
         parent::__construct($app);

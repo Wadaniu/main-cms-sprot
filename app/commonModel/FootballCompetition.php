@@ -23,6 +23,11 @@ class FootballCompetition extends Model
         3=>"友谊赛",
     ];
 
+    public static function getByName(string $compName)
+    {
+        return self::where('short_name_zh',$compName)->findOrEmpty();
+    }
+
 
     /**
     * 获取分页列表
