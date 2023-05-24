@@ -9,7 +9,6 @@ use think\facade\View;
 class Index extends BaseController
 {
     const RouteTag  = 'jijin';
-    private $tempPath;
 
     public function __construct(App $app)
     {

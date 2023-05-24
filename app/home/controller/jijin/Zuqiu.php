@@ -10,10 +10,6 @@ use think\facade\View;
 class Zuqiu extends BaseController
 {
     const RouteTag  = 'jijin_zuqiu';
-    /**
-     * @var mixed
-     */
-    private $tempPath;
 
     public function __construct(App $app)
     {
