@@ -193,6 +193,19 @@ class FootballMatch extends Model
      */
     public function getMatchInfo($where,$competitionIds=[],$limit = 0,$order="status_id desc,match_time asc"): array
     {
+        $key = self::$CACHE_HOME;
+        if(!empty($competitionIds)){
+            $key .= implode($competitionIds);
+        }
+        if(!empty($where)){
+            $key .= json_encode($where);
+        }
+        $key .= $limit.$order;
+        $data = Cache::store('common_redis')->get($key);
+        if(!empty($data)){
+            return $data;
+        }
+
         if(!empty($competitionIds)){
             $where[] = ["competition_id","in",$competitionIds];
         }
@@ -220,8 +233,9 @@ class FootballMatch extends Model
                 $item->away_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
                 $item->away_team_logo = isset($info["logo"])?$info["logo"]:"";
                 $item->sphere_type="football";
-            })
-            ->toArray();
+            })->toArray();
+
+        Cache::store('common_redis')->set($key,$data,300);
         return $data;
     }
 

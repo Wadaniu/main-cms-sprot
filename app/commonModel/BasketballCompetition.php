@@ -16,6 +16,12 @@ class BasketballCompetition extends Model
 
     public static $HOT_DATA =  "BasketballCompetitionHotData";
     public static $CACHE_SHORT_NAME_ZH =  "BasketballCompetitionShortNameZh";
+
+    public static function getByName(string $compName)
+    {
+        return self::where('short_name_zh',$compName)->find();
+    }
+
     /**
     * 获取分页列表
     * @param $where

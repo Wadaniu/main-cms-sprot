@@ -204,7 +204,7 @@ class BasketballMatch extends Model
             $key .= json_encode($where);
         }
         $key .= $limit.$order;
-        $data = Cache::get($key);
+        $data = Cache::store('common_redis')->get($key);
         if(!empty($data)){
            return $data;
         }

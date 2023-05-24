@@ -90,29 +90,24 @@ abstract class BaseController
         $this->nav = array_column(get_navs_es('NAV_HOME'),null,'route_tag');
         $COMMON_NAV = get_navs('NAV_HOME');
         $seo = Request::rule();
-        //动态渲染title
-        $this->web_common_title = get_system_config('web','title');
-        $this->webAdminTitle = get_system_config('web','admin_title');
+
+        $search = [];
+
         foreach ($COMMON_NAV as $item){
-            if ($item['src'] == $seo->getName() ){
-                $this->webTitle = $item['web_title'];
-                $this->webKeywords = $item['web_keywords'];
-                $this->webDesc = $item['web_desc'];
-                break;
+            //父级路由
+            if ($item['src'] == $seo->getName() && isset($item['list'])){
+               foreach ($item['list'] as $list){
+                   $search[] = [
+                       'title'  =>  $list['title'],
+                       'src'  =>  $list['src']
+                   ];
+               }
             }
         }
 
-        $this->webTitle = $this->webTitle ?? $this->webAdminTitle;
-
-        $seo = [
-            'title' => $this->webTitle,
-            'keywords' => $this->webKeywords,
-            'description' => $this->webDesc,
-        ];
-
+        View::assign('search',$search);
         View::assign('web_name',$this->web_common_title);
         View::assign('COMMON_NAV', $COMMON_NAV);
-        View::assign('seo', $seo);
         View::assign('webconfig', get_config('webconfig'));
 
     }

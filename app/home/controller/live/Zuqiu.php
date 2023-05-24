@@ -20,7 +20,7 @@ class Zuqiu extends BaseController
         //处理tdk
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
-
+        var_dump($this->tempPath);die;
         return View::fetch($this->tempPath);
     }
 }
