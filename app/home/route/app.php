@@ -15,14 +15,14 @@ Route::get('/live/zuqiu/:compname?/:matchid?', CommonSpace.'\live\Zuqiu@index')-
 Route::get('/live/lanqiu/:compname?/:matchid?', CommonSpace.'\live\Lanqiu@index')->name('/live/lanqiu/');
 
 //录像首页
-Route::get('luxiang/', CommonSpace.'\luxiang\Index@index')->name('luxiang/');
+Route::get('luxiang/', CommonSpace.'\luxiang\Index@index')->name('/luxiang/');
 //足球录像
 Route::get('luxiang/zuqiu/:compname?/:vid?', CommonSpace.'\luxiang\Zuqiu@index')->name('/luxiang/zuqiu/');
 //篮球录像
 Route::get('luxiang/lanqiu/:compname?/:vid?', CommonSpace.'\luxiang\Lanqiu@index')->name('/luxiang/lanqiu/');
 
 //集锦主页
-Route::get('jijin/', CommonSpace.'\jijin\Index::index')->name('jijin/');
+Route::get('jijin/', CommonSpace.'\jijin\Index::index')->name('/jijin/');
 ////足球集锦
 Route::get('jijin/zuqiu/:compname?/:v_id?', CommonSpace.'\jijin\Zuqiu::index')->name('/jijin/zuqiu/');
 //篮球集锦
