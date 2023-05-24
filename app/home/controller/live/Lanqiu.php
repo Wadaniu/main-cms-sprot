@@ -62,10 +62,10 @@ class Lanqiu extends BaseController
         $video = $matchVideoModel->getByMatchId($matchId,1);
 
         //处理tdk关键字
-        $this->tdk->home_team_name = $analysis['info']['home_team_text'];
-        $this->tdk->away_team_name = $analysis['info']['away_team_text'];
-        $this->tdk->match_time = $analysis['info']['match_time'];
-        $this->tdk->short_name_zh = $analysis['info']['competition_text'];
+        $this->tdk->home_team_name = $analysis['info']['home_team_text'] ?? '';
+        $this->tdk->away_team_name = $analysis['info']['away_team_text'] ?? '';
+        $this->tdk->match_time = $analysis['info']['match_time'] ?? 0;
+        $this->tdk->short_name_zh = $analysis['info']['competition_text'] ?? '';
 
         $this->getTdk('live_zuqiu_detail',$this->tdk);
 
