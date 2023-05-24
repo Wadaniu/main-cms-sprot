@@ -5,11 +5,12 @@ namespace app\home\controller\jijin;
 use app\home\BaseController;
 use think\App;
 use think\facade\View;
+use app\home\Tdk;
+use app\commonModel\MatchVedio;
 
 class Index extends BaseController
 {
     const RouteTag  = 'jijin';
-    private $tempPath;
 
     public function __construct(App $app)
     {
@@ -20,9 +21,23 @@ class Index extends BaseController
     }
 
     public function index(){
-        //获取模板路径
-        $titleTemp = $this->nav[self::RouteTag]['web_title'];
-
+        $tdk = new Tdk();
+        $this->getTdk(self::RouteTag,$tdk);
+        $list = (new MatchVedio())->getList(['type'=>1],["order"=>'match_id desc']);
+        foreach ($list['data'] as $k=>$v){
+            $list['data'][$k]['date']='';
+            $list['data'][$k]['team']=[];
+            $titleArr = explode(" ",$v['title']);
+            if(preg_match("/月/",$titleArr[1])){
+                $list['data'][$k]['date'] = str_replace("日","",str_replace("月","-",$titleArr[1]));
+            }
+            if(isset($titleArr[3])){
+                $list['data'][$k]['team'] = explode("vs",$titleArr[3]);
+            }
+        }
+        View::assign("list",$list);
+        View::assign("index","集锦");
         return View::fetch($this->tempPath);
+
     }
 }

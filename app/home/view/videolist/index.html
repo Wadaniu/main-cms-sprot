@@ -8,207 +8,62 @@
     <div class="left-main">
         <div class="model">
             <div class="title">
-                <p class="tit"><i class="iconfont icon-jijin"></i><span>集锦</span></p>
+                <p class="tit"><i class="iconfont icon-jijin"></i><span>{$index}</span></p>
             </div>
             <div class="category">
                 <a href="" class="cur">全部</a>
-                <a href="">足球集锦</a>
-                <a href="">篮球集锦</a>
+                <a href="">足球</a>
+                <a href="">篮球</a>
             </div>
             <dl class="list-back">
+
+                {foreach $list.data as $row}
                 <dd>
                     <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
+                        <!-----type:1集锦，2录像  video_type:0足球，1篮球----------------------------------->
+                        {if $row.type=='1'}<!---集锦--->
+                            {if $row.video_type=='0'}
+                                <a href="/jijin/zuqiu/zuqiu/{$row.match_id}"><span>{$row.date}</span>{$row.title}</a>
+                            {else}
+                                <a href="/jijin/lanqiu/zuqiu/{$row.match_id}"><span>{$row.date}</span>{$row.title}</a>
+                            {/if}
+                        {else}
+                            {if $row.video_type=='0'}
+                                <a href="/luxiang/zuqiu/zuqiu/{$row.match_id}"><span>{$row.date}</span>{$row.title}</a>
+                            {else}
+                                <a href="/luxiang/lanqiu/zuqiu/{$row.match_id}"><span>{$row.date}</span>{$row.title}</a>
+                            {/if}
+                        {/if}
                     </p>
                     <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
+                        {foreach $row.team as $team}
+                            <a href="">{$team}</a>
+                        {/foreach}
+                        <!--<a href="">莱斯特城</a><a href="">利兹联</a>-->
                     </p>
                 </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平
-                            利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
+
+
+                {/foreach}
+
+                <!--<dd>-->
+                    <!--<p class="back-cont">-->
+                        <!--<a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平-->
+                            <!--利兹联1-1莱斯特城排名不变</a>-->
+                    <!--</p>-->
+                    <!--<p class="back-team">-->
+                        <!--<a href="">莱斯特城</a><a href="">利兹联</a>-->
+                    <!--</p>-->
+                <!--</dd>-->
             </dl>
+            <style type="text/css">
+                .pagination li{
+                    float: left;
+                    width: 30px;
+                }
+            </style>
             <div class="pages">
-                <a href="">&lt;</a>
-                <a href="#">1</a>
-                <a href="/">2</a>
-                <a href="/">3</a>
-                <a href="/">4</a>
-                <a href="/">5</a>
-                <a href="/">6</a>
-                <a href="/">7</a>
-                <a href="/">8</a>
-                <a href="/">9</a>
-                <a href="/">&gt;</a>
+                <?php echo $list['render'] ?>
             </div>
         </div>
     </div>
