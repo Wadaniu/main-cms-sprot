@@ -23,9 +23,9 @@ class FootballCompetition extends Model
         3=>"友谊赛",
     ];
 
-    public static function getByName(string $compName)
+    public static function getByPY(string $compName)
     {
-        return self::where('short_name_zh',$compName)->findOrEmpty();
+        return self::where('short_name_py',$compName)->findOrEmpty();
     }
 
 
@@ -85,7 +85,8 @@ class FootballCompetition extends Model
         try {
             $param['updated_at'] = time();
             self::where('id', $param['id'])->strict(false)->field(true)->update($param);
-            $sortConf = Db::name('comp_sort')->find($param['id']);
+            $sortConf = Db::name('comp_sort')->where('comp_id',$param['id'])->where('type',0)->find();
+
             $sort = [
                 'comp_id'    =>  $param['id'],
                 'sort'  =>  $param['sort'],
@@ -154,7 +155,7 @@ class FootballCompetition extends Model
         $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','comp_id');
 
         $ids = array_keys($sort);
-        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
+        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_py,short_name_zh,logo")->select()->toArray();
         foreach ($data as &$item){
             $item['sort'] = $sort[$item['id']]['sort'];
         }

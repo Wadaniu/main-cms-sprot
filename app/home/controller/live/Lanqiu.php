@@ -86,7 +86,7 @@ class Lanqiu extends BaseController
             $this->tdk->short_name_zh = '篮球';
         }else{
             //获取联赛id
-            $comp = BasketballCompetition::getByName($compName);
+            $comp = BasketballCompetition::getByPY($compName);
             //过滤联赛
             $data = $basketballModel->getWeekData([$comp['id']]);
             //tdk关键字

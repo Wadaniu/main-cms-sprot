@@ -86,7 +86,7 @@ class Zuqiu extends BaseController
             $this->tdk->short_name_zh = '篮球';
         }else{
             //获取联赛id
-            $comp = FootballCompetition::getByName($compName);
+            $comp = FootballCompetition::getByPY($compName);
             //过滤联赛
             $data = $footballModel->getWeekData([$comp['id']]);
             //tdk关键字
