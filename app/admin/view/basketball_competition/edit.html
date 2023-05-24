@@ -13,13 +13,14 @@
 			<td><input type="text" name="name_zht"  value="{$detail.name_zht}" autocomplete="off" placeholder="请输入粤语名称" class="layui-input"></td><td class="layui-td-gray-2">英文名称</td>
 			<td><input type="text" name="name_en"  value="{$detail.name_en}" autocomplete="off" placeholder="请输入英文名称" class="layui-input"></td><td class="layui-td-gray-2">中文简称</td>
 			<td><input type="text" name="short_name_zh"  value="{$detail.short_name_zh}" autocomplete="off" placeholder="请输入中文简称" class="layui-input"></td>
-		</tr>
+				</tr>
 				<tr><td class="layui-td-gray-2">粤语简称</td>
 			<td><input type="text" name="short_name_zht"  value="{$detail.short_name_zht}" autocomplete="off" placeholder="请输入粤语简称" class="layui-input"></td><td class="layui-td-gray-2">英文简称</td>
-			<td><input type="text" name="short_name_en"  value="{$detail.short_name_en}" autocomplete="off" placeholder="请输入英文简称" class="layui-input"></td><td class="layui-td-gray-2">赛事logo</td>
-			<td><input type="text" name="logo"  value="{$detail.logo}" autocomplete="off" placeholder="请输入赛事logo" class="layui-input"></td>
+			<td><input type="text" name="short_name_en"  value="{$detail.short_name_en}" autocomplete="off" placeholder="请输入英文简称" class="layui-input"></td><td class="layui-td-gray-2">中文拼音</td>
+			<td><input type="text" name="short_name_py"  value="{$detail.short_name_py}" autocomplete="off" placeholder="请输入中文拼音" class="layui-input"></td>
 		</tr>
-				<tr><td class="layui-td-gray-2">顺序</td>
+
+		<tr><td class="layui-td-gray-2">顺序</td>
 			<td><input type="text" name="sort"  value="{$detail.sort}" autocomplete="off" placeholder="请输入顺序" class="layui-input"></td><td class="layui-td-gray-2">是否热门</td>
 			<td>
 				<select name="status" >
@@ -31,6 +32,13 @@
 
 			<td><input type="text" name="updated_at"  lay-verify="required" lay-reqText="请完善更新时间" value="{$detail.updated_at|time_format=###,'Y-m-d H:i:s'}" readonly readonly id="laydate_updated_at" autocomplete="off" placeholder="请选择" class="layui-input"></td><td colspan='2'></td>
 
+		</tr>
+	<tr>
+	<td class="layui-td-gray-2">赛事logo</td>
+	<td colspan="5"><input type="text" name="logo"  value="{$detail.logo}" autocomplete="off" placeholder="请输入赛事logo" class="layui-input"></td>
+	</tr>
+		<tr><td class="layui-td-gray-2">赛事简介</td>
+		<td colspan="5" style="vertical-align:top"><textarea id="intro" name="intro" style="width: 1000px;height: 200px">{$detail.intro}</textarea></td>
 		</tr>
 	</table>
 	<div class="py-3">

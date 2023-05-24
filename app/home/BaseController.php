@@ -70,6 +70,8 @@ abstract class BaseController
      */
     protected $tempPath;
 
+    protected $tdk;
+
     /**
      * 构造方法
      * @access public

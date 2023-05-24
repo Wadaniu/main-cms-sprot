@@ -17,11 +17,10 @@ class BasketballCompetition extends Model
     public static $HOT_DATA =  "BasketballCompetitionHotData";
     public static $CACHE_SHORT_NAME_ZH =  "BasketballCompetitionShortNameZh";
 
-    public static function getByName(string $compName)
+    public static function getByPY(string $compName)
     {
-        return self::where('short_name_zh',$compName)->find();
+        return self::where('short_name_py',$compName)->findOrEmpty();
     }
-
     /**
     * 获取分页列表
     * @param $where
@@ -78,7 +77,7 @@ class BasketballCompetition extends Model
         try {
             $param['updated_at'] = time();
             self::where('id', $param['id'])->strict(false)->field(true)->update($param);
-            $sortConf = Db::name('comp_sort')->where('comp_id',$param['id'])->find();
+            $sortConf = Db::name('comp_sort')->where('comp_id',$param['id'])->where('type',1)->find();
             $sort = [
                 'comp_id'    =>  $param['id'],
                 'sort'  =>  $param['sort'],
@@ -148,7 +147,7 @@ class BasketballCompetition extends Model
         }
         $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',1)->column('*','comp_id');
         $ids = array_keys($sort);
-        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
+        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,short_name_py,logo")->select()->toArray();
         foreach ($data as &$item){
             $item['sort'] = $sort[$item['id']]['sort'];
         }
@@ -162,10 +161,10 @@ class BasketballCompetition extends Model
      */
     public function getShortNameZh($id){
         $key = self::$CACHE_SHORT_NAME_ZH;
-        $data = Cache::get($key);
+        $data = Cache::store('common_redis')->get($key);
         if(empty($data)){
-            $data = self::where([])->field("id,short_name_zh")->column("short_name_zh","id");
-            Cache::set($key,$data);
+            $data = self::field("id,short_name_zh")->column("short_name_zh","id");
+            Cache::store('common_redis')->set($key,$data);
         }
         if(isset($data[$id])){
             return $data[$id];

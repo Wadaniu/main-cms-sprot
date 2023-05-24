@@ -12,7 +12,7 @@ return [
     ],
 
     'live' => [
-        'route_name'    => '直播主页',
+        'route_name'    => '直播',
         'route_path'    =>  '/live/',
         'keywords'      =>  []
     ],
@@ -29,7 +29,8 @@ return [
         'keywords'      =>  [
             'home_team_name'    =>  '主队简称',
             'away_team_name'    =>  '客队简称',
-            'match_time'        =>  '比赛时间'
+            'match_time'        =>  '比赛时间',
+            'short_name_zh'     =>  '联赛简称'
         ]
     ],
     'live_lanqiu'       => [
@@ -45,12 +46,13 @@ return [
         'keywords'      =>  [
             'home_team_name'    =>  '主队简称',
             'away_team_name'    =>  '客队简称',
-            'match_time'        =>  '比赛时间'
+            'match_time'        =>  '比赛时间',
+            'short_name_zh'     =>  '联赛简称'
         ]
     ],
 
     'luxiang'           => [
-        'route_name'    => '录像主页',
+        'route_name'    => '录像',
         'route_path'    =>  '/luxiang/',
         'keywords'      =>  []
     ],
@@ -84,7 +86,7 @@ return [
     ],
 
     'jijin'             => [
-        'route_name'    => '集锦主页',
+        'route_name'    => '集锦',
         'route_path'    =>  '/jijin/',
         'keywords'      =>  []
     ],
@@ -118,7 +120,7 @@ return [
     ],
 
     'zixun'           => [
-        'route_name'    => '资讯主页',
+        'route_name'    => '资讯',
         'route_path'    =>  '/zixun/',
         'keywords'      =>  []
     ],
@@ -155,6 +157,11 @@ return [
         ]
     ],
 
+    'liansai'           => [
+        'route_name'    => '联赛',
+        'route_path'    =>  '/liansai/',
+        'keywords'      =>  []
+    ],
     'liansai_zuqiu'     => [
         'route_name'    => '足球联赛',
         'route_path'    =>  '/liansai/zuqiu/',
@@ -180,6 +187,11 @@ return [
         ]
     ],
 
+    'qiudui'           => [
+        'route_name'    => '球队',
+        'route_path'    =>  '/qiudui/',
+        'keywords'      =>  []
+    ],
     'qiudui_zuqiu'      => [
         'route_name'    => '足球球队',
         'route_path'    =>  '/qiudui/zuqiu/',

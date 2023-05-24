@@ -191,7 +191,7 @@ class FootballMatch extends Model
     /**
      * 获取一周数据
      */
-    public function getMatchInfo($where,$competitionIds=[],$limit = 0,$order="status_id desc,match_time asc"): array
+    public function getMatchInfo($where,$competitionIds=[],$limit = 50,$order="status_id desc,match_time asc"): array
     {
         $key = self::$CACHE_HOME;
         if(!empty($competitionIds)){

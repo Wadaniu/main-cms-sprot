@@ -195,7 +195,7 @@ class BasketballMatch extends Model
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getMatchInfo($where,$competitionIds=[],$limit = 0,$order="status_id desc,match_time desc"){
+    public function getMatchInfo($where,$competitionIds=[],$limit = 50,$order="status_id desc,match_time desc"){
         $key = self::$CACHE_HOME;
         if(!empty($competitionIds)){
             $key .= implode($competitionIds);
@@ -353,6 +353,7 @@ class BasketballMatch extends Model
             }
         }
     }
+
     /**
      * 视频采集
      */
@@ -383,7 +384,11 @@ class BasketballMatch extends Model
         }
     }
 
-
+    public function getMatchLive($id)
+    {
+        $info = self::field('id,is_link,mobile_link,pc_link')->where('id', $id)->where('status_id','IN',[1,2,3,4,5,6,7,8,9])->findOrEmpty()->toArray();
+        return $info;
+    }
 
 }
 

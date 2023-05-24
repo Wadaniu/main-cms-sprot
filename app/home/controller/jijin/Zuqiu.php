@@ -11,9 +11,7 @@ use app\commonModel\MatchVedio;
 class Zuqiu extends BaseController
 {
     const RouteTag  = 'jijin_zuqiu';
-    /**
-     * @var mixed
-     */
+
 
     public function __construct(App $app)
     {
