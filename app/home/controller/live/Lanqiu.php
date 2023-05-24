@@ -93,8 +93,13 @@ class Lanqiu extends BaseController
             $this->tdk->short_name_zh = $comp['short_name_zh'];
         }
 
+        $res = [];
+        foreach ($data as $item){
+            $res[date('Y-m-d',$item['match_time'])][] = $item;
+        }
+
         $this->getTdk('live_lanqiu',$this->tdk);
-        View::assign('data',$data);
+        View::assign('data',$res);
     }
 
 }
