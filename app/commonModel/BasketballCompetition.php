@@ -19,7 +19,7 @@ class BasketballCompetition extends Model
 
     public static function getByName(string $compName)
     {
-        return self::where('short_name_zh',$compName)->find();
+        return self::where('short_name_zh',$compName)->findOrEmpty();
     }
 
     /**
@@ -162,10 +162,10 @@ class BasketballCompetition extends Model
      */
     public function getShortNameZh($id){
         $key = self::$CACHE_SHORT_NAME_ZH;
-        $data = Cache::get($key);
+        $data = Cache::store('common_redis')->get($key);
         if(empty($data)){
-            $data = self::where([])->field("id,short_name_zh")->column("short_name_zh","id");
-            Cache::set($key,$data);
+            $data = self::field("id,short_name_zh")->column("short_name_zh","id");
+            Cache::store('common_redis')->set($key,$data);
         }
         if(isset($data[$id])){
             return $data[$id];

@@ -29,7 +29,8 @@ return [
         'keywords'      =>  [
             'home_team_name'    =>  '主队简称',
             'away_team_name'    =>  '客队简称',
-            'match_time'        =>  '比赛时间'
+            'match_time'        =>  '比赛时间',
+            'short_name_zh'     =>  '联赛简称'
         ]
     ],
     'live_lanqiu'       => [
@@ -45,7 +46,8 @@ return [
         'keywords'      =>  [
             'home_team_name'    =>  '主队简称',
             'away_team_name'    =>  '客队简称',
-            'match_time'        =>  '比赛时间'
+            'match_time'        =>  '比赛时间',
+            'short_name_zh'     =>  '联赛简称'
         ]
     ],
 

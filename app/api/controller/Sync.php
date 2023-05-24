@@ -122,11 +122,20 @@ class Sync extends BaseController
     }
 
     /**
-     * 足球情报列表
+     * 同步篮球比赛详情
      * @return void
      */
-//    public function footballIntelligence(){
-//        $footballIntelligence = new \app\admin\model\FootballIntelligence();
-//        return $footballIntelligence->autoSync(false);
-//    }
+    public function basketballMatchInfo(){
+        $BasketballMatchInfo = new \app\commonModel\BasketballMatchInfo();
+        $BasketballMatchInfo->autoSync();
+    }
+
+    /**
+     * 获取最近一个月所有比赛，用于同步赛程详情，同步一次即可
+     * @return void
+     */
+    public function addBasketballMatchInfoByLast(){
+        $BasketballMatchInfo = new \app\commonModel\BasketballMatchInfo();
+        $BasketballMatchInfo->addMatchByLast();
+    }
 }
