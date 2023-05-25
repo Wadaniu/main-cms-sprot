@@ -1,0 +1,17 @@
+<?php $type=count($search)?$search:typeselect(); ?>
+<div class="category">
+    <?php if(count($search)): ?>
+    <a href="{$_SERVER['REQUEST_URI']}">全部</a>
+    <?php endif; ?>
+    {foreach $type as $key=>$item}
+    <a href="{$item.src}">{$item.title}</a>
+    {/foreach}
+</div>
+<script>
+    let cururl = location.pathname;
+    $(".category a").each(function (i, item) {
+        if (cururl == $(item).attr('href')) {
+            $(item).addClass('cur').siblings().removeClass();
+        }
+    })
+</script>
