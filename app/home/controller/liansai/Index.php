@@ -32,7 +32,6 @@ class Index extends BaseController
         $footballModel = new FootballCompetition();
         $footballData = $footballModel->getList($where,['limit'=>5])->toArray();
         //篮球数据
-
         $basketballModel = new BasketballCompetition();
         $basketballData = $basketballModel->getList($where,['limit'=>5])->toArray();
 
