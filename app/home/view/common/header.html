@@ -12,6 +12,7 @@
         <nav class="nav">
             <ul>
                 {foreach $COMMON_NAV as $item}
+
                     <li><a href="{:url($item.src . $item.param)}">{$item.title}<i class="iconfont icon-xia"></i></a>
                     <?php if(isset($item['list'])&&is_array($item['list'])&&count($item['list'])>0): ?>
                     <div class="sub">
@@ -33,7 +34,7 @@
     </div>
 </div>
 <script>
-    let curlink = window.location.pathname;
+    let curlink = location.pathname;
     $(".nav a").each(function (i, item) {
         let thelink = $(item).attr('href') ? $(item).attr('href') : false;
         if (thelink && curlink.indexOf(thelink) > -1) $(item).parents('li').addClass('cur').siblings().removeClass(
