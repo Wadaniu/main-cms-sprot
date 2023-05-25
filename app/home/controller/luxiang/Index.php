@@ -16,15 +16,13 @@ class Index extends BaseController
     public function __construct(App $app)
     {
         parent::__construct($app);
-        $temp_id = $this->nav[self::RouteTag]['temp_id'];
-        $temp_info = (new \app\commonModel\HomeTempRoute)->getHomeTempRouteById($temp_id);
-        $this->tempPath = $temp_info->temp_path;
     }
 
     public function index(){
         //处理tdk
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
+        $this->getTempPath(self::RouteTag);
         $list = (new MatchVedio())->getList(['type'=>2],["order"=>'match_id desc']);
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['date']='';
