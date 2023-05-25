@@ -163,7 +163,8 @@ class BasketballCompetition extends Model
         $key = self::$CACHE_SHORT_NAME_ZH;
         $data = Cache::store('common_redis')->get($key);
         if(empty($data)){
-            $data = self::field("id,short_name_zh")->column("short_name_zh","id");
+            $data = self::field("id,short_name_zh,short_name_py")->select()->toArray();
+            $data = array_column($data,null,'id');
             Cache::store('common_redis')->set($key,$data);
         }
         if(isset($data[$id])){
@@ -232,6 +233,21 @@ class BasketballCompetition extends Model
     public function sync(){
         $this->autoSync(false);
         return to_assign(0,'已成功同步');
+    }
+
+    /**
+     * 获取分页列表
+     * @param $where
+     * @param $param
+     */
+    public function getList($where, $param)
+    {
+        $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+        $order = empty($param['order']) ? 'status desc,sort asc,id desc' : $param['order'];
+        $list = self::where($where)->field('id,short_name_zh,short_name_py,logo,status,sort')
+            ->order($order)
+            ->paginate($rows, false, ['query' => $param]);
+        return $list;
     }
 
 

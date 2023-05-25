@@ -36,11 +36,11 @@ Route::get('/zixun/zuqiu/:compname?/:aid?', CommonSpace.'\zixun\Zuqiu@index')->n
 Route::get('/zixun/lanqiu/:compname?/:aid?', CommonSpace.'\zixun\Lanqiu@index')->name('/zixun/lanqiu/');
 
 //联赛首页
-Route::get('/liansai/', CommonSpace.'\liansai\Index@index')->name('/liansai/');
+Route::get('/liansai/:page?/:keyword?', CommonSpace.'\liansai\Index@index')->name('/liansai/');
 //足球联赛
-Route::get('/liansai/zuqiu/:compid?', CommonSpace.'\liansai\Zuqiu@index')->name('/liansai/zuqiu/');
+Route::get('/liansai/zuqiu/:page?/:compid?', CommonSpace.'\liansai\Zuqiu@index')->name('/liansai/zuqiu/');
 //篮球联赛
-Route::get('/liansai/lanqiu/:compid?', CommonSpace.'\liansai\Lanqiu@index')->name('/liansai/lanqiu/');
+Route::get('/liansai/lanqiu/:page?/:compid?', CommonSpace.'\liansai\Lanqiu@index')->name('/liansai/lanqiu/');
 
 //球队首页
 Route::get('/qiudui/', CommonSpace.'\qiudui\Zuqiu@index')->name('/qiudui/');

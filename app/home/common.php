@@ -30,7 +30,11 @@ function get_navs($name)
 function get_navs_es($name)
 {
     if (!get_cache('homeNavEs' . $name)) {
-        $nav = \think\facade\Db::name('NavInfo')->where('status' , 1)->order('sort asc')->select()->toArray();
+        $nav_id = \think\facade\Db::name('Nav')->where(['name' => $name, 'status' => 1])->value('id');
+        if (empty($nav_id)) {
+            return '';
+        }
+        $nav = \think\facade\Db::name('NavInfo')->where('nav_id', $nav_id)->order('sort asc')->select()->toArray();
         \think\facade\Cache::set('homeNavEs' . $name, $nav);
     }
     $navs = get_cache('homeNavEs' . $name);
