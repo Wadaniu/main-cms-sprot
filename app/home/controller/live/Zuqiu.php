@@ -100,6 +100,7 @@ class Zuqiu extends BaseController
         }
 
         $this->getTdk('live_zuqiu',$this->tdk);
+        //var_dump($res);die;
         View::assign('data',$res);
     }
 }

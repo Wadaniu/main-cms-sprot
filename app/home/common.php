@@ -115,13 +115,10 @@ function getzt($id, $type): string
 
     switch ($type) {
         case 0:
-            $back = $boolean ? '' : 'ing';
+            $back = $boolean ? 'icon-fenxi' : ($id == 8 ? 'icon-bofang' : 'icon-zhibo');
             break;
         case 1:
             $back = $boolean ? '赛前分析' : ($id == 8 ? '锦集/录像' : '直播中...');
-            break;
-        case 2:
-            $back = $boolean ? 'analyse' : 'play';
             break;
     }
 
@@ -172,17 +169,70 @@ function getHotKeywords()
     return $labels;
 }
 
-function getFootballHotComp(){
+//某字符在字符串中出现某次的下标
+function findIndex($str, $target, $num): int
+{
+    $index = 0;
+    $count = 0;
+    for ($i = 0; $i < strlen($str); $i++) {
+        if ($str[$i] == $target) {
+            $index = $i;
+            $count++;
+        }
+        if ($count == $num) {
+            break;
+        }
+    }
+    return $index;
+}
+
+//热门分类选择
+function typeselect(): array
+{
+    $cururl = $_SERVER['REQUEST_URI'];
+    $alllink = count(get_params()) ? substr($cururl, 0, findIndex($cururl, '/', 3) + 1) : $cururl;
+    $typelist[] = ['title' => '全部', 'src' => $alllink];
+    $typedata = strpos($cururl, 'zuqiu') ? getFootballHotComp() : getBasketballHotComp();
+    foreach ($typedata as $item) {
+        $typelist[] = [
+            'title' => $item['short_name_zh'],
+            'src' => $alllink . $item['short_name_py']. '/'
+        ];
+    }
+    return $typelist;
+}
+
+//首页热门直播
+function hotlive(): array
+{
+    $typelist = [];
+    $hottype = [getFootballHotComp(), getBasketballHotComp()];
+    foreach ($hottype as $key => $type) {
+        $typesrc = $key ? 'lanqiu' : 'zuqiu';
+        foreach ($type as $item) {
+            $typelist[] = [
+                'title' => $item['short_name_zh'] . '直播',
+                'src' => 'live/' . $typesrc . '/' . $item['short_name_py']
+            ];
+        }
+    }
+    return $typelist;
+}
+
+function getFootballHotComp()
+{
     $Competition = new  \app\commonModel\FootballCompetition();
     return $Competition->getHotData();
 }
 
-function getBasketballHotComp(){
+function getBasketballHotComp()
+{
     $Competition = new  \app\commonModel\BasketballCompetition();
     return $Competition->getHotData();
 }
 
-function getMainMatchLive(){
+function getMainMatchLive()
+{
     $footballCompetition = new  \app\commonModel\MatchliveLink();
     return $footballCompetition->getList();
 }
@@ -191,15 +241,15 @@ function getHomeRule()
 {
     $route = \think\facade\Route::getRuleList();
     $level = [];
-    foreach ($route as $item){
-        if ($item['name'] == '/'){
+    foreach ($route as $item) {
+        if ($item['name'] == '/') {
             $level[$item['name']] = [];
             continue;
         }
-        $routes = explode('/',$item['name']);
-        if (array_key_exists($routes[0],$level)){
+        $routes = explode('/', $item['name']);
+        if (array_key_exists($routes[0], $level)) {
             $level[$routes[0]]['child'][] = $item['name'];
-        }else{
+        } else {
             $level[$routes[0]]['child'] = [];
         }
     }
@@ -210,16 +260,16 @@ function getFatherRule()
 {
     $route = \think\facade\Route::getRuleList();
     $level = [];
-    foreach ($route as $item){
-        if ($item['name'] == '/'){
+    foreach ($route as $item) {
+        if ($item['name'] == '/') {
             $level[] = $item['name'];
             continue;
         }
-        $routes = explode('/',$item['name']);
-        if (array_key_exists($routes[0],$level)){
+        $routes = explode('/', $item['name']);
+        if (array_key_exists($routes[0], $level)) {
             continue;
-        }else{
-            $level[]= $routes[0];
+        } else {
+            $level[] = $routes[0];
         }
     }
     return $level;
