@@ -106,7 +106,7 @@ abstract class BaseController
                }
             }
         }
-
+        //var_dump($search);die;
         View::assign('search',$search);
         View::assign('web_name',$this->web_common_title);
         View::assign('COMMON_NAV', $COMMON_NAV);
