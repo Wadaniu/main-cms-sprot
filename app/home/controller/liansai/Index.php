@@ -19,27 +19,28 @@ class Index extends BaseController
         $this->getTempPath(self::RouteTag);
     }
     public function index(){
+        $param = get_params();
+        //赛程id
+        $keyword = $param['keyword'] ?? '';
 
+        if (empty($keyword)){
+            $where = '1 = 1';
+        }else{
+            $where = ['short_name_zh','like',$keyword.'%'];
+        }
         //每页五条篮球和足球联赛数据
         $footballModel = new FootballCompetition();
-        $footballData = $footballModel->getList('1=1',['limit'=>5,'page'=>1]);
-        var_dump($footballData);die;
+        $footballData = $footballModel->getList($where,['limit'=>5])->toArray();
         //篮球数据
         $basketballModel = new BasketballCompetition();
-        $basketballData = $basketballModel->getWeekData();
+        $basketballData = $basketballModel->getList($where,['limit'=>5])->toArray();
 
-        $matchData = array_merge($footballData,$basketballData);
-
-        $res = [];
-        foreach ($matchData as $item){
-            $res[date('Y-m-d',$item['match_time'])][] = $item;
-        }
-
+        $footballData['data'] = array_merge($footballData["data"],$basketballData["data"]);
         //处理tdk
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
 
-        View::assign('data',$res);
+        View::assign('data',$footballData);
         return View::fetch($this->tempPath);
     }
 }

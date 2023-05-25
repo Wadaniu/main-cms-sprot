@@ -185,8 +185,9 @@ class FootballCompetition extends Model
         $key = self::$CACHE_SHORT_NAME_ZH;
         $data = Cache::get($key);
         if(empty($data)){
-            $data = self::where([])->field("id,short_name_zh")->column("short_name_zh","id");
-            Cache::set($key,$data);
+            $data = self::field("id,short_name_zh,short_name_py")->select()->toArray();
+            $data = array_column($data,null,'id');
+            Cache::store('common_redis')->set($key,$data);
         }
         if(isset($data[$id])){
             return $data[$id];

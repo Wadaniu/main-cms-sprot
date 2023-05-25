@@ -88,7 +88,7 @@ class Article extends BaseController
             $param['desc'] = @msubstr(checkStrHtml($param['content']), 0, 100, false);
             //截取第一个图片做缩略图
             $param['origin_url'] = get_html_first_imgurl($param['content']);
-
+            $param['keyword_names'] = str_replace('</p>','',$param['keyword_names']);
 			$ArticleModel = new ArticleModel();	
             $ArticleModel->addArticle($param);
         }else{

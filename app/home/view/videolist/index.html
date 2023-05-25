@@ -11,9 +11,10 @@
                 <p class="tit"><i class="iconfont icon-jijin"></i><span>{$index}</span></p>
             </div>
             <div class="category">
-                <a href="" class="cur">全部</a>
-                <a href="">足球</a>
-                <a href="">篮球</a>
+                <a href="{$href}" {if $compName==''} class="cur" {/if}>全部</a>
+                    {foreach $short as $s}
+                    <a href="{$href}{$s.short_name_py}"  {if $compName==$s.short_name_py } class="cur"  {/if}>{$s.short_name_zh}</a>
+                    {/foreach}
             </div>
             <dl class="list-back">
 
@@ -37,7 +38,7 @@
                     </p>
                     <p class="back-team">
                         {foreach $row.team as $team}
-                            <a href="">{$team}</a>
+                            <a>{$team}</a>
                         {/foreach}
                         <!--<a href="">莱斯特城</a><a href="">利兹联</a>-->
                     </p>
