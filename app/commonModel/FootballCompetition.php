@@ -58,6 +58,21 @@ class FootballCompetition extends Model
     }
 
     /**
+     * 获取分页列表
+     * @param $where
+     * @param $param
+     */
+    public function getList($where, $param)
+    {
+        $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+        $order = empty($param['order']) ? 'status desc,sort asc,id desc' : $param['order'];
+        $list = self::where($where)->field('id,type,short_name_zh,short_name_py,logo,status,sort')
+            ->order($order)
+            ->paginate($rows, false, ['query' => $param]);
+        return $list;
+    }
+
+    /**
     * 添加数据
     * @param $param
     */

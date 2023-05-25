@@ -35,7 +35,7 @@ class Lanqiu extends BaseController
 
     protected function getMatchInfo($matchId)
     {
-        $this->getTempPath('live_zuqiu_detail');
+        $this->getTempPath('live_lanqiu_detail');
 
         //直播
         $model = new BasketballMatch();
@@ -67,7 +67,7 @@ class Lanqiu extends BaseController
         $this->tdk->match_time = $analysis['info']['match_time'] ?? 0;
         $this->tdk->short_name_zh = $analysis['info']['competition_text'] ?? '';
 
-        $this->getTdk('live_zuqiu_detail',$this->tdk);
+        $this->getTdk('live_lanqiu_detail',$this->tdk);
 
         View::assign("analysis",$analysis);
         View::assign("players",$players);
