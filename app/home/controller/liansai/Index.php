@@ -20,10 +20,10 @@ class Index extends BaseController
     }
     public function index(){
 
-        //获取热门联赛一周内数据
-        //足球数据
+        //每页五条篮球和足球联赛数据
         $footballModel = new FootballCompetition();
-        $footballData = $footballModel->getWeekData();
+        $footballData = $footballModel->getList('1=1',['limit'=>5,'page'=>1]);
+        var_dump($footballData);die;
         //篮球数据
         $basketballModel = new BasketballCompetition();
         $basketballData = $basketballModel->getWeekData();
