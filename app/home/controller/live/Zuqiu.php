@@ -16,7 +16,7 @@ class Zuqiu extends BaseController
     public function __construct(App $app)
     {
         parent::__construct($app);
-        View::assign('type','football');
+        View::assign('type','zuqiu');
     }
     public function index(){
         $param = get_params();

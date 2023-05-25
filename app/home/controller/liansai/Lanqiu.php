@@ -12,6 +12,7 @@ class Lanqiu extends BaseController
     public function __construct(App $app)
     {
         parent::__construct($app);
+        View::assign('type','lanqiu');
     }
     public function index(){
         $param = get_params();
