@@ -24,15 +24,15 @@
                         <!-----type:1集锦，2录像  video_type:0足球，1篮球----------------------------------->
                         {if $row.type=='1'}<!---集锦--->
                             {if $row.video_type=='0'}
-                                <a href="/jijin/zuqiu/zuqiu/{$row.match_id}"><span>{$row.date}</span>{$row.title}</a>
+                                <a href="/jijin/zuqiu/zuqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                             {else}
-                                <a href="/jijin/lanqiu/zuqiu/{$row.match_id}"><span>{$row.date}</span>{$row.title}</a>
+                                <a href="/jijin/lanqiu/zuqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                             {/if}
                         {else}
                             {if $row.video_type=='0'}
-                                <a href="/luxiang/zuqiu/zuqiu/{$row.match_id}"><span>{$row.date}</span>{$row.title}</a>
+                                <a href="/luxiang/zuqiu/zuqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                             {else}
-                                <a href="/luxiang/lanqiu/zuqiu/{$row.match_id}"><span>{$row.date}</span>{$row.title}</a>
+                                <a href="/luxiang/lanqiu/zuqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                             {/if}
                         {/if}
                     </p>
