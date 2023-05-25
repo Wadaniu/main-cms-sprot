@@ -61,7 +61,7 @@ class BasketballMatchCount
 
             if (!array_key_exists($value['competition_id'],$existComp)){
                 //获取赛事信息
-                $compName = (new BasketballCompetition)->getShortNameZh($value['competition_id']);
+                $compName = (new BasketballCompetition)->getShortNameZh($value['competition_id'])['short_name_zh'];
                 $existComp[$value['competition_id']] = $compName;
             }else{
                 $compName = $existComp[$value['competition_id']];

@@ -4,18 +4,12 @@
 <!-- 主体 -->
 {block name="body"}
 {include file="common/header" nav='info' /}
+<?php $type=hotlive(); ?>
 <div class="subnav">
     <ul>
-        <li><a href="">英超直播</a></li>
-        <li><a href="">西甲直播</a></li>
-        <li><a href="">意甲直播</a></li>
-        <li><a href="">德甲直播</a></li>
-        <li><a href="">法甲直播</a></li>
-        <li><a href="">欧冠直播</a></li>
-        <li><a href="">中超直播</a></li>
-        <li><a href="">NBA直播</a></li>
-        <li><a href="">CBA直播</a></li>
-        <li><a href="">欧洲杯直播</a></li>
+        {foreach $type as $key=>$item}
+        <li><a href="{$item.src}">{$item.title}</a></li>
+        {/foreach}
     </ul>
 </div>
 <div class="container">

@@ -224,7 +224,9 @@ class FootballMatch extends Model
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
                 $footballCompetition = new  FootballCompetition();
-                $item->competition_text = $footballCompetition->getShortNameZh($item->competition_id);
+                $comp = $footballCompetition->getShortNameZh($item->competition_id);
+                $item->competition_text = $comp['short_name_zh'];
+                $item->comp_py = $comp['short_name_py'];
                 $footballTeam = new  FootballTeam();
                 $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
                 $item->home_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
@@ -443,8 +445,8 @@ class FootballMatch extends Model
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
-                $basketballCompetition = new  FootballCompetition();
-                $item->competition_text = $basketballCompetition->getShortNameZh($item->competition_id);
+//                $basketballCompetition = new  FootballCompetition();
+//                $item->competition_text = $basketballCompetition->getShortNameZh($item->competition_id);
                 $basketballTeam = new  FootballTeam();
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
                 $item->home_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
@@ -476,8 +478,8 @@ class FootballMatch extends Model
             if(isset(self::$STATUSID[$item->status_id])){
                 $item->status_text = self::$STATUSID[$item->status_id];
             }
-            $basketballCompetition = new  FootballCompetition();
-            $item->competition_text = $basketballCompetition->getShortNameZh($item->competition_id);
+//            $basketballCompetition = new  FootballCompetition();
+//            $item->competition_text = $basketballCompetition->getShortNameZh($item->competition_id);
             $basketballTeam = new  FootballTeam();
             $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
             $item->home_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";

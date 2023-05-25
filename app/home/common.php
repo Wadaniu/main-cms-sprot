@@ -30,7 +30,11 @@ function get_navs($name)
 function get_navs_es($name)
 {
     if (!get_cache('homeNavEs' . $name)) {
-        $nav = \think\facade\Db::name('NavInfo')->where('status', 1)->order('sort asc')->select()->toArray();
+        $nav_id = \think\facade\Db::name('Nav')->where(['name' => $name, 'status' => 1])->value('id');
+        if (empty($nav_id)) {
+            return '';
+        }
+        $nav = \think\facade\Db::name('NavInfo')->where('nav_id', $nav_id)->order('sort asc')->select()->toArray();
         \think\facade\Cache::set('homeNavEs' . $name, $nav);
     }
     $navs = get_cache('homeNavEs' . $name);
@@ -165,6 +169,7 @@ function getHotKeywords()
     return $labels;
 }
 
+//某字符在字符串中出现某次的下标
 function findIndex($str, $target, $num): int
 {
     $index = 0;
@@ -181,6 +186,7 @@ function findIndex($str, $target, $num): int
     return $index;
 }
 
+//热门分类选择
 function typeselect(): array
 {
     $cururl = $_SERVER['REQUEST_URI'];
@@ -190,8 +196,25 @@ function typeselect(): array
     foreach ($typedata as $item) {
         $typelist[] = [
             'title' => $item['short_name_zh'],
-            'src' => $alllink.$item['short_name_py']
+            'src' => $alllink . $item['short_name_py']. '/'
         ];
+    }
+    return $typelist;
+}
+
+//首页热门直播
+function hotlive(): array
+{
+    $typelist = [];
+    $hottype = [getFootballHotComp(), getBasketballHotComp()];
+    foreach ($hottype as $key => $type) {
+        $typesrc = $key ? 'lanqiu' : 'zuqiu';
+        foreach ($type as $item) {
+            $typelist[] = [
+                'title' => $item['short_name_zh'] . '直播',
+                'src' => 'live/' . $typesrc . '/' . $item['short_name_py']
+            ];
+        }
     }
     return $typelist;
 }

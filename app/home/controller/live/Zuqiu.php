@@ -16,6 +16,7 @@ class Zuqiu extends BaseController
     public function __construct(App $app)
     {
         parent::__construct($app);
+        View::assign('type','zuqiu');
     }
     public function index(){
         $param = get_params();
@@ -91,6 +92,7 @@ class Zuqiu extends BaseController
             $data = $footballModel->getWeekData([$comp['id']]);
             //tdk关键字
             $this->tdk->short_name_zh = $comp['short_name_zh'];
+            View::assign('comp',$comp);
         }
 
         $res = [];
@@ -99,6 +101,7 @@ class Zuqiu extends BaseController
         }
 
         $this->getTdk('live_zuqiu',$this->tdk);
+        //var_dump($res);die;
         View::assign('data',$res);
     }
 }

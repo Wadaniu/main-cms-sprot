@@ -12,6 +12,7 @@ class Lanqiu extends BaseController
     public function __construct(App $app)
     {
         parent::__construct($app);
+        View::assign('type','lanqiu');
     }
     public function index(){
         $param = get_params();
@@ -20,15 +21,15 @@ class Lanqiu extends BaseController
 
         $this->tdk = new Tdk();
 
-        if ($matchId > 0){
-            $this->getMatchInfo($matchId);
+        if ($compid > 0){
+            $this->getCompInfo($compid);
         }else{
-            $this->getMatchList($compName);
+            $this->getMatchList($param);
         }
         return View::fetch($this->tempPath);
     }
 
-    protected function getMatchInfo($matchId)
+    protected function getCompInfo($matchId)
     {
         $this->getTempPath('live_zuqiu_detail');
 

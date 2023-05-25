@@ -227,7 +227,9 @@ class BasketballMatch extends Model
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
                 $basketballCompetition = new  BasketballCompetition();
-                $item->competition_text = $basketballCompetition->getShortNameZh($item->competition_id);
+                $comp = $basketballCompetition->getShortNameZh($item->competition_id);
+                $item->competition_text = $comp['short_name_zh'];
+                $item->comp_py = $comp['short_name_py'];
                 $basketballTeam = new  BasketballTeam();
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
                 if(!empty($info)) {

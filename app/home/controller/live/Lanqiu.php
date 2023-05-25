@@ -16,6 +16,7 @@ class Lanqiu extends BaseController
     public function __construct(App $app)
     {
         parent::__construct($app);
+        View::assign('type','lanqiu');
     }
     public function index(){
         $param = get_params();
@@ -91,6 +92,7 @@ class Lanqiu extends BaseController
             $data = $basketballModel->getWeekData([$comp['id']]);
             //tdk关键字
             $this->tdk->short_name_zh = $comp['short_name_zh'];
+            View::assign('comp',$comp);
         }
 
         $res = [];
