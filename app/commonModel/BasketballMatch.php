@@ -247,7 +247,7 @@ class BasketballMatch extends Model
                     $item->away_team_text = "";
                     $item->away_team_logo = "";
                 }
-                $item->sphere_type="basketball";
+                $item->sphere_type="lanqiu";
             })
             ->toArray();
         Cache::store('common_redis')->set($key,$data,300);
