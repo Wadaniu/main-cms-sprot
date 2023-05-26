@@ -2,6 +2,8 @@
 
 namespace app\home\controller\liansai;
 
+use app\commonModel\BasketballCompetition;
+use app\commonModel\BasketballMatch;
 use app\home\BaseController;
 use app\home\Tdk;
 use think\App;
@@ -24,77 +26,39 @@ class Lanqiu extends BaseController
         if ($compid > 0){
             $this->getCompInfo($compid);
         }else{
-            $this->getMatchList($param);
+            $this->getCompList($param);
         }
         return View::fetch($this->tempPath);
     }
 
-    protected function getCompInfo($matchId)
+    protected function getCompInfo($compid)
     {
-        $this->getTempPath('live_zuqiu_detail');
+        $this->getTempPath('liansai_lanqiu_detail');
 
-        //直播
-        $model = new BasketballMatch();
-        $matchLive = $model->getMatchLive($matchId);
+        $matchModel = new BasketballMatch();
+        $match = $matchModel->getMatchInfo(['status_id','IN',[1,2,3,4,5,7,8,9]],[$compid],5);
 
-        if ($matchLive){
-            $matchLive['mobile_link'] = json_decode($matchLive['mobile_link']??'',true);
-            $matchLive['pc_link'] = json_decode($matchLive['pc_link']??'',true);
-        }
 
-        $basketballMatchInfoModel = new BasketballMatchInfo();
-        $matchInfo = $basketballMatchInfoModel->getByMatchId($matchId);
-        //历史交锋
-        $analysis = [
-            'info'      =>  is_null($matchInfo['info']) ? [] : json_decode($matchInfo['info'],true),
-            'future'    =>  is_null($matchInfo['future']) ? [] : json_decode($matchInfo['future'],true),
-            'history'   =>  is_null($matchInfo['history']) ? [] : json_decode($matchInfo['history'],true),
-        ];
-        //队伍统计
-        $players = is_null($matchInfo['players']) ? [] : json_decode($matchInfo['players'],true);
-
-        //集锦/录像
-        $matchVideoModel = new MatchVedio();
-        $video = $matchVideoModel->getByMatchId($matchId,1);
-
-        //处理tdk关键字
-        $this->tdk->home_team_name = $analysis['info']['home_team_text'] ?? '';
-        $this->tdk->away_team_name = $analysis['info']['away_team_text'] ?? '';
-        $this->tdk->match_time = $analysis['info']['match_time'] ?? 0;
-        $this->tdk->short_name_zh = $analysis['info']['competition_text'] ?? '';
-
-        $this->getTdk('live_zuqiu_detail',$this->tdk);
-
-        View::assign("analysis",$analysis);
-        View::assign("players",$players);
-        View::assign("video",$video);
-        View::assign("matchLive",$matchLive);
+        $this->getTdk('liansai_lanqiu_detail',$this->tdk);
     }
 
-    protected function getMatchList(string $compName)
+    protected function getCompList($param)
     {
-        $this->getTempPath('live_lanqiu');
+        $this->getTempPath('liansai_lanqiu');
+        //赛程id
+        $keyword = $param['keyword'] ?? '';
 
-        $basketballModel = new BasketballMatch();
-        if (empty($compName)){
-            //篮球数据
-            $data = $basketballModel->getWeekData();
-            $this->tdk->short_name_zh = '篮球';
+        if (empty($keyword)){
+            $where = '1 = 1';
         }else{
-            //获取联赛id
-            $comp = BasketballCompetition::getByPY($compName);
-            //过滤联赛
-            $data = $basketballModel->getWeekData([$comp['id']]);
-            //tdk关键字
-            $this->tdk->short_name_zh = $comp['short_name_zh'];
+            $where = ['short_name_zh','like',$keyword.'%'];
         }
+        $param['limit'] = 40;
+        //篮球数据
+        $basketballModel = new BasketballCompetition();
+        $basketballData = $basketballModel->getList($where,$param)->toArray();
 
-        $res = [];
-        foreach ($data as $item){
-            $res[date('Y-m-d',$item['match_time'])][] = $item;
-        }
-
-        $this->getTdk('live_lanqiu',$this->tdk);
-        View::assign('data',$res);
+        $this->getTdk('liansai_lanqiu',$this->tdk);
+        View::assign('data',$basketballData);
     }
 }

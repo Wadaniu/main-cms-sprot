@@ -234,7 +234,7 @@ class FootballMatch extends Model
                 $info = $footballTeam->getShortNameZhLogo($item->away_team_id);
                 $item->away_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
                 $item->away_team_logo = isset($info["logo"])?$info["logo"]:"";
-                $item->sphere_type="football";
+                $item->sphere_type="zuqiu";
             })->toArray();
 
         Cache::store('common_redis')->set($key,$data,300);
