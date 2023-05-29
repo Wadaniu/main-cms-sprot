@@ -42,9 +42,9 @@ Route::get('/liansai/lanqiu/:page?/:compid?', CommonSpace.'\liansai\Lanqiu@index
 //联赛首页
 Route::get('/liansai/:page?/:keyword?', CommonSpace.'\liansai\Index@index')->name('/liansai/');
 
-//球队首页
-Route::get('/qiudui/:page?/:keyword?', CommonSpace.'\qiudui\Zuqiu@index')->name('/qiudui/');
 //足球球队
 Route::get('/qiudui/zuqiu/:page?/:teamid?', CommonSpace.'\qiudui\Zuqiu@index')->name('/qiudui/zuqiu/');
 //篮球球队
 Route::get('/qiudui/lanqiu/:page?/:teamid?', CommonSpace.'\qiudui\Lanqiu@index')->name('/qiudui/lanqiu/');
+//球队首页
+Route::get('/qiudui/:page?/:keyword?', CommonSpace.'\qiudui\Zuqiu@index')->name('/qiudui/');
