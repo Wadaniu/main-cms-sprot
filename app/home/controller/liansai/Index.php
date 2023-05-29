@@ -26,15 +26,20 @@ class Index extends BaseController
         if (empty($keyword)){
             $where = '1 = 1';
         }else{
-            $where = ['short_name_zh','like',$keyword.'%'];
+            $where = [
+                ['short_name_zh','like',$keyword.'%'],
+                ['name_zh','like',$keyword.'%']
+            ];
         }
-        //每页五条篮球和足球联赛数据
+
+        //每页12条篮球和足球联赛数据
         $footballModel = new FootballCompetition();
-        $footballData = $footballModel->getList($where,['limit'=>5])->toArray();
+        $footballData = $footballModel->getList($where,['limit'=>12])->toArray();
         //篮球数据
         $basketballModel = new BasketballCompetition();
-        $basketballData = $basketballModel->getList($where,['limit'=>5])->toArray();
+        $basketballData = $basketballModel->getList($where,['limit'=>12])->toArray();
 
+        $footballData['per_page'] = 24;
         $footballData['data'] = array_merge($footballData["data"],$basketballData["data"]);
         //处理tdk
         $tdk = new Tdk();

@@ -8,16 +8,11 @@
     <div class="left-main">
         <div class="model">
             <div class="title">
-                <p class="tit"><i class="iconfont icon-jijin"></i><span>{$index}</span></p>
+                <p class="tit"><i
+                        class="iconfont {$index=='录像'?'icon-luxiang':'icon-jijin'}"></i><span><?php echo typename() ?>{$index}</span></p>
             </div>
-            <div class="category">
-                <a href="{$href}" {if $compName==''} class="cur" {/if}>全部</a>
-                    {foreach $short as $s}
-                    <a href="{$href}{$s.short_name_py}"  {if $compName==$s.short_name_py } class="cur"  {/if}>{$s.short_name_zh}</a>
-                    {/foreach}
-            </div>
+            {include file="assembly/typeselect"/}
             <dl class="list-back">
-
                 {foreach $list.data as $row}
                 <dd>
                     <p class="back-cont">
@@ -35,42 +30,38 @@
                                 <a href="/luxiang/lanqiu/lanqiu/lanqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                             {/if}
                         {/if}
+                        <a href="/{$row.type=='1'?'jijin':'luxiang'}/{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                     </p>
                     <p class="back-team">
                         {foreach $row.team as $team}
-                            <a>{$team}</a>
+                        <a>{$team}</a>
                         {/foreach}
-                        <!--<a href="">莱斯特城</a><a href="">利兹联</a>-->
                     </p>
                 </dd>
-
-
                 {/foreach}
-
-                <!--<dd>-->
-                    <!--<p class="back-cont">-->
-                        <!--<a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平-->
-                            <!--利兹联1-1莱斯特城排名不变</a>-->
-                    <!--</p>-->
-                    <!--<p class="back-team">-->
-                        <!--<a href="">莱斯特城</a><a href="">利兹联</a>-->
-                    <!--</p>-->
-                <!--</dd>-->
             </dl>
-            <style type="text/css">
-                .pagination li{
-                    float: left;
-                    width: 30px;
-                }
-            </style>
             <div class="pages">
-                <?php echo $list['render'] ?>
+                <?php
+				$cur=$list['current_page'];
+				$total=ceil($list['total']/$list['per_page']);
+				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
+                $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
+                ?>
+                <a href="{$cur==1?'':'?page='.($cur-1)}"><</a>
+                {for start='$start' end='$end'}
+                <a href="{$cur==$i?'#':'?page='.$i}">{$i}</a>
+                {/for}
+                <a href="{$cur==$total?'':'?page='.($cur+1)}">></a>
             </div>
         </div>
     </div>
     <div class="right-main">
         {include file="assembly/zhibo"/}
+        <?php if($index=='录像'): ?>
+        {include file="assembly/jijin"/}
+        <?php else: ?>
         {include file="assembly/luxiang"/}
+        <?php endif; ?>
         {include file="assembly/hotkey"/}
     </div>
 </div>

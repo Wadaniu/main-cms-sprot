@@ -1,6 +1,7 @@
 <?php
 
 use think\facade\Env;
+use think\facade\Request;
 
 /**
  * @copyright Copyright (c) 2021 勾股工作室
@@ -207,8 +208,8 @@ function typeselect(): array
     return $typelist;
 }
 
-//首页热门直播
-function hotlive(): array
+//全部热门类别
+function hotlive($src,$name=''): array
 {
     $typelist = [];
     $hottype = [getFootballHotComp(), getBasketballHotComp()];
@@ -216,8 +217,8 @@ function hotlive(): array
         $typesrc = $key ? 'lanqiu' : 'zuqiu';
         foreach ($type as $item) {
             $typelist[] = [
-                'title' => $item['short_name_zh'] . '直播',
-                'src' => 'live/' . $typesrc . '/' . $item['short_name_py']
+                'title' => $item['short_name_zh'] . $name,
+                'src' => $src . '/' . $typesrc . '/' . $item['short_name_py']
             ];
         }
     }

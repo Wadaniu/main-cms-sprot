@@ -223,21 +223,24 @@ class FootballMatch extends Model
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
+
                 $footballCompetition = new  FootballCompetition();
                 $comp = $footballCompetition->getShortNameZh($item->competition_id);
-                $item->competition_text = $comp['short_name_zh'];
-                $item->comp_py = $comp['short_name_py'];
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
+
                 $footballTeam = new  FootballTeam();
                 $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
-                $item->home_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
-                $item->home_team_logo = isset($info["logo"])?$info["logo"]:"";
+                $item->home_team_text = $info["short_name_zh"]??"";
+                $item->home_team_logo = $info["logo"]??"";
+
                 $info = $footballTeam->getShortNameZhLogo($item->away_team_id);
-                $item->away_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
-                $item->away_team_logo = isset($info["logo"])?$info["logo"]:"";
+                $item->away_team_text = $info["short_name_zh"]??"";
+                $item->away_team_logo = $info["logo"]??"";
                 $item->sphere_type="zuqiu";
             })->toArray();
 
-        Cache::store('common_redis')->set($key,$data,300);
+        Cache::store('common_redis')->set($key,$data,120);
         return $data;
     }
 
@@ -445,16 +448,21 @@ class FootballMatch extends Model
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
-//                $basketballCompetition = new  FootballCompetition();
-//                $item->competition_text = $basketballCompetition->getShortNameZh($item->competition_id);
-                $basketballTeam = new  FootballTeam();
-                $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
-                $item->home_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
-                $item->home_team_logo = isset($info["logo"])?$info["logo"]:"";
-                $info = $basketballTeam->getShortNameZhLogo($item->away_team_id);
-                $item->away_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
-                $item->away_team_logo = isset($info["logo"])?$info["logo"]:"";
-                $item->sphere_type="football";
+
+                $footballCompetition = new  FootballCompetition();
+                $comp = $footballCompetition->getShortNameZh($item->competition_id);
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
+
+                $footballTeam = new  FootballTeam();
+                $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
+                $item->home_team_text = $info["short_name_zh"]??"";
+                $item->home_team_logo = $info["logo"]??"";
+
+                $info = $footballTeam->getShortNameZhLogo($item->away_team_id);
+                $item->away_team_text = $info["short_name_zh"]??"";
+                $item->away_team_logo = $info["logo"]??"";
+                $item->sphere_type="zuqiu";
             })
             ->toArray();
         return $data;
@@ -462,10 +470,10 @@ class FootballMatch extends Model
 
     public function getByTeam($id)
     {
-        $redisKey = 'footballTeamMatch'.$id;
-        $data = Cache::get($redisKey);
-        if ($data){
-            return json_decode($data,true);
+        $key = 'footballTeamMatch'.$id;
+        $data = Cache::store('common_redis')->get($key);
+        if(!empty($data)){
+            return $data;
         }
         //获取三十天内时间
         $startTime = \time() - 86400 * 30;
@@ -478,19 +486,24 @@ class FootballMatch extends Model
             if(isset(self::$STATUSID[$item->status_id])){
                 $item->status_text = self::$STATUSID[$item->status_id];
             }
-//            $basketballCompetition = new  FootballCompetition();
-//            $item->competition_text = $basketballCompetition->getShortNameZh($item->competition_id);
-            $basketballTeam = new  FootballTeam();
-            $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
-            $item->home_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
-            $item->home_team_logo = isset($info["logo"])?$info["logo"]:"";
-            $info = $basketballTeam->getShortNameZhLogo($item->away_team_id);
-            $item->away_team_text = isset($info["short_name_zh"])?$info["short_name_zh"]:"";
-            $item->away_team_logo = isset($info["logo"])?$info["logo"]:"";
-            $item->sphere_type="football";
+
+            $footballCompetition = new  FootballCompetition();
+            $comp = $footballCompetition->getShortNameZh($item->competition_id);
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
+
+            $footballTeam = new  FootballTeam();
+            $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
+            $item->home_team_text = $info["short_name_zh"]??"";
+            $item->home_team_logo = $info["logo"]??"";
+
+            $info = $footballTeam->getShortNameZhLogo($item->away_team_id);
+            $item->away_team_text = $info["short_name_zh"]??"";
+            $item->away_team_logo = $info["logo"]??"";
+            $item->sphere_type="zuqiu";
         })->toArray();
 
-        Cache::set($redisKey, json_encode($data),600);
+        Cache::store('common_redis')->set($key,$data,120);
         return $data;
     }
 

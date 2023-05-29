@@ -19,7 +19,7 @@
         </li>
         <li>&gt;</li>
         <li>
-            首页
+            首页666
         </li>
     </ul>
 </div>
@@ -28,11 +28,12 @@
         <div class="zt-title">
             <span>联赛</span>专题
         </div>
+        <?php $type=hotlive('liansai'); ?>
         <div class="hontlink">
-            热门联赛：<a href="">欧冠</a><a href="">西甲</a><a href="">NBA</a><a href="">CBA</a><a href="">世界杯</a><a
-                href="">欧冠</a><a href="">西甲</a><a href="">NBA</a><a href="">CBA</a><a href="">世界杯</a><a
-                href="">欧冠</a><a href="">西甲</a><a href="">NBA</a><a href="">CBA</a><a href="">世界杯</a><a
-                href="">欧冠</a><a href="">西甲</a><a href="">NBA</a><a href="">CBA</a><a href="">世界杯</a>
+            热门联赛：
+            {foreach $type as $key=>$item}
+            <a href="{$item.src}">{$item.title}</a>
+            {/foreach}
         </div>
     </div>
     <div class="ztnav-bg">

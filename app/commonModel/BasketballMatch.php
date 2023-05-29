@@ -195,7 +195,7 @@ class BasketballMatch extends Model
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getMatchInfo($where,$competitionIds=[],$limit = 50,$order="status_id desc,match_time desc"){
+    public function getMatchInfo($where,array $competitionIds=[],$limit = 50,$order="status_id desc,match_time desc"){
         $key = self::$CACHE_HOME;
         if(!empty($competitionIds)){
             $key .= implode($competitionIds);
@@ -228,29 +228,22 @@ class BasketballMatch extends Model
                 }
                 $basketballCompetition = new  BasketballCompetition();
                 $comp = $basketballCompetition->getShortNameZh($item->competition_id);
-                $item->competition_text = $comp['short_name_zh'];
-                $item->comp_py = $comp['short_name_py'];
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
+
                 $basketballTeam = new  BasketballTeam();
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
-                if(!empty($info)) {
-                    $item->home_team_text = $info["short_name_zh"];
-                    $item->home_team_logo = $info["logo"];
-                }else{
-                    $item->home_team_text = "";
-                    $item->home_team_logo = "";
-                }
+                $item->home_team_text = $info["short_name_zh"]??'';
+                $item->home_team_logo = $info["logo"]??'';
+
                 $info = $basketballTeam->getShortNameZhLogo($item->away_team_id);
-                if(!empty($info)){
-                    $item->away_team_text = $info["short_name_zh"];
-                    $item->away_team_logo = $info["logo"];
-                }else{
-                    $item->away_team_text = "";
-                    $item->away_team_logo = "";
-                }
+                $item->away_team_text = $info["short_name_zh"]??'';
+                $item->away_team_logo = $info["logo"]??'';
+
                 $item->sphere_type="lanqiu";
             })
             ->toArray();
-        Cache::store('common_redis')->set($key,$data,300);
+        Cache::store('common_redis')->set($key,$data,120);
         return $data;
     }
 
@@ -392,5 +385,43 @@ class BasketballMatch extends Model
         return $info;
     }
 
+    public function getByTeam($id)
+    {
+        $redisKey = 'basketballTeamMatch'.$id;
+        $data = Cache::store('common_redis')->get($redisKey);
+        if ($data){
+            return $data;
+        }
+        //获取三十天内时间
+        $startTime = \time() - 86400 * 30;
+
+        $data = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time')
+            ->where('match_time','>',$startTime)
+            ->whereRAW("home_team_id = :id OR away_team_id = :id",['id'=>$id])
+            ->order('match_time','ASC')->select()
+            ->each(function ($item, $key) {
+                if(isset(self::$STATUSID[$item->status_id])){
+                    $item->status_text = self::$STATUSID[$item->status_id];
+                }
+                $basketballCompetition = new  BasketballCompetition();
+                $comp = $basketballCompetition->getShortNameZh($item->competition_id);
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
+
+                $basketballTeam = new  BasketballTeam();
+                $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
+                $item->home_team_text = $info["short_name_zh"]??'';
+                $item->home_team_logo = $info["logo"]??'';
+
+                $info = $basketballTeam->getShortNameZhLogo($item->away_team_id);
+                $item->away_team_text = $info["short_name_zh"]??'';
+                $item->away_team_logo = $info["logo"]??'';
+
+                $item->sphere_type="lanqiu";
+            })->toArray();
+
+        Cache::store('common_redis')->set($redisKey, $data,120);
+        return $data;
+    }
 }
 

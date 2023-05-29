@@ -4,7 +4,7 @@
 <!-- 主体 -->
 {block name="body"}
 {include file="common/header" nav='info' /}
-<?php $type=hotlive(); ?>
+<?php $type=hotlive('live','直播'); ?>
 <div class="subnav">
     <ul>
         {foreach $type as $key=>$item}
