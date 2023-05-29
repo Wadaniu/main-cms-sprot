@@ -246,7 +246,10 @@ class BasketballCompetition extends Model
         $order = empty($param['order']) ? 'status desc,sort asc,id desc' : $param['order'];
         $list = self::where($where)->field('id,short_name_zh,short_name_py,logo,status,sort')
             ->order($order)
-            ->paginate($rows, false, ['query' => $param]);
+            ->paginate($rows, false, ['query' => $param])
+            ->each(function ($item, $key) {
+                $item->sphere_type="lanqiu";
+            });
         return $list;
     }
 
