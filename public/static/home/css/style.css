@@ -802,7 +802,6 @@ a.right-btn span {
     display: flex;
     align-items: center;
     justify-content: right;
-    width: 20%;
 }
 
 .back-team a {

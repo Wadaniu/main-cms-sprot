@@ -88,6 +88,11 @@ function get_path(): array
     return $arr;
 }
 
+function get_ruleName()
+{
+    return Request::instance()->rule()->getName();
+}
+
 //生成一个不会重复的字符串
 function make_token()
 {
