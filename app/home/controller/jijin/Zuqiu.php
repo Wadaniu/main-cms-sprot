@@ -51,13 +51,13 @@ class Zuqiu extends BaseController
             $comp = FootballCompetition::where(['short_name_py'=>$compName])->find();//赛事
             if($comp){
                 $match = FootballMatch::where(["competition_id"=>$comp->id])->column("id");
-                $list = (new MatchVedio())->getList(['type'=>1,'video_type'=>0,'match_id'=>$match],["order"=>'match_id desc']);
+                $list = (new MatchVedio())->getList(['type'=>1,'video_type'=>0,'match_id'=>$match],["order"=>'id desc']);
             }else{
-                $list = (new MatchVedio())->getList(['type'=>1,'video_type'=>0],["order"=>'match_id desc']);
+                $list = (new MatchVedio())->getList(['type'=>1,'video_type'=>0],["order"=>'id desc']);
             }
 
         }else{
-            $list = (new MatchVedio())->getList(['type'=>1,'video_type'=>0],["order"=>'match_id desc']);
+            $list = (new MatchVedio())->getList(['type'=>1,'video_type'=>0],["order"=>'id desc']);
         }
         //$list = (new MatchVedio())->getList(['type'=>1,'video_type'=>0],["order"=>'match_id desc']);
         foreach ($list['data'] as $k=>$v){
@@ -79,7 +79,7 @@ class Zuqiu extends BaseController
         $shortName = (new FootballCompetition())->where(['status'=>1])->field("short_name_zh,short_name_py")->select()->toArray();
         View::assign("short",$shortName);
         View::assign("list",$list);
-        View::assign("index","录像");
+        View::assign("index","集锦");
         View::assign("href","/jijin/zuqiu/");
         View::assign("compName",$compName);
     }

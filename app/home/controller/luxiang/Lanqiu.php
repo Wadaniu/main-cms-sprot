@@ -47,13 +47,13 @@ class Lanqiu extends BaseController
             $comp = BasketballCompetition::where(['short_name_py'=>$compName])->find();//赛事
             if($comp){
                 $match = BasketballMatch::where(["competition_id"=>$comp->id])->column("id");
-                $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>1,'match_id'=>$match],["order"=>'match_id desc']);
+                $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>1,'match_id'=>$match],["order"=>'id desc']);
             }else{
-                $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>1],["order"=>'match_id desc']);
+                $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>1],["order"=>'id desc']);
             }
 
         }else{
-            $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>1],["order"=>'match_id desc']);
+            $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>1],["order"=>'id desc']);
         }
 
         $this->getTempPath('luxiang_lanqiu');
