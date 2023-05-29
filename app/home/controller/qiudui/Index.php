@@ -39,6 +39,7 @@ class Index extends BaseController
         $basketballModel = new BasketballTeam();
         $basketballData = $basketballModel->getList($where,['limit'=>12])->toArray();
 
+        $footballData['per_page'] = 24;
         $footballData['data'] = array_merge($footballData["data"],$basketballData["data"]);
         //处理tdk
         $tdk = new Tdk();

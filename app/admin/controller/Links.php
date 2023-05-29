@@ -89,7 +89,7 @@ class links extends BaseController
         $data['status'] = '-1';
         $data['id'] = $id;
         $data['update_time'] = time();
-        if (Db::name('Links')->update($data) !== false) {
+        if (Db::name('Links')->delete($data) !== false) {
             add_log('delete', $id);
             return to_assign(0, "删除成功");
         } else {
