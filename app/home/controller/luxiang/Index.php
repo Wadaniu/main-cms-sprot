@@ -33,6 +33,7 @@ class Index extends BaseController
             }
             $list['data'][$k]['team'] = explode("vs",$titleArr[3]);
         }
+        //var_dump($list);die;
         View::assign("list",$list);
         View::assign("index","录像");
         return View::fetch($this->tempPath);

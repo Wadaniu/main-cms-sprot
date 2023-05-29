@@ -79,7 +79,7 @@ class Zuqiu extends BaseController
         $shortName = (new FootballCompetition())->where(['status'=>1])->field("short_name_zh,short_name_py")->select()->toArray();
         View::assign("short",$shortName);
         View::assign("list",$list);
-        View::assign("index","录像");
+        View::assign("index","集锦");
         View::assign("href","/jijin/zuqiu/");
         View::assign("compName",$compName);
     }
