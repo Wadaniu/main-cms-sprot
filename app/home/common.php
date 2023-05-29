@@ -169,6 +169,11 @@ function getHotKeywords()
     return $labels;
 }
 
+function typename(): string
+{
+    return strpos($_SERVER['REQUEST_URI'], 'zuqiu') ? '足球' : (strpos($_SERVER['REQUEST_URI'], 'lanqiu') ? '篮球' : '');
+}
+
 //某字符在字符串中出现某次的下标
 function findIndex($str, $target, $num): int
 {
@@ -196,7 +201,7 @@ function typeselect(): array
     foreach ($typedata as $item) {
         $typelist[] = [
             'title' => $item['short_name_zh'],
-            'src' => $alllink . $item['short_name_py']. '/'
+            'src' => $alllink . $item['short_name_py'] . '/'
         ];
     }
     return $typelist;
