@@ -2,8 +2,10 @@
 
 namespace app\home\controller\liansai;
 
+use app\commonModel\Article;
 use app\commonModel\BasketballCompetition;
 use app\commonModel\BasketballMatch;
+use app\commonModel\MatchVedio;
 use app\home\BaseController;
 use app\home\Tdk;
 use think\App;
@@ -11,6 +13,7 @@ use think\facade\View;
 
 class Lanqiu extends BaseController
 {
+    const MainLimit = 5;
     public function __construct(App $app)
     {
         parent::__construct($app);
@@ -22,7 +25,7 @@ class Lanqiu extends BaseController
         $compid = $param['compid'] ?? 0;
 
         $this->tdk = new Tdk();
-
+var_dump($compid);die;
         if ($compid > 0){
             $this->getCompInfo($compid);
         }else{
@@ -34,12 +37,34 @@ class Lanqiu extends BaseController
     protected function getCompInfo($compid)
     {
         $this->getTempPath('liansai_lanqiu_detail');
-
+echo 11;
+        //直播数据
         $matchModel = new BasketballMatch();
-        $match = $matchModel->getMatchInfo(['status_id','IN',[1,2,3,4,5,7,8,9]],[$compid],5);
+        $matchList = $matchModel->getMatchInfo(['status_id','IN',[1,2,3,4,5,7,8,9]],[$compid],self::MainLimit);
 
+        $videoModel = new MatchVedio();
+        $matchId = BasketballMatch::where(["competition_id"=>$compid])->column("id");
+        //录像
+        $luxiang = $videoModel->getByMatchId($matchId,1,self::MainLimit,2);
+        //集锦
+        $jijin = $videoModel->getByMatchId($matchId,1,self::MainLimit);
+echo 22;
+        //资讯
+        $articleModel = new Article();
+        $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
+        //联赛数据
+        $comp = BasketballCompetition::where('id',$compid)->findOrEmpty();
+
+        $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
         $this->getTdk('liansai_lanqiu_detail',$this->tdk);
+
+        var_dump($matchList);die;
+        View::assign('data',$matchList);
+        View::assign('luxiang',$luxiang);
+        View::assign('jijin',$jijin);
+        View::assign('article',$article);
+        View::assign('comp',$comp);
     }
 
     protected function getCompList($param)
