@@ -186,7 +186,7 @@ class FootballCompetition extends Model
      */
     public function getShortNameZh($id){
         $key = self::$CACHE_SHORT_NAME_ZH;
-        $data = Cache::get($key);
+        $data = Cache::store('common_redis')->get($key);
         if(empty($data)){
             $data = self::field("id,short_name_zh,short_name_py")->select()->toArray();
             $data = array_column($data,null,'id');

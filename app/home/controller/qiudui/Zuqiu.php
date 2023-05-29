@@ -85,8 +85,8 @@ class Zuqiu extends BaseController
 
         $param['limit'] = 24;
         //篮球数据
-        $basketballModel = new FootballTeam();
-        $data = $basketballModel->getList($where,$param)->toArray();
+        $footballModel = new FootballTeam();
+        $data = $footballModel->getList($where,$param)->toArray();
 
         $this->getTdk('qiudui_zuqiu',$this->tdk);
         View::assign('data',$data);

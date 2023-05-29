@@ -228,8 +228,8 @@ class BasketballMatch extends Model
                 }
                 $basketballCompetition = new  BasketballCompetition();
                 $comp = $basketballCompetition->getShortNameZh($item->competition_id);
-                $item->competition_text = $comp['short_name_zh'];
-                $item->comp_py = $comp['short_name_py'];
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
 
                 $basketballTeam = new  BasketballTeam();
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
@@ -405,8 +405,8 @@ class BasketballMatch extends Model
                 }
                 $basketballCompetition = new  BasketballCompetition();
                 $comp = $basketballCompetition->getShortNameZh($item->competition_id);
-                $item->competition_text = $comp['short_name_zh'];
-                $item->comp_py = $comp['short_name_py'];
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
 
                 $basketballTeam = new  BasketballTeam();
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);

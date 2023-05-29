@@ -226,8 +226,8 @@ class FootballMatch extends Model
 
                 $footballCompetition = new  FootballCompetition();
                 $comp = $footballCompetition->getShortNameZh($item->competition_id);
-                $item->competition_text = $comp['short_name_zh'];
-                $item->comp_py = $comp['short_name_py'];
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
 
                 $footballTeam = new  FootballTeam();
                 $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
@@ -451,8 +451,8 @@ class FootballMatch extends Model
 
                 $footballCompetition = new  FootballCompetition();
                 $comp = $footballCompetition->getShortNameZh($item->competition_id);
-                $item->competition_text = $comp['short_name_zh'];
-                $item->comp_py = $comp['short_name_py'];
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
 
                 $footballTeam = new  FootballTeam();
                 $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
@@ -489,8 +489,8 @@ class FootballMatch extends Model
 
             $footballCompetition = new  FootballCompetition();
             $comp = $footballCompetition->getShortNameZh($item->competition_id);
-            $item->competition_text = $comp['short_name_zh'];
-            $item->comp_py = $comp['short_name_py'];
+                $item->competition_text = $comp['short_name_zh']??'';
+                $item->comp_py = $comp['short_name_py']??'';
 
             $footballTeam = new  FootballTeam();
             $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
