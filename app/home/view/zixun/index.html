@@ -60,7 +60,17 @@
                 {/foreach}
             </dl>
             <div class="pages">
-                <?php echo $list['render'] ?>
+                <?php
+				$cur=$list['current_page'];
+				$total=ceil($list['total']/$list['per_page']);
+				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
+                $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
+                ?>
+                <a href="{$cur==1?'':'?page='.($cur-1)}"><</a>
+                {for start='$start' end='$end'}
+                <a href="{$cur==$i?'#':'?page='.$i}">{$i}</a>
+                {/for}
+                <a href="{$cur==$total?'':'?page='.($cur+1)}">></a>
             </div>
         </div>
     </div>
