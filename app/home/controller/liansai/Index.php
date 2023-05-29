@@ -32,7 +32,7 @@ class Index extends BaseController
             ];
         }
 
-        //每页五条篮球和足球联赛数据
+        //每页12条篮球和足球联赛数据
         $footballModel = new FootballCompetition();
         $footballData = $footballModel->getList($where,['limit'=>12])->toArray();
         //篮球数据

@@ -199,6 +199,19 @@ class FootballTeam extends Model
         return $getApiInfo;
     }
 
+    public function getList($where, $param)
+    {
+        $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+        $order = empty($param['order']) ? 'id desc' : $param['order'];
+        $list = self::where($where)->field('id,short_name_zh,logo')
+            ->order($order)
+            ->paginate($rows, false, ['query' => $param])
+            ->each(function ($item, $key) {
+                $item->sphere_type="zuqiu";
+            });
+        return $list;
+    }
+
 
 }
 

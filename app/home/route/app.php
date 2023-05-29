@@ -47,4 +47,4 @@ Route::get('/qiudui/zuqiu/:page?/:teamid?', CommonSpace.'\qiudui\Zuqiu@index')->
 //篮球球队
 Route::get('/qiudui/lanqiu/:page?/:teamid?', CommonSpace.'\qiudui\Lanqiu@index')->name('/qiudui/lanqiu/');
 //球队首页
-Route::get('/qiudui/:page?/:keyword?', CommonSpace.'\qiudui\Zuqiu@index')->name('/qiudui/');
+Route::get('/qiudui/:page?/:keyword?', CommonSpace.'\qiudui\Index@index')->name('/qiudui/');

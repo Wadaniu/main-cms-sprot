@@ -37,6 +37,12 @@ class Zuqiu extends BaseController
     {
         $this->getTempPath('liansai_zuqiu_detail');
 
+        //联赛数据
+        $comp = FootballCompetition::where('id',$compid)->findOrEmpty();
+        if ($comp->isEmpty()) {
+            $this->redirectTo(404);
+        }
+
         //直播数据
         $matchModel = new FootballMatch();
         $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7,8,9]]],[$compid],self::MainLimit);
@@ -51,9 +57,6 @@ class Zuqiu extends BaseController
         //资讯
         $articleModel = new Article();
         $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
-
-        //联赛数据
-        $comp = FootballCompetition::where('id',$compid)->findOrEmpty();
 
         $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
         $this->getTdk('liansai_zuqiu_detail',$this->tdk);

@@ -37,6 +37,13 @@ class Lanqiu extends BaseController
     {
         $this->getTempPath('liansai_lanqiu_detail');
 
+        //联赛数据
+        $comp = BasketballCompetition::where('id',$compid)->findOrEmpty();
+
+        if ($comp->isEmpty()) {
+            $this->redirectTo(404);
+        }
+
         //直播数据
         $matchModel = new BasketballMatch();
         $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7,8,9]]],[$compid],self::MainLimit);
@@ -51,9 +58,6 @@ class Lanqiu extends BaseController
         //资讯
         $articleModel = new Article();
         $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
-
-        //联赛数据
-        $comp = BasketballCompetition::where('id',$compid)->findOrEmpty();
 
         $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
         $this->getTdk('liansai_lanqiu_detail',$this->tdk);
