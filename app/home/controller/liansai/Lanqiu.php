@@ -17,7 +17,6 @@ class Lanqiu extends BaseController
     public function __construct(App $app)
     {
         parent::__construct($app);
-        View::assign('type','lanqiu');
     }
     public function index(){
         $param = get_params();
@@ -25,7 +24,7 @@ class Lanqiu extends BaseController
         $compid = $param['compid'] ?? 0;
 
         $this->tdk = new Tdk();
-var_dump($compid);die;
+
         if ($compid > 0){
             $this->getCompInfo($compid);
         }else{
@@ -37,18 +36,18 @@ var_dump($compid);die;
     protected function getCompInfo($compid)
     {
         $this->getTempPath('liansai_lanqiu_detail');
-echo 11;
+
         //直播数据
         $matchModel = new BasketballMatch();
-        $matchList = $matchModel->getMatchInfo(['status_id','IN',[1,2,3,4,5,7,8,9]],[$compid],self::MainLimit);
+        $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7,8,9]]],[$compid],self::MainLimit);
 
         $videoModel = new MatchVedio();
-        $matchId = BasketballMatch::where(["competition_id"=>$compid])->column("id");
+        $matchId = BasketballMatch::where("competition_id",$compid)->column("id");
         //录像
         $luxiang = $videoModel->getByMatchId($matchId,1,self::MainLimit,2);
         //集锦
         $jijin = $videoModel->getByMatchId($matchId,1,self::MainLimit);
-echo 22;
+
         //资讯
         $articleModel = new Article();
         $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
@@ -59,7 +58,6 @@ echo 22;
         $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
         $this->getTdk('liansai_lanqiu_detail',$this->tdk);
 
-        var_dump($matchList);die;
         View::assign('data',$matchList);
         View::assign('luxiang',$luxiang);
         View::assign('jijin',$jijin);
@@ -76,14 +74,18 @@ echo 22;
         if (empty($keyword)){
             $where = '1 = 1';
         }else{
-            $where = ['short_name_zh','like',$keyword.'%'];
+            $where = [
+                ['short_name_zh','like',$keyword.'%'],
+                ['name_zh','like',$keyword.'%']
+            ];
         }
-        $param['limit'] = 40;
+
+        $param['limit'] = 24;
         //篮球数据
         $basketballModel = new BasketballCompetition();
-        $basketballData = $basketballModel->getList($where,$param)->toArray();
+        $data = $basketballModel->getList($where,$param)->toArray();
 
         $this->getTdk('liansai_lanqiu',$this->tdk);
-        View::assign('data',$basketballData);
+        View::assign('data',$data);
     }
 }

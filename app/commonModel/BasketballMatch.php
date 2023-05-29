@@ -195,7 +195,7 @@ class BasketballMatch extends Model
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getMatchInfo($where,$competitionIds=[],$limit = 50,$order="status_id desc,match_time desc"){
+    public function getMatchInfo($where,array $competitionIds=[],$limit = 50,$order="status_id desc,match_time desc"){
         $key = self::$CACHE_HOME;
         if(!empty($competitionIds)){
             $key .= implode($competitionIds);
