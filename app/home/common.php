@@ -213,6 +213,7 @@ function hotlive($src,$name=''): array
 {
     $typelist = [];
     $hottype = [getFootballHotComp(), getBasketballHotComp()];
+
     foreach ($hottype as $key => $type) {
         $typesrc = $key ? 'lanqiu' : 'zuqiu';
         foreach ($type as $item) {

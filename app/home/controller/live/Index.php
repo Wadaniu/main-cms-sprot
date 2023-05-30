@@ -43,7 +43,6 @@ class Index extends BaseController
         //处理tdk
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
-        //var_dump($res);die;
         View::assign('data',$res);
         return View::fetch($this->tempPath);
     }

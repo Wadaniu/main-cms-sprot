@@ -4,30 +4,38 @@
 <!-- 主体 -->
 {block name="body"}
 {include file="common/header" nav='info' /}
-<div class="breadcrumbs">
-    <ul>
-        <li>
-            <a href="">首页</a>
-        </li>
-        <li>&gt;</li>
-        <li>
-            <a href="">首页</a>
-        </li>
-        <li>&gt;</li>
-        <li>
-            <a href="">首页</a>
-        </li>
-        <li>&gt;</li>
-        <li>
-            首页666
-        </li>
-    </ul>
-</div>
+<!--<div class="breadcrumbs">-->
+<!--    <ul>-->
+<!--        <li>-->
+<!--            <a href="">首页</a>-->
+<!--        </li>-->
+<!--        <li>&gt;</li>-->
+<!--        <li>-->
+<!--            <a href="">首页</a>-->
+<!--        </li>-->
+<!--        <li>&gt;</li>-->
+<!--        <li>-->
+<!--            <a href="">首页</a>-->
+<!--        </li>-->
+<!--        <li>&gt;</li>-->
+<!--        <li>-->
+<!--            首页666-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
 <div class="zhuanti">
+    <?php $typesrc=strpos($_SERVER['REQUEST_URI'], 'liansai') ? 'liansai' : 'qiudui'; $linkname=get_ruleName(); ?>
     <div class="ztbg">
         <div class="zt-title">
-            <span>联赛</span>专题
+            <span>{$typesrc=='liansai'?'联赛':'球队'}</span>专题
         </div>
+        <?php if($linkname=='/liansai/'||$linkname=='/qiudui/'): ?>
+        <div class="search">
+            <p id="search"><input type="text"/>
+                <button><i class="iconfont icon-sousuo"></i></button>
+            </p>
+        </div>
+        <?php endif; ?>
         <?php $type=hotlive('liansai'); ?>
         <div class="hontlink">
             热门联赛：
@@ -38,88 +46,32 @@
     </div>
     <div class="ztnav-bg">
         <div class="ztnav">
-            <a href="" class="cur"><span><i>足球专题</i></span></a><a href=""><span><i>篮球专题</i></span></a>
+            <a href="/{$typesrc}/zuqiu/" class="{:strpos($linkname,'zuqiu')?'cur':''}"><span><i>足球专题</i></span></a>
+            <a href="/{$typesrc}/lanqiu/"
+               class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
         </div>
     </div>
     <div class="zt-list">
         <div class="logo-list">
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
+            {foreach $data.data as $key=>$item}
+            <a href="/{$typesrc}/{$item.sphere_type}/1/{$item.id}">
+                <img src="{$item.logo}" title="{$item.short_name_zh}">
+                <p>{$item.short_name_zh}</p>
             </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
-            <a href="">
-                <img src="https://www.i999.com.cn/uploads/liansai/hasachao.png" alt="">
-                哈萨超
-            </a>
+            {/foreach}
         </div>
         <div class="pages">
-            <a href="">&lt;</a>
-            <a href="#">1</a>
-            <a href="/">2</a>
-            <a href="/">3</a>
-            <a href="/">4</a>
-            <a href="/">5</a>
-            <a href="/">6</a>
-            <a href="/">7</a>
-            <a href="/">8</a>
-            <a href="/">9</a>
-            <a href="/">&gt;</a>
+            <?php
+				$cur=$data['current_page'];
+				$total=ceil($data['total']/$data['per_page']);
+				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
+            $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
+            ?>
+            <a href="{$cur==1?'':$linkname.($cur-1)}"><</a>
+            {for start='$start' end='$end'}
+            <a href="{$cur==$i?'#':$linkname.$i}">{$i}</a>
+            {/for}
+            <a href="{$cur==$total?'':$linkname.($cur+1)}">></a>
         </div>
     </div>
 </div>
@@ -128,7 +80,15 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-
+    $("#search input").keydown(function (e) {
+        if (e.keyCode == 13) {
+            let txt = $.trim($("#search input").val());
+            let name = location.href.indexOf('liansai') > 0 ? 'liansai' : 'qiudui';
+            if (txt != "") {
+                location.href = `${location.origin}/${name}/1/${txt}`
+            }
+        }
+    });
 </script>
 {/block}
 <!-- /脚本 -->
