@@ -44,11 +44,11 @@
                         </a>
                         <p class="other">
 									<span>
+                                        {if !empty($l['comp'])}
 										<i>
-                                            {if !empty($l['comp'])}
                                             <a>{$l.comp.short_name_zh}</a>
-                                            {/if}
                                         </i>
+                                        {/if}
 									</span>
                             <span>
 										<i>浏览：{$l.read}</i>
