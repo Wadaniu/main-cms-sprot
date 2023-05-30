@@ -1372,8 +1372,7 @@ a.right-btn span {
 .ztbg {
     background-color: rgba(var(--main-r), var(--main-g), var(--main-b), 0.7);
     position: relative;
-    height: 260px;
-    padding-top: 20px;
+    padding: 20px 0;
     box-sizing: border-box;
 }
 
@@ -1415,6 +1414,39 @@ a.right-btn span {
     top: 0;
     background-color: var(--main-color);
     -webkit-mask: url(../images/zt_border.png) no-repeat center/100%;
+}
+
+.zhuanti .search {
+    position: relative;
+    width: 800px;
+    padding: 0 100px;
+    box-sizing: border-box;
+    margin: 0 auto 20px;
+}
+
+.zhuanti .search p {
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, .1);
+}
+
+.zhuanti .search input {
+    height: 40px;
+    flex-grow: 1;
+    border: none;
+    padding: 0 10px;
+    font-size: 16px;
+    color: var(--main-color);
+}
+
+.zhuanti .search button {
+    height: 40px;
+    width: 80px;
+    cursor: pointer;
+    background-color: var(--main-color);
+}
+.zhuanti .search button i{
+    color: #fff;
 }
 
 .hontlink {
@@ -1531,6 +1563,12 @@ a.right-btn span {
     margin: 0 auto 10px;
     width: 70px;
     height: 70px;
+}
+
+.zt-list .logo-list a p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .specific {
