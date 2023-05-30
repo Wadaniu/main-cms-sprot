@@ -16,219 +16,61 @@
                 <a href="">篮球资讯</a>
             </div>
             <dl class="news-list">
+                {foreach $list.data as $l}
                 <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
+
+
+                    {if $l.cate_id==1}
+                        <a href="/zixun/zuqiu/zuqiu/zuqiu/{$l.id}">
+                            {else}
+                            <a href="/zixun/lanqiu/lanqiu/lanqiu/{$l.id}">
+                            {/if}
+
+
+                        <img src="{$l.origin_url}">
                     </a>
                     <div>
-                        <a href="new.html" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
+
+
+                        {if $l.cate_id==1}
+                        <a href="/zixun/zuqiu/zuqiu/zuqiu/{$l.id}">
+                            {else}
+                            <a href="/zixun/lanqiu/lanqiu/lanqiu/{$l.id}">
+                                {/if}
+
+
+                            <h4 title="">{$l.title}</h4>
+                            <p class="desc"> {$l.desc}</p>
                         </a>
                         <p class="other">
 									<span>
-										<i><a href="" target="_blank">西甲</a></i>
+                                        {if !empty($l['comp'])}
+										<i>
+                                            <a>{$l.comp.short_name_zh}</a>
+                                        </i>
+                                        {/if}
 									</span>
                             <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
+										<i>浏览：{$l.read}</i>
+										<i>时间：{$l.create_time}</i>
 									</span>
                         </p>
                     </div>
                 </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
-                <dd>
-                    <a href="">
-                        <img src="https://www.i999.com.cn/uploads/litimg/2023-04-26/39171d1b1bd18afef7bd5836f273f62b.jpg">
-                    </a>
-                    <div>
-                        <a href="" target="_blank">
-                            <h4 title="">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</h4>
-                            <p class="desc"> 4月25日讯 梅州客家队在中超联赛第三轮1-2输给武汉三镇，梅州客家队外援杜加利奇赛后进了一球。 评论这场比赛 没有什么可评论的，很遗憾输了，就这样。 前三轮对手强，如何调整球</p>
-                        </a>
-                        <p class="other">
-									<span>
-										<i><a href="" target="_blank">西甲</a></i>
-									</span>
-                            <span>
-										<i>浏览：0</i>
-										<i>时间：2023-04-14 16:14</i>
-									</span>
-                        </p>
-                    </div>
-                </dd>
+                {/foreach}
             </dl>
             <div class="pages">
-                <a href="">&lt;</a>
-                <a href="#">1</a>
-                <a href="/">2</a>
-                <a href="/">3</a>
-                <a href="/">4</a>
-                <a href="/">5</a>
-                <a href="/">6</a>
-                <a href="/">7</a>
-                <a href="/">8</a>
-                <a href="/">9</a>
-                <a href="/">&gt;</a>
+                <?php
+				$cur=$list['current_page'];
+				$total=ceil($list['total']/$list['per_page']);
+				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
+                $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
+                ?>
+                <a href="{$cur==1?'':'?page='.($cur-1)}"><</a>
+                {for start='$start' end='$end'}
+                <a href="{$cur==$i?'#':'?page='.$i}">{$i}</a>
+                {/for}
+                <a href="{$cur==$total?'':'?page='.($cur+1)}">></a>
             </div>
         </div>
     </div>

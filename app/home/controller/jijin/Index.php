@@ -21,7 +21,7 @@ class Index extends BaseController
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
         $this->getTempPath(self::RouteTag);
-        $list = (new MatchVedio())->getList(['type'=>1],["order"=>'match_id desc']);
+        $list = (new MatchVedio())->getList(['type'=>1],["order"=>'id desc']);
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['date']='';
             $list['data'][$k]['team']=[];
@@ -33,6 +33,9 @@ class Index extends BaseController
                 $list['data'][$k]['team'] = explode("vs",$titleArr[3]);
             }
         }
+        View::assign("short",[]);
+        View::assign("href","");
+        View::assign("compName",'');
         View::assign("list",$list);
         View::assign("index","集锦");
         return View::fetch($this->tempPath);

@@ -16,6 +16,20 @@
                 {foreach $list.data as $row}
                 <dd>
                     <p class="back-cont">
+                        <!-----type:1集锦，2录像  video_type:0足球，1篮球----------------------------------->
+                        {if $row.type=='1'}<!---集锦--->
+                            {if $row.video_type=='0'}
+                                <a href="/jijin/zuqiu/zuqiu/zuqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
+                            {else}
+                                <a href="/jijin/lanqiu/lanqiu/lanqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
+                            {/if}
+                        {else}
+                            {if $row.video_type=='0'}
+                                <a href="/luxiang/zuqiu/zuqiu/zuqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
+                            {else}
+                                <a href="/luxiang/lanqiu/lanqiu/lanqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
+                            {/if}
+                        {/if}
                         <a href="/{$row.type=='1'?'jijin':'luxiang'}/{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                     </p>
                     <p class="back-team">

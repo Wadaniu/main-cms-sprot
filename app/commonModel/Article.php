@@ -57,6 +57,25 @@ class Article extends Model
 		return $list;
     }
 
+
+
+    /**
+     * 获取分页数据
+     *
+     * **/
+    public function getArticleDatalist($where, $param){
+        $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
+        $order = empty($param['order']) ? 'id desc' : $param['order'];
+        $list = self::where($where)
+            ->order($order)
+            ->paginate($rows, false, ['query' => $param])
+        ;
+
+        $data = $list->toArray();
+        $data['render'] = $list->render();
+        return $data;
+    }
+
     /**
     * 添加数据
     * @param $param
