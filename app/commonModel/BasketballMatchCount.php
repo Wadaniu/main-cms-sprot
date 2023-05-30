@@ -140,7 +140,7 @@ class BasketballMatchCount
      * @return mixed
      */
     public function getChangeData($typeId = 0){
-        $url = "/api/v5/football/data/more/update";
+        $url = "/api/v5/basketball/data/more/update";
 
         $data = getApiInfo($url);
         if ($data['code'] != 0){
