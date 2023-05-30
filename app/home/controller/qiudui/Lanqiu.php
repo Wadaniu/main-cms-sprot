@@ -48,7 +48,7 @@ class Lanqiu extends BaseController
         $matchList = $matchModel->getByTeam($teamid);
 
         $videoModel = new MatchVedio();
-        $matchId = BasketballMatch::whereRAW("home_team_id = :id OR away_team_id = :id",['id'=>$teamid])->column("id");
+        $matchId = BasketballMatch::whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$teamid,'aid'=>$teamid])->column("id");
         //录像
         $luxiang = $videoModel->getByMatchId($matchId,1,self::MainLimit,2);
         //集锦
