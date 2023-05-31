@@ -164,7 +164,7 @@ class FootballCompetition extends Model
     /**
      * 获取热点数据
      */
-    public function getHotData(){
+    public function getHotData($limit = 0){
         $key = self::$HOT_DATA.Env::get('HOME.HOME_SPACE');
         $data = Cache::get($key);
         if(!empty($data)){
@@ -179,6 +179,11 @@ class FootballCompetition extends Model
         }
         array_multisort(array_column($data,'sort'),SORT_DESC,$data);
         Cache::set($key,$data);
+
+        if ($limit > 0){
+            $data = array_slice($data,0,$limit);
+        }
+
         return $data;
     }
     /**

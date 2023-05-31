@@ -228,63 +228,17 @@ function hotlive($src,$name=''): array
     return $typelist;
 }
 
-function getFootballHotComp()
+function getFootballHotComp($limit = 0)
 {
     $Competition = new  \app\commonModel\FootballCompetition();
-    return $Competition->getHotData();
+    return $Competition->getHotData($limit);
 }
 
-function getBasketballHotComp()
+function getBasketballHotComp($limit = 0)
 {
     $Competition = new  \app\commonModel\BasketballCompetition();
-    return $Competition->getHotData();
+    return $Competition->getHotData($limit);
 }
-
-function getMainMatchLive()
-{
-    $footballCompetition = new  \app\commonModel\MatchliveLink();
-    return $footballCompetition->getList();
-}
-
-function getHomeRule()
-{
-    $route = \think\facade\Route::getRuleList();
-    $level = [];
-    foreach ($route as $item) {
-        if ($item['name'] == '/') {
-            $level[$item['name']] = [];
-            continue;
-        }
-        $routes = explode('/', $item['name']);
-        if (array_key_exists($routes[0], $level)) {
-            $level[$routes[0]]['child'][] = $item['name'];
-        } else {
-            $level[$routes[0]]['child'] = [];
-        }
-    }
-    return $level;
-}
-
-function getFatherRule()
-{
-    $route = \think\facade\Route::getRuleList();
-    $level = [];
-    foreach ($route as $item) {
-        if ($item['name'] == '/') {
-            $level[] = $item['name'];
-            continue;
-        }
-        $routes = explode('/', $item['name']);
-        if (array_key_exists($routes[0], $level)) {
-            continue;
-        } else {
-            $level[] = $routes[0];
-        }
-    }
-    return $level;
-}
-
-
 
 /**
  *资讯
@@ -322,7 +276,6 @@ function getZiXun($cate_id,$limit,$competition_id=0){
     return $data;
 }
 
-
 /**
  *录像集锦数据
  * type:1集锦，2录像
@@ -353,4 +306,35 @@ function getLuxiangJijin($type,$video_type,$limit,$competition_id=0){
     }
     Cache::store('common_redis')->set($key,$data,300);
     return $data;
+}
+
+/**
+ * 积分榜
+ * @param $limit
+ * @param $type
+ * @param $compId
+ * @return array
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\DbException
+ * @throws \think\db\exception\ModelNotFoundException
+ */
+function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
+
+    if ($compId > 0){
+        $compIds[] = $compId;
+    }else{
+        //获取联赛
+        switch ($type){
+            case 'lanqiu':
+                $hotComp = getBasketballHotComp($limit);
+                break;
+            default:
+                $hotComp = getFootballHotComp($limit);
+                break;
+        }
+        $compIds = array_column($hotComp,'id');
+    }
+
+    //获取积分榜数据
+    return \app\commonModel\CompTables::where(['type'=>$type,'comp_id',$compIds])->select()->toArray();
 }
