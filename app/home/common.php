@@ -226,16 +226,16 @@ function hotlive($src,$name=''): array
     return $typelist;
 }
 
-function getFootballHotComp()
+function getFootballHotComp($limit = 0)
 {
     $Competition = new  \app\commonModel\FootballCompetition();
-    return $Competition->getHotData();
+    return $Competition->getHotData($limit);
 }
 
-function getBasketballHotComp()
+function getBasketballHotComp($limit = 0)
 {
     $Competition = new  \app\commonModel\BasketballCompetition();
-    return $Competition->getHotData();
+    return $Competition->getHotData($limit);
 }
 
 /**
@@ -283,4 +283,35 @@ function getLuxiangJijin($type,$video_type){
         ->toArray();
     Cache::store('common_redis')->set($key,$data,300);
     return $data;
+}
+
+/**
+ * 积分榜
+ * @param $limit
+ * @param $type
+ * @param $compId
+ * @return array
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\DbException
+ * @throws \think\db\exception\ModelNotFoundException
+ */
+function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
+
+    if ($compId > 0){
+        $compIds[] = $compId;
+    }else{
+        //获取联赛
+        switch ($type){
+            case 'lanqiu':
+                $hotComp = getBasketballHotComp($limit);
+                break;
+            default:
+                $hotComp = getFootballHotComp($limit);
+                break;
+        }
+        $compIds = array_column($hotComp,'id');
+    }
+
+    //获取积分榜数据
+    return \app\commonModel\CompTables::where(['type'=>$type,'comp_id',$compIds])->select()->toArray();
 }

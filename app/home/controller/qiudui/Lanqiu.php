@@ -78,8 +78,8 @@ class Lanqiu extends BaseController
             $where = '1 = 1';
         }else{
             $where = [
-                ['short_name_zh','like',$keyword.'%'],
-                ['name_zh','like',$keyword.'%']
+                ['short_name_zh','like','%'.$keyword.'%'],
+                ['name_zh','like','%'.$keyword.'%']
             ];
         }
 
