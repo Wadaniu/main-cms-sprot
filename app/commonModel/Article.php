@@ -72,7 +72,7 @@ class Article extends Model
         ;
 
         $data = $list->toArray();
-        $data['render'] = $list->render();
+        //$data['render'] = $list->render();
         return $data;
     }
 
@@ -215,6 +215,23 @@ class Article extends Model
     {
         return Db::query("SELECT `id`,`cate_id`,`competition_id`,`title`,`desc`,`origin_url`,`read`,`create_time` FROM `fb_article` AS a1 
                           WHERE a1.id >= (SELECT ROUND(RAND() * (SELECT MAX(id) FROM `fb_article` )) AS id ) AND a1.delete_time = 0 ORDER BY a1.id ASC LIMIT 2");
+    }
+
+
+
+    function getArticleCompetition($id){
+        $info = $this->getArticleById($id);
+        switch ($info->cate_id){
+            case 1:
+                $competition = FootballCompetition::where("id",$info->competition_id)->find();
+
+            case 2:
+                $competition = BasketballCompetition::where("id",$info->competition_id)->find();
+        }
+        if(!$competition){
+            return [];
+        }
+        return $competition->toArray();
     }
 }
 

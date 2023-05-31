@@ -19,24 +19,12 @@
                 {foreach $list.data as $l}
                 <dd>
 
-
-                    {if $l.cate_id==1}
-                        <a href="/zixun/zuqiu/zuqiu/zuqiu/{$l.id}">
-                            {else}
-                            <a href="/zixun/lanqiu/lanqiu/lanqiu/{$l.id}">
-                            {/if}
-
-
-                        <img src="{$l.origin_url}">
+                        <a href="/zixun/{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$param.page}/{$l.short_name_py}/{$l.id}"><img src="{$l.origin_url}">
                     </a>
                     <div>
 
 
-                        {if $l.cate_id==1}
-                        <a href="/zixun/zuqiu/zuqiu/zuqiu/{$l.id}">
-                            {else}
-                            <a href="/zixun/lanqiu/lanqiu/lanqiu/{$l.id}">
-                                {/if}
+                        <a href="/zixun/{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$param.page}/{$l.short_name_py}/{$l.id}">
 
 
                             <h4 title="">{$l.title}</h4>
@@ -44,9 +32,9 @@
                         </a>
                         <p class="other">
 									<span>
-                                        {if !empty($l['comp'])}
+                                        {if !empty($l['short_name_zh'])}
 										<i>
-                                            <a>{$l.comp.short_name_zh}</a>
+                                            <a>{$l.short_name_zh}</a>
                                         </i>
                                         {/if}
 									</span>

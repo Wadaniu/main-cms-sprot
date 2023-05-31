@@ -20,29 +20,26 @@ class Index extends BaseController
 
     }
     public function index(){
+        $param = get_params();
+        $param['page'] = isset($param['page'])?$param['page']:1;
+        //$param['limit'] = 1;
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
         $this->getTempPath(self::RouteTag);
-        $list = (new Article())->getArticleDatalist(['status'=>1,'delete_time'=>0],[]);
+        $model = new Article();
+        $list = $model->getArticleDatalist(['status'=>1,'delete_time'=>0],$param);
         foreach ($list['data'] as $k=>$v){
-            if($v['cate_id']==1){//足球
-                $comp = FootballCompetition::where(['id'=>$v['competition_id']])->find();
-                if($comp){
-                    $list['data'][$k]['comp'] = $comp->toArray();
-                }else{
-                    $list['data'][$k]['comp'] = [];
-                }
-            }else{// 篮球
-                $comp = BasketballCompetition::where(['id'=>$v['competition_id']])->find();
-                if($comp){
-                    $list['data'][$k]['comp'] = $comp->toArray();
-                }else{
-                    $list['data'][$k]['comp'] = [];
-                }
-
+            $list['data'][$k]['short_name_zh'] = '';
+            $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
+            $competition = $model->getArticleCompetition($v["id"]);
+            if($competition){
+                $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
+                $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
         }
+        //print_r($param);exit;
         View::assign("list",$list);
+        View::assign('param',$param);
         return View::fetch($this->tempPath);
     }
 }
