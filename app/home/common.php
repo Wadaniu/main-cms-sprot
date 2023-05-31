@@ -281,3 +281,53 @@ function getFatherRule()
     }
     return $level;
 }
+
+
+
+/**
+ *资讯
+ * 1:足球2：篮球,0所有
+ * */
+function getZiXun($cate_id){
+    $key = "zinxun:".$cate_id;
+    $data = Cache::store('common_redis')->get($key);
+    if($data){
+       return $data;
+    }
+    $model = (new \app\commonModel\Article())->where("status",1);
+    if($cate_id){
+        $model = $model->where("cate_id",$cate_id);
+    }
+    $data = $model->order("id desc ")
+        ->field("id,title")
+        ->limit(5)
+        ->select()
+        ->toArray();
+    Cache::store('common_redis')->set($key,$data,300);
+    return $data;
+}
+
+
+/**
+ *录像集锦数据
+ * type:1集锦，2录像
+ * video_type:0足球，1篮球
+ * */
+function getLuxiangJijin($type,$video_type){
+    $key = "matchVedio".$type."_".$video_type;
+    $data = Cache::store('common_redis')->get($key);
+    if($data){
+        return $data;
+    }
+    $model = (new \app\commonModel\MatchVedio())->where("type",$type);
+    if(in_array($video_type,[0,1])){
+        $model = $model->where("video_type",$video_type);
+    }
+    $data = $model->order("id desc ")
+        ->field("id,title,match_id,mobile_link,pc_link,cover")
+        ->limit(5)
+        ->select()
+        ->toArray();
+    Cache::store('common_redis')->set($key,$data,300);
+    return $data;
+}

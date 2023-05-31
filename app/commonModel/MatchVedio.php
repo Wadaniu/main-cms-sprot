@@ -23,11 +23,50 @@ class MatchVedio extends Model
         $list = self::where($where)
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
-            //->toArray()
         ;
+        return $list;
+    }
 
-        $data = $list->toArray();
-        $data['render'] = $list->render();
-        return $data;
+
+    //获取集锦或者录像的赛事和赛程信息
+    public function getCompetitionInfo($id){
+        $info = self::where('id', $id)->find();
+        switch ($info->video_type){
+            case 0:
+                return $this->football($info);
+            case 1:
+                return $this->basketball($info);
+        }
+    }
+
+
+    function football($info){
+        $match = FootballMatch::where("id",$info->match_id)->find();
+        if($match){
+            $competition = FootballCompetition::where("id",$match->competition_id)->find();
+            return [
+                'match'=>$match->toArray(),
+                'competition'=>$competition->toArray(),
+            ];
+        }
+        return [
+            'match'=>[],
+            'competition'=>[],
+        ];
+    }
+
+    function basketball($info){
+        $match = BasketballMatch::where("id",$info->match_id)->find();
+        if($match){
+            $competition = BasketballCompetition::where("id",$match->competition_id)->find();
+            return [
+                'match'=>$match->toArray(),
+                'competition'=>$competition->toArray(),
+            ];
+        }
+        return [
+            'match'=>[],
+            'competition'=>[],
+        ];
     }
 }

@@ -26,7 +26,6 @@ class Zuqiu extends BaseController
 
         $param = get_params();
         //赛程id
-        $compName = $param['compname'] ?? '';
         $matchId = $param['vid'] ?? 0;
 
 //        print_r($compName);
@@ -37,24 +36,28 @@ class Zuqiu extends BaseController
         if ($matchId > 0){
             $this->getMatchInfo($matchId);
         }else{
-            $this->getMatchList($compName);
+            $this->getMatchList($param);
         }
         return View::fetch($this->tempPath);
 
     }
 
 
-    function getMatchList($compName){
+    function getMatchList($param){
+
+        $param['page'] = (isset($param['page']) && $param['page'])?$param['page']:1;
+        $compName = (isset($param['compname']) &&  $param['compname'])?$param['compname']:'';
+        $model = new MatchVedio();
         if($compName){
             $comp = FootballCompetition::where(['short_name_py'=>$compName])->find();//赛事
             if($comp){
                 $match = FootballMatch::where(["competition_id"=>$comp->id])->column("id");
-                $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>0,'match_id'=>$match],["order"=>'id desc']);
+                $list = $model->getList(['type'=>2,'video_type'=>0,'match_id'=>$match],$param)->toArray();
             }else{
-                $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>0],["order"=>'id desc']);
+                $list = $model->getList(['type'=>2,'video_type'=>0],["order"=>'id desc'])->toArray();
             }
         }else{
-            $list = (new MatchVedio())->getList(['type'=>2,'video_type'=>0],["order"=>'id desc']);
+            $list = $model->getList(['type'=>2,'video_type'=>0],$param)->toArray();
         }
         $this->getTempPath('luxiang_zuqiu');
         $this->getTdk('luxiang_zuqiu',$this->tdk);
@@ -63,19 +66,20 @@ class Zuqiu extends BaseController
             $list['data'][$k]['date']='';
             $list['data'][$k]['team']=[];
             $titleArr = explode(" ",$v['title']);
-            if(preg_match("/月/",$titleArr[1])){
-                $list['data'][$k]['date'] = str_replace("日","",str_replace("月","-",$titleArr[1]));
-            }
             $list['data'][$k]['team'] = explode("vs",$titleArr[3]);
+            $competition = $model->getCompetitionInfo($v['id']);
+            if(isset($competition['match']['match_time'])){
+                $list['data'][$k]['date'] = date('m-d',$competition['match']['match_time']);
+            }
+            $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
         }
-
-
         $shortName = (new FootballCompetition())->where(['status'=>1])->field("short_name_zh,short_name_py")->select()->toArray();
         View::assign("short",$shortName);
         View::assign("list",$list);
         View::assign("index","录像");
         View::assign("href","/luxiang/zuqiu/");
         View::assign("compName",$compName);
+        View::assign("param",$param);
 
     }
 
