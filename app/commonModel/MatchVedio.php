@@ -69,4 +69,24 @@ class MatchVedio extends Model
             'competition'=>[],
         ];
     }
+
+
+
+    function getListWithMatch($type,$video_type,$limit,$competition_id=0){
+        $list = self::alias("a")->field('a.*')->where("type",$type);
+        if($video_type==0){
+            $list = $list->join("FootballMatch b","a.match_id=b.id");
+        }else{
+            $list = $list->join("BasketballMatch b","a.match_id=b.id");
+        }
+        if($competition_id){
+            $list = $list->where("c.competition_id",$competition_id);
+        }
+        $list = $list->order("a.id desc");
+        if($limit){
+            $list = $list->limit($limit);
+        }
+        return $list;
+
+    }
 }

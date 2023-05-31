@@ -2,6 +2,8 @@
 
 use think\facade\Env;
 use think\facade\Request;
+use think\facade\Cache;
+use think\facade\Db;
 
 /**
  * @copyright Copyright (c) 2021 勾股工作室
@@ -288,22 +290,35 @@ function getFatherRule()
  *资讯
  * 1:足球2：篮球,0所有
  * */
-function getZiXun($cate_id){
-    $key = "zinxun:".$cate_id;
-    $data = Cache::store('common_redis')->get($key);
+function getZiXun($cate_id,$limit,$competition_id=0){
+    $key = "zinxun:".$cate_id.'_'.$limit."_".$competition_id;
+    $data = Cache::store('redis')->get($key);
     if($data){
        return $data;
     }
-    $model = (new \app\commonModel\Article())->where("status",1);
+    $model = (new \app\commonModel\Article());
+    $list = $model->where("status",1);
     if($cate_id){
-        $model = $model->where("cate_id",$cate_id);
+        $list = $list->where("cate_id",$cate_id);
     }
-    $data = $model->order("id desc ")
-        ->field("id,title")
-        ->limit(5)
+    if($competition_id){
+        $list = $list->where("competition",$competition_id);
+    }
+    $data = $list->order("id desc ")
+        ->field("id,title,cate_id")
+        ->limit($limit)
         ->select()
         ->toArray();
-    Cache::store('common_redis')->set($key,$data,300);
+    foreach ($data as $k=>$v){
+        $data[$k]['short_name_zh'] = '';
+        $data[$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
+        $competition = $model->getArticleCompetition($v["id"]);
+        if($competition){
+            $data[$k]['short_name_zh'] =$competition['short_name_zh'];
+            $data[$k]['short_name_py'] =$competition['short_name_py'];
+        }
+    }
+    Cache::store('redis')->set($key,$data,300);
     return $data;
 }
 
@@ -313,21 +328,29 @@ function getZiXun($cate_id){
  * type:1集锦，2录像
  * video_type:0足球，1篮球
  * */
-function getLuxiangJijin($type,$video_type){
-    $key = "matchVedio".$type."_".$video_type;
+function getLuxiangJijin($type,$video_type,$limit,$competition_id=0){
+    echo $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
     $data = Cache::store('common_redis')->get($key);
     if($data){
-        return $data;
+        //return $data;
     }
-    $model = (new \app\commonModel\MatchVedio())->where("type",$type);
-    if(in_array($video_type,[0,1])){
-        $model = $model->where("video_type",$video_type);
+    $model = (new \app\commonModel\MatchVedio());
+    $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*");
+    if($video_type=='0'){
+        $list = $list->leftJoin("fb_football_match b","a.match_id=b.id")->where("video_type",$video_type);
+    }else if($video_type=='1'){
+        $list = $list->leftJoin("fb_basketball_match b","a.match_id=b.id")->where("video_type",$video_type);
     }
-    $data = $model->order("id desc ")
-        ->field("id,title,match_id,mobile_link,pc_link,cover")
-        ->limit(5)
-        ->select()
-        ->toArray();
+    $list = $list->where("a.type",$type);
+    if($competition_id){
+        $list = $list->where("b.competition_id",$competition_id);
+    }
+    $list->order("a.id desc");
+    $data = $list->limit($limit)->select()->toArray();
+    foreach ($data as $k=>$v){
+        $competition = $model->getCompetitionInfo($v['id']);
+        $data[$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
+    }
     Cache::store('common_redis')->set($key,$data,300);
     return $data;
 }
