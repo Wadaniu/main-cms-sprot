@@ -1,17 +1,9 @@
-<?php $type=count($search)?$search:typeselect(); ?>
+<?php $type=count($search)?$search:typeselect(); $curparam=get_params('compname')?>
 <div class="category">
     <?php if(count($search)): ?>
-    <a href="{$_SERVER['REQUEST_URI']}">全部</a>
+    <a href="{$_SERVER['REQUEST_URI']}" class="cur">全部</a>
     <?php endif; ?>
     {foreach $type as $key=>$item}
-    <a href="{$item.src}">{$item.title}</a>
+    <a href="{$item.src}" class="{:count($search)?'':(!empty($curparam)&&strpos($item.src, $curparam)||empty($curparam)&&$key==0 ? 'cur' : '')}">{$item.title}</a>
     {/foreach}
 </div>
-<script>
-    let cururl = location.pathname;
-    $(".category a").each(function (i, item) {
-        if (cururl == $(item).attr('href')) {
-            $(item).addClass('cur').siblings().removeClass();
-        }
-    })
-</script>

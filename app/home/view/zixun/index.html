@@ -8,13 +8,9 @@
     <div class="left-main">
         <div class="model">
             <div class="title">
-                <p class="tit"><i class="iconfont icon-zixun"></i><span>资讯</span></p>
+                <p class="tit"><i class="iconfont icon-zixun"></i><span><?php echo typename() ?>资讯</span></p>
             </div>
-            <div class="category">
-                <a href="" class="cur">全部</a>
-                <a href="">足球资讯</a>
-                <a href="">篮球资讯</a>
-            </div>
+            {include file="assembly/typeselect"/}
             <dl class="news-list">
                 {foreach $list.data as $l}
                 <dd>
@@ -39,26 +35,28 @@
                                         {/if}
 									</span>
                             <span>
-										<i>浏览：{$l.read}</i>
-										<i>时间：{$l.create_time}</i>
-									</span>
+                                <i>浏览：{$l.read}</i>
+                                <i>时间：{$l.create_time}</i>
+                            </span>
                         </p>
                     </div>
                 </dd>
                 {/foreach}
             </dl>
             <div class="pages">
-                <?php
-				$cur=$list['current_page'];
-				$total=ceil($list['total']/$list['per_page']);
-				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
-                $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
-                ?>
-                <a href="{$cur==1?'':'?page='.($cur-1)}"><</a>
-                {for start='$start' end='$end'}
-                <a href="{$cur==$i?'#':'?page='.$i}">{$i}</a>
-                {/for}
-                <a href="{$cur==$total?'':'?page='.($cur+1)}">></a>
+                <div class="pages">
+                    <?php
+                    $cur=$list['current_page'];
+                    $total=ceil($list['total']/$list['per_page']);
+                    $start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
+                    $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
+                    ?>
+                    <a href="{$cur==1?'': get_ruleName().($cur-1).'/'.$param}"><</a>
+                    {for start='$start' end='$end'}
+                    <a href="{$cur==$i?'#':get_ruleName().($i).'/'.$param}">{$i}</a>
+                    {/for}
+                    <a href="{$cur==$total?'':get_ruleName().($cur+1).'/'.$param}">></a>
+                </div>
             </div>
         </div>
     </div>

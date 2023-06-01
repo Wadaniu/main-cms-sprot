@@ -3,80 +3,18 @@
         <p class="tit"><i class="iconfont icon-zixun"></i><span>相关资讯</span></p>
     </div>
     <dl class="about-list">
+        {foreach $article.data as $i=>$item}
         <dd>
             <a href="" target="_blank">
                 <div class="new-img">
-                    <img title="测试9" alt="测试9" src="https://i03piccdn.sogoucdn.com/70c2670edc804ca0">
+                    <img title="{$item.title}" src="{$item.origin_url}">
                 </div>
                 <div class="cont">
-                    <h4 title="测试9">测试9</h4>
-                    <p class="desc">
-                        随着足球赛事的越来越受到热爱球迷的关注，每个人都想找到最好的方式来观看比赛。特别是在今年的西班牙足球甲级联赛中，每一场比赛都备受期待，许多球迷希望能够在第一时间观看比赛。然而，很多人并不知道西甲直播在哪里看，所以今天我们来推荐几个超棒的直播网站。
-                    </p>
+                    <h4 title="{$item.title}">{$item.title}</h4>
+                    <p class="desc">{$item.desc}</p>
                 </div>
             </a>
         </dd>
-        <dd>
-            <a href="" target="_blank">
-                <div class="new-img">
-                    <img title="高清在线观看奥运篮球赛程，尽在篮球直播！" alt="高清在线观看奥运篮球赛程，尽在篮球直播！"
-                         src="https://i01piccdn.sogoucdn.com/d6257c62c8fd53b7">
-                </div>
-                <div class="cont">
-                    <h4 title="高清在线观看奥运篮球赛程，尽在篮球直播！">高清在线观看奥运篮球赛程，尽在篮球直播！</h4>
-                    <p class="desc">高清在线观看奥运篮球赛程，尽在篮球直播！</p>
-                </div>
-            </a>
-        </dd>
-        <dd>
-            <a href="" target="_blank">
-                <div class="new-img">
-                    <img title="测试9" alt="测试9" src="https://i03piccdn.sogoucdn.com/70c2670edc804ca0">
-                </div>
-                <div class="cont">
-                    <h4 title="测试9">测试9</h4>
-                    <p class="desc">
-                        随着足球赛事的越来越受到热爱球迷的关注，每个人都想找到最好的方式来观看比赛。特别是在今年的西班牙足球甲级联赛中，每一场比赛都备受期待，许多球迷希望能够在第一时间观看比赛。然而，很多人并不知道西甲直播在哪里看，所以今天我们来推荐几个超棒的直播网站。
-                    </p>
-                </div>
-            </a>
-        </dd>
-        <dd>
-            <a href="" target="_blank">
-                <div class="new-img">
-                    <img title="高清在线观看奥运篮球赛程，尽在篮球直播！" alt="高清在线观看奥运篮球赛程，尽在篮球直播！"
-                         src="https://i01piccdn.sogoucdn.com/d6257c62c8fd53b7">
-                </div>
-                <div class="cont">
-                    <h4 title="高清在线观看奥运篮球赛程，尽在篮球直播！">高清在线观看奥运篮球赛程，尽在篮球直播！</h4>
-                    <p class="desc">高清在线观看奥运篮球赛程，尽在篮球直播！</p>
-                </div>
-            </a>
-        </dd>
-        <dd>
-            <a href="" target="_blank">
-                <div class="new-img">
-                    <img title="测试9" alt="测试9" src="https://i03piccdn.sogoucdn.com/70c2670edc804ca0">
-                </div>
-                <div class="cont">
-                    <h4 title="测试9">测试9</h4>
-                    <p class="desc">
-                        随着足球赛事的越来越受到热爱球迷的关注，每个人都想找到最好的方式来观看比赛。特别是在今年的西班牙足球甲级联赛中，每一场比赛都备受期待，许多球迷希望能够在第一时间观看比赛。然而，很多人并不知道西甲直播在哪里看，所以今天我们来推荐几个超棒的直播网站。
-                    </p>
-                </div>
-            </a>
-        </dd>
-        <dd>
-            <a href="" target="_blank">
-                <div class="new-img">
-                    <img title="高清在线观看奥运篮球赛程，尽在篮球直播！" alt="高清在线观看奥运篮球赛程，尽在篮球直播！"
-                         src="https://i01piccdn.sogoucdn.com/d6257c62c8fd53b7">
-                </div>
-                <div class="cont">
-                    <h4 title="高清在线观看奥运篮球赛程，尽在篮球直播！">高清在线观看奥运篮球赛程，尽在篮球直播！</h4>
-                    <p class="desc">高清在线观看奥运篮球赛程，尽在篮球直播！</p>
-                </div>
-            </a>
-        </dd>
+        {/foreach}
     </dl>
 </div>

@@ -4,25 +4,6 @@
 <!-- 主体 -->
 {block name="body"}
 {include file="common/header" nav='info' /}
-<div class="breadcrumbs">
-    <ul>
-        <li>
-            <a href="">首页</a>
-        </li>
-        <li>&gt;</li>
-        <li>
-            <a href="">首页</a>
-        </li>
-        <li>&gt;</li>
-        <li>
-            <a href="">首页</a>
-        </li>
-        <li>&gt;</li>
-        <li>
-            首页
-        </li>
-    </ul>
-</div>
 <div class="container">
     <div class="left-main">
         <div class="model">
@@ -31,26 +12,16 @@
             </div>
             <div class="play-list">
                 <dl class="list-cont">
+                    {foreach $data as $i=>$team}
                     <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
+                        <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='H:i'}</p>
+                        <p class="type"><a href="">{$team.competition_text}</a></p>
+                        <p class="team"><a href="">{$team.home_team_text}</a><img src="{$team.home_team_logo}"></p>
                         <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
+                        <p class="team"><img src="{$team.away_team_logo}"><a href="">{$team.away_team_text}</a></p>
+                        <a class="right-btn" target="_blank" href="/live/{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i class="iconfont <?php echo getzt($team['status_id'],0) ?>"></i><span><?php echo getzt($team['status_id'],1) ?></span></a>
                     </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
+                    {/foreach}
                 </dl>
             </div>
         </div>
@@ -59,30 +30,16 @@
                 <p class="tit"><i class="iconfont icon-luxiang"></i><span>录像</span></p>
             </div>
             <dl class="list-back">
+                {foreach $luxiang as $i=>$item}
                 <dd>
                     <p class="back-cont">
-                        <a href=""><span>2023-04-28</span>04月28日 西甲第31轮 毕尔巴鄂vs塞维利亚 全场录像</a>
+                        <a href=""><span></span>{$item.title}</a>
                     </p>
                     <p class="back-team">
-                        <a href="">塞维利亚</a><a href="">巴鄂</a>
+                        <a href=""></a><a href=""></a>
                     </p>
                 </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-28</span>04月28日 西甲第31轮 毕尔巴鄂vs塞维利亚 全场录像</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">塞维利亚</a><a href="">巴鄂</a>
-                    </p>
-                </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-28</span>04月28日 西甲第31轮 毕尔巴鄂vs塞维利亚 全场录像</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">塞维利亚</a><a href="">巴鄂</a>
-                    </p>
-                </dd>
+                {/foreach}
             </dl>
         </div>
         <div class="model">
@@ -90,22 +47,16 @@
                 <p class="tit"><i class="iconfont icon-jijin"></i><span>集锦</span></p>
             </div>
             <dl class="list-back">
+                {foreach $jijin as $i=>$item}
                 <dd>
                     <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平 利兹联1-1莱斯特城排名不变</a>
+                        <a href=""><span></span>{$item.title}</a>
                     </p>
                     <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
+                        <a href=""></a><a href=""></a>
                     </p>
                 </dd>
-                <dd>
-                    <p class="back-cont">
-                        <a href=""><span>2023-04-26</span>英超-西尼斯特拉泰山压顶瓦尔迪扳平 利兹联1-1莱斯特城排名不变</a>
-                    </p>
-                    <p class="back-team">
-                        <a href="">莱斯特城</a><a href="">利兹联</a>
-                    </p>
-                </dd>
+                {/foreach}
             </dl>
         </div>
         {include file="assembly/newimg"/}
@@ -113,11 +64,10 @@
     <div class="right-main">
         <div class="model specific">
             <div class="logo">
-                <img src="https://www.i999.com.cn/uploads/qiudui/af9b672d68a9c382ff4b6886dcdfce6d.png" />
+                <img src="{$comp.logo}" />
             </div>
             <div class="info">
-                曼彻斯特城足球俱乐部（Manchester City F.C.），简称“曼城”，绰号“蓝月亮”，口号是Superbia in Proelio，意为“战争的自豪”（Pride in
-                Battle）；位于英国的曼彻斯特，前身为成立于1880年的
+                {$comp.intro}
             </div>
         </div>
         {include file="assembly/team"/}

@@ -16,6 +16,8 @@
                 <p>{$comp.intro}</p>
             </div>
         </div>
+        <?php else: ?>
+        <img class="infoimg" src="/static/home/images/{:strpos(get_ruleName(),'zuqiu')?'zuqiubg':'lanqiubg'}.jpg" />
         <?php endif; ?>
         <div class="model">
             <div class="title">
