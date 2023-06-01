@@ -12,47 +12,41 @@ class FootballCompetitionCount
     const SHOOT_LIMIT = 30;
 
     //积分榜
-    public function getFootballCompCountByCompId($id)
+    public function formatFootballCompCount($tables = [],$id = 0)
     {
-        $url = "/api/v5/football/competition/table/detail";
-
-        if ($id <= 0){
-           return [];
+        if (empty($tables) || $id == 0){
+            return [];
         }
+
         $redisKey = 'footballCompCount'.$id;
-        $data = Cache::get($redisKey);
-        if ($data){
-            return json_decode($data,true);
+        $res = Cache::store('common_redis')->get($redisKey);
+        if ($res){
+            return json_decode($res,true);
         }
 
-        $params['id'] = $id;
-
-        $getApiInfo = getApiInfo($url,$params);
-        if(isset($getApiInfo["code"]) && $getApiInfo["code"]==0){
-            $data = [];
-            foreach ($getApiInfo['results']['tables'] as $key => $value)
-            {
-                $team = [];
-                $teamIdArr = array_column($value['rows'] ,'team_id');
-                $teamArr = FootballTeam::field('id,short_name_zh,logo')->where('id','IN',$teamIdArr)->select()->toArray();
-                $teamArr = array_column($teamArr,null,'id');
-
-                foreach ($value['rows'] as $k => $teamCount){
-                    $teamCount['team_name'] = $teamArr[$teamCount['team_id']]['short_name_zh'];
-                    $teamCount['team_logo'] = $teamArr[$teamCount['team_id']]['logo'];
-                    $team[$k] = $teamCount;
-                }
-
-                $data[$key]['id'] = $value['id'];
-                $data[$key]['conference'] = $value['conference'];
-                $data[$key]['group'] = $value['group'];
-                $data[$key]['stage_id'] = $value['stage_id'];
-                $data[$key]['rows'] = $team;
+        $footballTeamModel = new FootballTeam();
+        $data = [];
+        foreach ($tables as $key => $value)
+        {
+            $team = [];
+            foreach ($value['rows'] as $k => $teamCount){
+                $teamInfo = $footballTeamModel->getShortNameZhLogo($teamCount['team_id']);
+                $teamCount['team_name'] = $teamInfo['short_name_zh'];
+                $teamCount['team_logo'] = $teamInfo['logo'];
+                $team[$k] = $teamCount;
             }
 
-            Cache::set($redisKey, json_encode($data),3600);
+            $data[$key]['id'] = $value['id'];
+            $data[$key]['conference'] = $value['conference'];
+            $data[$key]['group'] = $value['group'];
+            $data[$key]['stage_id'] = $value['stage_id'];
+            $data[$key]['rows'] = $team;
         }
-        return $data;
+        $res['comp'] = (new \app\commonModel\FootballCompetition())->getShortNameZh($id);
+        $res['tables'] = $data;
+
+        Cache::store('common_redis')->set($redisKey, json_encode($res),86400);
+        return $res;
     }
 
     //射手榜
