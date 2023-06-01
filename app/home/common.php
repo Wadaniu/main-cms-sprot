@@ -313,5 +313,13 @@ function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
     }
 
     //获取积分榜数据
-    return \app\commonModel\CompTables::where(['type'=>$type,'comp_id',$compIds])->select()->toArray();
+    $stat = \app\commonModel\CompTables::field('comp_id,tables')->where(['type'=>$type,'comp_id'=>$compIds])->select()->toArray();
+
+    $compStatModel = new \app\commonModel\FootballCompetitionCount();
+    $data = [];
+    foreach ($stat as $item){
+        $data[] = $compStatModel->formatFootballCompCount(json_decode($item['tables'],true),$item['comp_id']);
+    }
+
+    return $data;
 }
