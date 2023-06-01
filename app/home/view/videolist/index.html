@@ -35,11 +35,11 @@
 				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
                 $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
                 ?>
-                <a href="{$cur==1?'': get_ruleName().($cur-1).'/'.$param}"><</a>
+                <a href="{$cur==1?'': get_ruleName().($cur-1).'/'.$curparam}"><</a>
                 {for start='$start' end='$end'}
-                <a href="{$cur==$i?'#':get_ruleName().($i).'/'.$param}">{$i}</a>
+                <a href="{$cur==$i?'#':get_ruleName().($i).'/'.$curparam}">{$i}</a>
                 {/for}
-                <a href="{$cur==$total?'':get_ruleName().($cur+1).'/'.$param}">></a>
+                <a href="{$cur==$total?'':get_ruleName().($cur+1).'/'.$curparam}">></a>
             </div>
         </div>
     </div>

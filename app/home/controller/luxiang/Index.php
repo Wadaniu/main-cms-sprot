@@ -40,6 +40,7 @@ class Index extends BaseController
             }
             $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
         }
+
         View::assign("short",[]);
         View::assign("href","/luxiang/zuqiu/");
         View::assign("list",$list);

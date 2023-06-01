@@ -1,9 +1,9 @@
-<?php $type=count($search)?$search:typeselect(); $param=get_params('compname')?>
+<?php $type=count($search)?$search:typeselect(); $curparam=get_params('compname')?>
 <div class="category">
     <?php if(count($search)): ?>
     <a href="{$_SERVER['REQUEST_URI']}" class="cur">全部</a>
     <?php endif; ?>
     {foreach $type as $key=>$item}
-    <a href="{$item.src}" class="{:count($search)?'':(!empty($param)&&strpos($item.src, $param)||empty($param)&&$key==0 ? 'cur' : '')}">{$item.title}</a>
+    <a href="{$item.src}" class="{:count($search)?'':(!empty($curparam)&&strpos($item.src, $curparam)||empty($curparam)&&$key==0 ? 'cur' : '')}">{$item.title}</a>
     {/foreach}
 </div>
