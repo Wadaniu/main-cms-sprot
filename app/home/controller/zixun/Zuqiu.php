@@ -50,19 +50,35 @@ class Zuqiu extends BaseController
     protected function getArticleList($param)
     {
         $param['page'] = isset($param['page'])?$param['page']:1;
-        //$param['limit'] =1;
         $this->getTdk('zixun_zuqiu',$this->tdk);
         $model = new Article();
-        $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0],$param);
+        if(isset($param['compname']) && $param['compname']){
+            $competition = FootballCompetition::where("short_name_py",$param['compname'])->find();
+            if($competition){
+                $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0,'competition_id'=>$competition->id],$param);
+            }else{
+                $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0],$param);
+            }
+        }else{
+            $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0],$param);
+        }
+
+        //echo "<pre>";
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
             $competition = $model->getArticleCompetition($v["id"]);
+//            print_r($v);
+//            print_r($competition);
             if($competition){
                 $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
         }
+
+        //print_r($list);
+        //exit;
+
         View::assign("list",$list);
         View::assign('param',$param);
         $this->getTempPath('zixun_zuqiu');
