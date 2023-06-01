@@ -23,11 +23,70 @@ class MatchVedio extends Model
         $list = self::where($where)
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
-            //->toArray()
         ;
+        return $list;
+    }
 
-        $data = $list->toArray();
-        $data['render'] = $list->render();
-        return $data;
+
+    //获取集锦或者录像的赛事和赛程信息
+    public function getCompetitionInfo($id){
+        $info = self::where('id', $id)->find();
+        switch ($info->video_type){
+            case 0:
+                return $this->football($info);
+            case 1:
+                return $this->basketball($info);
+        }
+    }
+
+
+    function football($info){
+        $match = FootballMatch::where("id",$info->match_id)->find();
+        if($match){
+            $competition = FootballCompetition::where("id",$match->competition_id)->find();
+            return [
+                'match'=>$match->toArray(),
+                'competition'=>$competition->toArray(),
+            ];
+        }
+        return [
+            'match'=>[],
+            'competition'=>[],
+        ];
+    }
+
+    function basketball($info){
+        $match = BasketballMatch::where("id",$info->match_id)->find();
+        if($match){
+            $competition = BasketballCompetition::where("id",$match->competition_id)->find();
+            return [
+                'match'=>$match->toArray(),
+                'competition'=>$competition->toArray(),
+            ];
+        }
+        return [
+            'match'=>[],
+            'competition'=>[],
+        ];
+    }
+
+
+
+    function getListWithMatch($type,$video_type,$limit,$competition_id=0){
+        $list = self::alias("a")->field('a.*')->where("type",$type);
+        if($video_type==0){
+            $list = $list->join("FootballMatch b","a.match_id=b.id");
+        }else{
+            $list = $list->join("BasketballMatch b","a.match_id=b.id");
+        }
+        if($competition_id){
+            $list = $list->where("c.competition_id",$competition_id);
+        }
+        $list = $list->order("a.id desc");
+        if($limit){
+            $list = $list->limit($limit);
+        }
+        return $list;
+
     }
 }

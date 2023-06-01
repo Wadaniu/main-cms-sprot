@@ -14,22 +14,26 @@
             <dl class="news-list">
                 {foreach $list.data as $l}
                 <dd>
-                    <a href="/zixun/{$l.cate_id==1?'zuqiu':'lanqiu'}/1/pinyin/{$l.id}" target="_blank">
-                        <img src="{$l.origin_url}">
+
+                        <a href="/zixun/{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$param.page}/{$l.short_name_py}/{$l.id}"><img src="{$l.origin_url}">
                     </a>
                     <div>
-                        <a href="/zixun/{$l.cate_id==1?'zuqiu':'lanqiu'}/1/pinyin/{$l.id}" target="_blank">
+
+
+                        <a href="/zixun/{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$param.page}/{$l.short_name_py}/{$l.id}">
+
+
                             <h4 title="">{$l.title}</h4>
                             <p class="desc"> {$l.desc}</p>
                         </a>
                         <p class="other">
-                            <span>
-                                {if !empty($l['comp'])}
-                                <i>
-                                    <a href="/zixun/{$l.cate_id==1?'zuqiu':'lanqiu'}/1/{$l.comp.short_name_py}/" target="_blank">{$l.comp.short_name_zh}</a>
-                                </i>
-                                {/if}
-                            </span>
+									<span>
+                                        {if !empty($l['short_name_zh'])}
+										<i>
+                                            <a>{$l.short_name_zh}</a>
+                                        </i>
+                                        {/if}
+									</span>
                             <span>
                                 <i>浏览：{$l.read}</i>
                                 <i>时间：{$l.create_time}</i>

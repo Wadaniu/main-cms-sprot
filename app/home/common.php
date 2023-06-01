@@ -2,6 +2,8 @@
 
 use think\facade\Env;
 use think\facade\Request;
+use think\facade\Cache;
+use think\facade\Db;
 
 /**
  * @copyright Copyright (c) 2021 勾股工作室
@@ -229,58 +231,113 @@ function hotlive($src,$name=''): array
     return $typelist;
 }
 
-function getFootballHotComp()
+function getFootballHotComp($limit = 0)
 {
     $Competition = new  \app\commonModel\FootballCompetition();
-    return $Competition->getHotData();
+    return $Competition->getHotData($limit);
 }
 
-function getBasketballHotComp()
+function getBasketballHotComp($limit = 0)
 {
     $Competition = new  \app\commonModel\BasketballCompetition();
-    return $Competition->getHotData();
+    return $Competition->getHotData($limit);
 }
 
-function getMainMatchLive()
-{
-    $footballCompetition = new  \app\commonModel\MatchliveLink();
-    return $footballCompetition->getList();
-}
-
-function getHomeRule()
-{
-    $route = \think\facade\Route::getRuleList();
-    $level = [];
-    foreach ($route as $item) {
-        if ($item['name'] == '/') {
-            $level[$item['name']] = [];
-            continue;
-        }
-        $routes = explode('/', $item['name']);
-        if (array_key_exists($routes[0], $level)) {
-            $level[$routes[0]]['child'][] = $item['name'];
-        } else {
-            $level[$routes[0]]['child'] = [];
+/**
+ *资讯
+ * 1:足球2：篮球,0所有
+ * */
+function getZiXun($cate_id,$limit,$competition_id=0){
+    $key = "zinxun:".$cate_id.'_'.$limit."_".$competition_id;
+    $data = Cache::store('redis')->get($key);
+    if($data){
+       return $data;
+    }
+    $model = (new \app\commonModel\Article());
+    $list = $model->where("status",1);
+    if($cate_id){
+        $list = $list->where("cate_id",$cate_id);
+    }
+    if($competition_id){
+        $list = $list->where("competition",$competition_id);
+    }
+    $data = $list->order("id desc ")
+        ->field("id,title,cate_id")
+        ->limit($limit)
+        ->select()
+        ->toArray();
+    foreach ($data as $k=>$v){
+        $data[$k]['short_name_zh'] = '';
+        $data[$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
+        $competition = $model->getArticleCompetition($v["id"]);
+        if($competition){
+            $data[$k]['short_name_zh'] =$competition['short_name_zh'];
+            $data[$k]['short_name_py'] =$competition['short_name_py'];
         }
     }
-    return $level;
+    Cache::store('redis')->set($key,$data,300);
+    return $data;
 }
 
-function getFatherRule()
-{
-    $route = \think\facade\Route::getRuleList();
-    $level = [];
-    foreach ($route as $item) {
-        if ($item['name'] == '/') {
-            $level[] = $item['name'];
-            continue;
-        }
-        $routes = explode('/', $item['name']);
-        if (array_key_exists($routes[0], $level)) {
-            continue;
-        } else {
-            $level[] = $routes[0];
-        }
+/**
+ *录像集锦数据
+ * type:1集锦，2录像
+ * video_type:0足球，1篮球
+ * */
+function getLuxiangJijin($type,$video_type,$limit,$competition_id=0){
+    echo $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
+    $data = Cache::store('common_redis')->get($key);
+    if($data){
+        //return $data;
     }
-    return $level;
+    $model = (new \app\commonModel\MatchVedio());
+    $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*");
+    if($video_type=='0'){
+        $list = $list->leftJoin("fb_football_match b","a.match_id=b.id")->where("video_type",$video_type);
+    }else if($video_type=='1'){
+        $list = $list->leftJoin("fb_basketball_match b","a.match_id=b.id")->where("video_type",$video_type);
+    }
+    $list = $list->where("a.type",$type);
+    if($competition_id){
+        $list = $list->where("b.competition_id",$competition_id);
+    }
+    $list->order("a.id desc");
+    $data = $list->limit($limit)->select()->toArray();
+    foreach ($data as $k=>$v){
+        $competition = $model->getCompetitionInfo($v['id']);
+        $data[$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
+    }
+    Cache::store('common_redis')->set($key,$data,300);
+    return $data;
+}
+
+/**
+ * 积分榜
+ * @param $limit
+ * @param $type
+ * @param $compId
+ * @return array
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\DbException
+ * @throws \think\db\exception\ModelNotFoundException
+ */
+function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
+
+    if ($compId > 0){
+        $compIds[] = $compId;
+    }else{
+        //获取联赛
+        switch ($type){
+            case 'lanqiu':
+                $hotComp = getBasketballHotComp($limit);
+                break;
+            default:
+                $hotComp = getFootballHotComp($limit);
+                break;
+        }
+        $compIds = array_column($hotComp,'id');
+    }
+
+    //获取积分榜数据
+    return \app\commonModel\CompTables::where(['type'=>$type,'comp_id',$compIds])->select()->toArray();
 }

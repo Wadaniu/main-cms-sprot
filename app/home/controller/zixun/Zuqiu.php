@@ -47,20 +47,24 @@ class Zuqiu extends BaseController
         View::assign("info",$info);
     }
 
-    protected function getArticleList($compName)
+    protected function getArticleList($param)
     {
-        $this->getTempPath('zixun_zuqiu');
+        $param['page'] = isset($param['page'])?$param['page']:1;
+        //$param['limit'] =1;
         $this->getTdk('zixun_zuqiu',$this->tdk);
-
-        $list = (new Article())->getArticleDatalist(['cate_id'=>1],[]);
+        $model = new Article();
+        $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0],$param);
         foreach ($list['data'] as $k=>$v){
-                $comp = FootballCompetition::where(['id'=>$v['competition_id']])->find();
-                if($comp){
-                    $list['data'][$k]['comp'] = $comp->toArray();
-                }else{
-                    $list['data'][$k]['comp'] = [];
-                }
+            $list['data'][$k]['short_name_zh'] = '';
+            $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
+            $competition = $model->getArticleCompetition($v["id"]);
+            if($competition){
+                $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
+                $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
+            }
         }
         View::assign("list",$list);
+        View::assign('param',$param);
+        $this->getTempPath('zixun_zuqiu');
     }
 }

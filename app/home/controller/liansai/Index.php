@@ -27,17 +27,17 @@ class Index extends BaseController
             $where = '1 = 1';
         }else{
             $where = [
-                ['short_name_zh','like',$keyword.'%'],
-                ['name_zh','like',$keyword.'%']
+                ['short_name_zh','like','%'.$keyword.'%'],
+                ['name_zh','like','%'.$keyword.'%']
             ];
         }
-
+        $param['limit'] = 12;
         //每页12条篮球和足球联赛数据
         $footballModel = new FootballCompetition();
-        $footballData = $footballModel->getList($where,['limit'=>12])->toArray();
+        $footballData = $footballModel->getList($where,$param)->toArray();
         //篮球数据
         $basketballModel = new BasketballCompetition();
-        $basketballData = $basketballModel->getList($where,['limit'=>12])->toArray();
+        $basketballData = $basketballModel->getList($where,$param)->toArray();
 
         $footballData['per_page'] = 24;
         $footballData['data'] = array_merge($footballData["data"],$basketballData["data"]);
