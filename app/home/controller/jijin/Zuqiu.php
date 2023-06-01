@@ -10,6 +10,8 @@ use app\commonModel\MatchVedio;
 use app\commonModel\FootballCompetition;
 use app\commonModel\FootballMatch;
 use app\commonModel\FootballMatchInfo;
+use app\commonModel\FootballTeam;
+use app\commonModel\BasketballTeam;
 
 class Zuqiu extends BaseController
 {
@@ -61,14 +63,19 @@ class Zuqiu extends BaseController
         }else{
             $list = $model->getList(['type'=>1,'video_type'=>0],["order"=>'id desc'])->toArray();
         }
+        $footballTeam = new FootballTeam();
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['date']='';
-            $list['data'][$k]['team']=[];
             $titleArr = explode(" ",$v['title']);
-            if(isset($titleArr[2]) && preg_match('/-/',$titleArr[2])){
-                $team = explode("-",$titleArr[2]);
-                foreach ($team as $t){
-                    $list['data'][$k]['team'][] = preg_replace("/[0-9]/","",$t);
+            $list['data'][$k]['teamArr'] = [];
+            if(isset($titleArr[3])){
+                $team = explode("vs",$titleArr[3]);
+                if($team){
+                    $teamArr = [];
+                    foreach ($team  as $t){
+                        $teamArr[] = ['name'=>$t,'id'=>$footballTeam->getTeamInfoByName($t,'name_zh')];
+                    }
+                    $list['data'][$k]['teamArr'] = $teamArr;
                 }
             }
             $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];

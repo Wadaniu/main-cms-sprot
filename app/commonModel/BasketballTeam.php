@@ -14,6 +14,9 @@ class BasketballTeam extends Model
     protected $connection = 'compDataDb';
 
     public static $CACHE_SHORT_NAME_ZH =  "BasketballTeamShortNameZh";
+
+
+    public $teamInfo = [];
     /**
     * 获取分页列表
     * @param $where
@@ -227,6 +230,25 @@ class BasketballTeam extends Model
                 $item->sphere_type="lanqiu";
             });
         return $list;
+    }
+
+
+
+    /**
+     * 根据球队名称查找球队ID
+     * 同时为了相同的球队名称重复查做了优化
+     * */
+    public function getTeamInfoByName($name,$column){
+        $id = array_search($name,$this->teamInfo);
+        if($id){
+            return $id;
+        }
+         $teamInfo = self::where($column,$name)->find();
+         if($teamInfo){
+            $this->teamInfo[$teamInfo->id] = $teamInfo->name_zh;
+            return $teamInfo->id;
+         }
+         return 0;
     }
 }
 

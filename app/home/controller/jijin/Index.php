@@ -7,6 +7,8 @@ use think\App;
 use think\facade\View;
 use app\home\Tdk;
 use app\commonModel\MatchVedio;
+use app\commonModel\FootballTeam;
+use app\commonModel\BasketballTeam;
 
 class Index extends BaseController
 {
@@ -25,13 +27,28 @@ class Index extends BaseController
         $param['page'] = isset($param['page'])?$param['page']:1;
         $model = new MatchVedio();
         $list = $model->getList(['type'=>1],$param)->toArray();
+        $footballTeam = new FootballTeam();
+        $basketballTeam = new BasketballTeam();
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['date']='';
-            $list['data'][$k]['team']=[];
+            //$list['data'][$k]['team']=[];
             $titleArr = explode(" ",$v['title']);
+            $list['data'][$k]['teamArr'] = [];
             if(isset($titleArr[3])){
-                $list['data'][$k]['team'] = explode("vs",$titleArr[3]);
+                $team = explode("vs",$titleArr[3]);
+                if($team){
+                    $teamArr = [];
+                    foreach ($team  as $t){
+                        if($v['video_type']=='0'){
+                            $teamArr[] = ['name'=>$t,'id'=>$footballTeam->getTeamInfoByName($t,'name_zh')];
+                        }else{
+                            $teamArr[] = ['name'=>$t,'id'=>$basketballTeam->getTeamInfoByName($t,'name_zh')];
+                        }
+                    }
+                    $list['data'][$k]['teamArr'] = $teamArr;
+                }
             }
+
             $competition = $model->getCompetitionInfo($v['id']);
             if(isset($competition['match']['match_time'])){
                 $list['data'][$k]['date'] = date('m-d',$competition['match']['match_time']);
