@@ -10,6 +10,8 @@ use app\commonModel\MatchVedio;
 use app\commonModel\BasketballCompetition;
 use app\commonModel\BasketballMatch;
 use app\commonModel\BasketballMatchInfo;
+use app\commonModel\FootballTeam;
+use app\commonModel\BasketballTeam;
 
 class Lanqiu extends BaseController
 {
@@ -58,12 +60,21 @@ class Lanqiu extends BaseController
         $this->getTempPath('jijin_lanqiu');
         $this->getTdk('jijin_lanqiu',$this->tdk);
         //$list = (new MatchVedio())->getList(['type'=>1,'video_type'=>1],["order"=>'match_id desc']);
+        $basketballTeam = new BasketballTeam();
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['date']='';
-            $list['data'][$k]['team']=[];
+            //$list['data'][$k]['team']=[];
             $titleArr = explode(" ",$v['title']);
+            $list['data'][$k]['teamArr'] = [];
             if(isset($titleArr[3])){
-                $list['data'][$k]['team'] = explode("vs",$titleArr[3]);
+                $team = explode("vs",$titleArr[3]);
+                if($team){
+                    $teamArr = [];
+                    foreach ($team  as $t){
+                        $teamArr[] = ['name'=>$t,'id'=>$basketballTeam->getTeamInfoByName($t,'name_zh')];
+                    }
+                    $list['data'][$k]['teamArr'] = $teamArr;
+                }
             }
             $competition = $model->getCompetitionInfo($v['id']);
             if(isset($competition['match']['match_time'])){
