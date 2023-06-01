@@ -6,10 +6,15 @@
  */
 namespace app\commonModel;
 use think\facade\Cache;
+use think\facade\Db;
 use think\model;
 
 class BasketballTeam extends Model
 {
+    /**
+     * @var mixed
+     */
+    private static $HOT_DATA = 'BasketballTeamHotData';
     protected $connection = 'compDataDb';
 
     public static $CACHE_SHORT_NAME_ZH =  "BasketballTeamShortNameZh";
@@ -29,6 +34,10 @@ class BasketballTeam extends Model
             ->field('id,competition_id,conference_id,venue_id,name_zh,name_zht,name_en,short_name_zh,short_name_zht,short_name_en,logo,updated_at')
             ->order($order)->paginate($rows, false, ['query' => $param])
             ->each(function ($item, $key) {
+                $sortConf = Db::name('hot_team_sort')->where('type',1)->where('team_id',$item->id)->findOrEmpty();
+
+                $item->sort = $sortConf['sort'] ?? 0;
+                $item->status = $sortConf['is_hot'] ?? 0;
                 $item->updated_at = date("Y-m-d H:i:s",$item->updated_at);
             });
 		return $list;
@@ -61,6 +70,19 @@ class BasketballTeam extends Model
         try {
             $param['updated_at'] = time();
             self::where('id', $param['id'])->strict(false)->field(true)->update($param);
+            $sortConf = Db::name('hot_team_sort')->where('team_id',$param['id'])->where('type',1)->find();
+
+            $sort = [
+                'team_id'   =>  $param['id'],
+                'sort'      =>  $param['sort'],
+                'is_hot'    =>  $param['status'],
+                'type'      =>  1
+            ];
+            if ($sortConf){
+                Db::name('hot_team_sort')->update($sort);
+            }else{
+                Db::name('hot_team_sort')->insert($sort);
+            }
 			add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {
 			return to_assign(1, '操作失败，原因：'.$e->getMessage());
@@ -77,6 +99,11 @@ class BasketballTeam extends Model
     public function getBasketballTeamById($id)
     {
         $info = self::where('id', $id)->find();
+        //获取项目排序字段
+        $sortConf = Db::name('hot_team_sort')->where('type',1)->where('team_id',$id)->findOrEmpty();
+
+        $info->sort = $sortConf['sort'] ?? 0;
+        $info->status = $sortConf['is_hot'] ?? 0;
 		return $info;
     }
 
@@ -131,6 +158,31 @@ class BasketballTeam extends Model
         }
         return "";
     }
+
+    public function getHotData($limit = 0){
+        $key = self::$HOT_DATA;
+        $data = Cache::store('common_redis')->get($key);
+        if(!empty($data)){
+            return $data;
+        }
+        $sort = Db::name('hot_team_sort')->where('is_hot',1)->where('type',1)->column('*','team_id');
+
+        $ids = array_keys($sort);
+        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_py,short_name_zh,logo")->select()->toArray();
+        foreach ($data as &$item){
+            $item['sort'] = $sort[$item['id']]['sort'];
+            $item['sphere_type'] = 'lanqiu';
+        }
+        array_multisort(array_column($data,'sort'),SORT_DESC,$data);
+        Cache::store('common_redis')->set($key,$data);
+
+        if ($limit > 0){
+            $data = array_slice($data,0,$limit);
+        }
+
+        return $data;
+    }
+
     private function getBasketballTeamSync($params = []){
 
     }
@@ -200,7 +252,7 @@ class BasketballTeam extends Model
     {
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
         $order = empty($param['order']) ? 'id desc' : $param['order'];
-        $list = self::where($where)->field('id,short_name_zh,logo')
+        $list = self::where('logo','<>','')->where($where)->field('id,short_name_zh,logo')
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
             ->each(function ($item, $key) {

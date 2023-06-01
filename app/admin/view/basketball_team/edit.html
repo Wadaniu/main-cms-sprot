@@ -20,7 +20,18 @@
 			<td><input type="text" name="short_name_en"  value="{$detail.short_name_en}" autocomplete="off" placeholder="请输入英文简称" class="layui-input"></td>
 		</tr>
 				<tr><td class="layui-td-gray-2">球队logo</td>
-			<td><input type="text" name="logo"  value="{$detail.logo}" autocomplete="off" placeholder="请输入球队logo" class="layui-input"></td><td colspan='4'></td>
+			<td><input type="text" name="logo"  value="{$detail.logo}" autocomplete="off" placeholder="请输入球队logo" class="layui-input"></td>
+
+					<td class="layui-td-gray-2">是否热门</td>
+					<td>
+						<select name="status" >
+							<option value="">请选择</option>
+							<option value="1" {eq name="$detail.status" value="1"} selected{/eq}>是</option>
+							<option value="0" {eq name="$detail.status" value="0"} selected{/eq}>否</option>
+						</select>
+					</td>
+					<td class="layui-td-gray-2">顺序</td>
+					<td><input type="text" name="sort"  value="{$detail.sort}" autocomplete="off" placeholder="请输入顺序" class="layui-input"></td>
 		</tr>
 	</table>
 	<div class="py-3">

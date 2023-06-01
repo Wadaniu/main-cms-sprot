@@ -48,6 +48,10 @@ class FootballCompetition extends Model
                     $item->type = $competitionType[$item->type];
                 }
                 $item->updated_at = date("Y-m-d H:i:s",$item->updated_at);
+                $sortConf = Db::name('comp_sort')->where('type',0)->where('comp_id',$item->id)->findOrEmpty();
+
+                $item->sort = $sortConf['sort'] ?? 0;
+                $item->status = $sortConf['is_hot'] ?? 0;
                 if($item->status==1){
                     $item->status = "是";
                 }else{
@@ -66,7 +70,7 @@ class FootballCompetition extends Model
     {
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
         $order = empty($param['order']) ? 'status desc,sort asc,id desc' : $param['order'];
-        $list = self::where($where)->field('id,type,short_name_zh,short_name_py,logo,status,sort')
+        $list = self::where('logo','<>','')->where($where)->field('id,type,short_name_zh,short_name_py,logo,status,sort')
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
             ->each(function ($item, $key) {
@@ -135,7 +139,7 @@ class FootballCompetition extends Model
     {
         $info = self::where('id', $id)->find();
         //获取项目排序字段
-        $sortConf = Db::name('comp_sort')->where('type',0)->where('comp_id',$id)->find();
+        $sortConf = Db::name('comp_sort')->where('type',0)->where('comp_id',$id)->findOrEmpty();
 
         $info->sort = $sortConf['sort'] ?? 0;
         $info->status = $sortConf['is_hot'] ?? 0;
@@ -165,8 +169,8 @@ class FootballCompetition extends Model
      * 获取热点数据
      */
     public function getHotData($limit = 0){
-        $key = self::$HOT_DATA.Env::get('HOME.HOME_SPACE');
-        $data = Cache::get($key);
+        $key = self::$HOT_DATA;
+        $data = Cache::store('common_redis')->get($key);
         if(!empty($data)){
             return $data;
         }
@@ -178,7 +182,7 @@ class FootballCompetition extends Model
             $item['sort'] = $sort[$item['id']]['sort'];
         }
         array_multisort(array_column($data,'sort'),SORT_DESC,$data);
-        Cache::set($key,$data);
+        Cache::store('common_redis')->set($key,$data);
 
         if ($limit > 0){
             $data = array_slice($data,0,$limit);
