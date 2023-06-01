@@ -349,3 +349,21 @@ function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
 
     return $data;
 }
+
+function getLive($limit = 5,$type = 'zuqiu',$compId = 0){
+
+    switch ($type){
+        case 'lanqiu' :
+            $data = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId,$limit);
+            break;
+        default :
+            $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$limit);
+            break;
+    }
+    return $data;
+}
+
+function getMainMatchLive(){
+    $footballCompetition = new  \app\commonModel\MatchliveLink();
+    return $footballCompetition->getList();
+}
