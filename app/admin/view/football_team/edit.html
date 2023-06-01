@@ -37,6 +37,19 @@
 			<td><input type="text" name="national_players"  value="{$detail.national_players}" autocomplete="off" placeholder="请输入国家队球员数" class="layui-input"></td><td class="layui-td-gray-2">更新时间</td>
 			<td><input type="text" name="updated_at"  value="{$detail.updated_at|time_format=###,'Y-m-d H:i:s'}" readonly readonly id="laydate_updated_at" autocomplete="off" placeholder="请选择" class="layui-input"></td>
 		</tr>
+	<tr>
+
+	<td class="layui-td-gray-2">是否热门</td>
+<td>
+<select name="status" >
+	<option value="">请选择</option>
+		<option value="1" {eq name="$detail.status" value="1"} selected{/eq}>是</option>
+		<option value="0" {eq name="$detail.status" value="0"} selected{/eq}>否</option>
+</select>
+</td>
+	<td class="layui-td-gray-2">顺序</td>
+	<td><input type="text" name="sort"  value="{$detail.sort}" autocomplete="off" placeholder="请输入顺序" class="layui-input"></td>
+	</tr>
 				<tr><td class="layui-td-gray-2">球队logo<font>*</font></td>
 			<td colspan="5" style="vertical-align:top">
 				<div class="layui-upload">

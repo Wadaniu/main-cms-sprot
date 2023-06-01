@@ -6,6 +6,7 @@
  */
 namespace app\commonModel;
 use think\facade\Cache;
+use think\facade\Db;
 use think\model;
 
 class FootballTeam extends Model
@@ -26,6 +27,10 @@ class FootballTeam extends Model
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
             ->each(function ($item, $key) {
+                $sortConf = Db::name('hot_team_sort')->where('type',0)->where('team_id',$item->id)->findOrEmpty();
+
+                $item->sort = $sortConf['sort'] ?? 0;
+                $item->status = $sortConf['is_hot'] ?? 0;
                 $item->updated_at = date("Y-m-d H:i:s",$item->updated_at);
                 $item->national = $item->national?"是":"否";
             });
@@ -67,7 +72,21 @@ class FootballTeam extends Model
                 $param['updated_at'] = strtotime($param['updated_at']);
             }
             self::where('id', $param['id'])->strict(false)->field(true)->update($param);
-			add_log('edit', $param['id'], $param);
+            $sortConf = Db::name('hot_team_sort')->where('team_id',$param['id'])->where('type',0)->find();
+
+            $sort = [
+                'team_id'   =>  $param['id'],
+                'sort'      =>  $param['sort'],
+                'is_hot'    =>  $param['status'],
+                'type'      =>  0
+            ];
+            if ($sortConf){
+                Db::name('hot_team_sort')->update($sort);
+            }else{
+                Db::name('hot_team_sort')->insert($sort);
+            }
+
+            add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {
 			return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }
@@ -82,6 +101,11 @@ class FootballTeam extends Model
     public function getFootballTeamById($id)
     {
         $info = self::where('id', $id)->find();
+        //获取项目排序字段
+        $sortConf = Db::name('hot_team_sort')->where('type',0)->where('team_id',$id)->find();
+
+        $info->sort = $sortConf['sort'] ?? 0;
+        $info->status = $sortConf['is_hot'] ?? 0;
 		return $info;
     }
 
@@ -203,7 +227,7 @@ class FootballTeam extends Model
     {
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
         $order = empty($param['order']) ? 'id desc' : $param['order'];
-        $list = self::where($where)->field('id,short_name_zh,logo')
+        $list = self::where('logo','<>','')->where($where)->field('id,short_name_zh,logo')
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
             ->each(function ($item, $key) {
