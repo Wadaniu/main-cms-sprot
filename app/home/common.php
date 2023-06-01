@@ -199,10 +199,11 @@ function typeselect(): array
     $alllink = count(get_params()) ? substr($cururl, 0, findIndex($cururl, '/', 3) + 1) : $cururl;
     $typelist[] = ['title' => '全部', 'src' => $alllink];
     $typedata = strpos($cururl, 'zuqiu') ? getFootballHotComp() : getBasketballHotComp();
+    $page = strpos($cururl, 'live') ? '' : '1/';
     foreach ($typedata as $item) {
         $typelist[] = [
             'title' => $item['short_name_zh'],
-            'src' => $alllink . $item['short_name_py'] . '/'
+            'src' => $alllink . $page . $item['short_name_py'] . '/'
         ];
     }
     return $typelist;
@@ -218,8 +219,10 @@ function hotlive($src,$name=''): array
         $typesrc = $key ? 'lanqiu' : 'zuqiu';
         foreach ($type as $item) {
             $typelist[] = [
+                'id' => $item['id'],
+                'type' => $typesrc,
                 'title' => $item['short_name_zh'] . $name,
-                'src' => $src . '/' . $typesrc . '/' . $item['short_name_py']
+                'src' => '/' . $src . '/' . $typesrc . '/' . $item['short_name_py']
             ];
         }
     }

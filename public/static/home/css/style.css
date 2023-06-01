@@ -669,6 +669,13 @@ a.right-btn span {
     text-align: left;
 }
 
+.infoimg {
+    display: block;
+    width: 830px;
+    height: 240px;
+    margin-bottom: 20px;
+}
+
 .laliga-info {
     display: flex;
     padding: 20px;
@@ -1445,7 +1452,8 @@ a.right-btn span {
     cursor: pointer;
     background-color: var(--main-color);
 }
-.zhuanti .search button i{
+
+.zhuanti .search button i {
     color: #fff;
 }
 

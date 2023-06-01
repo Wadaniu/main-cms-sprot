@@ -16,20 +16,6 @@
                 {foreach $list.data as $row}
                 <dd>
                     <p class="back-cont">
-                        <!-----type:1集锦，2录像  video_type:0足球，1篮球----------------------------------->
-                        {if $row.type=='1'}<!---集锦--->
-                            {if $row.video_type=='0'}
-                                <a href="/jijin/zuqiu/zuqiu/zuqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
-                            {else}
-                                <a href="/jijin/lanqiu/lanqiu/lanqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
-                            {/if}
-                        {else}
-                            {if $row.video_type=='0'}
-                                <a href="/luxiang/zuqiu/zuqiu/zuqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
-                            {else}
-                                <a href="/luxiang/lanqiu/lanqiu/lanqiu/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
-                            {/if}
-                        {/if}
                         <a href="/{$row.type=='1'?'jijin':'luxiang'}/{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                     </p>
                     <p class="back-team">
@@ -47,11 +33,11 @@
 				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
                 $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
                 ?>
-                <a href="{$cur==1?'':'?page='.($cur-1)}"><</a>
+                <a href="{$cur==1?'': get_ruleName().($cur-1).'/'.$param}"><</a>
                 {for start='$start' end='$end'}
-                <a href="{$cur==$i?'#':'?page='.$i}">{$i}</a>
+                <a href="{$cur==$i?'#':get_ruleName().($i).'/'.$param}">{$i}</a>
                 {/for}
-                <a href="{$cur==$total?'':'?page='.($cur+1)}">></a>
+                <a href="{$cur==$total?'':get_ruleName().($cur+1).'/'.$param}">></a>
             </div>
         </div>
     </div>

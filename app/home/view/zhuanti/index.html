@@ -38,23 +38,19 @@
         <?php endif; ?>
         <?php $type=hotlive('liansai'); ?>
         <div class="hontlink">
-            热门联赛：
-            {foreach $type as $key=>$item}
-            <a href="{$item.src}">{$item.title}</a>
-            {/foreach}
+            热门联赛：{foreach $type as $key=>$item}<a href="/liansai/{$item.type}/1/{$item.id}" target="_blank">{$item.title}</a>{/foreach}
         </div>
     </div>
     <div class="ztnav-bg">
         <div class="ztnav">
             <a href="/{$typesrc}/zuqiu/" class="{:strpos($linkname,'zuqiu')?'cur':''}"><span><i>足球专题</i></span></a>
-            <a href="/{$typesrc}/lanqiu/"
-               class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
+            <a href="/{$typesrc}/lanqiu/" class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
         </div>
     </div>
     <div class="zt-list">
         <div class="logo-list">
             {foreach $data.data as $key=>$item}
-            <a href="/{$typesrc}/{$item.sphere_type}/1/{$item.id}">
+            <a href="/{$typesrc}/{$item.sphere_type}/1/{$item.id}" target="_blank">
                 <img src="{$item.logo}" title="{$item.short_name_zh}">
                 <p>{$item.short_name_zh}</p>
             </a>
