@@ -7,12 +7,13 @@
 namespace app\commonModel;
 use think\facade\Cache;
 use think\facade\Db;
+use think\facade\Env;
 use think\model;
 
 class FootballTeam extends Model
 {
     protected $connection = 'compDataDb';
-
+    public static $HOT_DATA =  "FootballTeamHotData";
     public static $CACHE_SHORT_NAME_ZH =  "FootballTeamShortNameZh";
     public $teamInfo = [];
     /**
@@ -255,6 +256,30 @@ class FootballTeam extends Model
             return $teamInfo->id;
         }
         return 0;
+    }
+
+    public function getHotData($limit = 0){
+        $key = self::$HOT_DATA;
+        $data = Cache::store('common_redis')->get($key);
+        if(!empty($data)){
+            return $data;
+        }
+        $sort = Db::name('hot_team_sort')->where('is_hot',1)->where('type',0)->column('*','team_id');
+
+        $ids = array_keys($sort);
+        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_py,short_name_zh,logo")->select()->toArray();
+        foreach ($data as &$item){
+            $item['sort'] = $sort[$item['id']]['sort'];
+            $item['sphere_type'] = 'zuqiu';
+        }
+        array_multisort(array_column($data,'sort'),SORT_DESC,$data);
+        Cache::store('common_redis')->set($key,$data);
+
+        if ($limit > 0){
+            $data = array_slice($data,0,$limit);
+        }
+
+        return $data;
     }
 
 

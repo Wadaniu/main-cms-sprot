@@ -367,3 +367,14 @@ function getMainMatchLive(){
     $footballCompetition = new  \app\commonModel\MatchliveLink();
     return $footballCompetition->getList();
 }
+
+function getHotTeam($limit = 10){
+    $halfLimit = $limit / 2;
+    $footballTeamModel = new \app\commonModel\FootballTeam();
+    $footballTeam = $footballTeamModel->getHotData($halfLimit);
+    $otherLimit = $limit - count($footballTeam);
+    $basketballTeamModel = new \app\commonModel\BasketballTeam();
+    $basketballTeam = $basketballTeamModel->getHotData($otherLimit);
+
+    return array_merge($basketballTeam,$footballTeam);
+}

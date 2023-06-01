@@ -181,8 +181,12 @@ class FootballMatch extends Model
         return $this->getMatchInfo($where,[],20,"match_time desc");
     }
 
-    public function getCompetitionListInfo($competitionId,$limit = 20){
-        $competitionIds[] = $competitionId;
+    public function getCompetitionListInfo($competitionId,$limit = 20): array
+    {
+        $competitionIds = [];
+        if ($competitionId > 0){
+            $competitionIds[] = $competitionId;
+        }
         $where = [];
         //比赛时间大于当前时间-5400s
         $where[] = ["match_time",">=",time() - 5400];

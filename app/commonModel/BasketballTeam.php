@@ -11,6 +11,10 @@ use think\model;
 
 class BasketballTeam extends Model
 {
+    /**
+     * @var mixed
+     */
+    private static $HOT_DATA = 'BasketballTeamHotData';
     protected $connection = 'compDataDb';
 
     public static $CACHE_SHORT_NAME_ZH =  "BasketballTeamShortNameZh";
@@ -154,6 +158,31 @@ class BasketballTeam extends Model
         }
         return "";
     }
+
+    public function getHotData($limit = 0){
+        $key = self::$HOT_DATA;
+        $data = Cache::store('common_redis')->get($key);
+        if(!empty($data)){
+            return $data;
+        }
+        $sort = Db::name('hot_team_sort')->where('is_hot',1)->where('type',1)->column('*','team_id');
+
+        $ids = array_keys($sort);
+        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_py,short_name_zh,logo")->select()->toArray();
+        foreach ($data as &$item){
+            $item['sort'] = $sort[$item['id']]['sort'];
+            $item['sphere_type'] = 'lanqiu';
+        }
+        array_multisort(array_column($data,'sort'),SORT_DESC,$data);
+        Cache::store('common_redis')->set($key,$data);
+
+        if ($limit > 0){
+            $data = array_slice($data,0,$limit);
+        }
+
+        return $data;
+    }
+
     private function getBasketballTeamSync($params = []){
 
     }
