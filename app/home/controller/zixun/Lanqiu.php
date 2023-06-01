@@ -45,6 +45,7 @@ class Lanqiu extends BaseController
         $info['author'] = Admin::where(['id'=>$info['admin_id']])->find()->toArray();
         $info['pre'] = Article::where("id","<",$matchId)->order("id desc")->find();
         $info['next'] = Article::where("id",">",$matchId)->order("id asc")->find();
+        View::assign('article',['data'=>getZiXun(2,5,$info['competition_id'])]);
         View::assign("info",$info);
     }
 

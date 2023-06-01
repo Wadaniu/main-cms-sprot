@@ -93,11 +93,17 @@ class Lanqiu extends BaseController
     function getMatchInfo($matchId){
         $model = new MatchVedio();
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
+        $match = (new \app\commonModel\BasketballMatch())->where("id",$matchLive['match_id'])->find();
+        $competition_id = 0;
+        if($match){
+            $competition_id = $match->competition_id;
+        }
         //处理tdk关键字
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);
         $this->getTempPath("luxiang_lanqiu_detail");
         $this->getTdk('luxiang_lanqiu_detail',$this->tdk);
         View::assign("index","录像介绍");
+        View::assign('article',['data'=>getZiXun(2,5,$competition_id)]);
     }
 }

@@ -99,10 +99,17 @@ class Zuqiu extends BaseController
 
         $model = new MatchVedio();
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
+        $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
+        $competition_id = 0;
+        if($match){
+            $competition_id = $match->competition_id;
+        }
+        //print_r($competition_id);exit;
         $this->tdk->title = $matchLive['title'];
         $this->getTempPath("luxiang_zuqiu_detail");
         $this->getTdk('luxiang_zuqiu_detail',$this->tdk);
         View::assign("index","录像介绍");
         View::assign("matchLive",$matchLive);
+        View::assign('article',['data'=>getZiXun(1,5,$competition_id)]);
     }
 }
