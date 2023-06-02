@@ -2,36 +2,19 @@
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-luxiang"></i><span class="prefix">录像</span></p>
-        <p class="more"><a href="">更多</a></p>
+        <p class="more"><a href="/luxiang/">更多</a></p>
     </div>
     <div class="video">
+        {if isset($luxiang)}
+        {foreach $luxiang as $lx}
         <div class="play">
-            <a href="http://www.miguvideo.com/mgs/website/prd/detail.html?cid=798401626" rel="nofollow"
+            <a href="/{$lx.type=='1'?'jijin':'luxiang'}/{$lx.video_type=='0'?'zuqiu':'lanqiu'}/1/{$lx.short_name_py}/{$lx.id}" rel="nofollow"
                target="_blank">
-                <img src="https://img-cdn.namitiyu.com/video/collection/fe0170784d.jpg">
-                <p class="tit">[咪咕全场集锦] 西甲-双方均无建树 西班牙人0-0闷平加的斯</p>
+                <img src="{$lx.cover}">
+                <p class="tit">{$lx.title}</p>
             </a>
         </div>
-        <div class="play">
-            <a href="http://www.miguvideo.com/mgs/website/prd/detail.html?cid=798401626" rel="nofollow"
-               target="_blank">
-                <img src="https://img-cdn.namitiyu.com/video/collection/fe0170784d.jpg">
-                <p class="tit">[咪咕全场集锦] 西甲-双方均无建树 西班牙人0-0闷平加的斯</p>
-            </a>
-        </div>
-        <div class="play">
-            <a href="http://www.miguvideo.com/mgs/website/prd/detail.html?cid=798401626" rel="nofollow"
-               target="_blank">
-                <img src="https://img-cdn.namitiyu.com/video/collection/fe0170784d.jpg">
-                <p class="tit">[咪咕全场集锦] 西甲-双方均无建树 西班牙人0-0闷平加的斯</p>
-            </a>
-        </div>
-        <div class="play">
-            <a href="http://www.miguvideo.com/mgs/website/prd/detail.html?cid=798401626" rel="nofollow"
-               target="_blank">
-                <img src="https://img-cdn.namitiyu.com/video/collection/fe0170784d.jpg">
-                <p class="tit">[咪咕全场集锦] 西甲-双方均无建树 西班牙人0-0闷平加的斯</p>
-            </a>
-        </div>
+        {/foreach}
+        {/if}
     </div>
 </div>

@@ -46,6 +46,7 @@ class Zuqiu extends BaseController
 
 
     function getMatchList($param){
+        $competition_id = 0;
         $this->getTempPath('jijin_zuqiu');
         $this->getTdk('jijin_zuqiu',$this->tdk);
         $param['page'] = (isset($param['page']) && $param['page'])?$param['page']:1;
@@ -56,6 +57,7 @@ class Zuqiu extends BaseController
             if($comp){
                 $match = FootballMatch::where(["competition_id"=>$comp->id])->column("id");
                 $list = $model->getList(['type'=>1,'video_type'=>0,'match_id'=>$match],["order"=>'id desc'])->toArray();
+                $competition_id = $comp->id;
             }else{
                 $list = $model->getList(['type'=>1,'video_type'=>0],["order"=>'id desc'])->toArray();
             }
@@ -87,15 +89,22 @@ class Zuqiu extends BaseController
         View::assign("href","/jijin/zuqiu/");
         View::assign("compName",$compName);
         View::assign("param",$param);
+        View::assign("luxiang",getLuxiangJijin(2,0,$competition_id,4));
     }
 
     function getMatchInfo($matchId){
         $model = new MatchVedio();
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
+        $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
+        $competition_id = 0;
+        if($match){
+            $competition_id = $match->competition_id;
+        }
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);
         $this->getTempPath("jijin_zuqiu_detail");
         $this->getTdk('jijin_zuqiu_detail',$this->tdk);
         View::assign("index","集锦介绍");
+        View::assign('article',['data'=>getZiXun(1,$competition_id)]);
     }
 }
