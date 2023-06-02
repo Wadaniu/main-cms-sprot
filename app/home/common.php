@@ -185,11 +185,6 @@ function getplaydata($data)
     return $playdata;
 }
 
-function moresrc($name)
-{
-    return '/'.$name.'/'.(strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : (strpos(get_ruleName(), 'lanqiu') ? '/lanqiu/' :'')).(get_params('compname')?(($name=='live'?'':'1/').get_params('compname')):'');
-}
-
 function getHistoryMatch(): array
 {
     $id = Env::get('Home.HOME_SPACE');
@@ -305,7 +300,7 @@ function getHotComp($limit = 9){
  *资讯
  * 1:足球2：篮球,0所有
  * */
-function getZiXun($cate_id=0,$limit=5,$competition_id=0){
+function getZiXun($cate_id=0,$competition_id=0,$limit=5){
     $key = "zinxun:".$cate_id.'_'.$limit."_".$competition_id;
     $data = Cache::store('redis')->get($key);
     if($data){
@@ -343,8 +338,6 @@ function getZiXun($cate_id=0,$limit=5,$competition_id=0){
  * video_type:0足球，1篮球
  * */
 function getLuxiangJijin($type,$video_type,$competition_id=0,$limit=5){
-    $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
-function getLuxiangJijin($type,$video_type,$limit,$competition_id=0){
     $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
     $data = Cache::store('common_redis')->get($key);
     if($data){
@@ -413,11 +406,18 @@ function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
 function getLive($limit = 5,$type = 'zuqiu',$compId = 0){
 
     switch ($type){
+        case 'zuqiu':
+            $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$limit);
+            break;
         case 'lanqiu' :
             $data = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId,$limit);
             break;
         default :
-            $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$limit);
+            $halfLimit = ceil($limit / 2);
+            $basketball = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId,$halfLimit);
+            $otherLimit = $limit - count($basketball);
+            $football = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$otherLimit);
+            $data = array_merge($basketball,$football);
             break;
     }
     return $data;
@@ -430,11 +430,12 @@ function getMainMatchLive(){
 
 function getHotTeam($limit = 10){
     $halfLimit = $limit / 2;
-    $footballTeamModel = new \app\commonModel\FootballTeam();
-    $footballTeam = $footballTeamModel->getHotData($halfLimit);
-    $otherLimit = $limit - count($footballTeam);
     $basketballTeamModel = new \app\commonModel\BasketballTeam();
-    $basketballTeam = $basketballTeamModel->getHotData($otherLimit);
+    $basketballTeam = $basketballTeamModel->getHotData($halfLimit);
+
+    $otherLimit = $limit - count($basketballTeam);
+    $footballTeamModel = new \app\commonModel\FootballTeam();
+    $footballTeam = $footballTeamModel->getHotData($otherLimit);
 
     return array_merge($basketballTeam,$footballTeam);
 }
