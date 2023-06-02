@@ -406,11 +406,18 @@ function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
 function getLive($limit = 5,$type = 'zuqiu',$compId = 0){
 
     switch ($type){
+        case 'zuqiu':
+            $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$limit);
+            break;
         case 'lanqiu' :
             $data = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId,$limit);
             break;
         default :
-            $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$limit);
+            $halfLimit = ceil($limit / 2);
+            $basketball = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId,$halfLimit);
+            $otherLimit = $limit - count($basketball);
+            $football = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$otherLimit);
+            $data = array_merge($basketball,$football);
             break;
     }
     return $data;
