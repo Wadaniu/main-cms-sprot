@@ -1,83 +1,26 @@
+<?php $typid=strpos(get_ruleName(), 'zuqiu') ? 'zuqiu' : (strpos(get_ruleName(), 'lanqiu') ? 'lanqiu' : ''); $compid=$comp['id']??0; $zbdata=getLive(5,$typid,$compid); ?>
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-zhibo"></i><span class="prefix">直播</span></p>
-        <p class="more"><a href="">更多</a></p>
+        <p class="more"><a href="{:moresrc('live')}">更多</a></p>
     </div>
     <dl class="live">
+        {foreach $zbdata as $i=>$item}
         <dd>
             <p class="info">
-                <a href="">澳超</a>
-                <span>04-28 17:45</span>
+                <a href="">{$item.competition_text}</a>
+                <span>{$item.match_time|date='H:i'}</span>
             </p>
             <div class="cont">
                 <p class="team">
                     <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/31e4e9417ec512d4e6aeb27fb30fbd5e.png">墨尔本城</a>
+                            src="{$item.home_team_logo}">{$item.home_team_text}</a>
                     <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/0f2783cf9426088b7775925c6b3875a6.png">西悉尼流浪者</a>
+                            src="{$item.away_team_logo}">{$item.away_team_text}</a>
                 </p>
-                <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
+                <a class="right-btn" target="_blank" href="/live/{$item.sphere_type}/{$item.comp_py}/{$item.id}"><i class="iconfont <?php echo getzt($item['status_id'],0) ?>"></i><span><?php echo getzt($item['status_id'],1) ?></span></a>
             </div>
         </dd>
-        <dd>
-            <p class="info">
-                <a href="">澳超</a>
-                <span>04-28 17:45</span>
-            </p>
-            <div class="cont">
-                <p class="team">
-                    <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/31e4e9417ec512d4e6aeb27fb30fbd5e.png">墨尔本城</a>
-                    <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/0f2783cf9426088b7775925c6b3875a6.png">西悉尼流浪者</a>
-                </p>
-                <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
-            </div>
-        </dd>
-        <dd>
-            <p class="info">
-                <a href="">澳超</a>
-                <span>04-28 17:45</span>
-            </p>
-            <div class="cont">
-                <p class="team">
-                    <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/31e4e9417ec512d4e6aeb27fb30fbd5e.png">墨尔本城</a>
-                    <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/0f2783cf9426088b7775925c6b3875a6.png">西悉尼流浪者</a>
-                </p>
-                <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
-            </div>
-        </dd>
-        <dd>
-            <p class="info">
-                <a href="">澳超</a>
-                <span>04-28 17:45</span>
-            </p>
-            <div class="cont">
-                <p class="team">
-                    <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/31e4e9417ec512d4e6aeb27fb30fbd5e.png">墨尔本城</a>
-                    <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/0f2783cf9426088b7775925c6b3875a6.png">西悉尼流浪者</a>
-                </p>
-                <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
-            </div>
-        </dd>
-        <dd>
-            <p class="info">
-                <a href="">澳超</a>
-                <span>04-28 17:45</span>
-            </p>
-            <div class="cont">
-                <p class="team">
-                    <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/31e4e9417ec512d4e6aeb27fb30fbd5e.png">墨尔本城</a>
-                    <a href=""><img
-                            src="https://www.i999.com.cn/uploads/qiudui/0f2783cf9426088b7775925c6b3875a6.png">西悉尼流浪者</a>
-                </p>
-                <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
-            </div>
-        </dd>
+        {/foreach}
     </dl>
 </div>

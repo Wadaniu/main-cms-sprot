@@ -101,7 +101,6 @@ class Lanqiu extends BaseController
 
         $this->getTdk('live_lanqiu',$this->tdk);
         View::assign('data',$res);
-        View::assign('article',['data'=>getZiXun(2,5,0)]);
     }
 
 }

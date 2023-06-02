@@ -1,15 +1,14 @@
+<?php $typid=strpos(get_ruleName(), 'zuqiu') ? 0 : (strpos(get_ruleName(), 'lanqiu') ? 1 : ''); $compid=$comp['id']??0; $jjdata=getLuxiangJijin(1,$typid,5,$compid); ?>
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-jijin"></i><span class="prefix">集锦</span></p>
-        <p class="more"><a href="">更多</a></p>
+        <p class="more"><a href="{:moresrc('jijin')}">更多</a></p>
     </div>
     <div class="lists">
         <ul>
-            <li><a href="" title="" target="_blank">西甲-奥坎波斯补时点杀 塞维利亚1-0毕尔巴鄂</a></li>
-            <li><a href="" title="" target="_blank">西甲-奥坎波斯补时点杀 塞维利亚1-0毕尔巴鄂</a></li>
-            <li><a href="" title="" target="_blank">西甲-奥坎波斯补时点杀 塞维利亚1-0毕尔巴鄂</a></li>
-            <li><a href="" title="" target="_blank">西甲-奥坎波斯补时点杀 塞维利亚1-0毕尔巴鄂</a></li>
-            <li><a href="" title="" target="_blank">西甲-奥坎波斯补时点杀 塞维利亚1-0毕尔巴鄂</a></li>
+            {foreach $jjdata as $i=>$item}
+            <li><a href="/jijin/{$item.video_type=='0'?'zuqiu':'lanqiu'}/1/{$item.short_name_py}/{$item.id}" title="{$item.title}" target="_blank">{$item.title}</a></li>
+            {/foreach}
         </ul>
     </div>
 </div>

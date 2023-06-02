@@ -185,6 +185,11 @@ function getplaydata($data)
     return $playdata;
 }
 
+function moresrc($name)
+{
+    return '/'.$name.'/'.(strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : (strpos(get_ruleName(), 'lanqiu') ? '/lanqiu/' :'')).(get_params('compname')?(($name=='live'?'':'1/').get_params('compname')):'');
+}
+
 function getHistoryMatch(): array
 {
     $id = Env::get('Home.HOME_SPACE');
@@ -291,7 +296,7 @@ function getBasketballHotComp($limit = 0)
  *资讯
  * 1:足球2：篮球,0所有
  * */
-function getZiXun($cate_id=0,$competition_id=0,$limit=5){
+function getZiXun($cate_id=0,$limit=5,$competition_id=0){
     $key = "zinxun:".$cate_id.'_'.$limit."_".$competition_id;
     $data = Cache::store('redis')->get($key);
     if($data){
@@ -328,8 +333,8 @@ function getZiXun($cate_id=0,$competition_id=0,$limit=5){
  * type:1集锦，2录像
  * video_type:0足球，1篮球
  * */
-function getLuxiangJijin($type,$video_type,$competition_id=0,$limit){
-    echo $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
+function getLuxiangJijin($type,$video_type,$limit,$competition_id=0){
+    $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
     $data = Cache::store('common_redis')->get($key);
     if($data){
         return $data;
