@@ -23,7 +23,7 @@ class Test extends BaseController
      */
     public function index(){
         echo "<pre>";
-        $list = getLuxiangJijin(2,1,10);
+        $list = getZiXun(0,5,0);
         print_r($list);exit;
     }
 
