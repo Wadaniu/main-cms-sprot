@@ -154,6 +154,7 @@ class BasketballCompetition extends Model
         $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,short_name_py,logo")->select()->toArray();
         foreach ($data as &$item){
             $item['sort'] = $sort[$item['id']]['sort'];
+            $item['sphere_type'] = 'lanqiu';
         }
         array_multisort(array_column($data,'sort'),SORT_DESC,$data);
         Cache::set($key,$data);
