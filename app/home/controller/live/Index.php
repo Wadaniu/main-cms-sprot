@@ -44,6 +44,8 @@ class Index extends BaseController
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
         View::assign('data',$res);
+        View::assign('article',['data'=>getZiXun(0,5,0)]);
         return View::fetch($this->tempPath);
+
     }
 }
