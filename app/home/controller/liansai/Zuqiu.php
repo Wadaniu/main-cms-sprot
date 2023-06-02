@@ -63,6 +63,7 @@ class Zuqiu extends BaseController
         $this->getTdk('liansai_zuqiu_detail',$this->tdk);
 
         View::assign('data',$matchList);
+        //var_dump($jijin);die;
         View::assign('luxiang',$luxiang);
         View::assign('jijin',$jijin);
         View::assign('article',$article);

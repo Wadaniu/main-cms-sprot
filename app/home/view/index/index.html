@@ -14,6 +14,61 @@
 </div>
 <div class="container">
     <div class="left-main">
+        <div class="collect">
+            <div class="collect-box">
+                <div class="collect-tab">
+                    <p class="cur">足球录像</p>
+                    <p>足球集锦</p>
+                    <p>足球资讯</p>
+                </div>
+                <ul class="cur">
+                    <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
+                    {foreach $zuqiuLx as $row}
+                    <li><i class="iconfont icon-zuqiu"></i><a href="/luxiang/zuqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
+                    {/foreach}
+
+                </ul>
+                <ul>
+                    <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>
+                    {foreach $zuqiuJj as $row}
+                    <li><i class="iconfont icon-zuqiu"></i><a href="/luxiang/zuqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
+                    {/foreach}
+                </ul>
+                <ul>
+                    <?php  $zuqiuZx = getZiXun(1);  ?>
+                    {foreach $zuqiuZx as $row}
+                    <li><i class="iconfont icon-zuqiu"></i><a href="/zixun/zuqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
+                    {/foreach}
+                </ul>
+            </div>
+            <div class="collect-box">
+                <div class="collect-tab">
+                    <p class="cur">篮球录像</p>
+                    <p>篮球集锦</p>
+                    <p>篮球资讯</p>
+                </div>
+                <ul class="cur">
+                    <?php  $lanqiuLx = getLuxiangJijin(2,1);  ?>
+                    {foreach $lanqiuLx as $row}
+                    <li><i class="iconfont icon-lanqiu"></i><a href="/luxiang/lanqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
+                    {/foreach}
+                </ul>
+                <ul>
+                    <?php  $lanqiuJj = getLuxiangJijin(1,1);  ?>
+                    {foreach $lanqiuJj as $row}
+                    <li><i class="iconfont icon-lanqiu"></i><a href="/luxiang/lanqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
+                    {/foreach}
+                </ul>
+                <ul>
+                    <?php  $lanqiuZx = getZiXun(2);  ?>
+                    {foreach $lanqiuZx as $row}
+                    <li><i class="iconfont icon-lanqiu"></i><a href="/zixun/lanqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
+                    {/foreach}
+
+
+                </ul>
+            </div>
+        </div>
         <div class="model">
             <div class="title">
                 <div class="tit"><i class="iconfont icon-zhibo"></i><span>最近直播</span></div>
@@ -37,266 +92,21 @@
                 </div>
             </div>
             <div class="play-list">
-                <p class="play-date">2023-04-26</p>
+                {foreach $data as $key=>$item}
+                <p class="play-date">{$key}</p>
                 <dl class="list-cont">
+                    {foreach $item as $i=>$team}
                     <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
+                        <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='H:i'}</p>
+                        <p class="type"><a href="">{$team.competition_text}</a></p>
+                        <p class="team"><a href="">{$team.home_team_text}</a><img src="{$team.home_team_logo}"></p>
                         <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
+                        <p class="team"><img src="{$team.away_team_logo}"><a href="">{$team.away_team_text}</a></p>
+                        <a class="right-btn" target="_blank" href="/live/{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i class="iconfont <?php echo getzt($team['status_id'],0) ?>"></i><span><?php echo getzt($team['status_id'],1) ?></span></a>
                     </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-zhibo"></i><span>直播中...</span></a>
-                    </dd>
+                    {/foreach}
                 </dl>
-                <p class="play-date">2023-04-27</p>
-                <dl class="list-cont">
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-zhibo"></i><span>直播中...</span></a>
-                    </dd>
-                </dl>
-                <p class="play-date">2023-04-28</p>
-                <dl class="list-cont">
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-zhibo"></i><span>直播中...</span></a>
-                    </dd>
-                </dl>
-                <p class="play-date">2023-04-29</p>
-                <dl class="list-cont">
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-fenxi"></i><span>赛前分析</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-bofang"></i><span>锦集/录像</span></a>
-                    </dd>
-                    <dd>
-                        <p class="time"><i class="iconfont icon-zuqiu"></i>15:00</p>
-                        <p class="type"><a href="">中女超</a></p>
-                        <p class="team"><a href="">永川茶山竹海女足</a><img class=""
-                                                                            src="https://www.i999.com.cn/uploads/qiudui/default.png" alt=""></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img class="" src="https://www.i999.com.cn/uploads/qiudui/default.png"
-                                             alt=""><a href="">杭州银行女足</a></p>
-                        <a class="right-btn" href=""><i class="iconfont icon-zhibo"></i><span>直播中...</span></a>
-                    </dd>
-                </dl>
-            </div>
-        </div>
-        <div class="collect">
-            <div class="collect-box">
-                <div class="collect-tab">
-                    <p class="cur">足球录像</p>
-                    <p>足球集锦</p>
-                    <p>足球资讯</p>
-                </div>
-                <ul class="cur">
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                </ul>
-                <ul>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                </ul>
-                <ul>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                    <li><i class="iconfont icon-zuqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                </ul>
-            </div>
-            <div class="collect-box">
-                <div class="collect-tab">
-                    <p class="cur">篮球录像</p>
-                    <p>篮球集锦</p>
-                    <p>篮球资讯</p>
-                </div>
-                <ul class="cur">
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">04月26日 英超第33轮 狼队vs水晶宫
-                        全场录像</a></li>
-                </ul>
-                <ul>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">英超-明斯制胜麦金送助攻
-                        维拉1-0富勒姆十轮不败先赛一场升至第5</a></li>
-                </ul>
-                <ul>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                    <li><i class="iconfont icon-lanqiu"></i><a href="" target="_blank">梅州外援杜加利奇：本场输球很失望
-                        要抬起头来拿到更多分数</a></li>
-                </ul>
+                {/foreach}
             </div>
         </div>
     </div>

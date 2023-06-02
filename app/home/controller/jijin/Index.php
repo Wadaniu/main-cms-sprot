@@ -62,6 +62,7 @@ class Index extends BaseController
         View::assign("index","集锦");
         View::assign("compName",'');
         View::assign("param",$param);
+        View::assign("jijin",);
         return View::fetch($this->tempPath);
 
     }

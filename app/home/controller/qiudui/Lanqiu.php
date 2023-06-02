@@ -66,6 +66,7 @@ class Lanqiu extends BaseController
         View::assign('jijin',$jijin);
 //        View::assign('article',$article);
         View::assign('team',$team);
+        View::assign('article',['data'=>getZiXun(2)]);
     }
 
     protected function getTeamList($param)

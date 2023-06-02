@@ -80,6 +80,7 @@ class Zuqiu extends BaseController
         $this->getTempPath('live_zuqiu');
 
         $footballModel = new FootballMatch();
+        $competition_id = 0;
         if (empty($compName)){
             //篮球数据
             $data = $footballModel->getWeekData();
@@ -91,7 +92,9 @@ class Zuqiu extends BaseController
             $data = $footballModel->getWeekData([$comp['id']]);
             //tdk关键字
             $this->tdk->short_name_zh = $comp['short_name_zh'];
+
             View::assign('comp',$comp);
+            $competition_id = $comp['id'];
         }
 
         $res = [];
@@ -102,5 +105,6 @@ class Zuqiu extends BaseController
         $this->getTdk('live_zuqiu',$this->tdk);
 
         View::assign('data',$res);
+        View::assign('article',['data'=>getZiXun(1,$competition_id)]);
     }
 }

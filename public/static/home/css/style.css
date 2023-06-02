@@ -642,6 +642,14 @@ a.right-btn span {
     color: var(--main-color);
 }
 
+.integral .table {
+    display: none;
+}
+
+.integral .table.cur {
+    display: block;
+}
+
 .integral .table li {
     display: flex;
     font-size: 13px;
