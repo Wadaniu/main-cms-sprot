@@ -4,30 +4,31 @@
 <!-- 主体 -->
 {block name="body"}
 {include file="common/header" nav='info' /}
-<?php $iszuqiu=!isset($players) ?>
+<?php $islanqiu=isset($players) ?>
 <div class="playbg">
-<!--    <div class="breadcrumbs">-->
-<!--        <ul>-->
-<!--            <li>-->
-<!--                <a href="">首页</a>-->
-<!--            </li>-->
-<!--            <li>&gt;</li>-->
-<!--            <li>-->
-<!--                <a href="">首页</a>-->
-<!--            </li>-->
-<!--            <li>&gt;</li>-->
-<!--            <li>-->
-<!--                <a href="">首页</a>-->
-<!--            </li>-->
-<!--            <li>&gt;</li>-->
-<!--            <li>-->
-<!--                首页-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
+    <!--    <div class="breadcrumbs">-->
+    <!--        <ul>-->
+    <!--            <li>-->
+    <!--                <a href="">首页</a>-->
+    <!--            </li>-->
+    <!--            <li>&gt;</li>-->
+    <!--            <li>-->
+    <!--                <a href="">首页</a>-->
+    <!--            </li>-->
+    <!--            <li>&gt;</li>-->
+    <!--            <li>-->
+    <!--                <a href="">首页</a>-->
+    <!--            </li>-->
+    <!--            <li>&gt;</li>-->
+    <!--            <li>-->
+    <!--                首页-->
+    <!--            </li>-->
+    <!--        </ul>-->
+    <!--    </div>-->
     <div class="play match-info">
         <div class="team">
-            <p class="team-name">{$analysis.info.home_team_text}<span>({$analysis.info.home_scores[0]})</span></p>
+            <p class="name">{$analysis.info.home_team_text}<span>({$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]})</span>
+            </p>
             <p class="team-logo"><img src="{$analysis.info.home_team_logo}"></p>
         </div>
         <div class="info">
@@ -37,14 +38,12 @@
         </div>
         <div class="team">
             <p class="team-logo"><img src="{$analysis.info.away_team_logo}"></p>
-            <p class="team-name">{$analysis.info.away_team_text}<span>({$analysis.info.away_scores[0]})</span></p>
+            <p class="name">{$analysis.info.away_team_text}<span>({$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]})</span>
+            </p>
         </div>
     </div>
     <div class="live-link">
-        <?php $MainMatchLive = getMainMatchLive(); ?>
-        {foreach $MainMatchLive as $item}
-        <a href={$item.live_link} rel="nofollow" target=_blank>{$item.title}</a>
-        {/foreach}
+
         <?php if(!empty($matchLive) && is_array($matchLive['pc_link'])&&count($matchLive['pc_link'])>0): ?>
         {foreach $matchLive.pc_link as $key=>$item}
         <a href={$item} rel="nofollow" target=_blank>直播信号{$key+1}</a>
@@ -58,9 +57,8 @@
             <div class="type-tabs">
                 <p class="cur">赛前分析</p>
                 <p>直播信息</p>
-                <?php if($iszuqiu): ?>
                 <p>技术统计</p>
-                <?php else: ?>
+                <?php if($islanqiu): ?>
                 <p>球员统计</p>
                 <?php endif; ?>
             </div>
@@ -142,15 +140,56 @@
                     <li>
                         赛事信息：本场包含了{$analysis.info.home_team_text}vs{$analysis.info.away_team_text}直播信息,{$web_name}直播将对本场进行免费视频直播。
                     </li>
-                    <li>{$web_name}直播为您提供{$analysis.info.home_team_text}对阵{$analysis.info.away_team_text}高清无插件直播地址，{$analysis.info.home_team_text}直播和{$analysis.info.away_team_text}直播信号将在开赛前实时更新，刷新本页面或进入{$web_name}直播首页即可获取最新直播信号。喜欢看{$analysis.info.home_team_text}VS{$analysis.info.away_team_text}比赛的朋友可以提前收藏本页面以免错过您喜欢的赛事直播。
+                    <li>
+                        {$web_name}直播为您提供{$analysis.info.home_team_text}对阵{$analysis.info.away_team_text}高清无插件直播地址，{$analysis.info.home_team_text}直播和{$analysis.info.away_team_text}直播信号将在开赛前实时更新，刷新本页面或进入{$web_name}直播首页即可获取最新直播信号。喜欢看{$analysis.info.home_team_text}VS{$analysis.info.away_team_text}比赛的朋友可以提前收藏本页面以免错过您喜欢的赛事直播。
                     </li>
                 </ul>
             </div>
-            <?php if($iszuqiu): ?>
             <div class="type-cont">
-                <?php $keylist=["ball_possession","shots","shots_on_target","passes","passes_accuracy","freekicks","corner_kicks","offsides","fouls","yellow_cards","red_cards","yellow2red_cards","goals_against","tackles","interceptions"];
-						$namelist=["控球率","射门","射正","传球","传球成功","任意球","角球","越位","角球","犯规","黄牌","红牌","两黄变红","失球","抢断","拦截"];
+                <?php $keylist=$islanqiu?["mingzhong","toulan","sanzhong","santou","fazhong","fatou","gongban","fangban","lanban","zhugong","qiang","gaimao","shiwu","fangui","bifen"]:["ball_possession","shots","shots_on_target","passes","passes_accuracy","freekicks","corner_kicks","offsides","fouls","yellow_cards","red_cards","yellow2red_cards","goals_against","tackles","interceptions"];
+				    $namelist=$islanqiu?["命中次数","投篮次数","三分命中","三分投篮","罚球命中","罚球投篮","进攻篮板","防守篮板","总篮板","助攻数","抢断数","盖帽数","失误","个人犯规","比分"]:["控球率","射门","射正","传球","传球成功","任意球","角球","越位","角球","犯规","黄牌","红牌","两黄变红","失球","抢断","拦截"];
+						$teamStats=$islanqiu?getteamStats($keylist,$players[2],$players[3],$analysis['info']):$teamStats;
 						if(is_array($teamStats)&&count($teamStats)>0): ?>
+                <?php if($islanqiu): ?>
+                <table class="player-data">
+                    <tr>
+                        <th>实时数据</th>
+                        <th>1st</th>
+                        <th>2nd</th>
+                        <th>3rd</th>
+                        <th>4th</th>
+                        <th>加时1</th>
+                        <th>加时2</th>
+                        <th>加时3</th>
+                        <th>加时4</th>
+                        <th>总分</th>
+                    </tr>
+                    <tr>
+                        <td>{$analysis.info.home_team_text}</td>
+                        <td>{$analysis.info.home_scores[0]}</td>
+                        <td>{$analysis.info.home_scores[1]}</td>
+                        <td>{$analysis.info.home_scores[2]}</td>
+                        <td>{$analysis.info.home_scores[3]}</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{:getScore($analysis.info.home_scores)}</td>
+                    </tr>
+                    <tr>
+                        <td>{$analysis.info.away_team_text}</td>
+                        <td>{$analysis.info.away_scores[0]}</td>
+                        <td>{$analysis.info.away_scores[1]}</td>
+                        <td>{$analysis.info.away_scores[2]}</td>
+                        <td>{$analysis.info.away_scores[3]}</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>{:getScore($analysis.info.away_scores)}</td>
+                    </tr>
+                </table>
+                <?php endif; ?>
                 <div class="census">
                     <p class="left"><span>{$teamStats.0.team_name_text}</span><img
                             src="{$teamStats.0.team_name_logo}"></p>
@@ -161,141 +200,69 @@
                 {foreach $keylist as $key=>$item}
                 <div class="census contrast">
                     <p class="left"><i <?php echo getstyle($teamStats[0][$item],$teamStats[1][$item]) ?>></i>
-                        <span>{$teamStats.0[$item]}{$key==0?'%':''}</span></p>
+                        <span>{$teamStats.0[$item]}{$key==0&&$islanqiu?'%':''}</span></p>
                     <p class="center">{$namelist[$key]}</p>
                     <p class="right">
-                        <span>{$teamStats.1[$item]}{$key==0?'%':''}</span><i <?php echo getstyle($teamStats[1][$item],$teamStats[0][$item]) ?>></i></p>
+                        <span>{$teamStats.1[$item]}{$key==0&&$islanqiu?'%':''}</span><i <?php echo getstyle($teamStats[1][$item],$teamStats[0][$item]) ?>
+                        ></i></p>
                 </div>
                 {/foreach}
                 <?php else: ?>
                 <p class=nodata>暂无数据</p>
                 <?php endif; ?>
             </div>
-            <?php else: ?>
+            <?php if($islanqiu): ?>
             <div class="type-cont">
+
                 <table class="player-data">
                     <tr>
-                        <th><img src="https://image.24zbw.com/icon/team/2/d8a539f504ff28555785d42b3ab32c79">湖人</th>
-                        <th>位置</th>
+                        <th><img src="{$analysis.info.home_team_logo}">{$analysis.info.home_team_text}</th>
                         <th>时间</th>
                         <th>投篮</th>
                         <th>三分</th>
                         <th>罚球</th>
                         <th>篮板</th>
                         <th>助攻</th>
-                        <th>犯规</th>
                         <th>抢断</th>
-                        <th>失误</th>
                         <th>盖帽</th>
+                        <th>失误</th>
+                        <th>犯规</th>
                         <th>得分</th>
                     </tr>
+                    {foreach $players.0 as $key=>$item}
+                    <?php $playdata=getplaydata($item[6]); ?>
                     <tr>
-                        <td>范德比尔特</td>
-                        <td>前锋</td>
-                        <td>11</td>
-                        <td>0/1</td>
-                        <td>0/1</td>
-                        <td>2/2</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>2</td>
+                        <td><img src="{$item.4}">{$item.1}</td>
+                        {foreach $playdata as $data}
+                        <td>{$data}</td>
+                        {/foreach}
                     </tr>
-                    <tr>
-                        <td>范德比尔特</td>
-                        <td>前锋</td>
-                        <td>11</td>
-                        <td>0/1</td>
-                        <td>0/1</td>
-                        <td>2/2</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>范德比尔特</td>
-                        <td>前锋</td>
-                        <td>11</td>
-                        <td>0/1</td>
-                        <td>0/1</td>
-                        <td>2/2</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>2</td>
-                    </tr>
+                    {/foreach}
                 </table>
                 <table class="player-data">
                     <tr>
-                        <th><img src="https://image.24zbw.com/icon/team/2/92345ef1c709dd1b9e3911413f3ad887">勇士</th>
-                        <th>位置</th>
+                        <th><img src="{$analysis.info.away_team_logo}">{$analysis.info.away_team_text}</th>
                         <th>时间</th>
                         <th>投篮</th>
                         <th>三分</th>
                         <th>罚球</th>
                         <th>篮板</th>
                         <th>助攻</th>
-                        <th>犯规</th>
                         <th>抢断</th>
-                        <th>失误</th>
                         <th>盖帽</th>
+                        <th>失误</th>
+                        <th>犯规</th>
                         <th>得分</th>
                     </tr>
+                    {foreach $players.1 as $key=>$item}
+                    <?php $playdata=getplaydata($item[6]); ?>
                     <tr>
-                        <td>维金斯</td>
-                        <td>前锋</td>
-                        <td>39</td>
-                        <td>6/14</td>
-                        <td>2/6</td>
-                        <td>3/4</td>
-                        <td>4</td>
-                        <td>1</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>0</td>
-                        <td>17</td>
+                        <td><img src="{$item.4}">{$item.1}</td>
+                        {foreach $playdata as $data}
+                        <td>{$data}</td>
+                        {/foreach}
                     </tr>
-                    <tr>
-                        <td>维金斯</td>
-                        <td>前锋</td>
-                        <td>39</td>
-                        <td>6/14</td>
-                        <td>2/6</td>
-                        <td>3/4</td>
-                        <td>4</td>
-                        <td>1</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>0</td>
-                        <td>17</td>
-                    </tr>
-                    <tr>
-                        <td>维金斯</td>
-                        <td>前锋</td>
-                        <td>39</td>
-                        <td>6/14</td>
-                        <td>2/6</td>
-                        <td>3/4</td>
-                        <td>4</td>
-                        <td>1</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>0</td>
-                        <td>17</td>
-                    </tr>
+                    {/foreach}
                 </table>
             </div>
             <?php endif; ?>
@@ -312,12 +279,12 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
-    $(".type-tabs p").click(function() {
+    $(".type-tabs p").click(function () {
         let index = $(this).index();
         $(this).addClass("cur").siblings().removeClass();
         $(".type-cont").hide().eq(index).show();
     })
-    $(".name-tab li").click(function() {
+    $(".name-tab li").click(function () {
         let index = $(this).index();
         $(this).addClass("cur").siblings().removeClass();
         $(".type-cont .name-cont").slideUp().eq(index).slideDown();
