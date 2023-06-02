@@ -32,35 +32,15 @@ abstract class BaseController
     protected $app;
 
     /**
-     * 是否批量验证
-     * @var bool
-     */
-    protected $batchValidate = false;
-
-    /**
      * 控制器中间件
      * @var array
      */
     protected $middleware = [];
-
-    /**
-     * webtitle
-     * @var string
-     */
-    protected $webTitle = '';
     /**
      * 网站名称
      * @var string
      */
     protected $web_common_title = '';
-    /**
-     * 系统名称
-     * @var string
-     */
-    protected $webAdminTitle = '';
-
-    protected $webKeywords = '';
-    protected $webDesc = '';
 
     protected $nav = [];
 
@@ -94,6 +74,9 @@ abstract class BaseController
         $seo = Request::rule();
 
         $search = [];
+
+        //动态渲染title
+        $this->web_common_title = get_system_config('web','title');
 
         foreach ($COMMON_NAV as $item){
             //父级路由
@@ -157,6 +140,7 @@ abstract class BaseController
         $seo['title'] = $this->replaceTDK($this->nav[$routeTag]['web_title'],$tdk);
         $seo['keywords'] = $this->replaceTDK($this->nav[$routeTag]['web_keywords'],$tdk);
         $seo['description'] = $this->replaceTDK($this->nav[$routeTag]['web_desc'],$tdk);
+
         View::assign('seo',$seo);
     }
 
