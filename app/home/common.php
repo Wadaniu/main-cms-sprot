@@ -328,8 +328,8 @@ function getZiXun($cate_id=0,$competition_id=0,$limit=5){
  * type:1集锦，2录像
  * video_type:0足球，1篮球
  * */
-function getLuxiangJijin($type,$video_type,$competition_id=0,$limit){
-    echo $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
+function getLuxiangJijin($type,$video_type,$competition_id=0,$limit=5){
+    $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
     $data = Cache::store('common_redis')->get($key);
     if($data){
         return $data;

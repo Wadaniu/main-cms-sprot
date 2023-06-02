@@ -104,6 +104,6 @@ class Lanqiu extends BaseController
         $this->getTempPath("luxiang_lanqiu_detail");
         $this->getTdk('luxiang_lanqiu_detail',$this->tdk);
         View::assign("index","录像介绍");
-        View::assign('article',['data'=>getZiXun(2,5,$competition_id)]);
+        View::assign('article',['data'=>getZiXun(2,$competition_id)]);
     }
 }

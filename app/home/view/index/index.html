@@ -22,20 +22,20 @@
                     <p>足球资讯</p>
                 </div>
                 <ul class="cur">
-                    <?php  $zuqiuLx = getLuxiangJijin(2,0,5);  ?>
+                    <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
                     {foreach $zuqiuLx as $row}
                     <li><i class="iconfont icon-zuqiu"></i><a href="/luxiang/zuqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
                     {/foreach}
 
                 </ul>
                 <ul>
-                    <?php  $zuqiuJj = getLuxiangJijin(1,0,5);  ?>
+                    <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>
                     {foreach $zuqiuJj as $row}
                     <li><i class="iconfont icon-zuqiu"></i><a href="/luxiang/zuqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
                     {/foreach}
                 </ul>
                 <ul>
-                    <?php  $zuqiuZx = getZiXun(1,5);  ?>
+                    <?php  $zuqiuZx = getZiXun(1);  ?>
                     {foreach $zuqiuZx as $row}
                     <li><i class="iconfont icon-zuqiu"></i><a href="/zixun/zuqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
                     {/foreach}
@@ -48,19 +48,19 @@
                     <p>篮球资讯</p>
                 </div>
                 <ul class="cur">
-                    <?php  $lanqiuLx = getLuxiangJijin(2,1,5);  ?>
+                    <?php  $lanqiuLx = getLuxiangJijin(2,1);  ?>
                     {foreach $lanqiuLx as $row}
                     <li><i class="iconfont icon-lanqiu"></i><a href="/luxiang/lanqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
                     {/foreach}
                 </ul>
                 <ul>
-                    <?php  $lanqiuJj = getLuxiangJijin(1,1,5);  ?>
+                    <?php  $lanqiuJj = getLuxiangJijin(1,1);  ?>
                     {foreach $lanqiuJj as $row}
                     <li><i class="iconfont icon-lanqiu"></i><a href="/luxiang/lanqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
                     {/foreach}
                 </ul>
                 <ul>
-                    <?php  $lanqiuZx = getZiXun(2,5);  ?>
+                    <?php  $lanqiuZx = getZiXun(2);  ?>
                     {foreach $lanqiuZx as $row}
                     <li><i class="iconfont icon-lanqiu"></i><a href="/zixun/lanqiu/1/1/{$row.id}" target="_blank">{$row.title}</a></li>
                     {/foreach}

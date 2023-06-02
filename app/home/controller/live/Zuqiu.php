@@ -105,6 +105,6 @@ class Zuqiu extends BaseController
         $this->getTdk('live_zuqiu',$this->tdk);
 
         View::assign('data',$res);
-        View::assign('article',['data'=>getZiXun(1,5,$competition_id)]);
+        View::assign('article',['data'=>getZiXun(1,$competition_id)]);
     }
 }
