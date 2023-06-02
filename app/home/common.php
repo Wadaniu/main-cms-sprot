@@ -287,6 +287,15 @@ function getBasketballHotComp($limit = 0)
     return $Competition->getHotData($limit);
 }
 
+function getHotComp($limit = 9){
+    $halfLimit = ceil($limit / 2);
+    $basketballComp = getBasketballHotComp($halfLimit);
+    $otherLimit = $limit - count($basketballComp);
+    $footballComp = getFootballHotComp($otherLimit);
+
+    return array_merge($basketballComp,$footballComp);
+}
+
 /**
  *资讯
  * 1:足球2：篮球,0所有
@@ -414,11 +423,12 @@ function getMainMatchLive(){
 
 function getHotTeam($limit = 10){
     $halfLimit = $limit / 2;
-    $footballTeamModel = new \app\commonModel\FootballTeam();
-    $footballTeam = $footballTeamModel->getHotData($halfLimit);
-    $otherLimit = $limit - count($footballTeam);
     $basketballTeamModel = new \app\commonModel\BasketballTeam();
-    $basketballTeam = $basketballTeamModel->getHotData($otherLimit);
+    $basketballTeam = $basketballTeamModel->getHotData($halfLimit);
+
+    $otherLimit = $limit - count($basketballTeam);
+    $footballTeamModel = new \app\commonModel\FootballTeam();
+    $footballTeam = $footballTeamModel->getHotData($otherLimit);
 
     return array_merge($basketballTeam,$footballTeam);
 }

@@ -7,7 +7,7 @@ class MatchVedio extends Model
 {
     protected $connection = 'compDataDb';
 
-    public function getByMatchId($id, $video_type = 0,$limit = 0,$type = 1): array
+    public function getByMatchId($id, $video_type = 0,$limit = 0,$type = 1)
     {
         $query = self::where(['match_id'=>$id])->where(['video_type'=>$video_type,'type'=>$type]);
         if ($limit > 0){
