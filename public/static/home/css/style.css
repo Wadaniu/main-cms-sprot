@@ -23,7 +23,7 @@ a:hover {
 }
 
 img {
-    vertical-align: top;
+    vertical-align: middle;
     object-fit: contain;
 }
 
@@ -1327,9 +1327,15 @@ a.right-btn span {
     margin-top: 10%;
 }
 
-.match-info .team-name {
+.match-info .team .name {
     padding: 0 30px;
     font-size: 24px;
+    text-align: center;
+}
+
+.match-info .team .name span {
+    font-size: 30px;
+    display: block;
 }
 
 .match-info .info {
@@ -1779,10 +1785,11 @@ a.right-btn span {
 .player-data {
     margin-bottom: 20px;
     width: 100%;
+    border-collapse: separate;
 }
 
 .player-data tr th:first-child {
-    width: 130px;
+    width: 170px;
     display: flex;
     align-items: center;
 }

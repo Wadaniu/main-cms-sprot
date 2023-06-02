@@ -9,10 +9,10 @@
     {block name="meta"}
     <link rel="mobile-prefetch" href=""/>
     {/block}
-    {block name="title"}<title>{:$seo.title ?? get_system_config('web','admin_title')}</title>{/block}
+    {block name="title"}<title>{:$seo.title}</title>{/block}
     {block name="keywords"}
-    <meta name="keywords" content="{:$seo.keywords ?? get_system_config('web','keywords')}"/>
-    <meta name="description" content="{:$seo.description ?? get_system_config('web','desc')}"/>
+    <meta name="keywords" content="{:$seo.keywords}"/>
+    <meta name="description" content="{:$seo.description}"/>
     {/block}
     <link rel="stylesheet" href="{__CSS__}/base.css">
     <link rel="stylesheet" href="{__CSS__}/style.css">

@@ -4,6 +4,10 @@
     <a href="{$_SERVER['REQUEST_URI']}" class="cur">全部</a>
     <?php endif; ?>
     {foreach $type as $key=>$item}
-    <a href="{$item.src}" class="{:count($search)?'':(!empty($curparam)&&strpos($item.src, $curparam)||empty($curparam)&&$key==0 ? 'cur' : '')}">{$item.title}</a>
+    <a href="{$item.src}"
+       class="{:count($search)?'':(!empty($curparam)&&strpos($item.src, $curparam)||empty($curparam)&&$key==0 ? 'cur' : '')}">{$item.title}</a>
     {/foreach}
 </div>
+<script>
+
+</script>

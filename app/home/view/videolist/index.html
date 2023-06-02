@@ -8,8 +8,7 @@
     <div class="left-main">
         <div class="model">
             <div class="title">
-                <p class="tit"><i
-                        class="iconfont {$index=='录像'?'icon-luxiang':'icon-jijin'}"></i><span><?php echo typename() ?>{$index}</span></p>
+                <p class="tit"><i class="iconfont {$index=='录像'?'icon-luxiang':'icon-jijin'}"></i><span class="prefix">{$index}</span></p>
             </div>
             {include file="assembly/typeselect"/}
             <dl class="list-back">
@@ -17,7 +16,6 @@
                 <dd>
                     <p class="back-cont">
                         <!-----type:1集锦，2录像  video_type:0足球，1篮球----------------------------------->
-
                         <a href="/{$row.type=='1'?'jijin':'luxiang'}/{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$param.page}/{$row.short_name_py}/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                     </p>
                     <p class="back-team">

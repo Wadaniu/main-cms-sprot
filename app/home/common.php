@@ -141,6 +141,50 @@ function getstyle($num1, $num2): string
     return "style=width:$width% $win";
 }
 
+function getScore($fraction)
+{
+    $total = 0;
+    foreach ($fraction as $num) {
+        $total += $num;
+    }
+    return $total;
+}
+
+function strtoarr($name, $str, $logo, $text)
+{
+    $split1 = explode("^", $str);
+    $split2 = [];
+    $split3 = ['team_name_logo' => $logo, 'team_name_text' => $text];
+    foreach ($split1 as $i => $item) {
+        if ($i != 0 && $i != 12) {
+            $split2 = array_merge($split2, explode("-", $item));
+        }
+    }
+    foreach ($name as $i => $item) {
+        $split3[$item] = $split2[$i];
+    }
+    return $split3;
+}
+
+//整理篮球技术统计
+function getteamStats($name, $home_team, $away_team, $info)
+{
+    return [strtoarr($name, $home_team, $info['home_team_logo'], $info['home_team_text']), strtoarr($name, $away_team, $info['away_team_logo'], $info['away_team_text'])];
+}
+
+//整理篮球球员统计
+function getplaydata($data)
+{
+    $playdata = [];
+    $index = [0, 1, 2, 3, 6, 7, 8, 9, 10, 11, 13];
+    foreach (explode("^", $data) as $i => $item) {
+        if (in_array($i, $index)) {
+            $playdata[] = $item;
+        }
+    }
+    return $playdata;
+}
+
 function getHistoryMatch(): array
 {
     $id = Env::get('Home.HOME_SPACE');
@@ -262,7 +306,7 @@ function getZiXun($cate_id,$limit,$competition_id=0){
         $list = $list->where("competition_id",$competition_id);
     }
     $data = $list->order("id desc ")
-        //->field("id,title,cate_id")
+        ->field("id,title,cate_id")
         ->limit($limit)
         ->select()
         ->toArray();
