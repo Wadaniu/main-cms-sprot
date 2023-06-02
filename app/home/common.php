@@ -306,7 +306,7 @@ function getZiXun($cate_id,$limit,$competition_id=0){
         $list = $list->where("competition_id",$competition_id);
     }
     $data = $list->order("id desc ")
-        ->field("id,title,cate_id")
+        //->field("id,title,cate_id")
         ->limit($limit)
         ->select()
         ->toArray();
