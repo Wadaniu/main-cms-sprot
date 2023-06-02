@@ -92,6 +92,7 @@ class Zuqiu extends BaseController
             $data = $footballModel->getWeekData([$comp['id']]);
             //tdk关键字
             $this->tdk->short_name_zh = $comp['short_name_zh'];
+
             View::assign('comp',$comp);
             $competition_id = $comp['id'];
         }

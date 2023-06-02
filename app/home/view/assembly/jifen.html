@@ -1,17 +1,16 @@
+<?php $zxdata=getCompTables();  ?>
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-jifen"></i><span>积分榜</span></p>
     </div>
     <div class="integral">
         <div class="type">
-            <p class="cur">中超</p>
-            <p>英超</p>
-            <p>意甲</p>
-            <p>西甲</p>
-            <p>德甲</p>
-            <p>法甲</p>
+            {foreach $zxdata as $key=>$type}
+            <p class="{$key==0?'cur':''}">{$type.comp.short_name_zh}</p>
+            {/foreach}
         </div>
-        <ul class="table">
+        {foreach $zxdata as $key=>$table}
+        <ul class="table {$key==0?'cur':''}">
             <li class="item-name">
                 <span></span>
                 <span>球队</span>
@@ -20,30 +19,24 @@
                 <span>负</span>
                 <span>积分</span>
             </li>
+            {foreach $table['tables'][0]['rows'] as $key=>$item}
             <li>
-                <span>1</span>
-                <span>武汉三镇</span>
-                <span>25</span>
-                <span>3</span>
-                <span>6</span>
-                <span>78</span>
+                <span>{$key+1}</span>
+                <span>{$item.team_name}</span>
+                <span>{$item.won}</span>
+                <span>{$item.draw}</span>
+                <span>{$item.loss}</span>
+                <span>{$item.points}</span>
             </li>
-            <li>
-                <span>2</span>
-                <span>武汉三镇</span>
-                <span>25</span>
-                <span>3</span>
-                <span>6</span>
-                <span>78</span>
-            </li>
-            <li>
-                <span>3</span>
-                <span>武汉三镇</span>
-                <span>25</span>
-                <span>3</span>
-                <span>6</span>
-                <span>78</span>
-            </li>
+            {/foreach}
         </ul>
+        {/foreach}
     </div>
 </div>
+<script>
+    $(".integral p").click(function (){
+        let index = $(this).index();
+        $(this).addClass("cur").siblings().removeClass();
+        $(".integral .table").removeClass("cur").eq(index).addClass("cur");
+    })
+</script>
