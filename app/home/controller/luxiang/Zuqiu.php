@@ -111,6 +111,6 @@ class Zuqiu extends BaseController
 
         View::assign("index","录像介绍");
         View::assign("matchLive",$matchLive);
-        View::assign('article',['data'=>getZiXun(1,5,$competition_id)]);
+        View::assign('article',['data'=>getZiXun(1,$competition_id)]);
     }
 }

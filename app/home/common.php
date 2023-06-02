@@ -292,6 +292,15 @@ function getBasketballHotComp($limit = 0)
     return $Competition->getHotData($limit);
 }
 
+function getHotComp($limit = 9){
+    $halfLimit = ceil($limit / 2);
+    $basketballComp = getBasketballHotComp($halfLimit);
+    $otherLimit = $limit - count($basketballComp);
+    $footballComp = getFootballHotComp($otherLimit);
+
+    return array_merge($basketballComp,$footballComp);
+}
+
 /**
  *资讯
  * 1:足球2：篮球,0所有
@@ -333,6 +342,8 @@ function getZiXun($cate_id=0,$limit=5,$competition_id=0){
  * type:1集锦，2录像
  * video_type:0足球，1篮球
  * */
+function getLuxiangJijin($type,$video_type,$competition_id=0,$limit=5){
+    $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
 function getLuxiangJijin($type,$video_type,$limit,$competition_id=0){
     $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
     $data = Cache::store('common_redis')->get($key);
