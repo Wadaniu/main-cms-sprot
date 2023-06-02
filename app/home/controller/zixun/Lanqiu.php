@@ -45,6 +45,7 @@ class Lanqiu extends BaseController
         $info['author'] = Admin::where(['id'=>$info['admin_id']])->find()->toArray();
         $info['pre'] = Article::where("id","<",$matchId)->order("id desc")->find();
         $info['next'] = Article::where("id",">",$matchId)->order("id asc")->find();
+        View::assign('article',['data'=>getZiXun(2,5,$info['competition_id'])]);
         View::assign("info",$info);
     }
 
@@ -53,7 +54,20 @@ class Lanqiu extends BaseController
         $param['page'] = isset($param['page'])?$param['page']:1;
         $model = new Article();
         $this->getTdk('zixun_lanqiu',$this->tdk);
-        $list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0],[]);
+        //$list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0],[]);
+        if(isset($param['compname']) && $param['compname']){
+            $competition = BasketballCompetition::where("short_name_py",$param['compname'])->find();
+            if($competition){
+                $list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0,'competition_id'=>$competition->id],$param);
+            }else{
+                $list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0],$param);
+            }
+        }else{
+            $list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0],$param);
+        }
+
+
+
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
@@ -63,6 +77,8 @@ class Lanqiu extends BaseController
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
         }
+        $shortName = (new BasketballCompetition())->where(['status'=>1])->field("short_name_zh,short_name_py")->select()->toArray();
+        View::assign("short",$shortName);
         View::assign("list",$list);
         View::assign('param',$param);
         $this->getTempPath('zixun_lanqiu');

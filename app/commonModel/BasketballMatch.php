@@ -180,11 +180,15 @@ class BasketballMatch extends Model
         return $this->getMatchInfo($where,[],20,"match_time desc");
     }
 
-    public function getCompetitionListInfo($competitionId){
-        $competitionIds[] = $competitionId;
+    public function getCompetitionListInfo($competitionId,$limit = 20){
+        $competitionIds = [];
+        if ($competitionId > 0){
+            $competitionIds[] = $competitionId;
+        }
         $where = [];
-        $where[] = ["match_time","<=",time()];
-        return $this->getMatchInfo($where,$competitionIds,20,"match_time desc");
+        //比赛时间大于当前时间-5400s
+        $where[] = ["match_time",">=",time() - 5400];
+        return $this->getMatchInfo($where,$competitionIds,$limit,"match_time desc");
     }
 
     /**

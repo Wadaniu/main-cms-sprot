@@ -19,8 +19,10 @@
                         <a href="/{$row.type=='1'?'jijin':'luxiang'}/{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$param.page}/{$row.short_name_py}/{$row.id}"><span>{$row.date}</span>{$row.title}</a>
                     </p>
                     <p class="back-team">
-                        {foreach $row.team as $team}
-                        <a>{$team}</a>
+                        {foreach $row.teamArr as $t}
+                            {if $t.id!=0}
+                                <a href="/qiudui/{$row.video_type=='0'?'zuqiu':'lanqiu'}/1/{$t.id}">{$t.name}</a>
+                            {/if}
                         {/foreach}
                     </p>
                 </dd>

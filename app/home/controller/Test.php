@@ -13,6 +13,7 @@ use app\commonModel\Article as ArticleModel;
 use app\home\BaseController;
 use think\facade\View;
 use app\commonModel\MatchVedio;
+use app\commonModel\FootballTeam;
 
 class Test extends BaseController
 {
@@ -22,8 +23,7 @@ class Test extends BaseController
      */
     public function index(){
         echo "<pre>";
-        //$list = getLuxiangJijin(2,1,10);
-        $list = getZiXun(2,10);
+        $list = getZiXun(0,5,0);
         print_r($list);exit;
     }
 

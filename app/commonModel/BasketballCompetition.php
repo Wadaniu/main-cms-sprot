@@ -36,6 +36,10 @@ class BasketballCompetition extends Model
             ->paginate($rows, false, ['query' => $param])
             ->each(function ($item, $key) {
                 $item->updated_at = date("Y-m-d H:i:s",$item->updated_at);
+                $sortConf = Db::name('comp_sort')->where('type',1)->where('comp_id',$item->id)->findOrEmpty();
+
+                $item->sort = $sortConf['sort'] ?? 0;
+                $item->status = $sortConf['is_hot'] ?? 0;
                 if($item->status==1){
                     $item->status = "是";
                 }else{
@@ -248,7 +252,7 @@ class BasketballCompetition extends Model
     {
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
         $order = empty($param['order']) ? 'status desc,sort asc,id desc' : $param['order'];
-        $list = self::where($where)->field('id,short_name_zh,short_name_py,logo,status,sort')
+        $list = self::where('logo','<>','')->where($where)->field('id,short_name_zh,short_name_py,logo,status,sort')
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
             ->each(function ($item, $key) {

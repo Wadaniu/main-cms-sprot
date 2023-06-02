@@ -256,7 +256,7 @@ function typeselect(): array
 }
 
 //全部热门类别
-function hotlive($src, $name = ''): array
+function hotlive($src,$name=''): array
 {
     $typelist = [];
     $hottype = [getFootballHotComp(), getBasketballHotComp()];
@@ -291,36 +291,35 @@ function getBasketballHotComp($limit = 0)
  *资讯
  * 1:足球2：篮球,0所有
  * */
-function getZiXun($cate_id, $limit, $competition_id = 0)
-{
-    $key = "zinxun:" . $cate_id . '_' . $limit . "_" . $competition_id;
+function getZiXun($cate_id,$limit,$competition_id=0){
+    $key = "zinxun:".$cate_id.'_'.$limit."_".$competition_id;
     $data = Cache::store('redis')->get($key);
-    if ($data) {
-        return $data;
+    if($data){
+       return $data;
     }
     $model = (new \app\commonModel\Article());
-    $list = $model->where("status", 1);
-    if ($cate_id) {
-        $list = $list->where("cate_id", $cate_id);
+    $list = $model->where("status",1);
+    if($cate_id){
+        $list = $list->where("cate_id",$cate_id);
     }
-    if ($competition_id) {
-        $list = $list->where("competition", $competition_id);
+    if($competition_id){
+        $list = $list->where("competition_id",$competition_id);
     }
     $data = $list->order("id desc ")
         ->field("id,title,cate_id")
         ->limit($limit)
         ->select()
         ->toArray();
-    foreach ($data as $k => $v) {
+    foreach ($data as $k=>$v){
         $data[$k]['short_name_zh'] = '';
-        $data[$k]['short_name_py'] = $v['cate_id'] == '1' ? 'zuqiu' : 'lanqiu';
+        $data[$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
         $competition = $model->getArticleCompetition($v["id"]);
-        if ($competition) {
-            $data[$k]['short_name_zh'] = $competition['short_name_zh'];
-            $data[$k]['short_name_py'] = $competition['short_name_py'];
+        if($competition){
+            $data[$k]['short_name_zh'] =$competition['short_name_zh'];
+            $data[$k]['short_name_py'] =$competition['short_name_py'];
         }
     }
-    Cache::store('redis')->set($key, $data, 300);
+    Cache::store('redis')->set($key,$data,300);
     return $data;
 }
 
@@ -329,31 +328,30 @@ function getZiXun($cate_id, $limit, $competition_id = 0)
  * type:1集锦，2录像
  * video_type:0足球，1篮球
  * */
-function getLuxiangJijin($type, $video_type, $limit, $competition_id = 0)
-{
-    echo $key = "matchVedio" . $type . "_" . $video_type . "_" . $limit . "_" . $competition_id;
+function getLuxiangJijin($type,$video_type,$limit,$competition_id=0){
+    echo $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
     $data = Cache::store('common_redis')->get($key);
-    if ($data) {
+    if($data){
         //return $data;
     }
     $model = (new \app\commonModel\MatchVedio());
     $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*");
-    if ($video_type == '0') {
-        $list = $list->leftJoin("fb_football_match b", "a.match_id=b.id")->where("video_type", $video_type);
-    } else if ($video_type == '1') {
-        $list = $list->leftJoin("fb_basketball_match b", "a.match_id=b.id")->where("video_type", $video_type);
+    if($video_type=='0'){
+        $list = $list->leftJoin("fb_football_match b","a.match_id=b.id")->where("video_type",$video_type);
+    }else if($video_type=='1'){
+        $list = $list->leftJoin("fb_basketball_match b","a.match_id=b.id")->where("video_type",$video_type);
     }
-    $list = $list->where("a.type", $type);
-    if ($competition_id) {
-        $list = $list->where("b.competition_id", $competition_id);
+    $list = $list->where("a.type",$type);
+    if($competition_id){
+        $list = $list->where("b.competition_id",$competition_id);
     }
     $list->order("a.id desc");
     $data = $list->limit($limit)->select()->toArray();
-    foreach ($data as $k => $v) {
+    foreach ($data as $k=>$v){
         $competition = $model->getCompetitionInfo($v['id']);
-        $data[$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
+        $data[$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
     }
-    Cache::store('common_redis')->set($key, $data, 300);
+    Cache::store('common_redis')->set($key,$data,300);
     return $data;
 }
 
@@ -367,14 +365,13 @@ function getLuxiangJijin($type, $video_type, $limit, $competition_id = 0)
  * @throws \think\db\exception\DbException
  * @throws \think\db\exception\ModelNotFoundException
  */
-function getCompTables($limit = 5, $type = 'zuqiu', $compId = 0)
-{
+function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
 
-    if ($compId > 0) {
+    if ($compId > 0){
         $compIds[] = $compId;
-    } else {
+    }else{
         //获取联赛
-        switch ($type) {
+        switch ($type){
             case 'lanqiu':
                 $hotComp = getBasketballHotComp($limit);
                 break;
@@ -382,9 +379,46 @@ function getCompTables($limit = 5, $type = 'zuqiu', $compId = 0)
                 $hotComp = getFootballHotComp($limit);
                 break;
         }
-        $compIds = array_column($hotComp, 'id');
+        $compIds = array_column($hotComp,'id');
     }
 
     //获取积分榜数据
-    return \app\commonModel\CompTables::where(['type' => $type, 'comp_id', $compIds])->select()->toArray();
+    $stat = \app\commonModel\CompTables::field('comp_id,tables')->where(['type'=>$type,'comp_id'=>$compIds])->select()->toArray();
+
+    $compStatModel = new \app\commonModel\FootballCompetitionCount();
+    $data = [];
+    foreach ($stat as $item){
+        $data[] = $compStatModel->formatFootballCompCount(json_decode($item['tables'],true),$item['comp_id']);
+    }
+
+    return $data;
+}
+
+function getLive($limit = 5,$type = 'zuqiu',$compId = 0){
+
+    switch ($type){
+        case 'lanqiu' :
+            $data = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId,$limit);
+            break;
+        default :
+            $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$limit);
+            break;
+    }
+    return $data;
+}
+
+function getMainMatchLive(){
+    $footballCompetition = new  \app\commonModel\MatchliveLink();
+    return $footballCompetition->getList();
+}
+
+function getHotTeam($limit = 10){
+    $halfLimit = $limit / 2;
+    $footballTeamModel = new \app\commonModel\FootballTeam();
+    $footballTeam = $footballTeamModel->getHotData($halfLimit);
+    $otherLimit = $limit - count($footballTeam);
+    $basketballTeamModel = new \app\commonModel\BasketballTeam();
+    $basketballTeam = $basketballTeamModel->getHotData($otherLimit);
+
+    return array_merge($basketballTeam,$footballTeam);
 }

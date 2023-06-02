@@ -224,9 +224,10 @@ class Article extends Model
         switch ($info->cate_id){
             case 1:
                 $competition = FootballCompetition::where("id",$info->competition_id)->find();
-
+                break;
             case 2:
                 $competition = BasketballCompetition::where("id",$info->competition_id)->find();
+                break;
         }
         if(!$competition){
             return [];

@@ -12,6 +12,8 @@ use app\commonModel\BasketballMatch;
 use app\commonModel\FootballMatch;
 use app\commonModel\FootballCompetition;
 use app\commonModel\FootballMatchInfo;
+use app\commonModel\FootballTeam;
+use app\commonModel\BasketballTeam;
 
 class Zuqiu extends BaseController
 {
@@ -61,12 +63,18 @@ class Zuqiu extends BaseController
         }
         $this->getTempPath('luxiang_zuqiu');
         $this->getTdk('luxiang_zuqiu',$this->tdk);
-
+        $footballTeam = new FootballTeam();
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['date']='';
-            $list['data'][$k]['team']=[];
             $titleArr = explode(" ",$v['title']);
-            $list['data'][$k]['team'] = explode("vs",$titleArr[3]);
+            $team = explode("vs",$titleArr[3]);
+            if($team){
+                $teamArr = [];
+                foreach ($team  as $t){
+                    $teamArr[] = ['name'=>$t,'id'=>$footballTeam->getTeamInfoByName($t,'name_zh')];
+                }
+                $list['data'][$k]['teamArr'] = $teamArr;
+            }
             $competition = $model->getCompetitionInfo($v['id']);
             if(isset($competition['match']['match_time'])){
                 $list['data'][$k]['date'] = date('m-d',$competition['match']['match_time']);
@@ -91,10 +99,17 @@ class Zuqiu extends BaseController
 
         $model = new MatchVedio();
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
+        $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
+        $competition_id = 0;
+        if($match){
+            $competition_id = $match->competition_id;
+        }
+        //print_r($competition_id);exit;
         $this->tdk->title = $matchLive['title'];
         $this->getTempPath("luxiang_zuqiu_detail");
         $this->getTdk('luxiang_zuqiu_detail',$this->tdk);
         View::assign("index","录像介绍");
         View::assign("matchLive",$matchLive);
+        View::assign('article',['data'=>getZiXun(1,5,$competition_id)]);
     }
 }
