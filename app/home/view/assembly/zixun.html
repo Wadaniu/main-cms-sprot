@@ -6,11 +6,12 @@
     </div>
     <div class="lists">
         <ul>
-            <li><a href="" title="" target="_blank">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</a></li>
-            <li><a href="" title="" target="_blank">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</a></li>
-            <li><a href="" title="" target="_blank">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</a></li>
-            <li><a href="" title="" target="_blank">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</a></li>
-            <li><a href="" title="" target="_blank">梅州外援杜加利奇：本场输球很失望 要抬起头来拿到更多分数</a></li>
+            {foreach $article.data as $i=>$item}
+            <li><a href="/zixun/{$item.cate_id=='1'?'zuqiu':'lanqiu'}/1/{$item.short_name_py}/{$item.id}" title="{$item.title}" target="_blank">{$item.title}</a></li>
+            {/foreach}
+
+
+            
         </ul>
     </div>
 </div>

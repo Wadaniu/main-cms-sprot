@@ -306,7 +306,7 @@ function getZiXun($cate_id=0,$competition_id=0,$limit=5){
         $list = $list->where("competition_id",$competition_id);
     }
     $data = $list->order("id desc ")
-        ->field("id,title,cate_id")
+        //->field("id,title,cate_id")
         ->limit($limit)
         ->select()
         ->toArray();
@@ -332,7 +332,7 @@ function getLuxiangJijin($type,$video_type,$competition_id=0,$limit){
     echo $key = "matchVedio".$type."_".$video_type."_".$limit."_".$competition_id;
     $data = Cache::store('common_redis')->get($key);
     if($data){
-        //return $data;
+        return $data;
     }
     $model = (new \app\commonModel\MatchVedio());
     $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*");
@@ -421,4 +421,16 @@ function getHotTeam($limit = 10){
     $basketballTeam = $basketballTeamModel->getHotData($otherLimit);
 
     return array_merge($basketballTeam,$footballTeam);
+}
+
+
+function getKeywords(){
+    $key = "keywords";
+    $data = Cache::store('redis')->get($key);
+    if($data){
+        return $data;
+    }
+    $data = (new \app\commonModel\Keywords())->getHot();
+    Cache::store('redis')->set($key,$data,300);
+    return $data;
 }

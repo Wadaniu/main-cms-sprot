@@ -27,7 +27,14 @@ class Index extends BaseController
         $this->getTdk(self::RouteTag,$tdk);
         $this->getTempPath(self::RouteTag);
         $model = new Article();
-        $list = $model->getArticleDatalist(['status'=>1,'delete_time'=>0],$param);
+        //print_r($param);exit;
+        if(isset($param['keywords_id']) && $param['keywords_id']){
+            $aid = \app\commonModel\ArticleKeywords::where("keywords_id",$param['keywords_id'])->column("aid");
+            $list = $model->getArticleDatalist(['status'=>1,'delete_time'=>0,'id'=>$aid],$param);
+        }else{
+            $list = $model->getArticleDatalist(['status'=>1,'delete_time'=>0],$param);
+        }
+
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
