@@ -441,7 +441,7 @@ function getMainMatchLive()
 
 function getHotTeam($limit = 10,$type = '',$compId = 0)
 {
-    var_dump($compId);die;
+
     $basketballTeamModel = new \app\commonModel\BasketballTeam();
     $footballTeamModel = new \app\commonModel\FootballTeam();
 
