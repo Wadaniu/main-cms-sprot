@@ -401,7 +401,7 @@ class BasketballMatch extends Model
 
         $data = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time')
             ->where('match_time','>',$startTime)
-            ->whereRAW("home_team_id = :id OR away_team_id = :id",['id'=>$id])
+            ->whereRAW("home_team_id = :id OR away_team_id = :id",$id)
             ->order('match_time','ASC')->select()
             ->each(function ($item, $key) {
                 if(isset(self::$STATUSID[$item->status_id])){
