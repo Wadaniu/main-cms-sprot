@@ -66,7 +66,7 @@ class Zuqiu extends BaseController
         View::assign('luxiang',$luxiang);
         View::assign('jijin',$jijin);
         View::assign('article',$article);
-        View::assign('comp',$comp);
+        View::assign('data_info',$comp);
     }
 
     protected function getCompList($param)
