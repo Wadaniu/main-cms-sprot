@@ -439,7 +439,7 @@ function getMainMatchLive()
     return $footballCompetition->getList();
 }
 
-function getHotTeam($limit = 10)
+function getHotTeam($limit = 10,$type = '',$compId = 0)
 {
     $halfLimit = $limit / 2;
     $basketballTeamModel = new \app\commonModel\BasketballTeam();
