@@ -513,9 +513,9 @@ function getApiInfo($url,$param = []){
 
 function getHotCompetition(){
     $data = array();
-//    $basketballCompetition = new  \app\admin\model\BasketballCompetition();
-//    $basketballHotData = $basketballCompetition->getHotData();
-//    $data["basketball"]=$basketballHotData;
+    $basketballCompetition = new  \app\commonModel\BasketballCompetition();
+    $basketballHotData = $basketballCompetition->getHotData();
+    $data["basketball"]=$basketballHotData;
     $football = new  \app\commonModel\FootballCompetition();
     $footballHotData = $football->getHotData();
     $data["football"]=$footballHotData;

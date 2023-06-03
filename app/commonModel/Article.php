@@ -182,15 +182,11 @@ class Article extends Model
                 $item->type_str = self::$Type[$type];
 
                 if ($compType == 0){
-                    $item->sphere_type = 'zuqiu';
                     $comp = (new FootballCompetition())->getShortNameZh($item->competition_id);
-                    $item->short_name_py = $comp['short_name_py'];
                 }else{
-                    $item->sphere_type = 'lanqiu';
                     $comp = (new BasketballCompetition())->getShortNameZh($item->competition_id);
-                    $item->short_name_py = $comp['short_name_py'];
                 }
-
+                $item->short_name_py = $comp['short_name_py'];
             })->toArray();
         return $list;
     }

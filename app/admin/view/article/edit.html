@@ -21,7 +21,7 @@
 				<select name="cate_id" lay-verify="required" lay-reqText="请选择分类">
 					<option value="">请选择分类</option>
 					{volist name=":set_recursion(get_article_cate())" id="v"}
-					<option value="{$v.id}" {eq name="$detail.cate_id" value="$v.id" }selected{/eq} {if $v.id <= 2 }disabled{/if}>{$v.title}
+					<option value="{$v.id}" {eq name="$detail.cate_id" value="$v.id" }selected{/eq}>{$v.title}
 					</option>
 					{/volist}
 				</select>
