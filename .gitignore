@@ -5,6 +5,4 @@
 *.ini
 /runtime/*
 *.htaccess
-/.env
-/*.env
 /public/storage/*
