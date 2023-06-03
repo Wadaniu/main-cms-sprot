@@ -286,7 +286,7 @@ class FootballTeam extends Model
             $res = array_slice($res,0,$limit);
         }
 
-        return $data;
+        return $res;
     }
 
     public function filterByCompId($data,$compId): array
