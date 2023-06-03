@@ -56,7 +56,7 @@ class Zuqiu extends BaseController
 
         //资讯
         $articleModel = new Article();
-        $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
+        $article = $articleModel->getListByCompId(0,['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
         $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
         $this->getTdk('liansai_zuqiu_detail',$this->tdk);

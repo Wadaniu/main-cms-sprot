@@ -57,7 +57,7 @@ class Lanqiu extends BaseController
 
         //资讯
         $articleModel = new Article();
-        $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
+        $article = $articleModel->getListByCompId(1,['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
         $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
         $this->getTdk('liansai_lanqiu_detail',$this->tdk);
