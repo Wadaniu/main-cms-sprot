@@ -441,16 +441,15 @@ function getMainMatchLive()
 
 function getHotTeam($limit = 10,$type = '',$compId = 0)
 {
-
     $basketballTeamModel = new \app\commonModel\BasketballTeam();
     $footballTeamModel = new \app\commonModel\FootballTeam();
 
     switch ($type){
         case 'lanqiu' :
-            $data = $basketballTeamModel->getTeamByComp($limit,$compId);
+            $data = $basketballTeamModel->getTeamByComp($limit,$compId,$type);
             break;
         case 'zuqiu' :
-            $data = $footballTeamModel->getTeamByComp($limit,$compId);
+            $data = $footballTeamModel->getTeamByComp($limit,$compId,$type);
             break;
         default :
             $halfLimit = $limit / 2;
