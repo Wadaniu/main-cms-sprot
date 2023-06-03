@@ -258,14 +258,16 @@ class FootballTeam extends Model
         return 0;
     }
 
-    public function getHotData($limit = 0){
+    public function getHotData($limit = 0,$compId = 0){
         $key = self::$HOT_DATA;
         $data = Cache::store('common_redis')->get($key);
         if(!empty($data)){
+
+            $res = $this->filterByCompId($data,$compId);
             if ($limit > 0){
-                $data = array_slice($data,0,$limit);
+                $res = array_slice($res,0,$limit);
             }
-            return $data;
+            return $res;
         }
         $sort = Db::name('hot_team_sort')->where('is_hot',1)->where('type',0)->column('*','team_id');
 
@@ -278,13 +280,29 @@ class FootballTeam extends Model
         array_multisort(array_column($data,'sort'),SORT_DESC,$data);
         Cache::store('common_redis')->set($key,$data);
 
+        //过滤联赛下队伍
+        $res = $this->filterByCompId($data,$compId);
         if ($limit > 0){
-            $data = array_slice($data,0,$limit);
+            $res = array_slice($res,0,$limit);
         }
 
         return $data;
     }
 
+    public function filterByCompId($data,$compId): array
+    {
+        $res = [];
+        if ($compId > 0){
+            foreach ($data as $key=>$item){
+                if ($item['competition_id'] == $compId){
+                    $res[$key] = $item;
+                }
+            }
+        }else{
+            $res = $data;
+        }
 
+        return $res;
+    }
 }
 

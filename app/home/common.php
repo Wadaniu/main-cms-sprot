@@ -441,15 +441,25 @@ function getMainMatchLive()
 
 function getHotTeam($limit = 10,$type = '',$compId = 0)
 {
-    $halfLimit = $limit / 2;
     $basketballTeamModel = new \app\commonModel\BasketballTeam();
-    $basketballTeam = $basketballTeamModel->getHotData($halfLimit);
-
-    $otherLimit = $limit - count($basketballTeam);
     $footballTeamModel = new \app\commonModel\FootballTeam();
-    $footballTeam = $footballTeamModel->getHotData($otherLimit);
 
-    return array_merge($basketballTeam, $footballTeam);
+    switch ($type){
+        case 'lanqiu' :
+            $data = $basketballTeamModel->getHotData($limit,$compId);
+            break;
+        case 'zuqiu' :
+            $data = $footballTeamModel->getHotData($limit,$compId);
+            break;
+        default :
+            $halfLimit = $limit / 2;
+            $basketballTeam = $basketballTeamModel->getHotData($halfLimit);
+            $otherLimit = $limit - count($basketballTeam);
+            $footballTeam = $footballTeamModel->getHotData($otherLimit);
+            $data = array_merge($basketballTeam, $footballTeam);
+    }
+
+    return $data;
 }
 
 
