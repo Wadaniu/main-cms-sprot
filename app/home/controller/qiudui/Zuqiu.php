@@ -66,7 +66,7 @@ class Zuqiu extends BaseController
         View::assign('luxiang',$luxiang);
         View::assign('jijin',$jijin);
 //        View::assign('article',$article);
-        View::assign('team',$team);
+        View::assign('data_info',$team);
         View::assign('article',['data'=>getZiXun(1)]);
     }
 
