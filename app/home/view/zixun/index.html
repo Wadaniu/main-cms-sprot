@@ -11,7 +11,7 @@
                 <p class="tit"><i class="iconfont icon-zixun"></i><span><span class="prefix">资讯</span></p>
             </div>
             {include file="assembly/typeselect"/}
-            <dl class="news-list">
+            <dl class="news-list nodata">
                 {foreach $list.data as $l}
                 <dd>
                     <a href="/zixun/{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$param.page}/{$l.short_name_py}/{$l.id}" target="_blank"><img src="{$l.origin_url}"></a>

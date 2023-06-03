@@ -1,4 +1,4 @@
-<?php $qddata=getHotTeam(); var_dump($qddata);die;?>
+<?php $copmid=$data_info['id']??0; $type=$copmid?(strpos($_SERVER['REQUEST_URI'], 'lanqiu') ? 'lanqiu' : 'zuqiu'):''; $limit=$copmid?0:10; $qddata=getHotTeam($limit,$type,$copmid);?>
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-duiwu"></i><span>球队</span></p>
@@ -6,9 +6,9 @@
     </div>
     <div class="team-name">
         {foreach $qddata as $i=>$item}
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
+        <a href="/qiudui/{$item.sphere_type}/1/{$item.id}" target="_blank">
+            <img src="{$item.logo}"
+                 alt="{$item.name_zh}">{$item.short_name_zh}
         </a>
         {/foreach}
     </div>

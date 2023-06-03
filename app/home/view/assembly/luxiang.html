@@ -4,7 +4,7 @@
         <p class="tit"><i class="iconfont icon-luxiang"></i><span class="prefix">录像</span></p>
         <p class="more"><a href="{:moresrc('luxiang')}" target="_blank">更多{$compid}</a></p>
     </div>
-    <div class="video">
+    <div class="video nodata">
         {foreach $lxdata as $i=>$item}
         <div class="play">
             <a href="/luxiang/{$item.video_type=='0'?'zuqiu':'lanqiu'}/1/{$item.short_name_py}/{$item.id}" rel="nofollow"

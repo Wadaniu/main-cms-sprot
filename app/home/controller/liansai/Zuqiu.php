@@ -89,6 +89,7 @@ class Zuqiu extends BaseController
         $data = $footballModel->getList($where,$param)->toArray();
 
         $this->getTdk('liansai_zuqiu',$this->tdk);
+
         View::assign('data',$data);
     }
 }

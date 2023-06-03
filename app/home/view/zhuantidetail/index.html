@@ -11,7 +11,7 @@
                 <p class="tit"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
             </div>
             <div class="play-list">
-                <dl class="list-cont">
+                <dl class="list-cont nodata">
                     {foreach $data as $i=>$team}
                     <dd>
                         <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='H:i'}</p>
@@ -29,7 +29,7 @@
             <div class="title">
                 <p class="tit"><i class="iconfont icon-luxiang"></i><span>录像</span></p>
             </div>
-            <dl class="list-back">
+            <dl class="list-back nodata">
                 {foreach $luxiang as $i=>$item}
                 <dd>
                     <p class="back-cont">
@@ -46,7 +46,7 @@
             <div class="title">
                 <p class="tit"><i class="iconfont icon-jijin"></i><span>集锦</span></p>
             </div>
-            <dl class="list-back">
+            <dl class="list-back nodata">
                 {foreach $jijin as $i=>$item}
                 <dd>
                     <p class="back-cont">
@@ -64,10 +64,10 @@
     <div class="right-main">
         <div class="model specific">
             <div class="logo">
-                <img src="{$comp.logo}" />
+                <img src="{$data_info.logo}" />
             </div>
             <div class="info">
-                {$comp.intro}
+                {$data_info.intro}
             </div>
         </div>
         {include file="assembly/team"/}

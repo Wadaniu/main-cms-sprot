@@ -462,6 +462,7 @@ a.right-btn span {
 }
 
 .play-list {
+    overflow: hidden;
 }
 
 .play-list .play-date {
@@ -783,6 +784,7 @@ a.right-btn span {
 }
 
 .list-back {
+    overflow: hidden;
 }
 
 .list-back dd {
@@ -1825,4 +1827,15 @@ a.right-btn span {
     width: 40px;
     height: 40px;
     margin-right: 10px;
+}
+
+p.nodata {
+    width: 76%;
+    margin: 4% auto;
+    padding: 4%;
+    border: 3px dashed #ddd;
+    text-align: center;
+    color: #ddd;
+    font-size: 2em;
+    background-color: #fbfbfb;
 }
