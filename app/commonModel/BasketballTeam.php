@@ -168,7 +168,7 @@ class BasketballTeam extends Model
         $sort = Db::name('hot_team_sort')->where('is_hot',1)->where('type',1)->column('*','team_id');
 
         $ids = array_keys($sort);
-        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_py,short_name_zh,logo")->select()->toArray();
+        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo")->select()->toArray();
         foreach ($data as &$item){
             $item['sort'] = $sort[$item['id']]['sort'];
             $item['sphere_type'] = 'lanqiu';

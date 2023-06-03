@@ -59,7 +59,7 @@ class Zuqiu extends BaseController
             }else{
                 $list = $model->getList(['type'=>1,'video_type'=>0],["order"=>'id desc'])->toArray();
             }
-
+            View::assign('comp',$comp);
         }else{
             $list = $model->getList(['type'=>1,'video_type'=>0],["order"=>'id desc'])->toArray();
         }
@@ -97,11 +97,13 @@ class Zuqiu extends BaseController
         if($match){
             $competition_id = $match->competition_id;
         }
+
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);
         $this->getTempPath("jijin_zuqiu_detail");
         $this->getTdk('jijin_zuqiu_detail',$this->tdk);
         View::assign("index","集锦介绍");
         View::assign('article',['data'=>getZiXun(1,$competition_id)]);
+        View::assign("comp",['id'=>$competition_id]);
     }
 }

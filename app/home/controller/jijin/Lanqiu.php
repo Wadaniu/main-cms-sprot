@@ -53,7 +53,7 @@ class Lanqiu extends BaseController
             }else{
                 $list = $model->getList(['type'=>1,'video_type'=>1],["order"=>'id desc'])->toArray();
             }
-
+            View::assign('comp',$comp);
         }else{
             $list = $model->getList(['type'=>1,'video_type'=>1],["order"=>'id desc'])->toArray();
         }
@@ -99,11 +99,13 @@ class Lanqiu extends BaseController
         if($match){
             $competition_id = $match->competition_id;
         }
+
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);
         $this->getTempPath("jijin_lanqiu_detail");
         $this->getTdk('jijin_lanqiu_detail',$this->tdk);
         View::assign("index","集锦介绍");
+        View::assign("comp",['id'=>$competition_id]);
         View::assign('article',['data'=>getZiXun(2,$competition_id)]);
     }
 
