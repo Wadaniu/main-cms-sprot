@@ -94,11 +94,17 @@ class Lanqiu extends BaseController
 
         $model = new MatchVedio();
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
+        $match = (new \app\commonModel\BasketballMatch())->where("id",$matchLive['match_id'])->find();
+        $competition_id = 0;
+        if($match){
+            $competition_id = $match->competition_id;
+        }
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);
         $this->getTempPath("jijin_lanqiu_detail");
         $this->getTdk('jijin_lanqiu_detail',$this->tdk);
         View::assign("index","集锦介绍");
+        View::assign('article',['data'=>getZiXun(2,$competition_id)]);
     }
 
 

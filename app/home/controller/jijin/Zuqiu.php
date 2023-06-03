@@ -92,10 +92,16 @@ class Zuqiu extends BaseController
     function getMatchInfo($matchId){
         $model = new MatchVedio();
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
+        $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
+        $competition_id = 0;
+        if($match){
+            $competition_id = $match->competition_id;
+        }
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);
         $this->getTempPath("jijin_zuqiu_detail");
         $this->getTdk('jijin_zuqiu_detail',$this->tdk);
         View::assign("index","集锦介绍");
+        View::assign('article',['data'=>getZiXun(1,$competition_id)]);
     }
 }
