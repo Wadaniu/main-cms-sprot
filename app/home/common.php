@@ -447,10 +447,10 @@ function getHotTeam($limit = 10,$type = '',$compId = 0)
 
     switch ($type){
         case 'lanqiu' :
-            $data = $basketballTeamModel->getHotData($limit,$compId);
+            $data = $basketballTeamModel->getTeamByComp($limit,$compId);
             break;
         case 'zuqiu' :
-            $data = $footballTeamModel->getHotData($limit,$compId);
+            $data = $footballTeamModel->getTeamByComp($limit,$compId);
             break;
         default :
             $halfLimit = $limit / 2;
