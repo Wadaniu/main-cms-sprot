@@ -161,11 +161,14 @@ class Article extends Model
     }
 
     /**
-     * 获取分页列表
+     * 分页列表
+     * @param $type 0足球，1篮球
      * @param $where
      * @param $param
+     * @return array
+     * @throws \think\db\exception\DbException
      */
-    public function getListByCompId($where, $param)
+    public function getListByCompId($compType,$where, $param)
     {
         $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
         $order = empty($param['order']) ? 'a.id desc' : $param['order'];
@@ -173,11 +176,17 @@ class Article extends Model
             ->field('a.id,a.cate_id,a.competition_id,a.title,a.desc,a.origin_url,a.read,a.create_time')
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
-            ->each(function ($item, $key) {
+            ->each(function ($item, $key)use($compType) {
                 $item->articleKeywords;
                 $type = (int)$item->type;
                 $item->type_str = self::$Type[$type];
 
+                if ($compType == 0){
+                    $comp = (new FootballCompetition())->getShortNameZh($item->competition_id);
+                }else{
+                    $comp = (new BasketballCompetition())->getShortNameZh($item->competition_id);
+                }
+                $item->short_name_py = $comp['short_name_py'];
             })->toArray();
         return $list;
     }

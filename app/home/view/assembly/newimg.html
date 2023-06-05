@@ -2,7 +2,7 @@
     <div class="title">
         <p class="tit"><i class="iconfont icon-zixun"></i><span>相关资讯</span></p>
     </div>
-    <dl class="about-list">
+    <dl class="about-list nodata">
         {foreach $article.data as $i=>$item}
         <dd>
             <a href="/zixun/{$item.cate_id=='1'?'zuqiu':'lanqiu'}/1/{$item.short_name_py}/{$item.id}" target="_blank">

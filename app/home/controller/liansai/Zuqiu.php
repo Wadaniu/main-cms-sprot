@@ -56,7 +56,7 @@ class Zuqiu extends BaseController
 
         //资讯
         $articleModel = new Article();
-        $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
+        $article = $articleModel->getListByCompId(0,['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
         $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
         $this->getTdk('liansai_zuqiu_detail',$this->tdk);
@@ -66,7 +66,7 @@ class Zuqiu extends BaseController
         View::assign('luxiang',$luxiang);
         View::assign('jijin',$jijin);
         View::assign('article',$article);
-        View::assign('comp',$comp);
+        View::assign('data_info',$comp);
     }
 
     protected function getCompList($param)
@@ -89,6 +89,7 @@ class Zuqiu extends BaseController
         $data = $footballModel->getList($where,$param)->toArray();
 
         $this->getTdk('liansai_zuqiu',$this->tdk);
+
         View::assign('data',$data);
     }
 }

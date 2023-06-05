@@ -282,6 +282,20 @@ class FootballTeam extends Model
         return $data;
     }
 
+    public function getTeamByComp($limit, $compId,$type): array
+    {
+        $query = self::where('competition_id',$compId)->field("id,name_zh,short_name_zh,logo,competition_id");
+        if ($limit > 0){
+            $query->limit($limit);
+        }
 
+        $data = $query->select()->toArray();
+        $res = [];
+        foreach ($data as $item){
+            $item['sphere_type'] = $type;
+            $res[] = $item;
+        }
+        return $res;
+    }
 }
 

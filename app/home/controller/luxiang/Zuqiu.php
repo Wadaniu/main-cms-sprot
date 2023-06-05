@@ -59,6 +59,7 @@ class Zuqiu extends BaseController
             }else{
                 $list = $model->getList(['type'=>2,'video_type'=>0],["order"=>'id desc'])->toArray();
             }
+            View::assign('comp',$comp);
         }else{
             $list = $model->getList(['type'=>2,'video_type'=>0],$param)->toArray();
         }
@@ -114,5 +115,6 @@ class Zuqiu extends BaseController
         View::assign("index","录像介绍");
         View::assign("matchLive",$matchLive);
         View::assign('article',['data'=>getZiXun(1,$competition_id)]);
+        View::assign('comp',['id'=>$competition_id]);
     }
 }

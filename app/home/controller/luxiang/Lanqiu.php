@@ -57,7 +57,7 @@ class Lanqiu extends BaseController
             }else{
                 $list = $model->getList(['type'=>2,'video_type'=>1],["order"=>'id desc'])->toArray();
             }
-
+            View::assign('comp',$comp);
         }else{
             $list = $model->getList(['type'=>2,'video_type'=>1],["order"=>'id desc'])->toArray();
         }
@@ -107,5 +107,6 @@ class Lanqiu extends BaseController
         $this->getTdk('luxiang_lanqiu_detail',$this->tdk);
         View::assign("index","录像介绍");
         View::assign('article',['data'=>getZiXun(2,$competition_id)]);
+        View::assign('comp',['id'=>$competition_id]);
     }
 }

@@ -75,4 +75,11 @@ $(function () {
         let otitle = $(item).text()
         $(item).text(prefix + otitle)
     })
+
+
+    $(".nodata").each(function (i,item){
+        if($(item).children().length==0){
+            $(item).append("<p class=nodata>暂无数据</p>")
+        }
+    })
 })

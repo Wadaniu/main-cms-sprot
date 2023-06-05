@@ -1,40 +1,15 @@
+<?php $copmid=$data_info['id']??0; $type=$copmid?(strpos($_SERVER['REQUEST_URI'], 'lanqiu') ? 'lanqiu' : 'zuqiu'):''; $limit=$copmid?0:10; $qddata=getHotTeam($limit,$type,$copmid);?>
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-duiwu"></i><span>球队</span></p>
         <p class="more"><a href="/qiudui/">更多</a></p>
     </div>
     <div class="team-name">
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
+        {foreach $qddata as $i=>$item}
+        <a href="/qiudui/{$type}/1/{$item.id}" target="_blank">
+            <img src="{$item.logo}"
+                 alt="{$item.name_zh}">{$item.short_name_zh}
         </a>
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
-        </a>
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
-        </a>
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
-        </a>
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
-        </a>
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
-        </a>
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
-        </a>
-        <a href="">
-            <img src="https://www.i999.com.cn/uploads/qiudui/9c8466e1de53c93844cb1ed35f3ab036.png"
-                 alt="">武汉三镇
-        </a>
+        {/foreach}
     </div>
 </div>

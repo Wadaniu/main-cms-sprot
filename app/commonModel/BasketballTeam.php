@@ -159,16 +159,19 @@ class BasketballTeam extends Model
         return "";
     }
 
-    public function getHotData($limit = 0){
+    public function getHotData($limit = 0,$compId = 0){
         $key = self::$HOT_DATA;
         $data = Cache::store('common_redis')->get($key);
         if(!empty($data)){
+            if ($limit > 0){
+                $data = array_slice($data,0,$limit);
+            }
             return $data;
         }
         $sort = Db::name('hot_team_sort')->where('is_hot',1)->where('type',1)->column('*','team_id');
 
         $ids = array_keys($sort);
-        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_py,short_name_zh,logo")->select()->toArray();
+        $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_zh,logo,competition_id")->select()->toArray();
         foreach ($data as &$item){
             $item['sort'] = $sort[$item['id']]['sort'];
             $item['sphere_type'] = 'lanqiu';
@@ -181,6 +184,22 @@ class BasketballTeam extends Model
         }
 
         return $data;
+    }
+
+    public function getTeamByComp($limit, $compId,$type): array
+    {
+        $query = self::where('competition_id',$compId)->field("id,name_zh,short_name_zh,logo,competition_id");
+        if ($limit > 0){
+            $query->limit($limit);
+        }
+        $data = $query->select()->toArray();
+        $res = [];
+        foreach ($data as $item){
+            $item['sphere_type'] = $type;
+            $res[] = $item;
+        }
+
+        return $res;
     }
 
     private function getBasketballTeamSync($params = []){

@@ -145,7 +145,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="type-cont">
+            <div class="type-cont nodata">
                 <?php $keylist=$islanqiu?["mingzhong","toulan","sanzhong","santou","fazhong","fatou","gongban","fangban","lanban","zhugong","qiang","gaimao","shiwu","fangui","bifen"]:["ball_possession","shots","shots_on_target","passes","passes_accuracy","freekicks","corner_kicks","offsides","fouls","yellow_cards","red_cards","yellow2red_cards","goals_against","tackles","interceptions"];
 				    $namelist=$islanqiu?["命中次数","投篮次数","三分命中","三分投篮","罚球命中","罚球投篮","进攻篮板","防守篮板","总篮板","助攻数","抢断数","盖帽数","失误","个人犯规","比分"]:["控球率","射门","射正","传球","传球成功","任意球","角球","越位","角球","犯规","黄牌","红牌","两黄变红","失球","抢断","拦截"];
 						$teamStats=$islanqiu?getteamStats($keylist,$players[2],$players[3],$analysis['info']):$teamStats;
@@ -207,13 +207,10 @@
                         ></i></p>
                 </div>
                 {/foreach}
-                <?php else: ?>
-                <p class=nodata>暂无数据</p>
                 <?php endif; ?>
             </div>
             <?php if($islanqiu): ?>
             <div class="type-cont">
-
                 <table class="player-data">
                     <tr>
                         <th><img src="{$analysis.info.home_team_logo}">{$analysis.info.home_team_text}</th>

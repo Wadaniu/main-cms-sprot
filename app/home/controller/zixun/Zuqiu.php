@@ -45,7 +45,9 @@ class Zuqiu extends BaseController
         $info['pre'] = Article::where("id","<",$matchId)->order("id desc")->find();
         $info['next'] = Article::where("id",">",$matchId)->order("id asc")->find();
         View::assign('article',['data'=>getZiXun(1,$info['competition_id'])]);
+
         View::assign("info",$info);
+        View::assign("comp",['id'=>$info['competition_id']]);
     }
 
     protected function getArticleList($param)
@@ -60,6 +62,7 @@ class Zuqiu extends BaseController
             }else{
                 $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0],$param);
             }
+            View::assign('comp',$competition);
         }else{
             $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0],$param);
         }

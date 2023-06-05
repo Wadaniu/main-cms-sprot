@@ -73,6 +73,7 @@ class Lanqiu extends BaseController
         View::assign("players",$players);
         View::assign("video",$video);
         View::assign("matchLive",$matchLive);
+        View::assign("comp",['id'=>$analysis['info']['competition_id']]);
     }
 
     protected function getMatchList(string $compName)
