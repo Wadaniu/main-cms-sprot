@@ -149,7 +149,7 @@ class BasketballMatch extends Model
         $where[] = ['match_time','between',[$startTime,$endTime]];
         $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
 
-        return $this->getMatchInfo($where,$competitionIds);
+        return $this->getMatchInfo($where,$competitionIds,0);
     }
 
     /**根据日期比赛id过滤赛程
@@ -160,11 +160,11 @@ class BasketballMatch extends Model
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getMathchByDate(array $competitionIds = [], string $date = ''){
-        $startTime =  strtotime($date.' 00:00:00');
-        $endTime = strtotime($date.' 23:59:59');
+    public function getMatchByDate(array $competitionIds = [],$startDate = '',$endDate = ''){
+        $startTime =  strtotime($startDate) - 5000;
+        $endTime = strtotime($endDate.' 23:59:59');
         $where[] = ['match_time','between',[$startTime,$endTime]];
-
+        $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
         return $this->getMatchInfo($where,$competitionIds);
     }
 

@@ -147,6 +147,9 @@ class BasketballCompetition extends Model
         $key = self::$HOT_DATA.Env::get('HOME.HOME_SPACE');
         $data = Cache::get($key);
         if(!empty($data)){
+            if ($limit > 0){
+                $data = array_slice($data,0,$limit);
+            }
             return $data;
         }
         $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',1)->column('*','comp_id');
