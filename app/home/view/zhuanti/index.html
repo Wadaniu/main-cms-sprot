@@ -83,15 +83,21 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
+    function worldlist(val) {
+        let txt = $.trim(val);
+        let name = location.href.indexOf('liansai') > 0 ? 'liansai' : 'qiudui';
+        if (txt != "") {
+            location.href = `${location.origin}/${name}/1/${txt}`
+        }
+    }
     $("#search input").keydown(function (e) {
         if (e.keyCode == 13) {
-            let txt = $.trim($("#search input").val());
-            let name = location.href.indexOf('liansai') > 0 ? 'liansai' : 'qiudui';
-            if (txt != "") {
-                location.href = `${location.origin}/${name}/1/${txt}`
-            }
+            worldlist($("#search input").val());
         }
     });
+    $("#search button").click(function () {
+        worldlist($("#search input").val());
+    })
 </script>
 {/block}
 <!-- /脚本 -->

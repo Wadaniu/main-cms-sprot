@@ -60,9 +60,8 @@ class Zuqiu extends BaseController
 
         $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
         $this->getTdk('liansai_zuqiu_detail',$this->tdk);
-
+        //var_dump($luxiang);die;
         View::assign('data',$matchList);
-        //var_dump($jijin);die;
         View::assign('luxiang',$luxiang);
         View::assign('jijin',$jijin);
         View::assign('article',$article);
@@ -79,7 +78,6 @@ class Zuqiu extends BaseController
             $where = '1 = 1';
         }else{
             $where = [
-                ['short_name_zh','like','%'.$keyword.'%'],
                 ['name_zh','like','%'.$keyword.'%']
             ];
         }

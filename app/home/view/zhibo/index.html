@@ -17,7 +17,7 @@
             </div>
         </div>
         <?php else: ?>
-        <img class="infoimg" src="/static/home/images/{:strpos(get_ruleName(),'zuqiu')?'zuqiubg':'lanqiubg'}.jpg" />
+        <img class="infoimg" src="/static/home/images/{:strpos(get_ruleName(),'zuqiu')?'zuqiubg':(strpos(get_ruleName(),'lanqiu')?'lanqiubg':'livebg')}.jpg" />
         <?php endif; ?>
         <div class="model">
             <div class="title">

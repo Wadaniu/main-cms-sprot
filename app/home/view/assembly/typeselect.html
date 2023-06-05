@@ -3,10 +3,10 @@
     <?php if(count($search)): ?>
     <a href="{$_SERVER['REQUEST_URI']}" class="cur">全部</a>
     <?php endif; ?>
-    {foreach $type as $key=>$item}
+    {volist name="type" id="item" length='10'}
     <a href="{$item.src}"
        class="{:count($search)?'':(!empty($curparam)&&strpos($item.src, $curparam)||empty($curparam)&&$key==0 ? 'cur' : '')}">{$item.title}</a>
-    {/foreach}
+    {/volist}
 </div>
 <script>
 
