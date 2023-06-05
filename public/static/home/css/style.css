@@ -860,6 +860,7 @@ a.right-btn span {
 .live {
     padding: 0 14px;
     font-size: 14px;
+    overflow: hidden;
 }
 
 .live dd {

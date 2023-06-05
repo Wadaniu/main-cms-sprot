@@ -36,15 +36,22 @@
             </p>
         </div>
         <?php endif; ?>
-        <?php $type=hotlive('liansai'); ?>
         <div class="hontlink">
+            <?php if($typesrc=='liansai'): ?>
+            <?php $type=hotlive('liansai'); ?>
             热门联赛：{foreach $type as $key=>$item}<a href="/liansai/{$item.type}/1/{$item.id}" target="_blank">{$item.title}</a>{/foreach}
+            <?php else: ?>
+            <?php $type=getHotTeam(); ?>
+            热门球队：{foreach $type as $key=>$item}<a href="/qiudui/{$item.sphere_type}/1/{$item.id}" target="_blank">{$item.short_name_zh}</a>{/foreach}
+            <?php endif; ?>
         </div>
+
     </div>
     <div class="ztnav-bg">
         <div class="ztnav">
             <a href="/{$typesrc}/zuqiu/" class="{:strpos($linkname,'zuqiu')?'cur':''}"><span><i>足球专题</i></span></a>
-            <a href="/{$typesrc}/lanqiu/" class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
+            <a href="/{$typesrc}/lanqiu/"
+               class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
         </div>
     </div>
     <div class="zt-list">
