@@ -315,9 +315,9 @@ function getBasketballHotComp($limit = 0)
 function getHotComp($limit = 9)
 {
     $halfLimit = ceil($limit / 2);
-    $basketballComp = getBasketballHotComp($halfLimit);
+    $basketballComp = getBasketballHotComp(intval($halfLimit));
     $otherLimit = $limit - count($basketballComp);
-    $footballComp = getFootballHotComp($otherLimit);
+    $footballComp = getFootballHotComp(intval($otherLimit));
 
     return array_merge($basketballComp, $footballComp);
 }

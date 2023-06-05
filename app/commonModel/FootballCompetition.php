@@ -172,6 +172,9 @@ class FootballCompetition extends Model
         $key = self::$HOT_DATA;
         $data = Cache::store('common_redis')->get($key);
         if(!empty($data)){
+            if ($limit > 0){
+                $data = array_slice($data,0,$limit);
+            }
             return $data;
         }
         $sort = Db::name('comp_sort')->where('is_hot',1)->where('type',0)->column('*','comp_id');
