@@ -33,9 +33,11 @@
         <div class="video-intro">
             <p class="tit">{$index}</p>
             <ul class="playtxt">
-                <li>{$index}：在线观看录像-04月28日 西甲第31轮毕尔巴鄂vs塞维利亚，{$web_name}为你提供04月28日 西甲第31轮毕尔巴鄂vs塞维利亚导航资源，本站不制作、不存储04月28日
-                    西甲第31轮毕尔巴鄂vs塞维利亚视频资源，只作为技术探索的导航学习用途。</li>
-                <li>添加时间：2023-04-22 03:00</li>
+                <li>{$index}：比赛时间：{$matchLive.match_time|date="Y-m-d H:i:s"}<br/>
+                    球队信息：{if !empty($matchLive['team']['home_team'])}{$matchLive.team.home_team.name_zh}{/if}
+                    vs
+                    {if !empty($matchLive['team']['away_team'])}{$matchLive.team.away_team.name_zh}{/if}。</li>
+                <li>添加时间：{$matchLive.created_at}</li>
             </ul>
         </div>
         {include file="assembly/newimg"/}

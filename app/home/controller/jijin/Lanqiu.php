@@ -42,6 +42,7 @@ class Lanqiu extends BaseController
 
 
     function getMatchList($param){
+        $competition_id=0;
         $param['page'] = (isset($param['page']) && $param['page'])?$param['page']:1;
         $compName = (isset($param['compname']) &&  $param['compname'])?$param['compname']:'';
         $model = new MatchVedio();
@@ -50,6 +51,7 @@ class Lanqiu extends BaseController
             if($comp){
                 $match = BasketballMatch::where(["competition_id"=>$comp->id])->column("id");
                 $list = $model->getList(['type'=>1,'video_type'=>1,'match_id'=>$match],["order"=>'id desc'])->toArray();
+                $competition_id = $comp->id;
             }else{
                 $list = $model->getList(['type'=>1,'video_type'=>1],["order"=>'id desc'])->toArray();
             }
@@ -89,6 +91,7 @@ class Lanqiu extends BaseController
         View::assign("href","/jijin/lanqiu/");
         View::assign("compName",$compName);
         View::assign("param",$param);
+        View::assign("luxiang",getLuxiangJijin(2,1,$competition_id,4));
     }
     function getMatchInfo($matchId){
 
@@ -96,10 +99,13 @@ class Lanqiu extends BaseController
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
         $match = (new \app\commonModel\BasketballMatch())->where("id",$matchLive['match_id'])->find();
         $competition_id = 0;
+        $matchLive['team'] = [];
+        $matchLive['match_time'] = '';
         if($match){
             $competition_id = $match->competition_id;
+            $matchLive['team'] = $match->getTeamInfo();
+            $matchLive['match_time'] = $match->match_time;
         }
-
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);
         $this->getTempPath("jijin_lanqiu_detail");

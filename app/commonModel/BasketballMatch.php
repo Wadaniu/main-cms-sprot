@@ -427,5 +427,14 @@ class BasketballMatch extends Model
         Cache::store('common_redis')->set($redisKey, $data,120);
         return $data;
     }
+
+
+    function getTeamInfo(){
+        $model = new BasketballTeam();
+        return [
+            'home_team'=>$model->where("id",$this->home_team_id)->cache(true, 300)->find(),
+            'away_team'=>$model->where("id",$this->away_team_id)->cache(true, 300)->find(),
+        ];
+    }
 }
 
