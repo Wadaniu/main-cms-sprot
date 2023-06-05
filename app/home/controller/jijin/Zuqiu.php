@@ -80,6 +80,11 @@ class Zuqiu extends BaseController
                     $list['data'][$k]['teamArr'] = $teamArr;
                 }
             }
+            $competition = $model->getCompetitionInfo($v['id']);
+            if(isset($competition['match']['match_time'])){
+                $list['data'][$k]['date'] = date('m-d',$competition['match']['match_time']);
+            }
+            $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
             $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
         }
         $shortName = (new FootballCompetition())->where(['status'=>1])->field("short_name_zh,short_name_py")->select()->toArray();
@@ -97,8 +102,12 @@ class Zuqiu extends BaseController
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
         $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
         $competition_id = 0;
+        $matchLive['team'] = [];
+        $matchLive['match_time'] = '';
         if($match){
             $competition_id = $match->competition_id;
+            $matchLive['team'] = $match->getTeamInfo();
+            $matchLive['match_time'] = $match->match_time;
         }
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);

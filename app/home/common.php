@@ -91,6 +91,9 @@ function articlePrev($id, $cateId = 0)
         ->order("id desc")
         ->cache(true, 300)
         ->find();
+    if(!$article){
+        return [];
+    }
     if($article['cate_id']==1){
         $competition = (new \app\commonModel\FootballCompetition())->where("id",$article['competition_id'])->find();
     }else{
@@ -113,6 +116,9 @@ function articleNext($id, $cateId = 0)
         ->order("id asc")
         ->cache(true, 300)
         ->find();
+    if(!$article){
+        return [];
+    }
     if($article['cate_id']==1){
         $competition = (new \app\commonModel\FootballCompetition())->where("id",$article['competition_id'])->find();
     }else{

@@ -524,5 +524,17 @@ class FootballMatch extends Model
 
         return $this->getMatchInfo($where,$competitionIds,$limit,$order);
     }
+
+
+    /**
+     * 获取球队信息
+     * */
+    function getTeamInfo(){
+        $model = new FootballTeam();
+        return [
+            'home_team'=>$model->where("id",$this->home_team_id)->cache(true, 300)->find(),
+            'away_team'=>$model->where("id",$this->away_team_id)->cache(true, 300)->find(),
+        ];
+    }
 }
 

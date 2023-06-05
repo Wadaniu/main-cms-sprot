@@ -104,8 +104,12 @@ class Zuqiu extends BaseController
         $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
         $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
         $competition_id = 0;
+        $matchLive['team'] = [];
+        $matchLive['match_time'] = '';
         if($match){
             $competition_id = $match->competition_id;
+            $matchLive['team'] = $match->getTeamInfo();
+            $matchLive['match_time'] = $match->match_time;
         }
         //print_r($competition_id);exit;
         $this->tdk->title = $matchLive['title'];
