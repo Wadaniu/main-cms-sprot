@@ -106,7 +106,7 @@ i.iconfont {
     position: relative;
     display: flex;
     justify-content: center;
-    margin-right: 10px;
+    margin-right: 14px;
 }
 
 .head .nav li i.iconfont {
@@ -130,7 +130,7 @@ i.iconfont {
     height: 62px;
     line-height: 66px;
     border-bottom: 4px solid transparent;
-    padding: 0 22px;
+    padding: 0 26px;
     display: block;
     font-size: 17px;
     color: #fff;
@@ -860,6 +860,7 @@ a.right-btn span {
 .live {
     padding: 0 14px;
     font-size: 14px;
+    overflow: hidden;
 }
 
 .live dd {

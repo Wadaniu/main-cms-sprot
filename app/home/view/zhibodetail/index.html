@@ -43,7 +43,10 @@
         </div>
     </div>
     <div class="live-link">
-
+        <?php $MainMatchLive = getMainMatchLive(); ?>
+        {foreach $MainMatchLive as $item}
+        <a href={$item.live_link} rel="nofollow" target=_blank>{$item.title}</a>
+        {/foreach}
         <?php if(!empty($matchLive) && is_array($matchLive['pc_link'])&&count($matchLive['pc_link'])>0): ?>
         {foreach $matchLive.pc_link as $key=>$item}
         <a href={$item} rel="nofollow" target=_blank>直播信号{$key+1}</a>

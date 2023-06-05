@@ -2,13 +2,15 @@
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-jijin"></i><span class="prefix">集锦</span></p>
-        <p class="more"><a href="{:moresrc('jijin')}">更多</a></p>
+        <p class="more"><a href="/jijin/">更多</a></p>
     </div>
     <div class="lists">
         <ul class="nodata">
-            {foreach $jjdata as $i=>$item}
-            <li><a href="/jijin/{$item.video_type=='0'?'zuqiu':'lanqiu'}/1/{$item.short_name_py}/{$item.id}" title="{$item.title}" target="_blank">{$item.title}</a></li>
-            {/foreach}
+            {if isset($jijin)}
+                {foreach $jijin as $jj}
+                <li><a href="/{$jj.type=='1'?'jijin':'luxiang'}/{$jj.video_type=='0'?'zuqiu':'lanqiu'}/1/{$jj.short_name_py}/{$jj.id}" title="{$jj.title}" target="_blank">{$jj.title}</a></li>
+                {/foreach}
+            {/if}
         </ul>
     </div>
 </div>
