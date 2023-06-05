@@ -180,6 +180,7 @@ class FootballCompetition extends Model
         $data = self::where('id','IN',$ids)->field("id,name_zh,short_name_py,short_name_zh,logo")->select()->toArray();
         foreach ($data as &$item){
             $item['sort'] = $sort[$item['id']]['sort'];
+            $item['sphere_type'] = 'zuqiu';
         }
         array_multisort(array_column($data,'sort'),SORT_DESC,$data);
         Cache::store('common_redis')->set($key,$data);

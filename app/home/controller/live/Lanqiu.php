@@ -78,7 +78,6 @@ class Lanqiu extends BaseController
     protected function getMatchList(string $compName)
     {
         $this->getTempPath('live_lanqiu');
-        $competition_id = 0;
 
         $basketballModel = new BasketballMatch();
         if (empty($compName)){
@@ -88,7 +87,6 @@ class Lanqiu extends BaseController
         }else{
             //获取联赛id
             $comp = BasketballCompetition::getByPY($compName);
-            $competition_id = $comp['id'];
             //过滤联赛
             $data = $basketballModel->getWeekData([$comp['id']]);
             //tdk关键字
@@ -103,7 +101,6 @@ class Lanqiu extends BaseController
 
         $this->getTdk('live_lanqiu',$this->tdk);
         View::assign('data',$res);
-        View::assign('article',['data'=>getZiXun(2,$competition_id)]);
     }
 
 }

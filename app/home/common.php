@@ -287,6 +287,15 @@ function getBasketballHotComp($limit = 0)
     return $Competition->getHotData($limit);
 }
 
+function getHotComp($limit = 9){
+    $halfLimit = ceil($limit / 2);
+    $basketballComp = getBasketballHotComp($halfLimit);
+    $otherLimit = $limit - count($basketballComp);
+    $footballComp = getFootballHotComp($otherLimit);
+
+    return array_merge($basketballComp,$footballComp);
+}
+
 /**
  *资讯
  * 1:足球2：篮球,0所有
@@ -397,11 +406,18 @@ function getCompTables($limit = 5,$type = 'zuqiu',$compId = 0){
 function getLive($limit = 5,$type = 'zuqiu',$compId = 0){
 
     switch ($type){
+        case 'zuqiu':
+            $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$limit);
+            break;
         case 'lanqiu' :
             $data = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId,$limit);
             break;
         default :
-            $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$limit);
+            $halfLimit = ceil($limit / 2);
+            $basketball = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId,$halfLimit);
+            $otherLimit = $limit - count($basketball);
+            $football = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId,$otherLimit);
+            $data = array_merge($basketball,$football);
             break;
     }
     return $data;
@@ -414,11 +430,12 @@ function getMainMatchLive(){
 
 function getHotTeam($limit = 10){
     $halfLimit = $limit / 2;
-    $footballTeamModel = new \app\commonModel\FootballTeam();
-    $footballTeam = $footballTeamModel->getHotData($halfLimit);
-    $otherLimit = $limit - count($footballTeam);
     $basketballTeamModel = new \app\commonModel\BasketballTeam();
-    $basketballTeam = $basketballTeamModel->getHotData($otherLimit);
+    $basketballTeam = $basketballTeamModel->getHotData($halfLimit);
+
+    $otherLimit = $limit - count($basketballTeam);
+    $footballTeamModel = new \app\commonModel\FootballTeam();
+    $footballTeam = $footballTeamModel->getHotData($otherLimit);
 
     return array_merge($basketballTeam,$footballTeam);
 }
