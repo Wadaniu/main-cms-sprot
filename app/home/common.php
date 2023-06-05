@@ -87,10 +87,16 @@ function articlePrev($id, $cateId = 0)
     $map[] = ["id", '<', $id];
     $article = \think\facade\Db::name('article')
         ->where($map)
-        ->field("id,competition_id,title")
+        ->field("id,competition_id,title,cate_id")
         ->order("id desc")
         ->cache(true, 300)
         ->find();
+    if($article['cate_id']==1){
+        $competition = (new \app\commonModel\FootballCompetition())->where("id",$article['competition_id'])->find();
+    }else{
+        $competition = (new \app\commonModel\BasketballCompetition())->where("id",$article['competition_id'])->find();
+    }
+    $article['short_name_py'] = $competition['short_name_py'];
     return $article;
 }
 
@@ -103,10 +109,16 @@ function articleNext($id, $cateId = 0)
     $map[] = ["id", '>', $id];
     $article = \think\facade\Db::name('article')
         ->where($map)
-        ->field("id,competition_id,title")
+        ->field("id,competition_id,title,cate_id")
         ->order("id asc")
         ->cache(true, 300)
         ->find();
+    if($article['cate_id']==1){
+        $competition = (new \app\commonModel\FootballCompetition())->where("id",$article['competition_id'])->find();
+    }else{
+        $competition = (new \app\commonModel\BasketballCompetition())->where("id",$article['competition_id'])->find();
+    }
+    $article['short_name_py'] = $competition['short_name_py'];
     return $article;
 }
 

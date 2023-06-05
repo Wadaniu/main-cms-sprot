@@ -42,8 +42,8 @@ class Zuqiu extends BaseController
         $this->tdk->keyword = $info['title'];
         $this->tdk->desc = $info['desc'];
         $info['author'] = Admin::where(['id'=>$info['admin_id']])->find()->toArray();
-        $info['pre'] = Article::where("id","<",$matchId)->order("id desc")->find();
-        $info['next'] = Article::where("id",">",$matchId)->order("id asc")->find();
+        $info['pre'] = articlePrev($matchId);
+        $info['next'] = articleNext($matchId);
         View::assign('article',['data'=>getZiXun(1,$info['competition_id'])]);
 
         View::assign("info",$info);
