@@ -13,26 +13,16 @@
                 {$info.content|raw}
             </div>
             <div class="connect">
-                <span>上一篇：
                 {if !empty($info['pre'])}
-                        {if $info.pre.cate_id==1}
-                                <a href="/zixun/zuqiu/1/{$info.pre.short_name_py}/{$info.pre.id}">
-                                    {else}
-                                    <a href="/zixun/lanqiu/1/{$info.pre.short_name_py}/{$info.pre.id}">
-                            {/if}
-                            {$info.pre.title}</a>
+                <span>上一篇：
+                    <a href="/zixun/{$info.next.cate_id==1?'zuqiu':'lanqiu'}/1/{$info.pre.short_name_py}/{$info.pre.id}">{$info.pre.title}</a>
+                </span>
                 {/if}
-                </span>
+                {if !empty($info['next'])}
                 <span>下一篇：
-                    {if !empty($info['next'])}
-                        {if $info.next.cate_id==1}
-                        <a href="/zixun/zuqiu/1/{$info.next.short_name_py}/{$info.next.id}">
-                            {else}
-                            <a href="/zixun/lanqiu/1/{$info.next.short_name_py}/{$info.next.id}">
-                        {/if}
-                            {$info.next.title}</a>
-                    {/if}
+                    <a href="/zixun/{$info.next.cate_id==1?'zuqiu':'lanqiu'}/1/{$info.next.short_name_py}/{$info.next.id}">{$info.next.title}</a>
                 </span>
+                {/if}
             </div>
 <!--            <div class="keyword">-->
 <!--                <label>标签 : </label>-->
