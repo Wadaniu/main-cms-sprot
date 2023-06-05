@@ -7,9 +7,9 @@
 <?php $type=hotlive('live','直播'); ?>
 <div class="subnav">
     <ul>
-        {foreach $type as $key=>$item}
+        {volist name="type" id="item"  length='10'}
         <li><a href="{$item.src}">{$item.title}</a></li>
-        {/foreach}
+        {/volist}
     </ul>
 </div>
 <div class="container">
