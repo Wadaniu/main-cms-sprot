@@ -263,6 +263,7 @@ function typeselect(): array
 //全部热门类别
 function hotlive($src, $name = ''): array
 {
+
     $typelist = [];
     $hottype = [getFootballHotComp(), getBasketballHotComp()];
 
@@ -277,6 +278,7 @@ function hotlive($src, $name = ''): array
             ];
         }
     }
+
     return $typelist;
 }
 

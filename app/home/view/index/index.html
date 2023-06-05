@@ -73,17 +73,13 @@
                     <div class="moresel">
                         <ul>
                             <li>
-                                足球：<a href="">欧冠</a><a href="">西甲</a><a href="">NBA</a><a href="">CBA</a><a
-                                    href="">世界杯</a><a href="">欧冠</a><a href="">西甲</a><a href="">NBA</a><a
-                                    href="">CBA</a><a href="">世界杯</a><a href="">欧冠</a><a href="">西甲</a><a
-                                    href="">NBA</a><a href="">CBA</a><a href="">世界杯</a><a href="">欧冠</a><a
-                                    href="">西甲</a><a href="">NBA</a><a href="">CBA</a><a href="">世界杯</a>
+                                <?php $zuqiu=getFootballHotComp(); ?>
+                                足球：{foreach $zuqiu as $item}<a target="_blank" href="/live/{$item.sphere_type}/{$item.short_name_py}/">{$item.short_name_zh}</a>{/foreach}
                             </li>
-                            <li>篮球：<a href="">欧冠</a><a href="">西甲</a><a href="">NBA</a><a href="">CBA</a><a
-                                    href="">世界杯</a><a href="">欧冠</a><a href="">西甲</a><a href="">NBA</a><a
-                                    href="">CBA</a><a href="">世界杯</a><a href="">欧冠</a><a href="">西甲</a><a
-                                    href="">NBA</a><a href="">CBA</a><a href="">世界杯</a><a href="">欧冠</a><a
-                                    href="">西甲</a><a href="">NBA</a><a href="">CBA</a><a href="">世界杯</a></li>
+                            <li>
+                                <?php $lanqiu=getBasketballHotComp(); ?>
+                                篮球：{foreach $lanqiu as $item}<a target="_blank" href="/live/{$item.sphere_type}/{$item.short_name_py}/">{$item.short_name_zh}</a>{/foreach}
+                            </li>
                         </ul>
                     </div>
                 </div>
