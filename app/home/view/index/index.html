@@ -91,10 +91,10 @@
                     {foreach $item as $i=>$team}
                     <dd>
                         <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='H:i'}</p>
-                        <p class="type"><a href="">{$team.competition_text}</a></p>
-                        <p class="team"><a href="">{$team.home_team_text}</a><img src="{$team.home_team_logo}"></p>
+                        <p class="type"><a href="/live/{$team.sphere_type}/{$team.comp_py}/" target="_blank">{$team.competition_text}</a></p>
+                        <p class="team">{$team.home_team_text}<img src="{$team.home_team_logo}"></p>
                         <p class="vs">VS</p>
-                        <p class="team"><img src="{$team.away_team_logo}"><a href="">{$team.away_team_text}</a></p>
+                        <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
                         <a class="right-btn" target="_blank" href="/live/{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i class="iconfont <?php echo getzt($team['status_id'],0) ?>"></i><span><?php echo getzt($team['status_id'],1) ?></span></a>
                     </dd>
                     {/foreach}
