@@ -237,9 +237,11 @@ class Article extends Model
             case 2:
                 $competition = BasketballCompetition::where("id",$info->competition_id)->find();
                 break;
+            default:
+                $competition = null;
         }
         if(!$competition){
-            return [];
+            return ['short_name_zh'=>'','short_name_py'=>''];
         }
         return $competition->toArray();
     }
