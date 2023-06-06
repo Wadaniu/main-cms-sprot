@@ -27,7 +27,6 @@ class Index extends BaseController
             $where = '1 = 1';
         }else{
             $where = [
-                ['short_name_zh','like','%'.$keyword.'%'],
                 ['name_zh','like','%'.$keyword.'%']
             ];
         }
