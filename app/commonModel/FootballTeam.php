@@ -225,17 +225,32 @@ class FootballTeam extends Model
         return $getApiInfo;
     }
 
-    public function getList($where, $param)
+    /**
+     * 获取分页列表
+     * @param $where
+     * @param $param
+     */
+    public function getList($keyword, $param)
     {
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+        $page = ($param['page'] - 1) > 0? $param['page'] - 1: 0;
         $order = empty($param['order']) ? 'id desc' : $param['order'];
-        $list = self::where('logo','<>','')->where($where)->field('id,short_name_zh,logo')
-            ->order($order)
-            ->paginate($rows, false, ['query' => $param])
-            ->each(function ($item, $key) {
-                $item->sphere_type="zuqiu";
-            });
-        return $list;
+        $query = self::where('logo','<>','')->field('id,short_name_zh,name_zh,short_name_py,logo');
+        if (!empty($keyword)){
+            $query->whereRaw("name_zh like :word OR short_name_zh = :key",['word'=>'%'.$keyword.'%','key'=>$keyword]);
+        }
+        $count = $query->count();
+        $list = $query->limit($page,$rows)->order($order)->select()->toArray();
+
+        foreach ($list as &$item){
+            $item['sphere_type'] = 'zuqiu';
+        }
+
+        $res = [
+            'total' => $count,
+            'data'  => $list
+        ];
+        return $res;
     }
 
 
