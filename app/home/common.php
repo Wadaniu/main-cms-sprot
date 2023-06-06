@@ -503,3 +503,59 @@ function getKeywords()
     Cache::store('redis')->set($key, $data, 300);
     return $data;
 }
+
+/**
+ * 替换[]中的内容
+ * */
+function replaceTitleWeb($str){
+    $start = stripos($str,"[")+1;
+    $end = stripos($str,"]")-1;
+    return substr_replace($str,'****',$start,$end);
+}
+
+
+
+/**
+ * 按分页获取match_vedio
+ * */
+function getMatchVedio($where=[]){
+    $param = get_params();
+    $competition_id = 0;
+    $param['page'] = (isset($param['page']) && $param['page'])?$param['page']:1;
+    $compName = (isset($param['compname']) &&  $param['compname'])?$param['compname']:'';
+    $model = new \app\commonModel\MatchVedio();
+    if($compName){
+        if(isset($where['video_type'])){
+            if($where['video_type']=='0'){
+                $comp = \app\commonModel\FootballCompetition::where(['short_name_py'=>$compName])->find();
+                if($comp){
+                    $where['match_id'] = \app\commonModel\FootballMatch::where(["competition_id"=>$comp->id])->column("id");
+                    $competition_id = $comp->id;
+                }
+            }else{
+                $comp = \app\commonModel\BasketballCompetition::where(['short_name_py'=>$compName])->find();
+                if($comp){
+                    $where['match_id'] = \app\commonModel\BasketballMatch::where(["competition_id"=>$comp->id])->column("id");
+                    $competition_id = $comp->id;
+                }
+            }
+        }
+    }
+    $list = $model->getList($where,$param)->toArray();
+    foreach ($list['data'] as $k=>$v){
+        $list['data'][$k]['date']='';
+        $list['data'][$k]['teamArr'] = [];
+        $competition = $model->getCompetitionInfo($v['id']);
+        if(isset($competition['match']['match_time'])){
+            $list['data'][$k]['date'] = date('m-d',$competition['match']['match_time']);
+        }
+        if($competition['home_team']){
+            $list['data'][$k]['teamArr'][] = $competition['home_team'];
+        }
+        if($competition['away_team']){
+            $list['data'][$k]['teamArr'][] = $competition['away_team'];
+        }
+        $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
+    }
+    return [$list,$competition_id,$param];
+}
