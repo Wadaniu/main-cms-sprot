@@ -234,7 +234,7 @@ class FootballTeam extends Model
     {
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
         $page = ($param['page'] - 1) > 0? $param['page'] - 1: 0;
-        $order = empty($param['order']) ? 'status desc,sort asc,id desc' : $param['order'];
+        $order = empty($param['order']) ? 'id desc' : $param['order'];
         $query = self::where('logo','<>','')->field('id,short_name_zh,name_zh,short_name_py,logo');
         if (!empty($keyword)){
             $query->whereRaw("name_zh like :word OR short_name_zh = :key",['word'=>'%'.$keyword.'%','key'=>$keyword]);
