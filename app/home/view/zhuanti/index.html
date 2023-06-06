@@ -29,13 +29,11 @@
         <div class="zt-title">
             <span>{$typesrc=='liansai'?'联赛':'球队'}</span>专题
         </div>
-        <?php if($linkname=='/liansai/'||$linkname=='/qiudui/'): ?>
         <div class="search">
             <p id="search"><input type="text"/>
                 <button><i class="iconfont icon-sousuo"></i></button>
             </p>
         </div>
-        <?php endif; ?>
         <div class="hontlink">
             <?php if($typesrc=='liansai'): ?>
             <?php $type=hotlive('liansai'); ?>
@@ -49,9 +47,9 @@
     </div>
     <div class="ztnav-bg">
         <div class="ztnav">
+            <a href="/{$typesrc}/" class="{$linkname=='/liansai/'||$linkname=='/qiudui/'?'cur':''}"><span><i>全部</i></span></a>
             <a href="/{$typesrc}/zuqiu/" class="{:strpos($linkname,'zuqiu')?'cur':''}"><span><i>足球专题</i></span></a>
-            <a href="/{$typesrc}/lanqiu/"
-               class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
+            <a href="/{$typesrc}/lanqiu/" class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
         </div>
     </div>
     <div class="zt-list">

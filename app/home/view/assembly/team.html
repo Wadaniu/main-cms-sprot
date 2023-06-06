@@ -8,7 +8,7 @@
         {foreach $qddata as $i=>$item}
         <a href="/qiudui/{$item.sphere_type}/1/{$item.id}" target="_blank">
             <img src="{$item.logo}"
-                 alt="{$item.name_zh}">{$item.short_name_zh}
+                 alt="{$item.name_zh}">{$item.short_name_zh??$item.name_zh}
         </a>
         {/foreach}
     </div>
