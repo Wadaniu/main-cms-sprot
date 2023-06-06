@@ -1602,7 +1602,7 @@ a.right-btn span {
 }
 
 .specific {
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .specific .logo {
@@ -1612,10 +1612,11 @@ a.right-btn span {
 .specific .logo img {
     width: 140px;
     height: 140px;
+    margin-bottom: 20px;
 }
 
 .specific .info {
-    padding-top: 20px;
+    padding: 20px 20px 0;
     line-height: 24px;
 }
 
