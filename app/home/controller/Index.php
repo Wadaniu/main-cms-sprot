@@ -37,10 +37,10 @@ class Index extends BaseController
         //获取热门联赛一周内数据
         //足球数据
         $footballModel = new FootballMatch();
-        $footballData = $footballModel->getMatchByDate($hotFootballCompId,date('Y-m-d H:i:s',time()),date('Y-m-d',time()));
+        $footballData = $footballModel->getMatchByDate($hotFootballCompId,date('Y-m-d',time()),date('Y-m-d',time()));
         //篮球数据
         $basketballModel = new BasketballMatch();
-        $basketballData = $basketballModel->getMatchByDate($hotBasketballCompId,date('Y-m-d H:i:s',time()),date('Y-m-d',time()));
+        $basketballData = $basketballModel->getMatchByDate($hotBasketballCompId,date('Y-m-d',time()),date('Y-m-d',time()));
 
         $matchData = array_merge($basketballData,$footballData);
 
