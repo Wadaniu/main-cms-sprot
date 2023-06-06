@@ -73,21 +73,13 @@ class Lanqiu extends BaseController
     {
         $this->getTempPath('qiudui_lanqiu');
         //赛程id
-        $keyword = $param['keyword'] ?? '';
-
-        if (empty($keyword)){
-            $where = '1 = 1';
-        }else{
-            $where = [
-                ['short_name_zh','like','%'.$keyword.'%'],
-                ['name_zh','like','%'.$keyword.'%']
-            ];
-        }
-
-        $param['limit'] = 24;
+        $param['page'] = $param['page'] ?? 1;
+        $param['limit'] = 12;
         //篮球数据
         $basketballModel = new BasketballTeam();
-        $data = $basketballModel->getList($where,$param)->toArray();
+        $data = $basketballModel->getList('',$param);
+        $data['per_page'] = $param['limit'];
+        $data['current_page'] = $param['page'];
 
         $this->getTdk('qiudui_lanqiu',$this->tdk);
         View::assign('data',$data);
