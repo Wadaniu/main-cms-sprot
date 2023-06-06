@@ -161,7 +161,7 @@ class BasketballMatch extends Model
      * @throws ModelNotFoundException
      */
     public function getMatchByDate(array $competitionIds = [],$startDate = '',$endDate = ''){
-        $startTime =  strtotime($startDate) - 5000;
+        $startTime =  strtotime($startDate.' 00:00:00');
         $endTime = strtotime($endDate.' 23:59:59');
         $where[] = ['match_time','between',[$startTime,$endTime]];
         $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
@@ -185,10 +185,10 @@ class BasketballMatch extends Model
         if ($competitionId > 0){
             $competitionIds[] = $competitionId;
         }
-        //比赛时间大于当前时间-5400s
-        $where[] = ["match_time",">=",time()];
+        //比赛时间大于当天时间
+        $where[] = ["match_time",">=",strtotime(date('Y-m-d 00:00:00',time()))];
         $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
-        return $this->getMatchInfo($where,$competitionIds,$limit,"match_time asc");
+        return $this->getMatchInfo($where,$competitionIds,$limit);
     }
 
     /**
@@ -199,7 +199,7 @@ class BasketballMatch extends Model
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getMatchInfo($where,array $competitionIds=[],$limit = 50,$order="status_id desc,match_time desc"){
+    public function getMatchInfo($where,array $competitionIds=[],$limit = 50,$order="status_id desc,match_time asc"){
         $key = self::$CACHE_HOME;
         if(!empty($competitionIds)){
             $key .= implode($competitionIds);

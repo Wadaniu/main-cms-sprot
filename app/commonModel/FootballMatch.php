@@ -162,11 +162,11 @@ class FootballMatch extends Model
      * @return array|mixed
      */
     public function getMatchByDate(array $competitionIds = [],$startDate = '',$endDate = ''){
-        $startTime =  strtotime($startDate);
+        $startTime =  strtotime($startDate.' 00:00:00');
         $endTime = strtotime($endDate.' 23:59:59');
         $where[] = ['match_time','between',[$startTime,$endTime]];
         $where[] = ['status_id','IN',[1,2,3,4,5,7]];
-        return $this->getMatchInfo($where,$competitionIds,0);
+        return $this->getMatchInfo($where,$competitionIds);
     }
 
     /**
@@ -188,9 +188,9 @@ class FootballMatch extends Model
             $competitionIds[] = $competitionId;
         }
         //比赛时间大于当前时间-5400s
-        $where[] = ["match_time",">=",time()];
+        $where[] = ["match_time",">=",strtotime(date('Y-m-d 00:00:00',time()))];
         $where[] = ['status_id','IN',[1,2,3,4,5,7]];
-        return $this->getMatchInfo($where,$competitionIds,$limit,"match_time asc");
+        return $this->getMatchInfo($where,$competitionIds,$limit);
     }
 
     /**
