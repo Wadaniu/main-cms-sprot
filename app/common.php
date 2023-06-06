@@ -81,11 +81,11 @@ function get_params($key = "")
     return Request::instance()->param($key);
 }
 
-function get_path(): array
+function get_path()
 {
     $pathinfo = Request::instance()->pathinfo();
-    $path = preg_match( '/\d+/' , $pathinfo , $arr );
-    return $arr;
+    //$path = preg_match( '/\d+/' , $pathinfo , $arr );
+    return $pathinfo;
 }
 
 function get_ruleName()

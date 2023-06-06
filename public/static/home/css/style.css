@@ -658,6 +658,11 @@ a.right-btn span {
     border-top: 1px solid rgba(var(--main-r), var(--main-g), var(--main-b), 0.15);
 }
 
+.integral .table li.group-name span {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
 .integral .table li.item-name {
     line-height: 36px;
     background-color: rgba(var(--main-r), var(--main-g), var(--main-b), 0.1);
@@ -1597,7 +1602,7 @@ a.right-btn span {
 }
 
 .specific {
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .specific .logo {
@@ -1607,10 +1612,11 @@ a.right-btn span {
 .specific .logo img {
     width: 140px;
     height: 140px;
+    margin-bottom: 20px;
 }
 
 .specific .info {
-    padding-top: 20px;
+    padding: 20px 20px 0;
     line-height: 24px;
 }
 

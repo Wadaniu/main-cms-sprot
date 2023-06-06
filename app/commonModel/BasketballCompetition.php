@@ -93,13 +93,12 @@ class BasketballCompetition extends Model
             }else{
                 Db::name('comp_sort')->insert($sort);
             }
-
             add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {
             return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }
-        Cache::delete(self::$HOT_DATA.Env::get('HOME.HOME_SPACE'));
-        Cache::delete(self::$CACHE_SHORT_NAME_ZH);
+        Cache::store('common_redis')->delete(self::$HOT_DATA);
+        Cache::store('common_redis')->delete(self::$CACHE_SHORT_NAME_ZH);
         return to_assign();
     }
 	
@@ -144,8 +143,8 @@ class BasketballCompetition extends Model
      * 获取热点数据
      */
     public function getHotData($limit = 0){
-        $key = self::$HOT_DATA.Env::get('HOME.HOME_SPACE');
-        $data = Cache::get($key);
+        $key = self::$HOT_DATA;
+        $data = Cache::store('common_redis')->get($key);
         if(!empty($data)){
             if ($limit > 0){
                 $data = array_slice($data,0,$limit);
@@ -160,7 +159,7 @@ class BasketballCompetition extends Model
             $item['sphere_type'] = 'lanqiu';
         }
         array_multisort(array_column($data,'sort'),SORT_DESC,$data);
-        Cache::set($key,$data);
+        Cache::store('common_redis')->set($key,$data);
 
         if ($limit > 0){
             $data = array_slice($data,0,$limit);
@@ -175,7 +174,7 @@ class BasketballCompetition extends Model
         $key = self::$CACHE_SHORT_NAME_ZH;
         $data = Cache::store('common_redis')->get($key);
         if(empty($data)){
-            $data = self::field("id,short_name_zh,short_name_py")->select()->toArray();
+            $data = self::field("id,short_name_zh,short_name_py,name_zh")->select()->toArray();
             $data = array_column($data,null,'id');
             Cache::store('common_redis')->set($key,$data);
         }
@@ -230,8 +229,6 @@ class BasketballCompetition extends Model
                     self::strict(false)->field(true)->insertAll($param);
 
             }
-            Cache::delete(self::$HOT_DATA);
-            Cache::delete(self::$CACHE_SHORT_NAME_ZH);
             if($getApiInfo["query"]['total'] == 1 || $getApiInfo["query"]['total'] == 0){
                 array_multisort(array_column($getApiInfo["results"],'updated_at'),$getApiInfo["results"]);
                 $end = end($getApiInfo["results"]);
@@ -252,17 +249,27 @@ class BasketballCompetition extends Model
      * @param $where
      * @param $param
      */
-    public function getList($where, $param)
+    public function getList($keyword, $param)
     {
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-        $order = empty($param['order']) ? 'status desc,sort asc,id desc' : $param['order'];
-        $list = self::where('logo','<>','')->where($where)->field('id,short_name_zh,short_name_py,logo,status,sort')
-            ->order($order)
-            ->paginate($rows, false, ['query' => $param])
-            ->each(function ($item, $key) {
-                $item->sphere_type="lanqiu";
-            });
-        return $list;
+        $page = ($param['page'] - 1) > 0? $param['page'] - 1: 0;
+        $order = empty($param['order']) ? 'id desc' : $param['order'];
+        $query = self::where('logo','<>','')->field('id,short_name_zh,name_zh,short_name_py,logo');
+        if (!empty($keyword)){
+            $query->whereRaw("name_zh like :word OR short_name_zh = :key",['word'=>'%'.$keyword.'%','key'=>$keyword]);
+        }
+        $count = $query->count();
+        $list = $query->limit($page,$rows)->order($order)->select()->toArray();
+
+        foreach ($list as &$item){
+            $item['sphere_type'] = 'lanqiu';
+        }
+
+        $res = [
+            'total' => $count,
+            'data'  => $list
+        ];
+        return $res;
     }
 
 

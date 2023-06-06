@@ -1,4 +1,4 @@
-<?php $zxdata=getCompTables();  ?>
+<?php $zxdata=getCompTables(); ?>
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-jifen"></i><span>积分榜</span></p>
@@ -19,9 +19,13 @@
                 <span>负</span>
                 <span>积分</span>
             </li>
-            {foreach $table['tables'][0]['rows'] as $key=>$item}
+            {foreach $table['tables'] as $level}
+            <?php $name='ABCDEFGHIJKLMNOPQRSTUVWXYZ'; if(count($table['tables'])>1): ?>
+            <li class="group-name"><span></span><span>{$name[$level.group-1]}组</span></li>
+            <?php endif; ?>
+            {foreach $level['rows'] as $i=>$item}
             <li>
-                <span>{$key+1}</span>
+                <span>{$i+1}</span>
                 <span>{$item.team_name}</span>
                 <span>{$item.won}</span>
                 <span>{$item.draw}</span>
@@ -29,12 +33,13 @@
                 <span>{$item.points}</span>
             </li>
             {/foreach}
+            {/foreach}
         </ul>
         {/foreach}
     </div>
 </div>
 <script>
-    $(".integral p").click(function (){
+    $(".integral p").click(function () {
         let index = $(this).index();
         $(this).addClass("cur").siblings().removeClass();
         $(".integral .table").removeClass("cur").eq(index).addClass("cur");

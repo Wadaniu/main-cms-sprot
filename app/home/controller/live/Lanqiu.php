@@ -83,13 +83,13 @@ class Lanqiu extends BaseController
         $basketballModel = new BasketballMatch();
         if (empty($compName)){
             //篮球数据
-            $data = $basketballModel->getWeekData();
+            $data = $basketballModel->getCompetitionListInfo();
             $this->tdk->short_name_zh = '篮球';
         }else{
             //获取联赛id
             $comp = BasketballCompetition::getByPY($compName);
             //过滤联赛
-            $data = $basketballModel->getWeekData([$comp['id']]);
+            $data = $basketballModel->getCompetitionListInfo($comp['id']);
             //tdk关键字
             $this->tdk->short_name_zh = $comp['short_name_zh'];
             View::assign('comp',$comp);

@@ -73,21 +73,15 @@ class Zuqiu extends BaseController
         $this->getTempPath('liansai_zuqiu');
         //赛程id
         $keyword = $param['keyword'] ?? '';
-
-        if (empty($keyword)){
-            $where = '1 = 1';
-        }else{
-            $where = [
-                ['name_zh','like','%'.$keyword.'%']
-            ];
-        }
-
+        $param['page'] = $param['page'] ?? 1;
         $param['limit'] = 24;
+
         $footballModel = new FootballCompetition();
-        $data = $footballModel->getList($where,$param)->toArray();
+        $data = $footballModel->getList($keyword,$param);
+        $data['per_page'] = $param['limit'];
+        $data['current_page'] = $param['page'];
 
         $this->getTdk('liansai_zuqiu',$this->tdk);
-
         View::assign('data',$data);
     }
 }

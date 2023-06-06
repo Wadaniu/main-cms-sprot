@@ -66,6 +66,11 @@
             <div class="logo">
                 <img src="{$data_info.logo}" />
             </div>
+            <?php if(strpos($_SERVER['REQUEST_URI'], 'liansai')): ?>
+            <div class="title">
+                <p class="tit"><i class="iconfont icon-jianjie"></i><span>{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}简介</span></p>
+            </div>
+            <?php endif; ?>
             <div class="info">
                 {$data_info.intro}
             </div>

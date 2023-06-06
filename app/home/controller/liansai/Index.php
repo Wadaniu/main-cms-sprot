@@ -22,23 +22,18 @@ class Index extends BaseController
         $param = get_params();
         //赛程id
         $keyword = $param['keyword'] ?? '';
-
-        if (empty($keyword)){
-            $where = '1 = 1';
-        }else{
-            $where = [
-                ['name_zh','like','%'.$keyword.'%']
-            ];
-        }
+        $param['page'] = $param['page'] ?? 1;
         $param['limit'] = 12;
         //每页12条篮球和足球联赛数据
         $footballModel = new FootballCompetition();
-        $footballData = $footballModel->getList($where,$param)->toArray();
+        $footballData = $footballModel->getList($keyword,$param);
+
         //篮球数据
         $basketballModel = new BasketballCompetition();
-        $basketballData = $basketballModel->getList($where,$param)->toArray();
+        $basketballData = $basketballModel->getList($keyword,$param);
 
         $footballData['per_page'] = 24;
+        $footballData['current_page'] = $param['page'];
         $footballData['data'] = array_merge($footballData["data"],$basketballData["data"]);
         //处理tdk
         $tdk = new Tdk();
