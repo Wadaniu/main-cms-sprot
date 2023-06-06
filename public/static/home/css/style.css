@@ -493,7 +493,7 @@ a.right-btn span {
 .list-cont dd .time {
     display: flex;
     align-items: center;
-    width: 12%;
+    width: 15%;
 }
 
 .list-cont dd .time i {
@@ -505,7 +505,7 @@ a.right-btn span {
 }
 
 .list-cont dd .team {
-    width: 28%;
+    width: 26%;
     display: flex;
     align-items: center;
 }
