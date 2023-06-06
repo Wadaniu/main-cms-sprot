@@ -180,15 +180,15 @@ class BasketballMatch extends Model
         return $this->getMatchInfo($where,[],20,"match_time desc");
     }
 
-    public function getCompetitionListInfo($competitionId,$limit = 20){
+    public function getCompetitionListInfo($competitionId = 0,$limit = 20){
         $competitionIds = [];
         if ($competitionId > 0){
             $competitionIds[] = $competitionId;
         }
-        $where = [];
         //比赛时间大于当前时间-5400s
-        $where[] = ["match_time",">=",time() - 5400];
-        return $this->getMatchInfo($where,$competitionIds,$limit,"match_time desc");
+        $where[] = ["match_time",">=",time()];
+        $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
+        return $this->getMatchInfo($where,$competitionIds,$limit,"match_time asc");
     }
 
     /**
@@ -232,16 +232,19 @@ class BasketballMatch extends Model
                 }
                 $basketballCompetition = new  BasketballCompetition();
                 $comp = $basketballCompetition->getShortNameZh($item->competition_id);
-                $item->competition_text = $comp['short_name_zh']??'';
+                $item->competition_text = isset($comp['short_name_zh']) && !empty($comp['short_name_zh']) ?
+                    $comp['short_name_zh'] : (isset($comp['name_zh']) && !empty($comp['name_zh']) ? $comp['name_zh'] : '');
                 $item->comp_py = $comp['short_name_py']??'';
 
                 $basketballTeam = new  BasketballTeam();
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
-                $item->home_team_text = $info["short_name_zh"]??'';
+                $item->home_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
+                    $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->home_team_logo = $info["logo"]??'';
 
                 $info = $basketballTeam->getShortNameZhLogo($item->away_team_id);
-                $item->away_team_text = $info["short_name_zh"]??'';
+                $item->away_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
+                    $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->away_team_logo = $info["logo"]??'';
 
                 $item->sphere_type="lanqiu";
@@ -409,16 +412,19 @@ class BasketballMatch extends Model
                 }
                 $basketballCompetition = new  BasketballCompetition();
                 $comp = $basketballCompetition->getShortNameZh($item->competition_id);
-                $item->competition_text = $comp['short_name_zh']??'';
+                $item->competition_text = isset($comp['short_name_zh']) && !empty($comp['short_name_zh']) ?
+                    $comp['short_name_zh'] : (isset($comp['name_zh']) && !empty($comp['name_zh']) ? $comp['name_zh'] : '');
                 $item->comp_py = $comp['short_name_py']??'';
 
                 $basketballTeam = new  BasketballTeam();
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
-                $item->home_team_text = $info["short_name_zh"]??'';
+                $item->home_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
+                    $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->home_team_logo = $info["logo"]??'';
 
                 $info = $basketballTeam->getShortNameZhLogo($item->away_team_id);
-                $item->away_team_text = $info["short_name_zh"]??'';
+                $item->away_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
+                    $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->away_team_logo = $info["logo"]??'';
 
                 $item->sphere_type="lanqiu";

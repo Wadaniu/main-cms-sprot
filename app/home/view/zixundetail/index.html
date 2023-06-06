@@ -15,7 +15,7 @@
             <div class="connect">
                 {if !empty($info['pre'])}
                 <span>上一篇：
-                    <a href="/zixun/{$info.next.cate_id==1?'zuqiu':'lanqiu'}/1/{$info.pre.short_name_py}/{$info.pre.id}">{$info.pre.title}</a>
+                    <a href="/zixun/{$info.pre.cate_id==1?'zuqiu':'lanqiu'}/1/{$info.pre.short_name_py}/{$info.pre.id}">{$info.pre.title}</a>
                 </span>
                 {/if}
                 {if !empty($info['next'])}

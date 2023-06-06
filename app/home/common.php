@@ -99,7 +99,11 @@ function articlePrev($id, $cateId = 0)
     }else{
         $competition = (new \app\commonModel\BasketballCompetition())->where("id",$article['competition_id'])->find();
     }
-    $article['short_name_py'] = $competition['short_name_py'];
+    if(!$competition){
+        $article['short_name_py'] = '';
+    }else{
+        $article['short_name_py'] = $competition['short_name_py'];
+    }
     return $article;
 }
 
@@ -124,7 +128,12 @@ function articleNext($id, $cateId = 0)
     }else{
         $competition = (new \app\commonModel\BasketballCompetition())->where("id",$article['competition_id'])->find();
     }
-    $article['short_name_py'] = $competition['short_name_py'];
+    if(!$competition){
+        $article['short_name_py'] = '';
+    }else{
+        $article['short_name_py'] = $competition['short_name_py'];
+    }
+
     return $article;
 }
 
@@ -281,20 +290,19 @@ function typeselect(): array
 //全部热门类别
 function hotlive($src, $name = ''): array
 {
-
     $typelist = [];
-    $hottype = [getFootballHotComp(), getBasketballHotComp()];
 
-    foreach ($hottype as $key => $type) {
-        $typesrc = $key ? 'lanqiu' : 'zuqiu';
-        foreach ($type as $item) {
-            $typelist[] = [
-                'id' => $item['id'],
-                'type' => $typesrc,
-                'title' => $item['short_name_zh'] . $name,
-                'src' => '/' . $src . '/' . $typesrc . '/' . $item['short_name_py']
-            ];
-        }
+    $hottype = array_merge(getFootballHotComp(), getBasketballHotComp());
+    //排序
+    array_multisort(array_column($hottype,'sort'),SORT_DESC,$hottype);
+
+    foreach ($hottype as $type) {
+        $typelist[] = [
+            'id' => $type['id'],
+            'type' => $type['sphere_type'],
+            'title' => $type['short_name_zh'] . $name,
+            'src' => '/' . $src . '/' . $type['sphere_type'] . '/' . $type['short_name_py']
+        ];
     }
 
     return $typelist;
@@ -319,7 +327,10 @@ function getHotComp($limit = 9)
     $otherLimit = $limit - count($basketballComp);
     $footballComp = getFootballHotComp(intval($otherLimit));
 
-    return array_merge($basketballComp, $footballComp);
+    $data = array_merge($basketballComp, $footballComp);
+    //排序
+    array_multisort(array_column($data,'sort'),SORT_DESC,$data);
+    return $data;
 }
 
 /**
