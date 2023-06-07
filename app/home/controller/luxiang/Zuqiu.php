@@ -59,22 +59,8 @@ class Zuqiu extends BaseController
     }
 
     function getMatchInfo($matchId){
-
-
-
         //处理tdk关键字
-
-        $model = new MatchVedio();
-        $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
-        $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
-        $competition_id = 0;
-        $matchLive['team'] = [];
-        $matchLive['match_time'] = '';
-        if($match){
-            $competition_id = $match->competition_id;
-            $matchLive['team'] = $match->getTeamInfo();
-            $matchLive['match_time'] = $match->match_time;
-        }
+        list($matchLive,$competition_id) = getMatchVedioById($matchId);
         //print_r($competition_id);exit;
         $this->tdk->title = $matchLive['title'];
         $this->getTempPath("luxiang_zuqiu_detail");
