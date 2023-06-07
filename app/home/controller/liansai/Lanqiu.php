@@ -47,6 +47,9 @@ class Lanqiu extends BaseController
         //直播数据
         $matchModel = new BasketballMatch();
         $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7,8,9]]],[$compid],self::MainLimit);
+        if (empty($matchList)){
+            $matchList = $matchModel->getMatchInfo([['status_id',10]],[$compid],self::MainLimit,'match_time desc');
+        }
 
         $videoModel = new MatchVedio();
         $matchId = BasketballMatch::where("competition_id",$compid)->column("id");
