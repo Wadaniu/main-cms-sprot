@@ -46,6 +46,5 @@ Route::get('/qiudui/:page?/:keyword?', CommonSpace.'\qiudui\Index@index')->name(
 //积分榜
 Route::get('/jifen/', CommonSpace.'\jifen\Index@index')->name('/jifen/');
 
-
 Route::get('/test', CommonSpace.'\Test@index')->name('/test/');
 
