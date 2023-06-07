@@ -558,6 +558,37 @@ function getMatchVedio($where=[]){
             $list['data'][$k]['teamArr'][] = $competition['away_team'];
         }
         $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
+        $list['data'][$k]['short_name_zh'] = empty($competition['competition'])?'':$competition['competition']['short_name_zh'];
     }
     return [$list,$competition_id,$param];
+}
+
+
+
+/**
+ * 获取集锦、录像详情
+ * */
+function getMatchVedioById($matchId){
+    $model = new \app\commonModel\MatchVedio();
+    $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
+    if($matchLive['video_type']==1){
+        $match = (new \app\commonModel\BasketballMatch())->where("id",$matchLive['match_id'])->find();
+        $comp = (new \app\commonModel\BasketballCompetition())->where("id",$match->competition_id)->find();
+    }else{
+        $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
+        $comp = (new \app\commonModel\FootballCompetition())->where("id",$match->competition_id)->find();
+    }
+    $competition_id = 0;
+    $matchLive['team'] = [];
+    $matchLive['match_time'] = '';
+    $matchLive['short_name_zh'] = '';
+    $matchLive['short_name_py'] = '';
+    if($match){
+        $competition_id = $match->competition_id;
+        $matchLive['team'] = $match->getTeamInfo();
+        $matchLive['match_time'] = $match->match_time;
+        $matchLive['short_name_zh'] = $comp->short_name_zh;
+        $matchLive['short_name_py'] = $comp->short_name_py;
+    }
+    return [$matchLive,$competition_id];
 }
