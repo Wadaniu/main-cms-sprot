@@ -399,11 +399,9 @@ class BasketballMatch extends Model
         if ($data){
             return $data;
         }
-        //获取三十天内时间
-        $startTime = \time() - 86400 * 30;
 
         $data = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time')
-            ->where('match_time','>',$startTime)
+            ->where('match_time','>',time()-6000)
             ->whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$id,'aid'=>$id])
             ->order('match_time','ASC')->select()
             ->each(function ($item, $key) {
