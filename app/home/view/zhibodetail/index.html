@@ -213,7 +213,8 @@
                 <?php endif; ?>
             </div>
             <?php if($islanqiu): ?>
-            <div class="type-cont">
+            <div class="type-cont nodata">
+                <?php if(is_array($players)&&count($players)>0): ?>
                 <table class="player-data">
                     <tr>
                         <th><img src="{$analysis.info.home_team_logo}">{$analysis.info.home_team_text}</th>
@@ -264,6 +265,7 @@
                     </tr>
                     {/foreach}
                 </table>
+                <?php endif; ?>
             </div>
             <?php endif; ?>
         </div>
