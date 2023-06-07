@@ -19,7 +19,7 @@ class Lanqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
 
         $compid = $param['compid'] ?? 0;
 

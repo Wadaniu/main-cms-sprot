@@ -5,7 +5,7 @@
     <dl class="about-list nodata">
         {foreach $article.data as $i=>$item}
         <dd>
-            <a href="/zixun/{$item.cate_id=='1'?'zuqiu':'lanqiu'}/1/{$item.short_name_py}/{$item.id}" target="_blank">
+            <a href="/zixun-{$item.cate_id=='1'?'zuqiu':'lanqiu'}/1/{$item.short_name_py}/{$item.id}" target="_blank">
                 <div class="new-img">
                     <img title="{$item.title}" src="{$item.origin_url}">
                 </div>
