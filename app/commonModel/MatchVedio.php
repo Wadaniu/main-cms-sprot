@@ -66,11 +66,15 @@ class MatchVedio extends Model
             return [
                 'match'=>$match->toArray(),
                 'competition'=>$competition->toArray(),
+                'home_team'=>FootballTeam::where("id",$match->home_team_id)->field("id,name_zh as name")->find()->toArray(),
+                'away_team'=>FootballTeam::where("id",$match->away_team_id)->field("id,name_zh as name")->find()->toArray(),
             ];
         }
         return [
             'match'=>[],
             'competition'=>[],
+            'home_team'=>[],
+            'away_team'=>[],
         ];
     }
 
@@ -81,11 +85,15 @@ class MatchVedio extends Model
             return [
                 'match'=>$match->toArray(),
                 'competition'=>$competition->toArray(),
+                'home_team'=>BasketballTeam::where("id",$match->home_team_id)->field("id,name_zh as name")->find()->toArray(),
+                'away_team'=>BasketballTeam::where("id",$match->away_team_id)->field("id,name_zh as name")->find()->toArray(),
             ];
         }
         return [
             'match'=>[],
             'competition'=>[],
+            'home_team'=>[],
+            'away_team'=>[],
         ];
     }
 

@@ -46,53 +46,13 @@ class Zuqiu extends BaseController
 
 
     function getMatchList($param){
-        $competition_id = 0;
         $this->getTempPath('jijin_zuqiu');
         $this->getTdk('jijin_zuqiu',$this->tdk);
-        $param['page'] = (isset($param['page']) && $param['page'])?$param['page']:1;
-        $compName = (isset($param['compname']) &&  $param['compname'])?$param['compname']:'';
-        $model = new MatchVedio();
-        if($compName){
-            $comp = FootballCompetition::where(['short_name_py'=>$compName])->find();//赛事
-            if($comp){
-                $match = FootballMatch::where(["competition_id"=>$comp->id])->column("id");
-                $list = $model->getList(['type'=>1,'video_type'=>0,'match_id'=>$match],["order"=>'id desc'])->toArray();
-                $competition_id = $comp->id;
-            }else{
-                $list = $model->getList(['type'=>1,'video_type'=>0],["order"=>'id desc'])->toArray();
-            }
-            View::assign('comp',$comp);
-        }else{
-            $list = $model->getList(['type'=>1,'video_type'=>0],["order"=>'id desc'])->toArray();
-        }
-        $footballTeam = new FootballTeam();
-        foreach ($list['data'] as $k=>$v){
-            $list['data'][$k]['date']='';
-            $titleArr = explode(" ",$v['title']);
-            $list['data'][$k]['teamArr'] = [];
-            if(isset($titleArr[3])){
-                $team = explode("vs",$titleArr[3]);
-                if($team){
-                    $teamArr = [];
-                    foreach ($team  as $t){
-                        $teamArr[] = ['name'=>$t,'id'=>$footballTeam->getTeamInfoByName($t,'name_zh')];
-                    }
-                    $list['data'][$k]['teamArr'] = $teamArr;
-                }
-            }
-            $competition = $model->getCompetitionInfo($v['id']);
-            if(isset($competition['match']['match_time'])){
-                $list['data'][$k]['date'] = date('m-d',$competition['match']['match_time']);
-            }
-            $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
-            $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
-        }
-        $shortName = (new FootballCompetition())->where(['status'=>1])->field("short_name_zh,short_name_py")->select()->toArray();
-        View::assign("short",$shortName);
+        list($list,$competition_id,$param)=getMatchVedio(['type'=>1,'video_type'=>0]);
         View::assign("list",$list);
         View::assign("index","集锦");
         View::assign("href","/jijin/zuqiu/");
-        View::assign("compName",$compName);
+        //View::assign("compName",$compName);
         View::assign("param",$param);
         View::assign("luxiang",getLuxiangJijin(2,0,$competition_id,4));
     }
