@@ -18,7 +18,7 @@ class Lanqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
 
         $teamid = $param['teamid'] ?? 0;
 

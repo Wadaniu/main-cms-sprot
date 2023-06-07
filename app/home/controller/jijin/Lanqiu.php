@@ -26,7 +26,7 @@ class Lanqiu extends BaseController
     }
     public function index(){
 
-        $param = get_params();
+        $param = $this->parmas;
         //赛程id
         $matchId = $param['vid'] ?? 0;
 

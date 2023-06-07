@@ -24,9 +24,7 @@ class Lanqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-
-
-        $param = get_params();
+        $param = $this->parmas;
         //赛程id
         $matchId = $param['vid'] ?? 0;
 
