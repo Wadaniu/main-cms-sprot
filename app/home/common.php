@@ -282,7 +282,7 @@ function typeselect(): array
     foreach ($typedata as $item) {
         $typelist[] = [
             'title' => $item['short_name_zh'],
-            'src' => $alllink . $page . $item['short_name_py'] . '/'
+            'src' => $alllink . $item['short_name_py'] . '/'
         ];
     }
     return $typelist;
@@ -302,7 +302,7 @@ function hotlive($src, $name = ''): array
             'id' => $type['id'],
             'type' => $type['sphere_type'],
             'title' => $type['short_name_zh'] . $name,
-            'src' => '/' . $src . '/' . $type['sphere_type'] . '/' . $type['short_name_py']
+            'src' => '/' . $src . '-' . $type['sphere_type'] . '/' . $type['short_name_py']
         ];
     }
 
