@@ -78,12 +78,14 @@ abstract class BaseController
 
         $this->parmas = get_params();
         //获取最后一个参数判断是否为分页参数
-        $endParmas = end($this->parmas);
-        $pageParmas = explode('_',$endParmas);
-        if ($pageParmas[0] == 'index'){
-            //删除参数中最后一个
-            array_pop($this->parmas);
-            $this->parmas['page'] = intval($pageParmas[1]);
+        if (count($this->parmas) >= 1){
+            $endParmas = end($this->parmas);
+            $pageParmas = explode('_',$endParmas);
+            if ($pageParmas[0] == 'index'){
+                //删除参数中最后一个
+                array_pop($this->parmas);
+                $this->parmas['page'] = intval($pageParmas[1]);
+            }
         }
 
         View::assign('web_name',$this->web_common_title);
