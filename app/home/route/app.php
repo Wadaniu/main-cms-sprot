@@ -49,6 +49,9 @@ Route::get('/qiudui/lanqiu/:page?/:teamid?', CommonSpace.'\qiudui\Lanqiu@index')
 //球队首页
 Route::get('/qiudui/:page?/:keyword?', CommonSpace.'\qiudui\Index@index')->name('/qiudui/');
 
+//积分榜
+Route::get('/jifen/', CommonSpace.'\jifen\Index@index')->name('/jifen/');
+
 
 Route::get('/test', CommonSpace.'\Test@index')->name('/test/');
 

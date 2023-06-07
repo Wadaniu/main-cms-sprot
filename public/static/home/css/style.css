@@ -282,6 +282,7 @@ i.iconfont {
     margin: 0 auto;
     padding: 20px 0 60px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
@@ -1845,4 +1846,99 @@ p.nodata {
     color: #ddd;
     font-size: 2em;
     background-color: #fbfbfb;
+}
+
+.jifen-tab {
+    background-color: #fff;
+    display: flex;
+    width: 100%;
+}
+
+.jifen-tab p {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    padding: 14px 0;
+    width: 120px;
+    border-top: 4px solid #fff;
+    cursor: pointer;
+}
+
+.jifen-tab p.cur {
+    border-color: var(--main-color);
+}
+
+.jifen-list {
+    width: 100%;
+    --span-width: 100px;
+}
+
+.jifen-list ul {
+    display: none;
+}
+
+.jifen-list ul.cur {
+    display: block;
+}
+
+.jifen-list li {
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+}
+
+.jifen-list li span {
+    display: block;
+    width: var(--span-width);
+    text-align: center;
+    line-height: 60px;
+}
+
+.jifen-list li span i {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-style: normal;
+    color: #fff;
+    background-color: #999;
+}
+
+.jifen-list li span i.top1 {
+    background-color: #F61111;
+}
+
+.jifen-list li span i.top2 {
+    background-color: #FF7D0C;
+}
+
+.jifen-list li span i.top3 {
+    background-color: #FFB330;
+}
+
+.jifen-list li.jifen-head span {
+    line-height: 50px;
+    color: #fff;
+    font-weight: bold;
+    background-color: var(--main-color);
+}
+
+.jifen-list li span:nth-child(2) {
+    width: calc(1200px - var(--span-width) * 9);
+
+}
+
+.jifen-list li:nth-child(n+2) span:nth-child(2) {
+    text-align: left;
+    padding-left: 100px;
+    box-sizing: border-box;
+}
+
+.jifen-list li img {
+    margin-right: 40px;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
 }
