@@ -563,6 +563,9 @@ a.right-btn span {
     width: 42%;
     margin-bottom: 16px;
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .team-name a img {
@@ -806,7 +809,7 @@ a.right-btn span {
 }
 
 .back-cont {
-    width: 74%;
+    width: 64%;
 }
 
 .back-cont a {
@@ -828,7 +831,7 @@ a.right-btn span {
 }
 
 .back-team a {
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 .pages {
@@ -890,7 +893,7 @@ a.right-btn span {
 
 }
 
-.live .cont .team a {
+.live .cont .team span {
     display: flex;
     align-items: center;
     padding: 4px 0;
