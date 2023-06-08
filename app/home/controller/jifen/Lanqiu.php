@@ -19,7 +19,8 @@ class Lanqiu extends BaseController
 
     public function index(){
         $param = $this->parmas;
-        $compName = $param['compname'];
+        $defaultComp = getBasketballHotComp(1);
+        $compName = $param['compname']??$defaultComp['id'];
 
         //获取联赛
         $comp = BasketballCompetition::getByPY($compName);

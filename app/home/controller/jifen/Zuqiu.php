@@ -2,7 +2,7 @@
 
 namespace app\home\controller\jifen;
 
-use app\commonModel\BasketballCompetition;
+use app\commonModel\FootballCompetition;
 use app\home\BaseController;
 use app\home\Tdk;
 use think\App;
@@ -19,10 +19,11 @@ class Zuqiu extends BaseController
 
     public function index(){
         $param = $this->parmas;
-        $compName = $param['compname'];
+        $defaultComp = getFootballHotComp(1);
+        $compName = $param['compname']??$defaultComp['id'];
 
         //获取联赛
-        $comp = BasketballCompetition::getByPY($compName);
+        $comp = FootballCompetition::getByPY($compName);
         if ($comp->isEmpty()){
             abort(404, '参数错误');
         }
