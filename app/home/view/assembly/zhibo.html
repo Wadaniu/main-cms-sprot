@@ -18,7 +18,7 @@
                     <a href=""><img
                             src="{$item.away_team_logo}">{$item.away_team_text}</a>
                 </p>
-                <a class="right-btn" target="_blank" href="/live/{$item.sphere_type}/{$item.comp_py}/{$item.id}"><i class="iconfont <?php echo getzt($item['status_id'],0) ?>"></i><span><?php echo getzt($item['status_id'],1) ?></span></a>
+                <a class="right-btn" target="_blank" href="/live-{$item.sphere_type}/{$item.comp_py}/{$item.id}"><i class="iconfont <?php echo getzt($item['status_id'],0) ?>"></i><span><?php echo getzt($item['status_id'],1) ?></span></a>
             </div>
         </dd>
         {/foreach}

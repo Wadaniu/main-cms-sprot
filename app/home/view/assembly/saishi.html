@@ -6,7 +6,7 @@
     </div>
     <div class="match-type">
         {foreach $lsdata as $i=>$item}
-        <a href="/liansai/{$item.sphere_type}/1/{$item.id}">
+        <a href="/liansai-{$item.sphere_type}/{$item.id}" target="_blank">
             <img src="{$item.logo}" alt="{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}">
             {:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}
         </a>
