@@ -20,7 +20,7 @@ class Index extends BaseController
 
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
         $param['page'] = isset($param['page'])?$param['page']:1;
         //$param['limit'] = 1;
         $tdk = new Tdk();
