@@ -523,6 +523,19 @@ function replaceTitleWeb($str)
 function getMatchVedio($where = [])
 {
     $param = get_params();
+    if (count($param) >= 1){
+        $endParmas = end($param);
+        $pageParmas = explode('_',$endParmas);
+        if ($pageParmas[0] == 'index'){
+            //删除参数中最后一个
+            array_pop($param);
+            $param['page'] = intval($pageParmas[1]);
+        }
+    }
+
+
+
+
     $competition_id = 0;
     $param['page'] = (isset($param['page']) && $param['page']) ? $param['page'] : 1;
     $compName = (isset($param['compname']) && $param['compname']) ? $param['compname'] : '';
@@ -561,7 +574,8 @@ function getMatchVedio($where = [])
         $list['data'][$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
         $list['data'][$k]['short_name_zh'] = empty($competition['competition']) ? '' : $competition['competition']['short_name_zh'];
     }
-    return [$list, $competition_id, $param];
+    $list['current_page'] = $param['page'];
+    return [$list,$competition_id,$param];
 }
 
 
@@ -571,6 +585,11 @@ function getMatchVedio($where = [])
 function getMatchVedioById($matchId)
 {
     $model = new \app\commonModel\MatchVedio();
+
+    $comp = \app\commonModel\MatchVedio::where('id',$matchId)->findOrEmpty();
+    if ($comp->isEmpty()) {
+        throw new \think\exception\HttpException(404, '找不到页面');
+    }
     $matchLive = $model->where(['id' => $matchId])->find()->toArray();
     if ($matchLive['video_type'] == 1) {
         $match = (new \app\commonModel\BasketballMatch())->where("id", $matchLive['match_id'])->find();

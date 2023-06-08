@@ -40,7 +40,7 @@ class Zuqiu extends BaseController
         //联赛数据
         $comp = FootballCompetition::where('id',$compid)->findOrEmpty();
         if ($comp->isEmpty()) {
-            $this->redirectTo('404',404);
+            $this->redirectTo(404);
         }
 
         //直播数据
@@ -49,6 +49,7 @@ class Zuqiu extends BaseController
         if (empty($matchList)){
             $matchList = $matchModel->getMatchInfo([['status_id','=',8]],[$compid],self::MainLimit,'match_time desc');
         }
+
 
         $videoModel = new MatchVedio();
         $matchId = FootballMatch::where("competition_id",$compid)->column("id");
