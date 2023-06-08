@@ -19,7 +19,7 @@ $(function () {
     //获取默认配色
     $.get('/api/FootballCompetitionCount/info', res => {
         //let color = `--main-color:${res.data.primary_color};${torgb(res.data.primary_color)}`;
-        let color = `--main-color:#3f86c4;${torgb('#3f86c4')}`;
+        let color = `--main-color:#029d94;${torgb('#029d94')}`;
         if (localStorage.getItem('theme') != color) {
             $("body").attr('style', color)
             localStorage.setItem('theme', color)

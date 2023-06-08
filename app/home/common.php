@@ -274,14 +274,15 @@ function findIndex($str, $target, $num): int
 function typeselect(): array
 {
     $cururl = $_SERVER['REQUEST_URI'];
-    $alllink = count(get_params()) ? substr($cururl, 0, findIndex($cururl, '/', 3) + 1) : $cururl;
+    $alllink = count(get_params()) ? substr($cururl, 0, findIndex($cururl, '/', 2) + 1) : $cururl;
+    //var_dump($alllink);die;
     $typelist[] = ['title' => '全部', 'src' => $alllink];
     $typedata = strpos($cururl, 'zuqiu') ? getFootballHotComp() : getBasketballHotComp();
     $page = strpos($cururl, 'live') ? '' : '1/';
     foreach ($typedata as $item) {
         $typelist[] = [
             'title' => $item['short_name_zh'],
-            'src' => $alllink . $page . $item['short_name_py'] . '/'
+            'src' => $alllink . $item['short_name_py'] . '/'
         ];
     }
     return $typelist;
@@ -301,7 +302,7 @@ function hotlive($src, $name = ''): array
             'id' => $type['id'],
             'type' => $type['sphere_type'],
             'title' => $type['short_name_zh'] . $name,
-            'src' => '/' . $src . '/' . $type['sphere_type'] . '/' . $type['short_name_py']
+            'src' => '/' . $src . '-' . $type['sphere_type'] . '/' . $type['short_name_py']
         ];
     }
 
