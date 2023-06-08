@@ -216,4 +216,24 @@ return [
             'short_name_zh'   =>  '球队简称'
         ]
     ],
+
+    'jifen' =>  [
+        'route_name'    => '积分榜',
+        'route_path'    =>  '',
+        'keywords'      =>  []
+    ],
+    'jifen_lanqiu'     => [
+        'route_name'    => '篮球积分',
+        'route_path'    =>  '/jifen-lanqiu/',
+        'keywords'      =>  [
+            'short_name_zh'   =>  '联赛简称'
+        ]
+    ],
+    'jifen_zuqiu'     => [
+        'route_name'    => '足球积分',
+        'route_path'    =>  '/jifen-zuqiu/',
+        'keywords'      =>  [
+            'short_name_zh'   =>  '联赛简称'
+        ]
+    ],
 ];

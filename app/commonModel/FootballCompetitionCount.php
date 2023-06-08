@@ -12,37 +12,45 @@ class FootballCompetitionCount
     const SHOOT_LIMIT = 30;
 
     //积分榜
-    public function formatFootballCompCount($tables = [],$id = 0)
+    public function formatFootballCompCount($tables = [],$id = 0,$type=0)
     {
         if (empty($tables) || $id == 0){
             return [];
         }
 
-        $redisKey = 'footballCompCount'.$id;
+        if ($type > 0){
+            $redisKey = 'basketballCompCount'.$id;
+            $teamModel = new FootballTeam();
+            $compModel = new FootballCompetition;
+        }else{
+            $redisKey = 'footballCompCount'.$id;
+            $teamModel = new BasketballTeam();
+            $compModel = new BasketballTeam();
+        }
+
         $res = Cache::store('common_redis')->get($redisKey);
         if ($res){
             return json_decode($res,true);
         }
 
-        $footballTeamModel = new FootballTeam();
+
         $data = [];
         foreach ($tables as $key => $value)
         {
             $team = [];
             foreach ($value['rows'] as $k => $teamCount){
-                $teamInfo = $footballTeamModel->getShortNameZhLogo($teamCount['team_id']);
+                $teamInfo = $teamModel->getShortNameZhLogo($teamCount['team_id']);
                 $teamCount['team_name'] = $teamInfo['short_name_zh'];
                 $teamCount['team_logo'] = $teamInfo['logo'];
                 $team[$k] = $teamCount;
             }
 
-            $data[$key]['id'] = $value['id'];
-            $data[$key]['conference'] = $value['conference'];
-            $data[$key]['group'] = $value['group'];
-            $data[$key]['stage_id'] = $value['stage_id'];
-            $data[$key]['rows'] = $team;
+            unset($value['rows']);
+            $value['rows'] = $team;
+            $data[$key] = $value;
         }
-        $res['comp'] = (new \app\commonModel\FootballCompetition())->getShortNameZh($id);
+
+        $res['comp'] = $compModel->getShortNameZh($id);
         $res['tables'] = $data;
 
         Cache::store('common_redis')->set($redisKey, json_encode($res),86400);

@@ -413,7 +413,7 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5)
  * @throws \think\db\exception\DbException
  * @throws \think\db\exception\ModelNotFoundException
  */
-function getCompTables($limit = 5, $type = 'zuqiu', $compId = 0)
+function getCompTables($limit = 5, $type = 0, $compId = 0): array
 {
 
     if ($compId > 0) {
@@ -421,7 +421,7 @@ function getCompTables($limit = 5, $type = 'zuqiu', $compId = 0)
     } else {
         //获取联赛
         switch ($type) {
-            case 'lanqiu':
+            case 1:
                 $hotComp = getBasketballHotComp($limit);
                 break;
             default:
@@ -437,7 +437,7 @@ function getCompTables($limit = 5, $type = 'zuqiu', $compId = 0)
     $compStatModel = new \app\commonModel\FootballCompetitionCount();
     $data = [];
     foreach ($stat as $item) {
-        $data[] = $compStatModel->formatFootballCompCount(json_decode($item['tables'], true), $item['comp_id']);
+        $data[] = $compStatModel->formatFootballCompCount(json_decode($item['tables'], true), $item['comp_id'],$type);
     }
 
     return $data;

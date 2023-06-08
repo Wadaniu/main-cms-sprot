@@ -41,7 +41,7 @@ class Lanqiu extends BaseController
         $comp = BasketballCompetition::where('id',$compid)->findOrEmpty();
 
         if ($comp->isEmpty()) {
-            $this->redirectTo(404);
+            abort(404, '参数错误');
         }
 
         //直播数据

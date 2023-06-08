@@ -40,7 +40,7 @@ class Lanqiu extends BaseController
         $team = BasketballTeam::where('id',$teamid)->findOrEmpty();
 
         if ($team->isEmpty()) {
-            $this->redirectTo(404);
+            abort(404, '参数错误');
         }
 
         //直播数据

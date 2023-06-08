@@ -45,6 +45,10 @@ Route::get('/qiudui/:page?/:keyword?', CommonSpace.'\qiudui\Index@index')->name(
 
 //积分榜
 Route::get('/jifen/', CommonSpace.'\jifen\Index@index')->name('/jifen/');
+//篮球积分榜
+Route::get('/jifen-lanqiu/:compname?', CommonSpace.'\jifen\Lanqiu@index')->name('/jifen-lanqiu/');
+//足球积分榜
+Route::get('/jifen-zuqiu/:compname?', CommonSpace.'\jifen\Zuqiu@index')->name('/jifen-zuqiu/');
 
 Route::get('/test', CommonSpace.'\Test@index')->name('/test/');
 
