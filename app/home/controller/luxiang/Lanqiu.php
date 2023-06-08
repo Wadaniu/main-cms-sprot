@@ -48,6 +48,7 @@ class Lanqiu extends BaseController
         View::assign("index","录像");
         View::assign("href","/luxiang/lanqiu/");
         View::assign("param",$param);
+        View::assign("comp",['id'=>$competition_id]);
         View::assign("jijin",getLuxiangJijin(1,1,$competition_id));
     }
 
