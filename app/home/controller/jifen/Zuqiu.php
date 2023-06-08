@@ -33,7 +33,7 @@ class Zuqiu extends BaseController
         $this->tdk = new Tdk();
         $this->tdk->short_name_zh = $comp->short_name_zh;
         $this->getTdk(self::RouteTag,$this->tdk);
-        View::assign('data',$data);
+        View::assign('data',$data[0]);
         return View::fetch($this->tempPath);
     }
 }
