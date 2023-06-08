@@ -37,6 +37,10 @@ class FootballCompetitionCount
         $data = [];
         foreach ($tables as $key => $value)
         {
+            if ($type > 0 && $value['scope'] < 5){
+                continue;
+            }
+
             $team = [];
             foreach ($value['rows'] as $k => $teamCount){
                 $teamInfo = $teamModel->getShortNameZhLogo($teamCount['team_id']);
