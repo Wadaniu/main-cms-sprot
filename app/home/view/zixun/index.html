@@ -14,9 +14,9 @@
             <dl class="news-list nodata">
                 {foreach $list.data as $l}
                 <dd>
-                    <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$param.page}/{$l.short_name_py}/{$l.id}" target="_blank"><img src="{$l.origin_url}"></a>
+                    <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}/{$l.id}" target="_blank"><img src="{$l.origin_url}"></a>
                     <div>
-                        <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$param.page}/{$l.short_name_py}/{$l.id}" target="_blank">
+                        <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}/{$l.id}" target="_blank">
                             <h4 title="">{$l.title}</h4>
                             <p class="desc"> {$l.desc}</p>
                         </a>
@@ -24,7 +24,7 @@
                             <span>
                                 {if !empty($l['short_name_zh'])}
                                 <i>
-                                    <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/1/{$l.short_name_py}">{$l.short_name_zh}</a>
+                                    <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}">{$l.short_name_zh}</a>
                                 </i>
                                 {/if}
                             </span>
@@ -40,16 +40,17 @@
             <div class="pages">
                 <div class="pages">
                     <?php
-                    $cur=$list['current_page'];
-                    $total=ceil($list['total']/$list['per_page']);
-                    $start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
+				$cur=$list['current_page'];
+				$total=ceil($list['total']/$list['per_page']);
+				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
                     $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
+                    $cs=$curparam&&!strpos($curparam, '_')?$curparam.'/':'';
                     ?>
-                    <a href="{$cur==1?'': get_ruleName().($cur-1).'/'.$curparam}"><</a>
+                    <a href="{$cur==1?'': get_ruleName().$cs.'index_'.($cur-1)}"><</a>
                     {for start='$start' end='$end'}
-                    <a href="{$cur==$i?'#':get_ruleName().($i).'/'.$curparam}">{$i}</a>
+                    <a href="{$cur==$i?'#':get_ruleName().$cs.'index_'.($i)}">{$i}</a>
                     {/for}
-                    <a href="{$cur==$total?'':get_ruleName().($cur+1).'/'.$curparam}">></a>
+                    <a href="{$cur==$total?'':get_ruleName().$cs.'index_'.($cur+1)}">></a>
                 </div>
             </div>
         </div>

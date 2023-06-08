@@ -47,15 +47,14 @@
     </div>
     <div class="ztnav-bg">
         <div class="ztnav">
-            <a href="/{$typesrc}/" class="{$linkname=='/liansai/'||$linkname=='/qiudui/'?'cur':''}"><span><i>全部</i></span></a>
-            <a href="/{$typesrc}/zuqiu/" class="{:strpos($linkname,'zuqiu')?'cur':''}"><span><i>足球专题</i></span></a>
-            <a href="/{$typesrc}/lanqiu/" class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
+            <a href="/{$typesrc}-zuqiu/" class="{:strpos($linkname,'zuqiu')?'cur':''}"><span><i>足球专题</i></span></a>
+            <a href="/{$typesrc}-lanqiu/" class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
         </div>
     </div>
     <div class="zt-list">
         <div class="logo-list">
             {foreach $data.data as $key=>$item}
-            <a href="/{$typesrc}/{$item.sphere_type}/1/{$item.id}" target="_blank">
+            <a href="/{$typesrc}-{$item.sphere_type}/{$item.id}" target="_blank">
                 <img src="{$item.logo}" title="{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}">
                 <p>{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</p>
             </a>
@@ -68,11 +67,12 @@
 				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
             $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
             ?>
-            <a href="{$cur==1?'':$linkname.($cur-1)}"><</a>
+            <a href="{$cur==1?'':$linkname.'index_'.($cur-1)}"><</a>
             {for start='$start' end='$end'}
-            <a href="{$cur==$i?'#':$linkname.$i}">{$i}</a>
+            <a href="{$cur==$i?'#':$linkname.'index_'.($i)}">{$i}</a>
             {/for}
-            <a href="{$cur==$total?'':$linkname.($cur+1)}">></a>
+            <a href="{$cur==$total?'':$linkname.'index_'.($cur+1)}">></a>
+
         </div>
     </div>
 </div>
