@@ -13,19 +13,19 @@ return [
 
     'live' => [
         'route_name'    => '直播',
-        'route_path'    =>  '/live/',
+        'route_path'    =>  '',
         'keywords'      =>  []
     ],
     'live_zuqiu' => [
         'route_name'    => '足球直播',
-        'route_path'    =>  '/live/zuqiu/',
+        'route_path'    =>  '/live-zuqiu/',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'live_zuqiu_detail' => [
         'route_name'    => '足球直播详情',
-        'route_path'    =>  '/live/zuqiu/[:compname]/[:matchid]',
+        'route_path'    =>  '/live-zuqiu/[:compname]/[:matchid]',
         'keywords'      =>  [
             'home_team_name'    =>  '主队简称',
             'away_team_name'    =>  '客队简称',
@@ -35,14 +35,14 @@ return [
     ],
     'live_lanqiu'       => [
         'route_name'    => '篮球直播',
-        'route_path'    =>  '/live/lanqiu/',
+        'route_path'    =>  '/live-lanqiu/',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'live_lanqiu_detail'=> [
         'route_name'    => '篮球直播详情',
-        'route_path'    =>  '/live/lanqiu/[:compname]/[:matchid]',
+        'route_path'    =>  '/live-lanqiu/[:compname]/[:matchid]',
         'keywords'      =>  [
             'home_team_name'    =>  '主队简称',
             'away_team_name'    =>  '客队简称',
@@ -53,33 +53,33 @@ return [
 
     'luxiang'           => [
         'route_name'    => '录像',
-        'route_path'    =>  '/luxiang/',
+        'route_path'    =>  '',
         'keywords'      =>  []
     ],
     'luxiang_zuqiu'     => [
         'route_name'    => '足球录像',
-        'route_path'    =>  '/luxiang/zuqiu/',
+        'route_path'    =>  '/luxiang-zuqiu/',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'luxiang_zuqiu_detail' => [
         'route_name'    => '足球录像详情',
-        'route_path'    =>  '/luxiang/zuqiu/[:compname]/[:vid]',
+        'route_path'    =>  '/luxiang-zuqiu/[:compname]/[:vid]',
         'keywords'      =>  [
             'title'   =>  '录像标题'
         ]
     ],
     'luxiang_lanqiu'    => [
         'route_name'    => '篮球录像',
-        'route_path'    =>  '/luxiang/lanqiu/',
+        'route_path'    =>  '/luxiang-lanqiu/',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'luxiang_lanqiu_detail' => [
         'route_name'    => '篮球录像详情',
-        'route_path'    =>  '/luxiang/lanqiu/[:compname]/[:vid]',
+        'route_path'    =>  '/luxiang-lanqiu/[:compname]/[:vid]',
         'keywords'      =>  [
             'title'   =>  '录像标题'
         ]
@@ -87,33 +87,33 @@ return [
 
     'jijin'             => [
         'route_name'    => '集锦',
-        'route_path'    =>  '/jijin/',
+        'route_path'    =>  '',
         'keywords'      =>  []
     ],
     'jijin_zuqiu'       => [
         'route_name'    => '足球集锦',
-        'route_path'    =>  '/jijin/zuqiu/',
+        'route_path'    =>  '/jijin-zuqiu/',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'jijin_zuqiu_detail'=> [
         'route_name'    => '足球集锦详情',
-        'route_path'    =>  '/jijin/zuqiu/[:compname]/[:vid]',
+        'route_path'    =>  '/jijin-zuqiu/[:compname]/[:vid]',
         'keywords'      =>  [
             'title'   =>  '录像标题'
         ]
     ],
     'jijin_lanqiu'      => [
         'route_name'    => '篮球集锦',
-        'route_path'    =>  '/jijin/lanqiu/',
+        'route_path'    =>  '/jijin-lanqiu/',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'jijin_lanqiu_detail' => [
         'route_name'    => '篮球集锦详情',
-        'route_path'    =>  '/jijin/lanqiu/[:compname]/[:vid]',
+        'route_path'    =>  '/jijin-lanqiu/[:compname]/[:vid]',
         'keywords'      =>  [
             'title'   =>  '录像标题'
         ]
@@ -121,19 +121,19 @@ return [
 
     'zixun'           => [
         'route_name'    => '资讯',
-        'route_path'    =>  '/zixun/',
+        'route_path'    =>  '',
         'keywords'      =>  []
     ],
     'zixun_zuqiu'       => [
         'route_name'    => '足球资讯',
-        'route_path'    =>  '/zixun/zuqiu/',
+        'route_path'    =>  '/zixun-zuqiu/',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'zixun_zuqiu_detail'=> [
         'route_name'    => '足球资讯详情',
-        'route_path'    =>  '/zixun/zuqiu/[:compname]/[:aid]',
+        'route_path'    =>  '/zixun-zuqiu/[:compname]/[:aid]',
         'keywords'      =>  [
             'title'     =>  '文章标题',
             'keyword'   =>  '文章关键字',
@@ -142,14 +142,14 @@ return [
     ],
     'zixun_lanqiu'      => [
         'route_name'    => '篮球资讯',
-        'route_path'    =>  '/zixun/lanqiu/',
+        'route_path'    =>  '/zixun-lanqiu/',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'zixun_lanqiu_detail'=> [
         'route_name'    => '篮球资讯详情',
-        'route_path'    =>  '/zixun/lanqiu/[:compname]/[:aid]',
+        'route_path'    =>  '/zixun-lanqiu/[:compname]/[:aid]',
         'keywords'      =>  [
             'title'     =>  '文章标题',
             'keyword'   =>  '文章关键字',
@@ -159,29 +159,29 @@ return [
 
     'liansai'           => [
         'route_name'    => '联赛',
-        'route_path'    =>  '/liansai/',
+        'route_path'    =>  '',
         'keywords'      =>  []
     ],
     'liansai_zuqiu'     => [
         'route_name'    => '足球联赛',
-        'route_path'    =>  '/liansai/zuqiu/',
+        'route_path'    =>  '/liansai-zuqiu/',
         'keywords'      =>  []
     ],
     'liansai_zuqiu_detail' => [
         'route_name'    => '足球联赛详情',
-        'route_path'    =>  '/liansai/zuqiu/[:compid]',
+        'route_path'    =>  '/liansai-zuqiu/[:compid]',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'liansai_lanqiu'    => [
         'route_name'    => '篮球联赛',
-        'route_path'    =>  '/liansai/lanqiu/',
+        'route_path'    =>  '/liansai-lanqiu/',
         'keywords'      =>  []
     ],
     'liansai_lanqiu_detail' => [
         'route_name'    => '篮球联赛详情',
-        'route_path'    =>  '/liansai/lanqiu/[:compid]',
+        'route_path'    =>  '/liansai-lanqiu/[:compid]',
         'keywords'      =>  [
             'short_name_zh'   =>  '联赛简称'
         ]
@@ -189,31 +189,51 @@ return [
 
     'qiudui'           => [
         'route_name'    => '球队',
-        'route_path'    =>  '/qiudui/',
+        'route_path'    =>  '',
         'keywords'      =>  []
     ],
     'qiudui_zuqiu'      => [
         'route_name'    => '足球球队',
-        'route_path'    =>  '/qiudui/zuqiu/',
+        'route_path'    =>  '/qiudui-zuqiu/',
         'keywords'      =>  []
     ],
     'qiudui_zuqiu_detail' => [
         'route_name'    => '足球球队详情',
-        'route_path'    =>  '/qiudui/zuqiu/[:teamid]',
+        'route_path'    =>  '/qiudui-zuqiu/[:teamid]',
         'keywords'      =>  [
             'short_name_zh'   =>  '球队简称'
         ]
     ],
     'qiudui_lanqiu'     => [
         'route_name'    => '篮球球队',
-        'route_path'    =>  '/qiudui/lanqiu/',
+        'route_path'    =>  '/qiudui-lanqiu/',
         'keywords'      =>  []
     ],
     'qiudui_lanqiu_detail' => [
         'route_name'    => '篮球球队详情',
-        'route_path'    =>  '/qiudui/lanqiu/[:teamid]',
+        'route_path'    =>  '/qiudui-lanqiu/[:teamid]',
         'keywords'      =>  [
             'short_name_zh'   =>  '球队简称'
+        ]
+    ],
+
+    'jifen' =>  [
+        'route_name'    => '积分榜',
+        'route_path'    =>  '',
+        'keywords'      =>  []
+    ],
+    'jifen_lanqiu'     => [
+        'route_name'    => '篮球积分',
+        'route_path'    =>  '/jifen-lanqiu/',
+        'keywords'      =>  [
+            'short_name_zh'   =>  '联赛简称'
+        ]
+    ],
+    'jifen_zuqiu'     => [
+        'route_name'    => '足球积分',
+        'route_path'    =>  '/jifen-zuqiu/',
+        'keywords'      =>  [
+            'short_name_zh'   =>  '联赛简称'
         ]
     ],
 ];

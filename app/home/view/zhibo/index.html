@@ -17,7 +17,7 @@
             </div>
         </div>
         <?php else: ?>
-        <img class="infoimg" src="/static/home/images/{:strpos(get_ruleName(),'zuqiu')?'zuqiubg':(strpos(get_ruleName(),'lanqiu')?'lanqiubg':'livebg')}.jpg" />
+        <img class="infoimg" src="/static/home/images/{:strpos(get_ruleName(),'zuqiu')?'zuqiubg':'lanqiubg'}.jpg" />
         <?php endif; ?>
         <div class="model">
             <div class="title">
@@ -31,11 +31,11 @@
                     {foreach $item as $i=>$team}
                     <dd>
                         <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='H:i'}</p>
-                        <p class="type"><a href="/live/{$team.sphere_type}/{$team.comp_py}/" target="_blank">{$team.competition_text}</a></p>
+                        <p class="type"><a href="/live-{$team.sphere_type}/{$team.comp_py}/" target="_blank">{$team.competition_text}</a></p>
                         <p class="team">{$team.home_team_text}<img src="{$team.home_team_logo}"></p>
                         <p class="vs">VS</p>
                         <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
-                        <a class="right-btn" target="_blank" href="/live/{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i class="iconfont <?php echo getzt($team['status_id'],0) ?>"></i><span><?php echo getzt($team['status_id'],1) ?></span></a>
+                        <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i class="iconfont <?php echo getzt($team['status_id'],0) ?>"></i><span><?php echo getzt($team['status_id'],1) ?></span></a>
                     </dd>
                     {/foreach}
                 </dl>

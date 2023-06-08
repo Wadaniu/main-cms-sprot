@@ -18,7 +18,7 @@ class Lanqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
 
         $teamid = $param['teamid'] ?? 0;
 
@@ -40,7 +40,7 @@ class Lanqiu extends BaseController
         $team = BasketballTeam::where('id',$teamid)->findOrEmpty();
 
         if ($team->isEmpty()) {
-            $this->redirectTo(404);
+            abort(404, '参数错误');
         }
 
         //直播数据
@@ -74,7 +74,7 @@ class Lanqiu extends BaseController
         $this->getTempPath('qiudui_lanqiu');
         //赛程id
         $param['page'] = $param['page'] ?? 1;
-        $param['limit'] = 12;
+        $param['limit'] = 24;
         //篮球数据
         $basketballModel = new BasketballTeam();
         $data = $basketballModel->getList('',$param);

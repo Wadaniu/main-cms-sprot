@@ -18,7 +18,7 @@ class Zuqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
 
         $teamid = $param['teamid'] ?? 0;
 
@@ -40,7 +40,7 @@ class Zuqiu extends BaseController
         $team = FootballTeam::where('id',$teamid)->findOrEmpty();
 
         if ($team->isEmpty()) {
-            $this->redirectTo(404);
+            abort(404, '参数错误');
         }
 
         //直播数据
@@ -75,7 +75,7 @@ class Zuqiu extends BaseController
         $this->getTempPath('qiudui_zuqiu');
         //赛程id
         $param['page'] = $param['page'] ?? 1;
-        $param['limit'] = 12;
+        $param['limit'] = 24;
         //篮球数据
         $footballModel = new FootballTeam();
         $data = $footballModel->getList('',$param);

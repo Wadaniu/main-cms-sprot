@@ -23,10 +23,7 @@ class Zuqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-
-
-
-        $param = get_params();
+        $param = $this->parmas;
         //赛程id
         $matchId = $param['vid'] ?? 0;
 
@@ -54,21 +51,12 @@ class Zuqiu extends BaseController
         View::assign("href","/jijin/zuqiu/");
         //View::assign("compName",$compName);
         View::assign("param",$param);
+        View::assign("comp",['id'=>$competition_id]);
         View::assign("luxiang",getLuxiangJijin(2,0,$competition_id,4));
     }
 
     function getMatchInfo($matchId){
-        $model = new MatchVedio();
-        $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
-        $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
-        $competition_id = 0;
-        $matchLive['team'] = [];
-        $matchLive['match_time'] = '';
-        if($match){
-            $competition_id = $match->competition_id;
-            $matchLive['team'] = $match->getTeamInfo();
-            $matchLive['match_time'] = $match->match_time;
-        }
+        list($matchLive,$competition_id) = getMatchVedioById($matchId);
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);
         $this->getTempPath("jijin_zuqiu_detail");

@@ -18,7 +18,7 @@ class Lanqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
         //赛程id
         $compName = $param['compname'] ?? '';
         $matchId = $param['matchid'] ?? 0;

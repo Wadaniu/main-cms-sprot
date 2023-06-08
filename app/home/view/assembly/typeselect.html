@@ -1,13 +1,17 @@
-<?php $type=count($search)?$search:typeselect(); $curparam=get_params('compname'); $curpath=get_path(); ?>
+<?php $type=typeselect(); $curparam=get_params('compname'); ?>
 <div class="category">
-    <?php if(count($search)): ?>
-    <a href="{$_SERVER['REQUEST_URI']}" class="cur">全部</a>
-    <?php endif; ?>
     {volist name="type" id="item" length='10'}
-    <a href="{$item.src}"
-       class="{:count($search)?'':(!empty($curparam)&&strpos($item.src, $curpath)||empty($curparam)&&$key==0 ? 'cur' : '')}">{$item.title}</a>
+    <a href="{$item.src}" data-link="{$item.py}">{$item.title}</a>
     {/volist}
 </div>
 <script>
-
+    let issel = true;
+    $(".category a").each(function (i, item) {
+        let thelink = $(item).data('link');
+        if (curlink.indexOf(thelink) > -1) {
+            $(item).addClass('cur');
+            issel = false;
+        }
+    })
+    if (issel) $(".category a:first-child").addClass('cur');
 </script>

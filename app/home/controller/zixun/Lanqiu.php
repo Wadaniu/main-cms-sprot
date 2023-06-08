@@ -17,7 +17,7 @@ class Lanqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
 
         $teamid = $param['aid'] ?? 0;
 
@@ -33,10 +33,11 @@ class Lanqiu extends BaseController
 
     protected function getCompInfo($matchId)
     {
+        $comp = Article::where('id',$matchId)->findOrEmpty();
+        if ($comp->isEmpty()) {
+            throw new \think\exception\HttpException(404, '找不到页面');
+        }
         $this->getTempPath('zixun_lanqiu_detail');
-
-
-
         $this->getTdk('zixun_lanqiu_detail',$this->tdk);
         $info = Article::where(['id'=>$matchId])->find()->toArray();
         $this->tdk->title = $info['title'];
@@ -52,7 +53,9 @@ class Lanqiu extends BaseController
 
     protected function getMatchList($param)
     {
+        $param = $this->parmas;
         $param['page'] = isset($param['page'])?$param['page']:1;
+        $param['limit'] = 10;
         $model = new Article();
         $this->getTdk('zixun_lanqiu',$this->tdk);
         //$list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0],[]);
@@ -79,8 +82,7 @@ class Lanqiu extends BaseController
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
         }
-        $shortName = (new BasketballCompetition())->where(['status'=>1])->field("short_name_zh,short_name_py")->select()->toArray();
-        View::assign("short",$shortName);
+        //$list['current_page'] = $param['page'];
         View::assign("list",$list);
         View::assign('param',$param);
         $this->getTempPath('zixun_lanqiu');

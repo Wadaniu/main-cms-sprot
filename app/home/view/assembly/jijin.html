@@ -1,4 +1,4 @@
-<?php $typid=strpos(get_ruleName(), 'zuqiu') ? 0 : (strpos(get_ruleName(), 'lanqiu') ? 1 : ''); $compid=$comp['id']??0; $jjdata=getLuxiangJijin(1,$typid,$compid,5); ?>
+<?php $typid=strpos(get_ruleName(), 'zuqiu') ? 0 : (strpos(get_ruleName(), 'lanqiu') ? 1 : ''); $compid=$comp['id']??0; $jjdata=getLuxiangJijin(1,$typid,$compid,5);?>
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-jijin"></i><span class="prefix">集锦</span></p>
@@ -7,7 +7,7 @@
     <div class="lists">
         <ul class="nodata">
             {foreach $jjdata as $jj}
-            <li><a href="/{$jj.type=='1'?'jijin':'luxiang'}/{$jj.video_type=='0'?'zuqiu':'lanqiu'}/1/{$jj.short_name_py}/{$jj.id}" title="{$jj.title}" target="_blank">{$jj.title}</a></li>
+            <li><a href="/{$jj.type=='1'?'jijin':'luxiang'}-{$jj.video_type=='0'?'zuqiu':'lanqiu'}/{$jj.short_name_py}/{$jj.id}" title="{$jj.title}" target="_blank">{$jj.title}</a></li>
             {/foreach}
         </ul>
     </div>

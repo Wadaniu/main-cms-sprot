@@ -24,9 +24,7 @@ class Lanqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-
-
-        $param = get_params();
+        $param = $this->parmas;
         //赛程id
         $matchId = $param['vid'] ?? 0;
 
@@ -50,21 +48,12 @@ class Lanqiu extends BaseController
         View::assign("index","录像");
         View::assign("href","/luxiang/lanqiu/");
         View::assign("param",$param);
+        View::assign("comp",['id'=>$competition_id]);
         View::assign("jijin",getLuxiangJijin(1,1,$competition_id));
     }
 
     function getMatchInfo($matchId){
-        $model = new MatchVedio();
-        $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
-        $match = (new \app\commonModel\BasketballMatch())->where("id",$matchLive['match_id'])->find();
-        $competition_id = 0;
-        $matchLive['team'] = [];
-        $matchLive['match_time'] = '';
-        if($match){
-            $competition_id = $match->competition_id;
-            $matchLive['team'] = $match->getTeamInfo();
-            $matchLive['match_time'] = $match->match_time;
-        }
+        list($matchLive,$competition_id) = getMatchVedioById($matchId);
         //处理tdk关键字
         $this->tdk->title = $matchLive['title'];
         View::assign("matchLive",$matchLive);

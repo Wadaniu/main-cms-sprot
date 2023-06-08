@@ -19,7 +19,7 @@ class Zuqiu extends BaseController
         parent::__construct($app);
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
 
         $compid = $param['compid'] ?? 0;
 
@@ -40,12 +40,16 @@ class Zuqiu extends BaseController
         //联赛数据
         $comp = FootballCompetition::where('id',$compid)->findOrEmpty();
         if ($comp->isEmpty()) {
-            $this->redirectTo(404);
+            abort(404, '参数错误');
         }
 
         //直播数据
         $matchModel = new FootballMatch();
-        $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7,8,9]]],[$compid],self::MainLimit);
+        $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7]]],[$compid],self::MainLimit,"status_id asc,match_time asc");
+        if (empty($matchList)){
+            $matchList = $matchModel->getMatchInfo([['status_id','=',8]],[$compid],self::MainLimit,'match_time desc');
+        }
+
 
         $videoModel = new MatchVedio();
         $matchId = FootballMatch::where("competition_id",$compid)->column("id");

@@ -52,6 +52,8 @@ abstract class BaseController
 
     protected $tdk;
 
+    protected $parmas;
+
     /**
      * 构造方法
      * @access public
@@ -71,30 +73,30 @@ abstract class BaseController
     {
         $this->nav = array_column(get_navs_es('NAV_HOME'),null,'route_tag');
         $COMMON_NAV = get_navs('NAV_HOME');
-        $seo = Request::rule();
-
-        $search = [];
-
         //动态渲染title
         $this->web_common_title = get_system_config('web','title');
 
-        foreach ($COMMON_NAV as $item){
-            //父级路由
-            if ($item['src'] == $seo->getName() && isset($item['list'])){
-               foreach ($item['list'] as $list){
-                   $search[] = [
-                       'title'  =>  $list['title'],
-                       'src'  =>  $list['src']
-                   ];
-               }
+        $this->parmas = get_params();
+        //获取最后一个参数判断是否为分页参数
+        if (count($this->parmas) >= 1){
+            $endParmas = end($this->parmas);
+            if (isset($this->parmas['page'])){
+                $endParmas = $this->parmas['page'];
+            }
+
+            $pageParmas = explode('_',$endParmas);
+            if ($pageParmas[0] == 'index'){
+                //删除参数中最后一个
+                if (!isset($this->parmas['page'])){
+                    array_pop($this->parmas);
+                }
+                $this->parmas['page'] = intval($pageParmas[1]);
             }
         }
-        //var_dump($search);die;
-        View::assign('search',$search);
+
         View::assign('web_name',$this->web_common_title);
         View::assign('COMMON_NAV', $COMMON_NAV);
         View::assign('webconfig', get_config('webconfig'));
-
     }
 
 	//页面跳转方法
