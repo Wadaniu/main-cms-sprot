@@ -40,7 +40,7 @@ class Zuqiu extends BaseController
         $FootballMatchInfoModel = new FootballMatchInfo();
         $matchInfo = $FootballMatchInfoModel->getByMatchId($matchId);
         if ($matchInfo->isEmpty() || empty($matchInfo['info'])) {
-            $this->redirectTo(404);
+            $this->redirectTo('404',404);
         }
 
         //直播
@@ -95,7 +95,7 @@ class Zuqiu extends BaseController
             //获取联赛id
             $comp = FootballCompetition::getByPY($compName);
             if ($comp->isEmpty()) {
-                $this->redirectTo(404);
+                $this->redirectTo('404',404);
             }
             //过滤联赛
             $data = $footballModel->getCompetitionListInfo($comp['id']);
