@@ -26,7 +26,7 @@ class Zuqiu extends BaseController
         if ($teamid > 0){
             $this->getCompInfo($teamid);
         }else{
-            $this->getArticleList($param);
+            $this->getArticleList();
         }
         return View::fetch($this->tempPath);
     }
@@ -34,8 +34,11 @@ class Zuqiu extends BaseController
     protected function getCompInfo($matchId)
     {
 
+        $comp = Article::where('id',$matchId)->findOrEmpty();
+        if ($comp->isEmpty()) {
+            throw new \think\exception\HttpException(404, '找不到页面');
+        }
         $this->getTempPath('zixun_zuqiu_detail');
-
         $this->getTdk('zixun_zuqiu_detail',$this->tdk);
         $info = Article::where(['id'=>$matchId])->find()->toArray();
         $this->tdk->title = $info['title'];
@@ -50,9 +53,13 @@ class Zuqiu extends BaseController
         View::assign("comp",['id'=>$info['competition_id']]);
     }
 
-    protected function getArticleList($param)
+    protected function getArticleList()
     {
+        $param = $this->parmas;
+
         $param['page'] = isset($param['page'])?$param['page']:1;
+        $param['limit'] = 10;
+        //print_r($param);exit;
         $this->getTdk('zixun_zuqiu',$this->tdk);
         $model = new Article();
         if(isset($param['compname']) && $param['compname']){
@@ -67,13 +74,10 @@ class Zuqiu extends BaseController
             $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0],$param);
         }
 
-        //echo "<pre>";
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
             $competition = $model->getArticleCompetition($v["id"]);
-//            print_r($v);
-//            print_r($competition);
             if($competition){
                 $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
@@ -82,7 +86,7 @@ class Zuqiu extends BaseController
 
         //print_r($list);
         //exit;
-
+        $list['current_page'] = $param['page'];
         View::assign("list",$list);
         View::assign('param',$param);
         $this->getTempPath('zixun_zuqiu');
