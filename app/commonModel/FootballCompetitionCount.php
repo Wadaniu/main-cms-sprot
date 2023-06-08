@@ -44,8 +44,9 @@ class FootballCompetitionCount
             $team = [];
             foreach ($value['rows'] as $k => $teamCount){
                 $teamInfo = $teamModel->getShortNameZhLogo($teamCount['team_id']);
-                $teamCount['team_name'] = $teamInfo['short_name_zh'];
-                $teamCount['team_logo'] = $teamInfo['logo'];
+                $teamCount['team_name'] = isset($teamInfo['short_name_zh']) && !empty($teamInfo['short_name_zh']) ?
+                    $teamInfo['short_name_zh'] : (isset($teamInfo['name_zh']) && !empty($teamInfo['name_zh']) ? $teamInfo['name_zh'] : '');
+                $teamCount['team_logo'] = $teamInfo['logo']??'';
                 $team[$k] = $teamCount;
             }
 
