@@ -40,7 +40,7 @@ class Zuqiu extends BaseController
         $team = FootballTeam::where('id',$teamid)->findOrEmpty();
 
         if ($team->isEmpty()) {
-            $this->redirectTo('404',404);
+            $this->redirectTo(404);
         }
 
         //直播数据
