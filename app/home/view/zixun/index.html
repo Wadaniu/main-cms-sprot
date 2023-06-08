@@ -40,9 +40,9 @@
             <div class="pages">
                 <div class="pages">
                     <?php
-                    $cur=$list['current_page'];
-                    $total=ceil($list['total']/$list['per_page']);
-                    $start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
+				$cur=$list['current_page'];
+				$total=ceil($list['total']/$list['per_page']);
+				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
                     $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
                     $cs=$curparam&&!strpos($curparam, '_')?$curparam.'/':'';
                     ?>

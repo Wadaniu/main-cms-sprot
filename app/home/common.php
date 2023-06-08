@@ -91,17 +91,17 @@ function articlePrev($id, $cateId = 0)
         ->order("id desc")
         ->cache(true, 300)
         ->find();
-    if(!$article){
+    if (!$article) {
         return [];
     }
-    if($article['cate_id']==1){
-        $competition = (new \app\commonModel\FootballCompetition())->where("id",$article['competition_id'])->find();
-    }else{
-        $competition = (new \app\commonModel\BasketballCompetition())->where("id",$article['competition_id'])->find();
+    if ($article['cate_id'] == 1) {
+        $competition = (new \app\commonModel\FootballCompetition())->where("id", $article['competition_id'])->find();
+    } else {
+        $competition = (new \app\commonModel\BasketballCompetition())->where("id", $article['competition_id'])->find();
     }
-    if(!$competition){
+    if (!$competition) {
         $article['short_name_py'] = '';
-    }else{
+    } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
     return $article;
@@ -120,17 +120,17 @@ function articleNext($id, $cateId = 0)
         ->order("id asc")
         ->cache(true, 300)
         ->find();
-    if(!$article){
+    if (!$article) {
         return [];
     }
-    if($article['cate_id']==1){
-        $competition = (new \app\commonModel\FootballCompetition())->where("id",$article['competition_id'])->find();
-    }else{
-        $competition = (new \app\commonModel\BasketballCompetition())->where("id",$article['competition_id'])->find();
+    if ($article['cate_id'] == 1) {
+        $competition = (new \app\commonModel\FootballCompetition())->where("id", $article['competition_id'])->find();
+    } else {
+        $competition = (new \app\commonModel\BasketballCompetition())->where("id", $article['competition_id'])->find();
     }
-    if(!$competition){
+    if (!$competition) {
         $article['short_name_py'] = '';
-    }else{
+    } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
 
@@ -275,14 +275,14 @@ function typeselect(): array
 {
     $cururl = $_SERVER['REQUEST_URI'];
     $alllink = count(get_params()) ? substr($cururl, 0, findIndex($cururl, '/', 2) + 1) : $cururl;
-    //var_dump($alllink);die;
-    $typelist[] = ['title' => '全部', 'src' => $alllink];
+    $typelist[] = ['title' => '全部', 'py' => '/all', 'src' => $alllink];
     $typedata = strpos($cururl, 'zuqiu') ? getFootballHotComp() : getBasketballHotComp();
     $page = strpos($cururl, 'live') ? '' : '1/';
     foreach ($typedata as $item) {
         $typelist[] = [
             'title' => $item['short_name_zh'],
-            'src' => $alllink . $item['short_name_py'] . '/'
+            'py' => '/' . $item['short_name_py'],
+            'src' => (substr($alllink, -1) == '/' ? $alllink : $alllink . '/') . $item['short_name_py'] . '/'
         ];
     }
     return $typelist;
@@ -295,8 +295,7 @@ function hotlive($src, $name = ''): array
 
     $hottype = array_merge(getFootballHotComp(), getBasketballHotComp());
     //排序
-    array_multisort(array_column($hottype,'sort'),SORT_DESC,$hottype);
-
+    array_multisort(array_column($hottype, 'sort'), SORT_DESC, $hottype);
     foreach ($hottype as $type) {
         $typelist[] = [
             'id' => $type['id'],
@@ -330,7 +329,7 @@ function getHotComp($limit = 9)
 
     $data = array_merge($basketballComp, $footballComp);
     //排序
-    array_multisort(array_column($data,'sort'),SORT_DESC,$data);
+    array_multisort(array_column($data, 'sort'), SORT_DESC, $data);
     return $data;
 }
 
@@ -471,17 +470,17 @@ function getMainMatchLive()
     return $footballCompetition->getList();
 }
 
-function getHotTeam($limit = 10,$type = '',$compId = 0)
+function getHotTeam($limit = 10, $type = '', $compId = 0)
 {
     $basketballTeamModel = new \app\commonModel\BasketballTeam();
     $footballTeamModel = new \app\commonModel\FootballTeam();
 
-    switch ($type){
+    switch ($type) {
         case 'lanqiu' :
-            $data = $basketballTeamModel->getTeamByComp($limit,$compId,$type);
+            $data = $basketballTeamModel->getTeamByComp($limit, $compId, $type);
             break;
         case 'zuqiu' :
-            $data = $footballTeamModel->getTeamByComp($limit,$compId,$type);
+            $data = $footballTeamModel->getTeamByComp($limit, $compId, $type);
             break;
         default :
             $halfLimit = $limit / 2;
@@ -510,18 +509,19 @@ function getKeywords()
 /**
  * 替换[]中的内容
  * */
-function replaceTitleWeb($str){
-    $start = stripos($str,"[")+1;
-    $end = stripos($str,"]")-1;
-    return substr_replace($str,'****',$start,$end);
+function replaceTitleWeb($str)
+{
+    $start = stripos($str, "[") + 1;
+    $end = stripos($str, "]") - 1;
+    return substr_replace($str, '****', $start, $end);
 }
-
 
 
 /**
  * 按分页获取match_vedio
  * */
-function getMatchVedio($where=[]){
+function getMatchVedio($where = [])
+{
     $param = get_params();
     if (count($param) >= 1){
         $endParmas = end($param);
@@ -537,77 +537,78 @@ function getMatchVedio($where=[]){
 
 
     $competition_id = 0;
-    $param['page'] = (isset($param['page']) && $param['page'])?$param['page']:1;
-    $compName = (isset($param['compname']) &&  $param['compname'])?$param['compname']:'';
+    $param['page'] = (isset($param['page']) && $param['page']) ? $param['page'] : 1;
+    $compName = (isset($param['compname']) && $param['compname']) ? $param['compname'] : '';
     $model = new \app\commonModel\MatchVedio();
-    if($compName){
-        if(isset($where['video_type'])){
-            if($where['video_type']=='0'){
-                $comp = \app\commonModel\FootballCompetition::where(['short_name_py'=>$compName])->find();
-                if($comp){
-                    $where['match_id'] = \app\commonModel\FootballMatch::where(["competition_id"=>$comp->id])->column("id");
+    if ($compName) {
+        if (isset($where['video_type'])) {
+            if ($where['video_type'] == '0') {
+                $comp = \app\commonModel\FootballCompetition::where(['short_name_py' => $compName])->find();
+                if ($comp) {
+                    $where['match_id'] = \app\commonModel\FootballMatch::where(["competition_id" => $comp->id])->column("id");
                     $competition_id = $comp->id;
                 }
-            }else{
-                $comp = \app\commonModel\BasketballCompetition::where(['short_name_py'=>$compName])->find();
-                if($comp){
-                    $where['match_id'] = \app\commonModel\BasketballMatch::where(["competition_id"=>$comp->id])->column("id");
+            } else {
+                $comp = \app\commonModel\BasketballCompetition::where(['short_name_py' => $compName])->find();
+                if ($comp) {
+                    $where['match_id'] = \app\commonModel\BasketballMatch::where(["competition_id" => $comp->id])->column("id");
                     $competition_id = $comp->id;
                 }
             }
         }
     }
-    $list = $model->getList($where,$param)->toArray();
-    foreach ($list['data'] as $k=>$v){
-        $list['data'][$k]['date']='';
+    $list = $model->getList($where, $param)->toArray();
+    foreach ($list['data'] as $k => $v) {
+        $list['data'][$k]['date'] = '';
         $list['data'][$k]['teamArr'] = [];
         $competition = $model->getCompetitionInfo($v['id']);
-        if(isset($competition['match']['match_time'])){
-            $list['data'][$k]['date'] = date('m-d',$competition['match']['match_time']);
+        if (isset($competition['match']['match_time'])) {
+            $list['data'][$k]['date'] = date('m-d', $competition['match']['match_time']);
         }
-        if($competition['home_team']){
+        if ($competition['home_team']) {
             $list['data'][$k]['teamArr'][] = $competition['home_team'];
         }
-        if($competition['away_team']){
+        if ($competition['away_team']) {
             $list['data'][$k]['teamArr'][] = $competition['away_team'];
         }
-        $list['data'][$k]['short_name_py'] = empty($competition['competition'])?($v['video_type']=='0'?'zuqiu':'lanqiu'):$competition['competition']['short_name_py'];
-        $list['data'][$k]['short_name_zh'] = empty($competition['competition'])?'':$competition['competition']['short_name_zh'];
+        $list['data'][$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
+        $list['data'][$k]['short_name_zh'] = empty($competition['competition']) ? '' : $competition['competition']['short_name_zh'];
     }
     $list['current_page'] = $param['page'];
     return [$list,$competition_id,$param];
 }
 
 
-
 /**
  * 获取集锦、录像详情
  * */
-function getMatchVedioById($matchId){
+function getMatchVedioById($matchId)
+{
     $model = new \app\commonModel\MatchVedio();
+
     $comp = \app\commonModel\MatchVedio::where('id',$matchId)->findOrEmpty();
     if ($comp->isEmpty()) {
         throw new \think\exception\HttpException(404, '找不到页面');
     }
-    $matchLive = $model->where(['id'=>$matchId])->find()->toArray();
-    if($matchLive['video_type']==1){
-        $match = (new \app\commonModel\BasketballMatch())->where("id",$matchLive['match_id'])->find();
-        $comp = (new \app\commonModel\BasketballCompetition())->where("id",$match->competition_id)->find();
-    }else{
-        $match = (new \app\commonModel\FootballMatch())->where("id",$matchLive['match_id'])->find();
-        $comp = (new \app\commonModel\FootballCompetition())->where("id",$match->competition_id)->find();
+    $matchLive = $model->where(['id' => $matchId])->find()->toArray();
+    if ($matchLive['video_type'] == 1) {
+        $match = (new \app\commonModel\BasketballMatch())->where("id", $matchLive['match_id'])->find();
+        $comp = (new \app\commonModel\BasketballCompetition())->where("id", $match->competition_id)->find();
+    } else {
+        $match = (new \app\commonModel\FootballMatch())->where("id", $matchLive['match_id'])->find();
+        $comp = (new \app\commonModel\FootballCompetition())->where("id", $match->competition_id)->find();
     }
     $competition_id = 0;
     $matchLive['team'] = [];
     $matchLive['match_time'] = '';
     $matchLive['short_name_zh'] = '';
     $matchLive['short_name_py'] = '';
-    if($match){
+    if ($match) {
         $competition_id = $match->competition_id;
         $matchLive['team'] = $match->getTeamInfo();
         $matchLive['match_time'] = $match->match_time;
         $matchLive['short_name_zh'] = $comp->short_name_zh;
         $matchLive['short_name_py'] = $comp->short_name_py;
     }
-    return [$matchLive,$competition_id];
+    return [$matchLive, $competition_id];
 }
