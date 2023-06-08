@@ -80,10 +80,16 @@ abstract class BaseController
         //获取最后一个参数判断是否为分页参数
         if (count($this->parmas) >= 1){
             $endParmas = end($this->parmas);
+            if (isset($this->parmas['page'])){
+                $endParmas = $this->parmas['page'];
+            }
+
             $pageParmas = explode('_',$endParmas);
             if ($pageParmas[0] == 'index'){
                 //删除参数中最后一个
-                array_pop($this->parmas);
+                if (!isset($this->parmas['page'])){
+                    array_pop($this->parmas);
+                }
                 $this->parmas['page'] = intval($pageParmas[1]);
             }
         }

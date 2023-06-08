@@ -19,7 +19,7 @@ class Index extends BaseController
         $this->getTempPath(self::RouteTag);
     }
     public function index(){
-        $param = get_params();
+        $param = $this->parmas;
         //赛程id
         $keyword = $param['keyword'] ?? '';
         $param['page'] = $param['page'] ?? 1;
