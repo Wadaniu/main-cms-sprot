@@ -65,15 +65,16 @@ class Article extends Model
      * **/
     public function getArticleDatalist($where, $param){
         $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
-        $page = ($param['page'] - 1) > 0? $param['page'] - 1: 0;
+        $page = $param['page'];
         $order = empty($param['order']) ? 'id desc' : $param['order'];
         $query = self::where($where);
         $count = $query->count();
-        $list = $query->limit($page,$rows)->order($order)->select()->toArray();
+        $list = $query->limit($page*$rows-$rows,$rows)->order($order)->select()->toArray();
         $res = [
             'total' => $count,
             'data'  => $list,
-            'per_page'=>$param['limit']
+            'per_page'=>$param['limit'],
+            'current_page'=>$page
         ];
         return $res;
     }
