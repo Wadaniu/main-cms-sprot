@@ -47,7 +47,7 @@ class Zuqiu extends BaseController
         $matchModel = new FootballMatch();
         $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7]]],[$compid],self::MainLimit,"status_id asc,match_time asc");
         if (empty($matchList)){
-            $matchList = $matchModel->getMatchInfo([['status_id',8]],[$compid],self::MainLimit,'match_time desc');
+            $matchList = $matchModel->getMatchInfo([['status_id','=',8]],[$compid],self::MainLimit,'match_time desc');
         }
 
         $videoModel = new MatchVedio();
