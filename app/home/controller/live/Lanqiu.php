@@ -40,7 +40,7 @@ class Lanqiu extends BaseController
         $basketballMatchInfoModel = new BasketballMatchInfo();
         $matchInfo = $basketballMatchInfoModel->getByMatchId($matchId);
         if ($matchInfo->isEmpty() || empty($matchInfo['info'])) {
-            $this->redirectTo(404);
+            $this->redirectTo('404',404);
         }
 
         //直播
@@ -93,7 +93,7 @@ class Lanqiu extends BaseController
             //获取联赛id
             $comp = BasketballCompetition::getByPY($compName);
             if ($comp->isEmpty()) {
-                $this->redirectTo(404);
+                $this->redirectTo('404',404);
             }
             //过滤联赛
             $data = $basketballModel->getCompetitionListInfo($comp['id']);
