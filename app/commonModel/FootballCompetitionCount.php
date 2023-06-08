@@ -25,7 +25,7 @@ class FootballCompetitionCount
         }else{
             $redisKey = 'footballCompCount'.$id;
             $teamModel = new BasketballTeam();
-            $compModel = new BasketballTeam();
+            $compModel = new BasketballCompetition();
         }
 
         $res = Cache::store('common_redis')->get($redisKey);
