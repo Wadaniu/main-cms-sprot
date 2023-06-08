@@ -75,7 +75,7 @@ class Zuqiu extends BaseController
         $this->getTempPath('qiudui_zuqiu');
         //赛程id
         $param['page'] = $param['page'] ?? 1;
-        $param['limit'] = 12;
+        $param['limit'] = 24;
         //篮球数据
         $footballModel = new FootballTeam();
         $data = $footballModel->getList('',$param);
