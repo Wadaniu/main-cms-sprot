@@ -86,7 +86,7 @@ class Zuqiu extends BaseController
 
         //print_r($list);
         //exit;
-        $list['current_page'] = $param['page'];
+        //$list['current_page'] = $param['page'];
         View::assign("list",$list);
         View::assign('param',$param);
         $this->getTempPath('zixun_zuqiu');

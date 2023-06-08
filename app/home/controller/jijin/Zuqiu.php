@@ -51,6 +51,7 @@ class Zuqiu extends BaseController
         View::assign("href","/jijin/zuqiu/");
         //View::assign("compName",$compName);
         View::assign("param",$param);
+        View::assign("comp",['id'=>$competition_id]);
         View::assign("luxiang",getLuxiangJijin(2,0,$competition_id,4));
     }
 

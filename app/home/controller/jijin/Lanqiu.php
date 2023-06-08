@@ -50,6 +50,7 @@ class Lanqiu extends BaseController
         View::assign("href","/jijin/lanqiu/");
         //View::assign("compName",$compName);
         View::assign("param",$param);
+        View::assign("comp",['id'=>$competition_id]);
         View::assign("luxiang",getLuxiangJijin(2,1,$competition_id,4));
     }
     function getMatchInfo($matchId){

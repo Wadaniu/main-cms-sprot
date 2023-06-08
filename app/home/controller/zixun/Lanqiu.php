@@ -82,7 +82,7 @@ class Lanqiu extends BaseController
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
         }
-        $list['current_page'] = $param['page'];
+        //$list['current_page'] = $param['page'];
         View::assign("list",$list);
         View::assign('param',$param);
         $this->getTempPath('zixun_lanqiu');

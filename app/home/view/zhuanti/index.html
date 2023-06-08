@@ -37,10 +37,10 @@
         <div class="hontlink">
             <?php if($typesrc=='liansai'): ?>
             <?php $type=hotlive('liansai'); ?>
-            热门联赛：{volist name="type" id="item" length='20'}<a href="/liansai/{$item.type}/1/{$item.id}" target="_blank">{$item.title}</a>{/volist}
+            热门联赛：{volist name="type" id="item" length='20'}<a href="/liansai-{$item.type}/{$item.id}" target="_blank">{$item.title}</a>{/volist}
             <?php else: ?>
             <?php $type=getHotTeam(); ?>
-            热门球队：{volist name="type" id="item" length='20'}<a href="/qiudui/{$item.sphere_type}/1/{$item.id}" target="_blank">{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</a>{/volist}
+            热门球队：{volist name="type" id="item" length='20'}<a href="/qiudui-{$item.sphere_type}/{$item.id}" target="_blank">{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</a>{/volist}
             <?php endif; ?>
         </div>
 
@@ -67,11 +67,11 @@
 				$start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
             $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
             ?>
-            <a href="{$cur==1?'':$linkname.'index_'.($cur-1)}"><</a>
+            <a href="{$cur==1?'':$linkname.'index_'.($cur-1).'/'.get_params('keyword')}"><</a>
             {for start='$start' end='$end'}
-            <a href="{$cur==$i?'#':$linkname.'index_'.($i)}">{$i}</a>
+            <a href="{$cur==$i?'#':$linkname.'index_'.($i).'/'.get_params('keyword')}">{$i}</a>
             {/for}
-            <a href="{$cur==$total?'':$linkname.'index_'.($cur+1)}">></a>
+            <a href="{$cur==$total?'':$linkname.'index_'.($cur+1).'/'.get_params('keyword')}">></a>
 
         </div>
     </div>
@@ -85,7 +85,7 @@
         let txt = $.trim(val);
         let name = location.href.indexOf('liansai') > 0 ? 'liansai' : 'qiudui';
         if (txt != "") {
-            location.href = `${location.origin}/${name}/1/${txt}`
+            location.href = `${location.origin}/${name}/index_1/${txt}`
         }
     }
     $("#search input").keydown(function (e) {

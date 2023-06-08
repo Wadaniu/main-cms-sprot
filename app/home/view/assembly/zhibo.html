@@ -8,17 +8,17 @@
         {foreach $zbdata as $i=>$item}
         <dd>
             <p class="info">
-                <a href="">{$item.competition_text}</a>
+                <a href="/live-{$item.sphere_type}/{$item.comp_py}/" target="_blank">{$item.competition_text}</a>
                 <span>{$item.match_time|date='m-d H:i'}</span>
             </p>
             <div class="cont">
                 <p class="team">
-                    <a href=""><img
-                            src="{$item.home_team_logo}">{$item.home_team_text}</a>
-                    <a href=""><img
-                            src="{$item.away_team_logo}">{$item.away_team_text}</a>
+                    <span><img
+                            src="{$item.home_team_logo}">{$item.home_team_text}</span>
+                    <span href=""><img
+                            src="{$item.away_team_logo}">{$item.away_team_text}</span>
                 </p>
-                <a class="right-btn" target="_blank" href="/live/{$item.sphere_type}/{$item.comp_py}/{$item.id}"><i class="iconfont <?php echo getzt($item['status_id'],0) ?>"></i><span><?php echo getzt($item['status_id'],1) ?></span></a>
+                <a class="right-btn" target="_blank" href="/live-{$item.sphere_type}/{$item.comp_py}/{$item.id}"><i class="iconfont <?php echo getzt($item['status_id'],0) ?>"></i><span><?php echo getzt($item['status_id'],1) ?></span></a>
             </div>
         </dd>
         {/foreach}

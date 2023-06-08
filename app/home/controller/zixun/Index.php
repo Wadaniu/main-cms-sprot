@@ -22,7 +22,7 @@ class Index extends BaseController
     public function index(){
         $param = $this->parmas;
         $param['page'] = isset($param['page'])?$param['page']:1;
-        //$param['limit'] = 1;
+        $param['limit'] = 10;
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
         $this->getTempPath(self::RouteTag);

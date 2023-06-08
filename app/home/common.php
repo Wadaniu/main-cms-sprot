@@ -214,7 +214,8 @@ function getplaydata($data)
 
 function moresrc($name)
 {
-    return '/' . $name . '/' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : (strpos(get_ruleName(), 'lanqiu') ? 'lanqiu/' : '')) . (get_params('compname') ? ($name == 'live' ? '' : '1/') . get_params('compname') : '');
+    $compname = get_params('compname');
+    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu') . ($compname&&!strpos($compname, '_') ? $compname : '');
 }
 
 function getHistoryMatch(): array
@@ -535,9 +536,9 @@ function getMatchVedio($where = [])
 
 
 
-
     $competition_id = 0;
     $param['page'] = (isset($param['page']) && $param['page']) ? $param['page'] : 1;
+    $param['limit'] = 15;
     $compName = (isset($param['compname']) && $param['compname']) ? $param['compname'] : '';
     $model = new \app\commonModel\MatchVedio();
     if ($compName) {
@@ -557,7 +558,9 @@ function getMatchVedio($where = [])
             }
         }
     }
-    $list = $model->getList($where, $param)->toArray();
+    $list = $model->getList($where, $param);
+//    var_dump($param);
+//    echo \app\commonModel\MatchVedio::getLastSql();exit;
     foreach ($list['data'] as $k => $v) {
         $list['data'][$k]['date'] = '';
         $list['data'][$k]['teamArr'] = [];
@@ -574,7 +577,7 @@ function getMatchVedio($where = [])
         $list['data'][$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
         $list['data'][$k]['short_name_zh'] = empty($competition['competition']) ? '' : $competition['competition']['short_name_zh'];
     }
-    $list['current_page'] = $param['page'];
+    //$list['current_page'] = $param['page'];
     return [$list,$competition_id,$param];
 }
 
