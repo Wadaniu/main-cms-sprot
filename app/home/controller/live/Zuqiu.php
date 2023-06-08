@@ -37,6 +37,12 @@ class Zuqiu extends BaseController
     {
         $this->getTempPath('live_lanqiu_detail');
 
+        $FootballMatchInfoModel = new FootballMatchInfo();
+        $matchInfo = $FootballMatchInfoModel->getByMatchId($matchId);
+        if ($matchInfo->isEmpty() || empty($matchInfo['info'])) {
+            $this->redirectTo(404);
+        }
+
         //直播
         $model = new FootballMatch();
         $matchLive = $model->getMatchLive($matchId);
@@ -88,6 +94,9 @@ class Zuqiu extends BaseController
         }else{
             //获取联赛id
             $comp = FootballCompetition::getByPY($compName);
+            if ($comp->isEmpty()) {
+                $this->redirectTo(404);
+            }
             //过滤联赛
             $data = $footballModel->getCompetitionListInfo($comp['id']);
             //tdk关键字

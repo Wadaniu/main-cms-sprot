@@ -37,6 +37,12 @@ class Lanqiu extends BaseController
     {
         $this->getTempPath('live_lanqiu_detail');
 
+        $basketballMatchInfoModel = new BasketballMatchInfo();
+        $matchInfo = $basketballMatchInfoModel->getByMatchId($matchId);
+        if ($matchInfo->isEmpty() || empty($matchInfo['info'])) {
+            $this->redirectTo(404);
+        }
+
         //直播
         $model = new BasketballMatch();
         $matchLive = $model->getMatchLive($matchId);
@@ -46,8 +52,6 @@ class Lanqiu extends BaseController
             $matchLive['pc_link'] = json_decode($matchLive['pc_link']??'',true);
         }
 
-        $basketballMatchInfoModel = new BasketballMatchInfo();
-        $matchInfo = $basketballMatchInfoModel->getByMatchId($matchId);
         //历史交锋
         $analysis = [
             'info'      =>  is_null($matchInfo['info']) ? [] : json_decode($matchInfo['info'],true),
@@ -88,6 +92,9 @@ class Lanqiu extends BaseController
         }else{
             //获取联赛id
             $comp = BasketballCompetition::getByPY($compName);
+            if ($comp->isEmpty()) {
+                $this->redirectTo(404);
+            }
             //过滤联赛
             $data = $basketballModel->getCompetitionListInfo($comp['id']);
             //tdk关键字
