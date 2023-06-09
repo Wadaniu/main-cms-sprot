@@ -33,7 +33,9 @@ class Lanqiu extends BaseController
         $this->tdk = new Tdk();
         $this->tdk->short_name_zh = $comp->short_name_zh;
         $this->getTdk(self::RouteTag,$this->tdk);
-        View::assign('data',$data);
+
+        $list = count($data) > 0 ? $data[0] : false;
+        View::assign('data', $list);
         return View::fetch($this->tempPath);
     }
 
