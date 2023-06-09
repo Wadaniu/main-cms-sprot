@@ -137,7 +137,7 @@ class FootballTeam extends Model
         $limit = 3000;
         $k = intval($id/3000);
         $key = self::$CACHE_SHORT_NAME_ZH.$k;
-        $data = Cache::get($key);
+        $data = Cache::store('common_redis')->get($key);
         if(empty($data)){
             $start = $k * $limit;
             $end = $start + $limit;
@@ -153,7 +153,7 @@ class FootballTeam extends Model
                 ];
             }
             if(!empty($data)){
-                Cache::set($key,$data,86400);
+                Cache::store('common_redis')->set($key,$data,86400);
             }
         }
 
