@@ -168,6 +168,14 @@ class BasketballMatch extends Model
         return $this->getMatchInfo($where,$competitionIds);
     }
 
+    public function getTodayData($competitionIds = []){
+        $startTime =  time() - 8000;
+        $endTime = strtotime(date('Y-m-d',time()).' 23:59:59');
+        $where[] = ['match_time','between',[$startTime,$endTime]];
+        $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
+        return $this->getMatchInfo($where,$competitionIds);
+    }
+
     /**
      * 获取团队信息列表
      * @param $competitionIds
@@ -186,7 +194,7 @@ class BasketballMatch extends Model
             $competitionIds[] = $competitionId;
         }
         //比赛时间大于当天时间
-        $where[] = ["match_time",">=",strtotime(date('Y-m-d 00:00:00',time()))];
+        $where[] = ["match_time",">=",time()-8000];
         $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
         return $this->getMatchInfo($where,$competitionIds,$limit);
     }
