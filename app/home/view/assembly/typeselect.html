@@ -5,13 +5,15 @@
     {/volist}
 </div>
 <script>
-    let issel = true;
-    $(".category a").each(function (i, item) {
-        let thelink = $(item).data('link');
-        if (curlink.indexOf(thelink) > -1) {
-            $(item).addClass('cur');
-            issel = false;
-        }
-    })
-    if (issel) $(".category a:first-child").addClass('cur');
+    let linkname = curlink.split('/')[2];
+    if (linkname) {
+        $(".category a").each(function (i, item) {
+            let thelink = $(item).data('link');
+            if ('/' + linkname == thelink) {
+                $(item).addClass('cur');
+            }
+        })
+    } else {
+        $(".category a:first-child").addClass('cur');
+    }
 </script>
