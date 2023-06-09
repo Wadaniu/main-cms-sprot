@@ -20,12 +20,12 @@ class FootballCompetitionCount
 
         if ($type > 0){
             $redisKey = 'basketballCompCount'.$id;
-            $teamModel = new FootballTeam();
-            $compModel = new FootballCompetition;
-        }else{
-            $redisKey = 'footballCompCount'.$id;
             $teamModel = new BasketballTeam();
             $compModel = new BasketballCompetition();
+        }else{
+            $redisKey = 'footballCompCount'.$id;
+            $teamModel = new FootballTeam();
+            $compModel = new FootballCompetition();
         }
 
         $res = Cache::store('common_redis')->get($redisKey);
