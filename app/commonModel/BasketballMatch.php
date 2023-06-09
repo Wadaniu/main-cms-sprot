@@ -232,19 +232,21 @@ class BasketballMatch extends Model
         if($limit>0){
             $model->limit($limit);
         }
+        $basketballCompetition = new  BasketballCompetition();
+        $basketballTeam = new  BasketballTeam();
         $data = $model
             ->select()
-            ->each(function ($item, $key) {
+            ->each(function ($item, $key)use ($basketballCompetition,$basketballTeam) {
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
-                $basketballCompetition = new  BasketballCompetition();
+
                 $comp = $basketballCompetition->getShortNameZh($item->competition_id);
                 $item->competition_text = isset($comp['short_name_zh']) && !empty($comp['short_name_zh']) ?
                     $comp['short_name_zh'] : (isset($comp['name_zh']) && !empty($comp['name_zh']) ? $comp['name_zh'] : '');
                 $item->comp_py = $comp['short_name_py']??'';
 
-                $basketballTeam = new  BasketballTeam();
+
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
                 $item->home_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');

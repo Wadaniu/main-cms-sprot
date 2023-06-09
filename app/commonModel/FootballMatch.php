@@ -230,20 +230,20 @@ class FootballMatch extends Model
         if($limit>0){
             $model->limit($limit);
         }
+        $footballCompetition = new  FootballCompetition();
+        $footballTeam = new  FootballTeam();
         $data = $model
             ->select()
-            ->each(function ($item, $key) {
+            ->each(function ($item, $key)use($footballCompetition,$footballTeam) {
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
 
-                $footballCompetition = new  FootballCompetition();
                 $comp = $footballCompetition->getShortNameZh($item->competition_id);
                 $item->competition_text = isset($comp['short_name_zh']) && !empty($comp['short_name_zh']) ?
                     $comp['short_name_zh'] : (isset($comp['name_zh']) && !empty($comp['name_zh']) ? $comp['name_zh'] : '');
                 $item->comp_py = $comp['short_name_py']??'';
 
-                $footballTeam = new  FootballTeam();
                 $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
                 $item->home_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
