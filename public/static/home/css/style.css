@@ -1872,16 +1872,16 @@ p.nodata {
 }
 
 .jifen-list {
-    --span-width: 80px;
     width: 83%;
+    background-color: #fff;
 }
 
-.jifen-list ul {
-    display: none;
+.jifen-list ul.zuqiu {
+    --span-width: 80px;
 }
 
-.jifen-list ul.cur {
-    display: block;
+.jifen-list ul.lanqiu {
+    --span-width: 100px;
 }
 
 .jifen-list li {
@@ -1933,9 +1933,12 @@ p.nodata {
     background-color: var(--main-color);
 }
 
-.jifen-list li span:nth-child(2) {
+.jifen-list ul.zuqiu li span:nth-child(2) {
     width: calc(996px - var(--span-width) * 9);
+}
 
+.jifen-list ul.lanqiu li span:nth-child(2) {
+    width: calc(996px - var(--span-width) * 7);
 }
 
 .jifen-list li:nth-child(n+2) span:nth-child(2) {
