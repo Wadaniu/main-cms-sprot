@@ -128,6 +128,15 @@ abstract class BaseController
                     $replace = date($tempArr[1],$tdkObj->$temp);
                 }
             }
+
+            //判断是否日期但未设定格式
+            if ($temp == 'date'){
+                $replace = date('Y-m-d H:i:s',time());
+            }
+            if ($temp == 'match_time'){
+                $replace = date('Y-m-d H:i:s',$tdkObj->$temp);
+            }
+
             //判断是否为网站名称
             if ($temp == 'web_common_title'){
                 $replace = $this->web_common_title;
