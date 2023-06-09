@@ -251,11 +251,13 @@ class BasketballMatch extends Model
                 $item->home_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->home_team_logo = $info["logo"]??'';
+                $item->home_team_id = $info["id"]??'';
 
                 $info = $basketballTeam->getShortNameZhLogo($item->away_team_id);
                 $item->away_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->away_team_logo = $info["logo"]??'';
+                $item->away_team_id = $info["id"]??'';
 
                 $item->sphere_type="lanqiu";
             })
