@@ -126,7 +126,7 @@ class BasketballTeam extends Model
 		return to_assign();
     }
     /**
-     * 中文简称
+     * 根据ID缓存球队信息，取数据每3000取一次去缓存
      */
     public function getShortNameZhLogo($id){
         $limit = 3000;
@@ -146,6 +146,7 @@ class BasketballTeam extends Model
                 $data[$item->id] = [
                   "short_name_zh"=>  $item->short_name_zh,
                   "logo"=>  $item->logo,
+                    "id"=>$item->id,
                 ];
             }
             if(!empty($data)){
