@@ -43,7 +43,7 @@ class Index extends BaseController
         $basketballData = $basketballModel->getMatchByDate($hotBasketballCompId,date('Y-m-d',time()),date('Y-m-d',time()));
 
         $matchData = array_merge($basketballData,$footballData);
-        array_multisort(array_column($matchData,'match_time'),SORT_DESC,$matchData);
+        array_multisort(array_column($matchData,'match_time'),SORT_ASC,$matchData);
 
         $res = [];
         foreach ($matchData as $item){
