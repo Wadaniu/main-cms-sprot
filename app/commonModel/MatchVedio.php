@@ -68,12 +68,12 @@ class MatchVedio extends Model
     function football($info){
         $match = FootballMatch::where("id",$info->match_id)->find();
         if($match){
-            $competition = FootballCompetition::where("id",$match->competition_id)->find();
+            $competition = (new FootballCompetition())->getShortNameZh($match->competition_id);
             return [
                 'match'=>$match->toArray(),
-                'competition'=>$competition->toArray(),
-                'home_team'=>FootballTeam::where("id",$match->home_team_id)->field("id,name_zh as name")->find()->toArray(),
-                'away_team'=>FootballTeam::where("id",$match->away_team_id)->field("id,name_zh as name")->find()->toArray(),
+                'competition'=>$competition,
+                'home_team'=>(new FootballTeam())->getShortNameZhLogo($match->home_team_id),
+                'away_team'=>(new FootballTeam())->getShortNameZhLogo($match->away_team_id),
             ];
         }
         return [
@@ -87,12 +87,12 @@ class MatchVedio extends Model
     function basketball($info){
         $match = BasketballMatch::where("id",$info->match_id)->find();
         if($match){
-            $competition = BasketballCompetition::where("id",$match->competition_id)->find();
+            $competition = (new BasketballCompetition())->getShortNameZh($match->competition_id);
             return [
                 'match'=>$match->toArray(),
-                'competition'=>$competition->toArray(),
-                'home_team'=>BasketballTeam::where("id",$match->home_team_id)->field("id,name_zh as name")->find()->toArray(),
-                'away_team'=>BasketballTeam::where("id",$match->away_team_id)->field("id,name_zh as name")->find()->toArray(),
+                'competition'=>$competition,
+                'home_team'=>(new BasketballTeam())->getShortNameZhLogo($match->home_team_id),
+                'away_team'=>(new BasketballTeam())->getShortNameZhLogo($match->away_team_id),
             ];
         }
         return [

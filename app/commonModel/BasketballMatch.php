@@ -444,8 +444,8 @@ class BasketballMatch extends Model
     function getTeamInfo(){
         $model = new BasketballTeam();
         return [
-            'home_team'=>$model->where("id",$this->home_team_id)->cache(true, 300)->find(),
-            'away_team'=>$model->where("id",$this->away_team_id)->cache(true, 300)->find(),
+            'home_team'=>$model->getShortNameZhLogo($this->home_team_id),
+            'away_team'=>$model->getShortNameZhLogo($this->away_team_id),
         ];
     }
 }
