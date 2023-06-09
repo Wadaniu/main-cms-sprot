@@ -11,9 +11,9 @@
         <a href="/jifen-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>
         {/volist}
     </div>
-    <div class="jifen-list">
-        <?php $typename=$iszuqiu?'zuqiu':'lanqiu'; if($iszuqiu): ?>
-        <ul class="cur">
+    <div class="jifen-list nodata">
+        <?php $typename=$iszuqiu?'zuqiu':'lanqiu'; if($iszuqiu&&$data): ?>
+        <ul class="zuqiu">
             <li class="jifen-head">
                 <span>排名</span>
                 <span>球队</span>
@@ -35,8 +35,27 @@
             {/foreach}
             {/foreach}
         </ul>
-        <?php else: ?>
-        6666
+        <?php elseif(!$iszuqiu&&$data): ?>
+        <ul class="lanqiu">
+            <li class="jifen-head">
+                <span>排名</span>
+                <span>球队</span>
+                <span>场次</span>
+                <span>胜</span>
+                <span>负</span>
+                <span>胜率</span>
+                <span>主场</span>
+                <span>客场</span>
+            </li>
+            {foreach $data['tables'] as $level}
+            <?php if(count($data['tables'])>1): ?>
+            <li class="group-name"><span>{$level.name}</span></li>
+            <?php endif; ?>
+            {foreach $level['rows'] as $i=>$item}
+            <li><span><i class={$item.position<4?'top':''}{$item.position}>{$item.position}</i></span><span><img src={$item.team_logo}><a href=/qiudui-{$typename}/{$item.team_id} target=_blank>{$item.team_name}</a></span><span>{$item.won+$item.lost}</span><span>{$item.won}</span><span>{$item.lost}</span><span>{$item.won_rate*100}%</span><span>{$item.home}</span><span>{$item.away}</span></li>
+            {/foreach}
+            {/foreach}
+        </ul>
         <?php endif; ?>
     </div>
 </div>

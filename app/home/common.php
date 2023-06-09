@@ -361,7 +361,7 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
     foreach ($data as $k => $v) {
         $data[$k]['short_name_zh'] = '';
         $data[$k]['short_name_py'] = $v['cate_id'] == '1' ? 'zuqiu' : 'lanqiu';
-        $competition = $model->getArticleCompetition($v["id"]);
+        $competition = $model->getArticleCompetition($v);
         if ($competition) {
             $data[$k]['short_name_zh'] = $competition['short_name_zh'];
             $data[$k]['short_name_py'] = $competition['short_name_py'];
@@ -397,7 +397,7 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5)
     $list->order("a.id desc");
     $data = $list->limit($limit)->select()->toArray();
     foreach ($data as $k => $v) {
-        $competition = $model->getCompetitionInfo($v['id']);
+        $competition = $model->getCompetitionInfo($v);
         $data[$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
     }
     Cache::store('common_redis')->set($key, $data, 300);
@@ -564,7 +564,7 @@ function getMatchVedio($where = [])
     foreach ($list['data'] as $k => $v) {
         $list['data'][$k]['date'] = '';
         $list['data'][$k]['teamArr'] = [];
-        $competition = $model->getCompetitionInfo($v['id']);
+        $competition = $model->getCompetitionInfo($v);
         if (isset($competition['match']['match_time'])) {
             $list['data'][$k]['date'] = date('m-d', $competition['match']['match_time']);
         }
@@ -589,17 +589,15 @@ function getMatchVedioById($matchId)
 {
     $model = new \app\commonModel\MatchVedio();
 
-    $comp = \app\commonModel\MatchVedio::where('id',$matchId)->findOrEmpty();
+    $comp = $model->where('id',$matchId)->findOrEmpty();
     if ($comp->isEmpty()) {
         throw new \think\exception\HttpException(404, '找不到页面');
     }
     $matchLive = $model->where(['id' => $matchId])->find()->toArray();
     if ($matchLive['video_type'] == 1) {
-        $match = (new \app\commonModel\BasketballMatch())->where("id", $matchLive['match_id'])->find();
-        $comp = (new \app\commonModel\BasketballCompetition())->where("id", $match->competition_id)->find();
+        $match = (new \app\commonModel\BasketballMatch())->getMatchInfo("id=".$matchLive['match_id'],[],1);
     } else {
-        $match = (new \app\commonModel\FootballMatch())->where("id", $matchLive['match_id'])->find();
-        $comp = (new \app\commonModel\FootballCompetition())->where("id", $match->competition_id)->find();
+        $match = (new \app\commonModel\FootballMatch())->getMatchInfo("id=".$matchLive['match_id'],[],1);
     }
     $competition_id = 0;
     $matchLive['team'] = [];
@@ -607,11 +605,20 @@ function getMatchVedioById($matchId)
     $matchLive['short_name_zh'] = '';
     $matchLive['short_name_py'] = '';
     if ($match) {
-        $competition_id = $match->competition_id;
-        $matchLive['team'] = $match->getTeamInfo();
-        $matchLive['match_time'] = $match->match_time;
-        $matchLive['short_name_zh'] = $comp->short_name_zh;
-        $matchLive['short_name_py'] = $comp->short_name_py;
+        $competition_id = $match[0]['competition_id'];
+        $matchLive['team'] = [
+            'home_team'=>[
+                'name_zh'=>$match[0]['home_team_text'],
+                'id'=>$match[0]['home_team_id'],
+            ],
+            'away_team'=>[
+                'name_zh'=>$match[0]['away_team_text'],
+                'id'=>$match[0]['away_team_id'],
+            ]
+        ];
+        $matchLive['match_time'] = $match[0]['match_time'];
+        $matchLive['short_name_zh'] = $match[0]['competition_text'];
+        $matchLive['short_name_py'] = $match[0]['comp_py'];
     }
     return [$matchLive, $competition_id];
 }
