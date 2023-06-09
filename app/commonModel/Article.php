@@ -231,14 +231,14 @@ class Article extends Model
 
 
 
-    function getArticleCompetition($id){
-        $info = $this->getArticleById($id);
-        switch ($info->cate_id){
+    function getArticleCompetition($info){
+        //$info = $this->getArticleById($id);
+        switch ($info['cate_id']){
             case 1:
-                $competition = FootballCompetition::where("id",$info->competition_id)->find();
+                $competition = (new FootballCompetition())->getShortNameZh($info['competition_id']);
                 break;
             case 2:
-                $competition = BasketballCompetition::where("id",$info->competition_id)->find();
+                $competition = (new BasketballCompetition())->getShortNameZh($info['competition_id']);;
                 break;
             default:
                 $competition = null;
@@ -246,7 +246,7 @@ class Article extends Model
         if(!$competition){
             return ['short_name_zh'=>'','short_name_py'=>''];
         }
-        return $competition->toArray();
+        return $competition;
     }
 }
 

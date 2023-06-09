@@ -149,6 +149,7 @@ class FootballTeam extends Model
                 }
                 $data[$item->id] = [
                     "short_name_zh"=>  $item->short_name_zh,
+                    "name_zh"=>$item->name_zh,
                     "logo"=>  $item->logo,
                     "id"=>$item->id,
                 ];

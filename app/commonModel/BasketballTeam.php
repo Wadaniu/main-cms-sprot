@@ -147,6 +147,7 @@ class BasketballTeam extends Model
                   "short_name_zh"=>  $item->short_name_zh,
                   "logo"=>  $item->logo,
                     "id"=>$item->id,
+                    "name_zh"=>$item->name_zh,
                 ];
             }
             if(!empty($data)){
