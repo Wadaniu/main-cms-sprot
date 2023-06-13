@@ -1,0 +1,19 @@
+{extend name="common/base"/}
+{block name="body"}
+<div class="container">
+    <div class="new-content">
+        <h1>{$info.title}<p><span>发布时间：{$info.create_time}</span><span>作者：{$info.author.username}</span></p>
+        </h1>
+        <div class="cont">
+            {$info.content|raw}
+        </div>
+        <div class="connect">
+            {if !empty($info['pre'])}<span>上一篇：<a href="/zixun-{$info.pre.cate_id==1?'zuqiu':'lanqiu'}/{$info.pre.short_name_py}/{$info.pre.id}">{$info.pre.title}</a></span>{/if}
+            {if !empty($info['next'])}<span>下一篇：<a href="/zixun-{$info.next.cate_id==1?'zuqiu':'lanqiu'}/{$info.next.short_name_py}/{$info.next.id}">{$info.next.title}</a></span>{/if}
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+
+{/block}

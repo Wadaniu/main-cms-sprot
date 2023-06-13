@@ -1,0 +1,29 @@
+{extend name="common/base"/}
+{block name="body"}
+<div class="container">
+    <div class="model">
+        {include file="assembly/subnav" subnav="subnav('直播')"/}
+        {include file="assembly/typeselect"/}
+        <div class="play-list nodata">
+            {foreach $data as $key=>$item}
+            <p class="play-date">{$key}</p>
+            <dl class="list-cont">
+                {foreach $item as $i=>$team}
+                <dd>
+                    <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}/">{$team.competition_text}</a></p>
+                    <p class="team"><img src="{$team.home_team_logo}">{$team.home_team_text}</p>
+                    <p class="vs">VS</p>
+                    <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
+                    <a class="right-btn" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i
+                            class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                </dd>
+                {/foreach}
+            </dl>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+
+{/block}

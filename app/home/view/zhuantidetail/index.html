@@ -19,7 +19,7 @@
                         <p class="team">{$team.home_team_text}<img src="{$team.home_team_logo}"></p>
                         <p class="vs">VS</p>
                         <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
-                        <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i class="iconfont <?php echo getzt($team['status_id'],0) ?>"></i><span><?php echo getzt($team['status_id'],1) ?></span></a>
+                        <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                     </dd>
                     {/foreach}
                 </dl>
@@ -65,8 +65,17 @@
             <div class="logo">
                 <img src="{$data_info.logo}" />
             </div>
+            <div class="intro">
+                <p class="name">{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}</p>
+                <ul>
+                    <li>英文名称：</li>
+                    <li>所属联赛：</li>
+                    <li>现任主教练：</li>
+                    <li>所在城市：</li>
+                </ul>
+            </div>
             <div class="title">
-                <p class="tit"><i class="iconfont icon-jianjie"></i><span>{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}简介</span></p>
+                <p class="tit"><i class="iconfont icon-jianjie"></i><span>球队简介</span></p>
             </div>
             <div class="info">
                 {$data_info.intro}

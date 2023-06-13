@@ -1,0 +1,41 @@
+{extend name="common/base"/}
+{block name="body"}
+<?php $typesrc=strpos($_SERVER['REQUEST_URI'], 'liansai') ? 'liansai' : 'qiudui'; $linkname=get_ruleName(); ?>
+<div class="container">
+    <div class="zhuanti">
+        <div class="ztbg">
+            <div class="zt-title">
+                <span>{$typesrc=='liansai'?'联赛':'球队'}</span>专题
+            </div>
+        </div>
+        <div class="ztnav">
+            <a href="/{$typesrc}-zuqiu/" class="{:strpos($linkname,'zuqiu')?'cur':''}"><span><i>足球专题</i></span></a>
+            <a href="/{$typesrc}-lanqiu/" class="{:strpos($linkname,'lanqiu')?'cur':''}"><span><i>篮球专题</i></span></a>
+        </div>
+        <div class="zt-list">
+            <div class="logo-list">
+                {foreach $data.data as $key=>$item}
+                <a href="/{$typesrc}-{$item.sphere_type}/{$item.id}" >
+                    <img src="{$item.logo}" title="{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}">
+                    <p>{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</p>
+                </a>
+                {/foreach}
+            </div>
+            <div class="page">
+                <?php
+                $cur=$data['current_page'];
+                $total=ceil($data['total']/$data['per_page']);
+                if($total>1):
+                ?>
+                <a href="{$cur==1?'':$linkname.'index_'.($cur-1).'/'.get_params('keyword')}" class="{$cur==1?='dis'}">上一页</a>
+                <span>{$cur}/{$total}</span>
+                <a href="{$cur==$total?'':$linkname.'index_'.($cur+1).'/'.get_params('keyword')}" class="{$cur==$total?='dis'}">下一页</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+
+{/block}

@@ -1179,6 +1179,21 @@ a.right-btn span {
     height: 1rem;
 }
 
+.specific .intro {
+    padding: 0.2rem 0.4rem;
+}
+
+.specific .intro .name {
+    text-align: center;
+    font-size: 0.36rem;
+    font-weight: bold;
+    padding-bottom: 0.2rem;
+}
+
+.specific .intro ul {
+    line-height: 0.52rem;
+}
+
 .specific .info {
     padding: 0.3rem;
     line-height: 0.48rem;

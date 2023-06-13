@@ -1,0 +1,130 @@
+{extend name="common/base"/}
+{block name="body"}
+<?php $type=hotlive('live','直播'); ?>
+<div class="subnav">
+    <ul>
+        {volist name="type" id="item" length='4'}
+        <li><a href="{$item.src}">{$item.title}</a></li>
+        {/volist}
+        <li class="btn"><span><i class="iconfont icon-xia"></i></span></li>
+        {volist name="type" id="item" offset='5' length='6'}
+        <li><a href="{$item.src}">{$item.title}</a></li>
+        {/volist}
+    </ul>
+</div>
+<div class="container">
+    <div class="model">
+        <div class="title">
+            <div class="tit"><i class="iconfont icon-zhibo"></i><span>最近直播</span></div>
+            <div class="right-btn showsel"><i class="iconfont icon-shaixuan"></i><span>筛选</span></div>
+        </div>
+        <div class="moresel">
+            <ul>
+                <li>
+                    <?php $zuqiu=getFootballHotComp(); ?>
+                    足球：{foreach $zuqiu as $item}<a href="/live-{$item.sphere_type}/{$item.short_name_py}/">{$item.short_name_zh}</a>{/foreach}
+                </li>
+                <li><?php $lanqiu=getBasketballHotComp(); ?>
+                    篮球：{foreach $lanqiu as $item}<a href="/live-{$item.sphere_type}/{$item.short_name_py}/">{$item.short_name_zh}</a>{/foreach}
+            </ul>
+            <p class="close"><i class="iconfont icon-close"></i></p>
+        </div>
+        <div class="play-list nodata">
+            {foreach $data as $key=>$item}
+            <p class="play-date">{$key}</p>
+            <dl class="list-cont">
+                {foreach $item as $i=>$team}
+                <dd>
+                    <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}/">{$team.competition_text}</a></p>
+                    <p class="team"><img src="{$team.home_team_logo}">{$team.home_team_text}</p>
+                    <p class="vs">VS</p>
+                    <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
+                    <a class="right-btn" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i
+                            class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                </dd>
+                {/foreach}
+            </dl>
+            {/foreach}
+        </div>
+    </div>
+    <div class="collect">
+        <div class="collect-box">
+            <div class="collect-tab">
+                <p class="cur">足球录像</p>
+                <p>足球集锦</p>
+                <p>足球资讯</p>
+            </div>
+            <ul class="cur">
+                <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
+                {foreach $zuqiuLx as $row}
+                <li><i class="iconfont icon-zuqiu"></i><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}"
+                >{$row.title}</a></li>
+                {/foreach}
+            </ul>
+            <ul>
+                <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>
+                {foreach $zuqiuJj as $row}
+                <li><i class="iconfont icon-zuqiu"></i><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}"
+                >{$row.title}</a></li>
+                {/foreach}
+            </ul>
+            <ul>
+                <?php  $zuqiuZx = getZiXun(1);  ?>
+                {foreach $zuqiuZx as $row}
+                <li><i class="iconfont icon-zuqiu"></i><a href="/zixun-zuqiu/{$row.short_name_py}/{$row.id}"
+                >{$row.title}</a></li>
+                {/foreach}
+            </ul>
+        </div>
+        <div class="collect-box">
+            <div class="collect-tab">
+                <p class="cur">篮球录像</p>
+                <p>篮球集锦</p>
+                <p>篮球资讯</p>
+            </div>
+            <ul class="cur">
+                <?php  $lanqiuLx = getLuxiangJijin(2,1);  ?>
+                {foreach $lanqiuLx as $row}
+                <li><i class="iconfont icon-lanqiu"></i><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}"
+                >{$row.title}</a></li>
+                {/foreach}
+            </ul>
+            <ul>
+                <?php  $lanqiuJj = getLuxiangJijin(1,1);  ?>
+                {foreach $lanqiuJj as $row}
+                <li><i class="iconfont icon-lanqiu"></i><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}"
+                >{$row.title}</a></li>
+                {/foreach}
+            </ul>
+            <ul>
+                <?php  $lanqiuZx = getZiXun(2);  ?>
+                {foreach $lanqiuZx as $row}
+                <li><i class="iconfont icon-lanqiu"></i><a href="/zixun-lanqiu/{$row.short_name_py}/{$row.id}"
+                >{$row.title}</a></li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+    {include file="assembly/saishi"/}
+    {include file="assembly/team"/}
+    {include file="assembly/hotkey"/}
+</div>
+{/block}
+{block name="script"}
+<script>
+    $(".btn").click(function () {
+        $(this).parent().toggleClass("open");
+    });
+    $(".showsel").click(function () {
+        $(".moresel").fadeIn(300);
+    });
+    $(".moresel .close").click(function () {
+        $(".moresel").fadeOut(300);
+    });
+    $(".collect-tab p").click(function () {
+        $(this).addClass('cur').siblings().removeClass('cur');
+        let parents = $(this).parents('.collect-box');
+        $(parents).find("ul").removeClass('cur').eq($(this).index()).addClass('cur')
+    });
+</script>
+{/block}

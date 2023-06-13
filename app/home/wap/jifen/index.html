@@ -1,0 +1,78 @@
+{extend name="common/base"/}
+{block name="body"}
+<?php $iszuqiu=strpos($_SERVER['REQUEST_URI'], 'zuqiu')?true:false; $typelist=$iszuqiu ? getFootballHotComp() : getBasketballHotComp(); ?>
+<div class="container">
+    <div class="model">
+        {include file="assembly/subnav" subnav="subnav('积分')"/}
+        <div class="category">
+            {volist name="typelist" id="item"}
+            <a data-link="/{$item.short_name_py}" href="/jifen-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>
+            {/volist}
+        </div>
+        <div class="jifen-list nodata">
+            <?php $typename=$iszuqiu?'zuqiu':'lanqiu'; if($iszuqiu&&$data): ?>
+            <ul class="data-list zuqiu">
+                <li class="head">
+                    <span>球队</span>
+                    <span>场次</span>
+                    <span>胜/平/负</span>
+                    <span>进/失球</span>
+                    <span>净胜球</span>
+                    <span>积分</span>
+                </li>
+                {foreach $data['tables'] as $level}
+                <?php $name='ABCDEFGHIJKLMNOPQRSTUVWXYZ'; if(count($data['tables'])>1): ?>
+                <li class="group-name"><span>{$name[$level.group-1]}组</span></li>
+                <?php endif; ?>
+                {foreach $level['rows'] as $item}
+                <a href=/qiudui-{$typename}/{$item.team_id}>
+                    <li><span>{$item.position<10?'0'.$item.position:$item.position}、<img
+                            src="{$item.team_logo}">{$item.team_name}</span><span>{$item.total}</span><span>{$item.won}/{$item.draw}/{$item.loss}</span><span>{$item.goals}/{$item.goals_against}</span><span>{$item.goal_diff}</span><span>{$item.points}</span>
+                    </li>
+                </a>
+                {/foreach}
+                {/foreach}
+            </ul>
+            <?php elseif(!$iszuqiu&&$data): ?>
+            <ul class="data-list lanqiu">
+                <li class="head">
+                    <span>球队</span>
+                    <span>场次</span>
+                    <span>胜/负</span>
+                    <span>胜率</span>
+                    <span>主场</span>
+                    <span>客场</span>
+                </li>
+                {foreach $data['tables'] as $level}
+                <?php if(count($data['tables'])>1): ?>
+                <li class="group-name"><span>{$level.name}</span></li>
+                <?php endif; ?>
+                {foreach $level['rows'] as $item}
+                <a href=/qiudui-{$typename}/{$item.team_id}>
+                    <li><span>{$item.position<10?'0'.$item.position:$item.position}、<img
+                            src="{$item.team_logo}">{$item.team_name}</span><span>{$item.won+$item.lost}</span><span>{$item.won}/{$item.lost}</span><span>{$item.won_rate*100}%</span><span>{$item.home}</span><span>{$item.away}</span>
+                    </li>
+                </a>
+                {/foreach}
+                {/foreach}
+            </ul>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    let linkname = cururl.split('/')[2];
+    if (linkname) {
+        $(".category a").each(function (i, item) {
+            let thelink = $(item).data('link');
+            if ('/' + linkname == thelink) {
+                $(item).addClass('cur');
+            }
+        })
+    } else {
+        $(".category a:first-child").addClass('cur');
+    }
+</script>
+{/block}

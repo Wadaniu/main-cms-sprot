@@ -1,0 +1,74 @@
+{extend name="common/base"/}
+{block name="body"}
+<div class="container">
+    <div class="model specific">
+        <div class="ztbg">
+            <div class="logo">
+                <img src="{$data_info.logo}"/>
+            </div>
+        </div>
+        <div class="intro">
+            <p class="name">{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}</p>
+            <ul>
+                <li>英文名称：</li>
+                <li>所属联赛：</li>
+                <li>现任主教练：</li>
+                <li>所在城市：</li>
+            </ul>
+        </div>
+        <div class="title">
+            <p class="tit"><i class="iconfont icon-jianjie"></i><span>球队简介</span>
+            </p>
+        </div>
+        <div class="info">{$data_info.intro}</div>
+    </div>
+    <div class="model">
+        <div class="title">
+            <p class="tit"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
+        </div>
+        <div class="play-list">
+            <dl class="list-cont nodata">
+                {foreach $data as $i=>$team}
+                <dd>
+                    <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}/">{$team.competition_text}</a>
+                    </p>
+                    <p class="team"><img src="{$team.home_team_logo}">{$team.home_team_text}</p>
+                    <p class="vs">VS</p>
+                    <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
+                    <a class="right-btn" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i
+                            class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                </dd>
+                {/foreach}
+            </dl>
+        </div>
+    </div>
+    <div class="model">
+        <div class="title">
+            <div class="tit"><i class="iconfont icon-luxiang"></i><span>录像</span></div>
+        </div>
+        <dl class="list-back nodata">
+            {foreach $luxiang as $i=>$item}
+            <dd>
+                <a href="/luxiang-{$item.sphere_type}/{$item.short_name_py}/{$item.id}/">{$item.title}</a>
+            </dd>
+            {/foreach}
+        </dl>
+    </div>
+    <div class="model">
+        <div class="title">
+            <div class="tit"><i class="iconfont icon-jijin"></i><span>集锦</span></div>
+        </div>
+        <dl class="list-back nodata">
+            {foreach $jijin as $i=>$item}
+            <dd>
+                <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}/" >{$item.title}</a>
+            </dd>
+            {/foreach}
+        </dl>
+    </div>
+    {include file="assembly/newtxt"/}
+</div>
+{/block}
+{block name="script"}
+
+{/block}
