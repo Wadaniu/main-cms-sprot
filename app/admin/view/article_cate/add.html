@@ -35,6 +35,24 @@
 				<textarea name="desc" placeholder="请输入描述，可空" class="layui-textarea"></textarea>
 			</td>
 		</tr>
+
+		<tr>
+			<td class="layui-td-gray">关联联赛：<font>*</font></td>
+			<td colspan="3">
+				<?php $competitions = getHotCompetition();
+				?>
+				<select name="competition_id">
+					<option value="0">请选择属性</option>
+					{foreach $competitions as $key=>$value}
+					{foreach $value as $vo}
+					<option value="{$vo.id}"
+							{if $vo.id == $Request.env.Home.HOME_SPACE} selected {/if}
+					> {if $key == 'basketball'}篮球{else}足球{/if}：{$vo.name_zh}（简称：{$vo.short_name_zh}）</option>
+					{/foreach}
+					{/foreach}
+				</select>
+			</td>
+		</tr>
 	</table>
 	<div class="py-3">
 		<input type="hidden" name="id" value="0" />
