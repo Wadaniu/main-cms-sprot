@@ -130,14 +130,14 @@ class FootballTeam extends Model
     }
 
     /**
-     * 中文简称
+     * 根据ID缓存球队信息，取数据每3000取一次去缓存
      */
     public function getShortNameZhLogo($id){
 
         $limit = 3000;
         $k = intval($id/3000);
         $key = self::$CACHE_SHORT_NAME_ZH.$k;
-        $data = Cache::get($key);
+        $data = Cache::store('common_redis')->get($key);
         if(empty($data)){
             $start = $k * $limit;
             $end = $start + $limit;
@@ -149,11 +149,13 @@ class FootballTeam extends Model
                 }
                 $data[$item->id] = [
                     "short_name_zh"=>  $item->short_name_zh,
+                    "name_zh"=>$item->name_zh,
                     "logo"=>  $item->logo,
+                    "id"=>$item->id,
                 ];
             }
             if(!empty($data)){
-                Cache::set($key,$data,86400);
+                Cache::store('common_redis')->set($key,$data,86400);
             }
         }
 

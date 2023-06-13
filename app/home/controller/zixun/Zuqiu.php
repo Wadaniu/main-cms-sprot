@@ -40,7 +40,7 @@ class Zuqiu extends BaseController
         }
         $this->getTempPath('zixun_zuqiu_detail');
         $this->getTdk('zixun_zuqiu_detail',$this->tdk);
-        $info = Article::where(['id'=>$matchId])->find()->toArray();
+        $info = $comp->toArray();
         $this->tdk->title = $info['title'];
         $this->tdk->keyword = $info['title'];
         $this->tdk->desc = $info['desc'];
@@ -61,11 +61,13 @@ class Zuqiu extends BaseController
         $param['limit'] = 10;
         //print_r($param);exit;
         $this->getTdk('zixun_zuqiu',$this->tdk);
+        $this->tdk->short_name_zh = '';
         $model = new Article();
         if(isset($param['compname']) && $param['compname']){
             $competition = FootballCompetition::where("short_name_py",$param['compname'])->find();
             if($competition){
                 $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0,'competition_id'=>$competition->id],$param);
+                $this->tdk->short_name_zh = $competition->short_name_zh;
             }else{
                 $list = $model->getArticleDatalist(['cate_id'=>1,'status'=>1,'delete_time'=>0],$param);
             }
@@ -77,7 +79,7 @@ class Zuqiu extends BaseController
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
-            $competition = $model->getArticleCompetition($v["id"]);
+            $competition = $model->getArticleCompetition($v);
             if($competition){
                 $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;

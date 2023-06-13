@@ -36,6 +36,11 @@ class Lanqiu extends BaseController
     protected function getMatchInfo($matchId)
     {
         $this->getTempPath('live_lanqiu_detail');
+        $basketballMatchInfoModel = new BasketballMatchInfo();
+        $matchInfo = $basketballMatchInfoModel->getByMatchId($matchId);
+        if ($matchInfo->isEmpty() || empty($matchInfo['info'])){
+            abort(404,'参数错误');
+        }
 
         //直播
         $model = new BasketballMatch();
@@ -46,8 +51,6 @@ class Lanqiu extends BaseController
             $matchLive['pc_link'] = json_decode($matchLive['pc_link']??'',true);
         }
 
-        $basketballMatchInfoModel = new BasketballMatchInfo();
-        $matchInfo = $basketballMatchInfoModel->getByMatchId($matchId);
         //历史交锋
         $analysis = [
             'info'      =>  is_null($matchInfo['info']) ? [] : json_decode($matchInfo['info'],true),

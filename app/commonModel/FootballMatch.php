@@ -169,6 +169,14 @@ class FootballMatch extends Model
         return $this->getMatchInfo($where,$competitionIds);
     }
 
+    public function getTodayData($competitionIds = []){
+        $startTime =  time() - 8000;
+        $endTime = strtotime(date('Y-m-d',time()).' 23:59:59');
+        $where[] = ['match_time','between',[$startTime,$endTime]];
+        $where[] = ['status_id','IN',[1,2,3,4,5,7]];
+        return $this->getMatchInfo($where,$competitionIds);
+    }
+
     /**
      * 获取团队信息列表
      * @param $competitionIds
@@ -188,7 +196,7 @@ class FootballMatch extends Model
             $competitionIds[] = $competitionId;
         }
         //比赛时间大于当前时间-5400s
-        $where[] = ["match_time",">=",strtotime(date('Y-m-d 00:00:00',time()))];
+        $where[] = ["match_time",">=",time()-8000];
         $where[] = ['status_id','IN',[1,2,3,4,5,7]];
         return $this->getMatchInfo($where,$competitionIds,$limit);
     }
@@ -222,29 +230,31 @@ class FootballMatch extends Model
         if($limit>0){
             $model->limit($limit);
         }
+        $footballCompetition = new  FootballCompetition();
+        $footballTeam = new  FootballTeam();
         $data = $model
             ->select()
-            ->each(function ($item, $key) {
+            ->each(function ($item, $key)use($footballCompetition,$footballTeam) {
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
 
-                $footballCompetition = new  FootballCompetition();
                 $comp = $footballCompetition->getShortNameZh($item->competition_id);
                 $item->competition_text = isset($comp['short_name_zh']) && !empty($comp['short_name_zh']) ?
                     $comp['short_name_zh'] : (isset($comp['name_zh']) && !empty($comp['name_zh']) ? $comp['name_zh'] : '');
                 $item->comp_py = $comp['short_name_py']??'';
 
-                $footballTeam = new  FootballTeam();
                 $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
                 $item->home_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->home_team_logo = $info["logo"]??"";
+                $item->home_team_id = $info["id"]??'';
 
                 $info = $footballTeam->getShortNameZhLogo($item->away_team_id);
                 $item->away_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->away_team_logo = $info["logo"]??"";
+                $item->away_team_id = $info["id"]??'';
                 $item->sphere_type="zuqiu";
             })->toArray();
 
@@ -539,8 +549,8 @@ class FootballMatch extends Model
     function getTeamInfo(){
         $model = new FootballTeam();
         return [
-            'home_team'=>$model->where("id",$this->home_team_id)->cache(true, 300)->find(),
-            'away_team'=>$model->where("id",$this->away_team_id)->cache(true, 300)->find(),
+            'home_team'=>$model->getShortNameZhLogo($this->home_team_id),
+            'away_team'=>$model->getShortNameZhLogo($this->away_team_id),
         ];
     }
 }

@@ -28,7 +28,7 @@ class MatchVedio extends Model
                 $item['sphere_type'] = 'lanqiu';
                 $item['short_name_py'] = $compInfo['short_name_py'];
             }
-
+            $item['title'] = replaceTitleWeb($item['title']);
             $res[] = $item;
         }
 
@@ -54,26 +54,28 @@ class MatchVedio extends Model
 
 
     //获取集锦或者录像的赛事和赛程信息
-    public function getCompetitionInfo($id){
-        $info = self::where('id', $id)->find();
-        switch ($info->video_type){
+    public function getCompetitionInfo($info){
+        //$info = self::where('id', $id)->find();
+        switch ($info['video_type']){
             case 0:
                 return $this->football($info);
+                break;
             case 1:
                 return $this->basketball($info);
+                break;
         }
     }
 
 
     function football($info){
-        $match = FootballMatch::where("id",$info->match_id)->find();
+        $match = (new FootballMatch())->getMatchInfo("id=".$info['match_id'],[],1);
         if($match){
-            $competition = FootballCompetition::where("id",$match->competition_id)->find();
+            $competition = (new FootballCompetition())->getShortNameZh($match[0]['competition_id']);
             return [
-                'match'=>$match->toArray(),
-                'competition'=>$competition->toArray(),
-                'home_team'=>FootballTeam::where("id",$match->home_team_id)->field("id,name_zh as name")->find()->toArray(),
-                'away_team'=>FootballTeam::where("id",$match->away_team_id)->field("id,name_zh as name")->find()->toArray(),
+                'match'=>$match[0],
+                'competition'=>$competition,
+                'home_team'=>(new FootballTeam())->getShortNameZhLogo($match[0]['home_team_id']),
+                'away_team'=>(new FootballTeam())->getShortNameZhLogo($match[0]['away_team_id']),
             ];
         }
         return [
@@ -85,14 +87,14 @@ class MatchVedio extends Model
     }
 
     function basketball($info){
-        $match = BasketballMatch::where("id",$info->match_id)->find();
+        $match = (new BasketballMatch())->getMatchInfo("id=".$info['match_id'],[],1);;
         if($match){
-            $competition = BasketballCompetition::where("id",$match->competition_id)->find();
+            $competition = (new BasketballCompetition())->getShortNameZh($match[0]['competition_id']);
             return [
-                'match'=>$match->toArray(),
-                'competition'=>$competition->toArray(),
-                'home_team'=>BasketballTeam::where("id",$match->home_team_id)->field("id,name_zh as name")->find()->toArray(),
-                'away_team'=>BasketballTeam::where("id",$match->away_team_id)->field("id,name_zh as name")->find()->toArray(),
+                'match'=>$match[0],
+                'competition'=>$competition,
+                'home_team'=>(new BasketballTeam())->getShortNameZhLogo($match[0]['home_team_id']),
+                'away_team'=>(new BasketballTeam())->getShortNameZhLogo($match[0]['away_team_id']),
             ];
         }
         return [
