@@ -215,7 +215,7 @@ function getplaydata($data)
 function moresrc($name)
 {
     $compname = get_params('compname');
-    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu') . ($compname&&!strpos($compname, '_') ? $compname : '');
+    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu') . ($compname && !strpos($compname, '_') ? $compname : '');
 }
 
 function getHistoryMatch(): array
@@ -307,6 +307,36 @@ function hotlive($src, $name = ''): array
     }
 
     return $typelist;
+}
+function ttt($n){
+    return $n>5?true:false;
+}
+//获取移动端导航链接
+function wapnav($list)
+{
+    $link = '';
+    foreach ($list as $t) {
+        $link = $t['src'] . $t['param'];
+        if ($link != '') {
+            return $link;
+        }
+    }
+}
+
+//获取移动端二级导航链接
+function subnav($name)
+{
+    $curname = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '-'));
+    $typenae = ['zuqiu' => '足球', 'lanqiu' => '篮球'];
+    $sublist = [];
+    foreach ($typenae as $i => $item) {
+        $sublist[] = [
+            'title' => $item . $name,
+            'link' => $curname . '-' . $i . '/',
+            'cur' => strpos($_SERVER['REQUEST_URI'], $i) ? true : false
+        ];
+    }
+    return $sublist;
 }
 
 function getFootballHotComp($limit = 0)
@@ -438,7 +468,7 @@ function getCompTables($limit = 5, $type = 0, $compId = 0): array
     $compStatModel = new \app\commonModel\FootballCompetitionCount();
     $data = [];
     foreach ($stat as $item) {
-        $data[] = $compStatModel->formatFootballCompCount(json_decode($item['tables'], true), $item['comp_id'],$type);
+        $data[] = $compStatModel->formatFootballCompCount(json_decode($item['tables'], true), $item['comp_id'], $type);
     }
 
     return $data;
@@ -524,16 +554,15 @@ function replaceTitleWeb($str)
 function getMatchVedio($where = [])
 {
     $param = get_params();
-    if (count($param) >= 1){
+    if (count($param) >= 1) {
         $endParmas = end($param);
-        $pageParmas = explode('_',$endParmas);
-        if ($pageParmas[0] == 'index'){
+        $pageParmas = explode('_', $endParmas);
+        if ($pageParmas[0] == 'index') {
             //删除参数中最后一个
             array_pop($param);
             $param['page'] = intval($pageParmas[1]);
         }
     }
-
 
 
     $competition_id = 0;
@@ -578,7 +607,7 @@ function getMatchVedio($where = [])
         $list['data'][$k]['short_name_zh'] = empty($competition['competition']) ? '' : $competition['competition']['short_name_zh'];
     }
     //$list['current_page'] = $param['page'];
-    return [$list,$competition_id,$param];
+    return [$list, $competition_id, $param];
 }
 
 
@@ -589,7 +618,7 @@ function getMatchVedioById($matchId)
 {
     $model = new \app\commonModel\MatchVedio();
 
-    $comp = \app\commonModel\MatchVedio::where('id',$matchId)->findOrEmpty();
+    $comp = \app\commonModel\MatchVedio::where('id', $matchId)->findOrEmpty();
     if ($comp->isEmpty()) {
         throw new \think\exception\HttpException(404, '找不到页面');
     }

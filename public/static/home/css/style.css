@@ -345,8 +345,19 @@ i.iconfont {
 
 }
 
-.collect-box li i {
+.collect-box li i, .list-cont dd .time i {
     margin-right: 10px;
+    font-size: 20px;
+}
+
+.collect-box li i.icon-zuqiu, .list-cont dd .time i.icon-zuqiu {
+    color: #2e2e2e;
+}
+
+.collect-box li i.icon-lanqiu, .list-cont dd .time i.icon-lanqiu {
+    color: #ff7517;
+    background: #000;
+    border-radius: 50%;
 }
 
 .collect-box li a {
@@ -940,6 +951,7 @@ a.right-btn span {
 
 .news-list dd {
     display: flex;
+    justify-content: space-between;
     margin: 0 20px;
     padding: 20px 0;
     border-bottom: 1px solid #eee;
@@ -949,7 +961,6 @@ a.right-btn span {
     width: 190px;
     overflow: hidden;
     border-radius: 5px;
-    flex-shrink: 0;
 }
 
 .news-list dd img {
@@ -964,14 +975,16 @@ a.right-btn span {
 }
 
 .news-list dd > div {
-    padding-left: 20px;
-    flex-grow: 1;
+    width: calc(100% - 210px);
 }
 
 .news-list dd > div h4 {
     font-weight: bold;
     font-size: 16px;
-    padding: 4px 0 10px
+    padding: 4px 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .news-list dd > div p.desc {
@@ -1008,7 +1021,7 @@ a.right-btn span {
 }
 
 .news-list dd > div p.other span:last-child i {
-    margin-left: 40px;
+    margin-left: 20px;
 }
 
 .new-content {
@@ -1062,7 +1075,12 @@ a.right-btn span {
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
+}
 
+.new-content .connect span {
+    width: 50%;
+    box-sizing: border-box;
+    line-height: 24px;
 }
 
 .new-content .connect span:first-child {
@@ -1338,6 +1356,7 @@ a.right-btn span {
     background-color: #fff;
     border-radius: 50%;
     text-align: center;
+    overflow: hidden;
 }
 
 .match-info .team-logo img {

@@ -6,7 +6,7 @@
 </div>
 <script>
     let linkname = curlink.split('/')[2];
-    if (linkname) {
+    if (linkname&&linkname.indexOf('_')==-1) {
         $(".category a").each(function (i, item) {
             let thelink = $(item).data('link');
             if ('/' + linkname == thelink) {

@@ -1,17 +1,4 @@
 $(function () {
-    $(window).scroll(function () {
-        if ($(document).scrollTop() > 400) {
-            $(".gotop").fadeIn(500);
-        } else {
-            $(".gotop").fadeOut(500);
-        }
-    });
-    $(".gotop").click(function () {
-        $("body,html").animate({
-            scrollTop: 0
-        }, 500);
-    });
-
     if (localStorage.getItem('theme')) {
         $("body").attr('style', localStorage.getItem('theme'))
     }
@@ -27,6 +14,10 @@ $(function () {
         $(".type-name").text(res.data.short_name_zh)
     })
 
+    if (document.body.scrollHeight < (window.innerHeight || document.documentElement.clientHeight)) {
+        $("#bottom").addClass("hold");
+    }
+
     //给未正确加载的图片加上默认图片
     $("img").each(function (i, item) {
         if (!$(item).attr('src')) {
@@ -35,6 +26,27 @@ $(function () {
         $(item).error(function () {
             $(this).attr('src', '/static/home/images/noimage.png')
         })
+    })
+
+    let prefix;
+    let curname = $(".category a.cur").text();
+    let cururl = location.pathname;
+    if (curname == "全部") {
+        prefix = cururl.indexOf('zuqiu') > 0 ? '足球' : cururl.indexOf('lanqiu') > 0 ? '篮球' : '';
+    } else if (curname == "") {
+        prefix = "相关";
+    } else {
+        prefix = curname;
+    }
+    $(".prefix").each(function (i, item) {
+        let otitle = $(item).text()
+        $(item).text(prefix + otitle)
+    })
+
+    $(".nodata").each(function (i, item) {
+        if ($(item).children().length == 0) {
+            $(item).append("<p class=nodata>暂无数据</p>")
+        }
     })
 
     //16进制颜色转rgb
@@ -61,25 +73,16 @@ $(function () {
         return rgb;
     }
 
-    let prefix;
-    let curname = $(".category a.cur").text();
-    let cururl = location.pathname;
-    if (curname == "全部") {
-        prefix = cururl.indexOf('zuqiu') > 0 ? '足球' : cururl.indexOf('lanqiu') > 0 ? '篮球' : '';
-    } else if (curname == "") {
-        prefix = "相关";
-    } else {
-        prefix = curname;
-    }
-    $(".prefix").each(function (i, item) {
-        let otitle = $(item).text()
-        $(item).text(prefix + otitle)
-    })
-
-
-    $(".nodata").each(function (i,item){
-        if($(item).children().length==0){
-            $(item).append("<p class=nodata>暂无数据</p>")
+    $(window).scroll(function () {
+        if ($(document).scrollTop() > 400) {
+            $(".gotop").fadeIn(500);
+        } else {
+            $(".gotop").fadeOut(500);
         }
-    })
+    });
+    $(".gotop").click(function () {
+        $("body,html").animate({
+            scrollTop: 0
+        }, 500);
+    });
 })
