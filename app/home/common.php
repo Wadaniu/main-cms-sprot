@@ -399,6 +399,7 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5)
     foreach ($data as $k => $v) {
         $competition = $model->getCompetitionInfo($v);
         $data[$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
+        $data[$k]['title'] = replaceTitleWeb($v['title']);
     }
     Cache::store('common_redis')->set($key, $data, 300);
     return $data;
@@ -514,7 +515,7 @@ function replaceTitleWeb($str)
 {
     $start = stripos($str, "[") + 1;
     $end = stripos($str, "]") - 1;
-    return substr_replace($str, '****', $start, $end);
+    return substr_replace($str, get_system_config('web','title'), $start, $end);
 }
 
 
@@ -535,7 +536,7 @@ function getMatchVedio($where = [])
     }
 
 
-
+    $short_name_zh = '';
     $competition_id = 0;
     $param['page'] = (isset($param['page']) && $param['page']) ? $param['page'] : 1;
     $param['limit'] = 15;
@@ -548,12 +549,14 @@ function getMatchVedio($where = [])
                 if ($comp) {
                     $where['match_id'] = \app\commonModel\FootballMatch::where(["competition_id" => $comp->id])->column("id");
                     $competition_id = $comp->id;
+                    $short_name_zh = $comp->short_name_zh;
                 }
             } else {
                 $comp = \app\commonModel\BasketballCompetition::where(['short_name_py' => $compName])->find();
                 if ($comp) {
                     $where['match_id'] = \app\commonModel\BasketballMatch::where(["competition_id" => $comp->id])->column("id");
                     $competition_id = $comp->id;
+                    $short_name_zh = $comp->short_name_zh;
                 }
             }
         }
@@ -576,9 +579,10 @@ function getMatchVedio($where = [])
         }
         $list['data'][$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
         $list['data'][$k]['short_name_zh'] = empty($competition['competition']) ? '' : $competition['competition']['short_name_zh'];
+        $list['data'][$k]['title'] = replaceTitleWeb($v['title']);
     }
     //$list['current_page'] = $param['page'];
-    return [$list,$competition_id,$param];
+    return [$list,$competition_id,$param,$short_name_zh];
 }
 
 
@@ -619,6 +623,7 @@ function getMatchVedioById($matchId)
         $matchLive['match_time'] = $match[0]['match_time'];
         $matchLive['short_name_zh'] = $match[0]['competition_text'];
         $matchLive['short_name_py'] = $match[0]['comp_py'];
+        $matchLive['title'] = replaceTitleWeb($matchLive['title']);
     }
     return [$matchLive, $competition_id];
 }

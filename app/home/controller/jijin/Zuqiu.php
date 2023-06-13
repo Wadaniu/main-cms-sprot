@@ -45,7 +45,8 @@ class Zuqiu extends BaseController
     function getMatchList($param){
         $this->getTempPath('jijin_zuqiu');
         $this->getTdk('jijin_zuqiu',$this->tdk);
-        list($list,$competition_id,$param)=getMatchVedio(['type'=>1,'video_type'=>0]);
+        list($list,$competition_id,$param,$short_name_zh)=getMatchVedio(['type'=>1,'video_type'=>0]);
+        $this->tdk->short_name_zh = $short_name_zh;
         View::assign("list",$list);
         View::assign("index","集锦");
         View::assign("href","/jijin/zuqiu/");
