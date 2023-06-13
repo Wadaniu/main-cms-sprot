@@ -100,7 +100,7 @@ function articlePrev($id, $cateId = 0)
         $competition = (new \app\commonModel\BasketballCompetition())->where("id", $article['competition_id'])->find();
     }
     if (!$competition) {
-        $article['short_name_py'] = '';
+        $article['short_name_py'] = $article['cate_id']==1?'足球':'篮球';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
@@ -129,7 +129,7 @@ function articleNext($id, $cateId = 0)
         $competition = (new \app\commonModel\BasketballCompetition())->where("id", $article['competition_id'])->find();
     }
     if (!$competition) {
-        $article['short_name_py'] = '';
+        $article['short_name_py'] = $article['cate_id']==1?'足球':'篮球';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
