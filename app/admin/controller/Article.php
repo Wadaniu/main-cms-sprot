@@ -89,6 +89,10 @@ class Article extends BaseController
             //截取第一个图片做缩略图
             $param['origin_url'] = get_html_first_imgurl($param['content']);
             $param['keyword_names'] = str_replace('</p>','',$param['keyword_names']);
+            if(!isset($param['competition_id']) || !$param['competition_id']){
+                $param['competition_id'] = \app\commonModel\ArticleCate::where("id",$param['cate_id'])->value("competition_id");
+            }
+
 			$ArticleModel = new ArticleModel();	
             $ArticleModel->addArticle($param);
         }else{
@@ -106,7 +110,8 @@ class Article extends BaseController
 		$param = get_params();
         $ArticleModel = new ArticleModel();
 		
-        if (request()->isAjax()) {		
+        if (request()->isAjax()) {
+            //print_r($param);exit;
 			if (isset($param['table-align'])) {
 				unset($param['table-align']);
 			}
@@ -136,6 +141,11 @@ class Article extends BaseController
             $param['desc'] = @msubstr(checkStrHtml($param['content']), 0, 100, false);
             //截取第一个图片做缩略图
             $param['origin_url'] = get_html_first_imgurl($param['content']);
+
+            if(!isset($param['competition_id']) || !$param['competition_id']){
+                $param['competition_id'] = \app\commonModel\ArticleCate::where("id",$param['cate_id'])->value("competition_id");
+            }
+//print_r($param);exit;
             $ArticleModel->editArticle($param);
         }else{
 			$id = isset($param['id']) ? $param['id'] : 0;

@@ -648,7 +648,7 @@ function getMatchVedioById($matchId)
                 'id' => $match[0]['away_team_id'],
             ]
         ];
-        $matchLive['match_time'] = $match[0]['match_time'];
+        $matchLive['match_time'] = date('Y-m-d',$match[0]['match_time']);
         $matchLive['short_name_zh'] = $match[0]['competition_text'];
         $matchLive['short_name_py'] = $match[0]['comp_py'];
         $matchLive['title'] = replaceTitleWeb($matchLive['title']);

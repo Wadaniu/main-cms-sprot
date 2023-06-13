@@ -15,6 +15,8 @@ use app\commonModel\ArticleCate as ArticleCateModel;
 use think\exception\ValidateException;
 use think\facade\Db;
 use think\facade\View;
+use \app\commonModel\FootballCompetition;
+use \app\commonModel\BasketballCompetition;
 
 class ArticleCate extends BaseController
 
@@ -33,7 +35,24 @@ class ArticleCate extends BaseController
     public function datalist()
     {
         if (request()->isAjax()) {
-            $list = $this->model->where('delete_time',0)->order('sort asc')->select();
+            $list = Db::table("fb_article_cate")
+                ->alias('a')
+                ->join('fb_comp_sort b', 'a.competition_id = b.comp_id', 'LEFT')->field("a.*,b.comp_id,b.type")
+                ->select()
+                ->toArray()
+            ;
+            $foot = new FootballCompetition();
+            $bas = new BasketballCompetition();
+            foreach ($list as &$v){
+                $v['competition_title'] = '';
+                if($v['type']=='0'){
+                    $football = $foot->getShortNameZh($v['comp_id']);
+                    $v['competition_title']="足球:".$football['name_zh']."（简称：".$football['short_name_zh']."）";
+                }elseif ($v['type']=='1'){
+                    $basketball = $bas->getShortNameZh($v['comp_id']);
+                    $v['competition_title']="蓝球:".$basketball['name_zh']."（简称：".$basketball['short_name_zh']."）";
+                }
+            }
             return to_assign(0, '', $list);
         }
         else{
