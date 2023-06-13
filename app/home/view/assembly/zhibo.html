@@ -1,4 +1,4 @@
-<?php $typid=strpos(get_ruleName(), 'zuqiu') ? 'zuqiu' : (strpos(get_ruleName(), 'lanqiu') ? 'lanqiu' : ''); $compid=$comp['id']??0; $zbdata=getLive(5,$typid,$compid); ?>
+<?php $typid=strpos(get_ruleName(), 'zuqiu') ? 'zuqiu' : (strpos(get_ruleName(), 'lanqiu') ? 'lanqiu' : ''); $compid=$comp['id']??0; $zbdata=getLive(5,$typid,$compid);?>
 <div class="model">
     <div class="title">
         <p class="tit"><i class="iconfont icon-zhibo"></i><span class="prefix">直播</span></p>
@@ -18,7 +18,7 @@
                     <span href=""><img
                             src="{$item.away_team_logo}">{$item.away_team_text}</span>
                 </p>
-                <a class="right-btn" target="_blank" href="/live-{$item.sphere_type}/{$item.comp_py}/{$item.id}"><i class="iconfont <?php echo getzt($item['status_id'],0) ?>"></i><span><?php echo getzt($item['status_id'],1) ?></span></a>
+                <a class="right-btn" target="_blank" href="/live-{$item.sphere_type}/{$item.comp_py}/{$item.id}"><i class="iconfont <?php echo getzt($item['status_id'],0,$item['sphere_type']) ?>"></i><span><?php echo getzt($item['status_id'],1,$item['sphere_type']) ?></span></a>
             </div>
         </dd>
         {/foreach}

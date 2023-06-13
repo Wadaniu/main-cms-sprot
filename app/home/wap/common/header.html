@@ -1,0 +1,44 @@
+<div class="right-tool">
+    <p class="gotop"><i class="iconfont icon-shang"></i></p>
+</div>
+<div class="head">
+    <h1 class="logo" style="-webkit-mask-image: url({:get_system_config('web','logo')});">
+        <a href="/">
+            <img src="{:get_system_config('web','logo')}" alt="{:get_system_config('web','admin_title')}"
+                 title="{:get_system_config('web','admin_title')}">
+        </a>
+    </h1>
+    <div class="search" id="search">
+        <input type="text" placeholder="联赛搜索"/><button><i class="iconfont icon-sousuo"></i></button>
+    </div>
+    <nav class="nav">
+        <ul>
+            {foreach $COMMON_NAV as $item}
+            <?php $childlink = isset($item['list'])&&is_array($item['list'])&&count($item['list'])>0; ?>
+            <li><a data-tag="{$item.route_tag}" href={$childlink?url(wapnav($item.list)):url($item.src . $item.param)}>{$item.title}</a>
+            </li>
+            {/foreach}
+        </ul>
+    </nav>
+</div>
+
+<script>
+    let cururl = location.pathname;
+    let navs = $("nav.nav a");
+    if (cururl == '/') {
+        navs.eq(0).parent().addClass('cur')
+    } else {
+        navs.each(function (i, item) {
+            if (i != 0 && cururl.indexOf($(item).data('tag')) > -1) {
+                $(item).parent().addClass('cur')
+            }
+        })
+    }
+
+    $("#search button").click(function () {
+        let txt = $.trim($("#search input").val());
+        if (txt != "") {
+            location.href = `${location.origin}/liansai/index_1/${txt}`
+        }
+    })
+</script>

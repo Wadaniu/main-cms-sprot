@@ -1,0 +1,42 @@
+{extend name="common/base"/}
+{block name="body"}
+<div class="container">
+    <div class="playbox">
+        <h1>{$matchLive.title}</h1>
+        <div class="show">
+            <iframe id="videobox" src="{$matchLive.pc_link}" scrolling="no"></iframe>
+            <div class="list">
+                <p class="openl"><span>播放列表</span></p>
+                <ul>
+                    <li class="cur">
+                        <p class="title">{$matchLive.title}</p>
+                        <a href="{$matchLive.pc_link}" target="_blank" rel="nofollow"><i
+                                class="iconfont icon-bofang"></i><span>源站播放</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="video-intro">
+        <p class="tit">{$index}</p>
+        <ul class="playtxt">
+            {if !empty($matchLive.team.home_team) && !empty($matchLive.team.away_team)}
+            <li>{$index}：在线观看录像-{$matchLive.match_time|date="m-d H:i"}
+                {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}，{$web_name}为你提供{$matchLive.match_time|date="m-d
+                H:i"}
+                {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}导航资源，本站不制作、不存储{$matchLive.match_time|date="m-d
+                H:i"} {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}视频资源，只作为技术探索的导航学习用途。
+            </li>
+            {/if}
+            <li>添加时间：{$matchLive.created_at}</li>
+        </ul>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $(".openl").click(function () {
+        $(this).parent().toggleClass("open");
+    })
+</script>
+{/block}

@@ -1635,7 +1635,21 @@ a.right-btn span {
 .specific .logo img {
     width: 140px;
     height: 140px;
-    margin-bottom: 20px;
+}
+
+.specific .intro {
+    padding: 10px 50px;
+}
+
+.specific .intro .name {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.specific .intro ul {
+    line-height: 26px;
 }
 
 .specific .info {

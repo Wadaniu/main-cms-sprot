@@ -1,0 +1,11 @@
+<?php $keywords = getKeywords(); ?>
+<div class="model">
+    <div class="title">
+        <p class="tit"><i class="iconfont icon-tag"></i><span>热门标签</span></p>
+    </div>
+    <div class="tags">
+        {volist name="keywords" id="row" length='20'}
+        <a href="/zixun/index_1/{$row.id}">{$row.title}</a>
+        {/volist}
+    </div>
+</div>

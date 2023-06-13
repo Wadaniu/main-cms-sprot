@@ -1,0 +1,32 @@
+{extend name="common/base"/}
+{block name="body"}
+<div class="container">
+    <div class="model">
+        {include file="assembly/subnav" subnav="subnav($index=='录像'?'录像':'集锦')"/}
+        {include file="assembly/typeselect"/}
+        <dl class="list-back nodata">
+            {foreach $list.data as $row}
+            <dd>
+                <a href="/{$row.type=='1'?'jijin':'luxiang'}-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.short_name_py}/{$row.id}"
+                   title="{$row.title}"><span>{$row.date}</span>{$row.title}</a>
+            </dd>
+            {/foreach}
+        </dl>
+        <div class="page">
+            <?php
+            $cur=$list['current_page'];
+            $total=ceil($list['total']/$list['per_page']);
+            $cs=$curparam&&!strpos($curparam, '_')?$curparam.'/':'';
+            if($total>1):
+            ?>
+            <a href="{$cur==1?'': get_ruleName().$cs.'index_'.($cur-1)}" class="{$cur==1?='dis'}">上一页</a>
+            <span>{$cur}/{$total}</span>
+            <a href="{$cur==$total?'':get_ruleName().$cs.'index_'.($cur+1)}" class="{$cur==$total?='dis'}">下一页</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+
+{/block}

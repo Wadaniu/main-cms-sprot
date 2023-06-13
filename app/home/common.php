@@ -129,7 +129,7 @@ function articleNext($id, $cateId = 0)
         $competition = (new \app\commonModel\BasketballCompetition())->where("id", $article['competition_id'])->find();
     }
     if (!$competition) {
-        $article['short_name_py'] = $article['cate_id']==1?'足球':'篮球';
+        $article['short_name_py'] = $article['cate_id'] == 1 ? '足球' : '篮球';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
@@ -137,18 +137,18 @@ function articleNext($id, $cateId = 0)
     return $article;
 }
 
-function getzt($id, $type): string
+function getzt($id, $type, $iszq): string
 {
     $back = '';
-    $zt = [0, 1, 9, 10, 11, 12, 13];
+    $zt = $iszq == 'zuqiu' ? [0, 1, 9, 10, 11, 12, 13] : [0, 1, 11, 12, 13, 14, 15];
     $boolean = in_array($id, $zt);
 
     switch ($type) {
         case 0:
-            $back = $boolean ? 'icon-fenxi' : ($id == 8 ? 'icon-bofang' : 'icon-zhibo');
+            $back = $boolean ? 'icon-fenxi' : ($id == ($iszq == 'zuqiu' ? 8 : 10) ? 'icon-bofang' : 'icon-zhibo');
             break;
         case 1:
-            $back = $boolean ? '赛前分析' : ($id == 8 ? '锦集/录像' : '直播中...');
+            $back = $boolean ? '赛前分析' : ($id == ($iszq == 'zuqiu' ? 8 : 10) ? '锦集/录像' : '直播中...');
             break;
     }
 
@@ -467,7 +467,7 @@ function getCompTables($limit = 5, $type = 0, $compId = 0): array
     $compStatModel = new \app\commonModel\FootballCompetitionCount();
     $data = [];
     foreach ($stat as $item) {
-        $data[] = $compStatModel->formatFootballCompCount(json_decode($item['tables'], true), $item['comp_id'],$type);
+        $data[] = $compStatModel->formatFootballCompCount(json_decode($item['tables'], true), $item['comp_id'], $type);
     }
 
     return $data;
@@ -543,7 +543,7 @@ function replaceTitleWeb($str)
 {
     $start = stripos($str, "[") + 1;
     $end = stripos($str, "]") - 1;
-    return substr_replace($str, get_system_config('web','title'), $start, $end);
+    return substr_replace($str, get_system_config('web', 'title'), $start, $end);
 }
 
 
@@ -610,7 +610,7 @@ function getMatchVedio($where = [])
         $list['data'][$k]['title'] = replaceTitleWeb($v['title']);
     }
     //$list['current_page'] = $param['page'];
-    return [$list,$competition_id,$param,$short_name_zh];
+    return [$list, $competition_id, $param, $short_name_zh];
 }
 
 
@@ -621,15 +621,15 @@ function getMatchVedioById($matchId)
 {
     $model = new \app\commonModel\MatchVedio();
 
-    $comp = $model->where('id',$matchId)->findOrEmpty();
+    $comp = $model->where('id', $matchId)->findOrEmpty();
     if ($comp->isEmpty()) {
         throw new \think\exception\HttpException(404, '找不到页面');
     }
     $matchLive = $model->where(['id' => $matchId])->find()->toArray();
     if ($matchLive['video_type'] == 1) {
-        $match = (new \app\commonModel\BasketballMatch())->getMatchInfo("id=".$matchLive['match_id'],[],1);
+        $match = (new \app\commonModel\BasketballMatch())->getMatchInfo("id=" . $matchLive['match_id'], [], 1);
     } else {
-        $match = (new \app\commonModel\FootballMatch())->getMatchInfo("id=".$matchLive['match_id'],[],1);
+        $match = (new \app\commonModel\FootballMatch())->getMatchInfo("id=" . $matchLive['match_id'], [], 1);
     }
     $competition_id = 0;
     $matchLive['team'] = [];
@@ -639,13 +639,13 @@ function getMatchVedioById($matchId)
     if ($match) {
         $competition_id = $match[0]['competition_id'];
         $matchLive['team'] = [
-            'home_team'=>[
-                'name_zh'=>$match[0]['home_team_text'],
-                'id'=>$match[0]['home_team_id'],
+            'home_team' => [
+                'name_zh' => $match[0]['home_team_text'],
+                'id' => $match[0]['home_team_id'],
             ],
-            'away_team'=>[
-                'name_zh'=>$match[0]['away_team_text'],
-                'id'=>$match[0]['away_team_id'],
+            'away_team' => [
+                'name_zh' => $match[0]['away_team_text'],
+                'id' => $match[0]['away_team_id'],
             ]
         ];
         $matchLive['match_time'] = $match[0]['match_time'];

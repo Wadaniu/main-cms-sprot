@@ -1,0 +1,15 @@
+<?php $lsdata=getHotComp(); ?>
+<div class="model">
+    <div class="title">
+        <p class="tit"><i class="iconfont icon-jiangbei"></i><span>联赛</span></p>
+        <p class="more"><a href="/liansai-zuqiu/">更多</a></p>
+    </div>
+    <div class="match-type">
+        {foreach $lsdata as $i=>$item}
+        <a href="/liansai-{$item.sphere_type}/{$item.id}" >
+            <img src="{$item.logo}" alt="{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}">
+            {:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}
+        </a>
+        {/foreach}
+    </div>
+</div>
