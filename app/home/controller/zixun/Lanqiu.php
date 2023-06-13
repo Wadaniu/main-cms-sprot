@@ -58,11 +58,13 @@ class Lanqiu extends BaseController
         $param['limit'] = 10;
         $model = new Article();
         $this->getTdk('zixun_lanqiu',$this->tdk);
+        $this->tdk->short_name_zh = '';
         //$list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0],[]);
         if(isset($param['compname']) && $param['compname']){
             $competition = BasketballCompetition::where("short_name_py",$param['compname'])->find();
             if($competition){
                 $list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0,'competition_id'=>$competition->id],$param);
+                $this->tdk->short_name_zh = $competition->short_name_zh;
             }else{
                 $list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0],$param);
             }

@@ -28,7 +28,7 @@ class MatchVedio extends Model
                 $item['sphere_type'] = 'lanqiu';
                 $item['short_name_py'] = $compInfo['short_name_py'];
             }
-
+            $item['title'] = replaceTitleWeb($item['title']);
             $res[] = $item;
         }
 

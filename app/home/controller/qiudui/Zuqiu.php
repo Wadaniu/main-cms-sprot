@@ -51,9 +51,9 @@ class Zuqiu extends BaseController
         $matchId = FootballMatch::whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$teamid,'aid'=>$teamid])->column("id");
 
         //录像
-        $luxiang = $videoModel->getByMatchId($matchId,1,self::MainLimit,2);
+        $luxiang = $videoModel->getByMatchId($matchId,0,self::MainLimit,2);
         //集锦
-        $jijin = $videoModel->getByMatchId($matchId,1,self::MainLimit);
+        $jijin = $videoModel->getByMatchId($matchId,0,self::MainLimit);
 //
 //        //资讯
 //        $articleModel = new Article();

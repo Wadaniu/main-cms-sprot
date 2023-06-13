@@ -27,7 +27,7 @@ Route::get('/zixun-zuqiu/:compname?/:aid?', CommonSpace.'\zixun\Zuqiu@index')->n
 //篮球资讯
 Route::get('/zixun-lanqiu/:compname?/:aid?', CommonSpace.'\zixun\Lanqiu@index')->name('/zixun-lanqiu/');
 //资讯总页
-Route::get('/zixun/:page?/:keywords_id?', CommonSpace.'\zixun\index@index')->name('/zixun/');
+Route::get('/zixun/:page?/:keywords_id?', CommonSpace.'\zixun\Index@index')->name('/zixun/');
 
 //足球联赛
 Route::get('/liansai-zuqiu/:compid?', CommonSpace.'\liansai\Zuqiu@index')->name('/liansai-zuqiu/');

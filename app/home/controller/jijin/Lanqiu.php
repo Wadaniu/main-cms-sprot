@@ -42,9 +42,10 @@ class Lanqiu extends BaseController
 
 
     function getMatchList($param){
+        list($list,$competition_id,$param,$short_name_zh)=getMatchVedio(['type'=>1,'video_type'=>1]);
         $this->getTempPath('jijin_lanqiu');
         $this->getTdk('jijin_lanqiu',$this->tdk);
-        list($list,$competition_id,$param)=getMatchVedio(['type'=>1,'video_type'=>1]);
+        $this->tdk->short_name_zh = $short_name_zh??'篮球';
         View::assign("list",$list);
         View::assign("index","集锦");
         View::assign("href","/jijin/lanqiu/");
