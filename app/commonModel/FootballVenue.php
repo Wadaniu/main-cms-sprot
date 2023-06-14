@@ -22,7 +22,7 @@ class FootballVenue extends Model
     /**
      *获取教练信息
      */
-    public function getBasketballVenueById($id){
+    public function getVenueById($id){
         $key = self::$CACHE_HOME;
         $key .= $id;
         $data = Cache::store('common_redis')->get($key);

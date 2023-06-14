@@ -22,7 +22,7 @@ class FootballCoach extends Model
     /**
      *获取教练信息
      */
-    public function getBasketballCoachById($id){
+    public function getBasketballCoachByTeamid($id){
         $key = self::$CACHE_HOME;
         $key .= $id;
         $data = Cache::store('common_redis')->get($key);
@@ -31,7 +31,7 @@ class FootballCoach extends Model
         }
 
         $field="id,name_zh,name_en,team_id";
-        $data = self::where(['id'=>$id])
+        $data = self::where(['team_id'=>$id])
             ->field($field)
             ->find();
         if($data){

@@ -61,6 +61,25 @@ class Zuqiu extends BaseController
 
         $this->tdk->short_name_zh = $team->short_name_zh ?? '';
         $this->getTdk('qiudui_zuqiu_detail',$this->tdk);
+        //$team = $team->toArray();
+        $team->competition = (new \app\commonModel\FootballCompetition())->getShortNameZh($team->competition_id);
+        $team->coach = (new \app\commonModel\FootballCoach())->getBasketballCoachByTeamid($team->id);
+        $team->ball = 'zuqiu';
+        $team->venue = (new \app\commonModel\FootballVenue())->getVenueById($team->venue_id);
+
+        $team->intro = "[$team->name_zh]俱乐部(简称:[$team->short_name_zh]是由[".$team->competition['name_zh']."]的足球俱乐部之一,";
+        if(!empty($team->venue)){
+            $team->intro.="[$team->short_name_zh]主场馆是位于[".$team->venue['name_zh']."]体育馆, ";
+        }
+        if($team->foundation_time){
+            $team->intro.="[ $team->short_name_zh]成立于[$team->foundation_time],";
+        }
+        $team->intro.="
+        [$team->short_name_zh]球队总评估市值为[$team->market_value]($team->market_value_currency) [$team->short_name_zh]球员总数为[$team->total_players]人,  
+        [$team->short_name_zh]球队队员中,现有国家队球员人数有[$team->national_players]人,
+         另外非本土球员为[$team->foreign_players]人,其余都为本土球员,
+         [".get_system_config('web', 'title')."] 提供最新[$team->short_name_zh]的数据和信息,
+         [".get_system_config('web', 'title')."]同时为您提供最新的[$team->short_name_zh]直播数据.";
 
         View::assign('data',$matchList);
         View::assign('luxiang',$luxiang);
