@@ -335,8 +335,8 @@ i.iconfont {
 .moresel {
     display: none;
     position: fixed;
-    top: 20vmin;
-    bottom: 46vmin;
+    top: 14vmin;
+    bottom: 40vmin;
     left: 6vmin;
     right: 6vmin;
     border-radius: 6px;
@@ -347,6 +347,8 @@ i.iconfont {
 }
 
 .moresel ul {
+    overflow-y: auto;
+    height: 100%;
 }
 
 .moresel li {

@@ -128,6 +128,7 @@
 						$teamStats=$islanqiu?(count($players)>0?getteamStats($keylist,$players[2],$players[3],$analysis['info']):[]):$teamStats;
             if(is_array($teamStats)&&count($teamStats)>0): ?>
             <?php if($islanqiu): ?>
+            <div class="table-box">
             <table class="player-data">
                 <tr>
                     <th>实时数据</th>
@@ -166,6 +167,7 @@
                     <td>{:getScore($analysis.info.away_scores)}</td>
                 </tr>
             </table>
+            </div>
             <?php endif; ?>
             <div class="census">
                 <p class="left"><span>{$teamStats.0.team_name_text}</span><img
