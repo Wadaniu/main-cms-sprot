@@ -543,7 +543,9 @@ function replaceTitleWeb($str)
 {
     $start = stripos($str, "[") + 1;
     $end = stripos($str, "]") - 1;
+    return $str;
     return substr_replace($str, get_system_config('web', 'title'), $start, $end);
+
 }
 
 
