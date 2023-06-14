@@ -274,11 +274,11 @@ function findIndex($str, $target, $num): int
 //热门分类选择
 function typeselect(): array
 {
-    $cururl = $_SERVER['REQUEST_URI'];
-    $alllink = count(get_params()) ? substr($cururl, 0, findIndex($cururl, '/', 2) + 1) : $cururl;
-    $typelist[] = ['title' => '全部', 'py' => '/all', 'src' => $alllink];
-    $typedata = strpos($cururl, 'zuqiu') ? getFootballHotComp() : getBasketballHotComp();
-    $page = strpos($cururl, 'live') ? '' : '1/';
+    $cururl = $_SERVER['REQUEST_URI'];//获取当前浏览器patch地址
+    $alllink = count(get_params()) ? substr($cururl, 0, findIndex($cururl, '/', 2) + 1) : $cururl;//截取patch中的主路径
+    if ($alllink == '/zixun/') return [];//特殊情况处理
+    $typelist[] = ['title' => '全部', 'py' => '/all', 'src' => $alllink];//默认全部分类信息
+    $typedata = strpos($alllink, 'zuqiu') ? getFootballHotComp() : getBasketballHotComp();//根据类别获取不同分类
     foreach ($typedata as $item) {
         $typelist[] = [
             'title' => $item['short_name_zh'],
@@ -543,7 +543,9 @@ function replaceTitleWeb($str)
 {
     $start = stripos($str, "[") + 1;
     $end = stripos($str, "]") - 1;
+    return $str;
     return substr_replace($str, get_system_config('web', 'title'), $start, $end);
+
 }
 
 
@@ -648,7 +650,7 @@ function getMatchVedioById($matchId)
                 'id' => $match[0]['away_team_id'],
             ]
         ];
-        $matchLive['match_time'] = date('Y-m-d',$match[0]['match_time']);
+        $matchLive['match_time'] = date('Y-m-d', $match[0]['match_time']);
         $matchLive['short_name_zh'] = $match[0]['competition_text'];
         $matchLive['short_name_py'] = $match[0]['comp_py'];
         $matchLive['title'] = replaceTitleWeb($matchLive['title']);

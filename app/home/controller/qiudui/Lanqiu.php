@@ -61,6 +61,25 @@ class Lanqiu extends BaseController
         $this->tdk->short_name_zh = $team->short_name_zh ?? '';
         $this->getTdk('qiudui_lanqiu_detail',$this->tdk);
 
+        $team->competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh($team->competition_id);
+        $team->coach = (new \app\commonModel\BasketballCoach())->getBasketballCoachByTeamid($team->id);
+        $team->ball = 'lanqiu';
+        $team->venue = (new \app\commonModel\BasketballVenue())->getVenueById($team->venue_id);
+
+
+        $team->intro = "[$team->name_zh] 队 (简称: [$team->short_name_zh])队 ,";
+        if(!empty($team->competition)){
+            $team->intro.="[$team->name_zh] 队所在联赛是[NBA]联赛,";
+        }
+        if(!empty($team->coach)){
+            $team->intro.="现[$team->name_zh]队主教练是由[".$team->coach['name_zh']."]带领,";
+        }
+        if(!empty($team->venue)){
+            $team->intro.="[$team->name_zh]队是[".$team->venue['city']."]的职业篮球队,";
+        }
+        $team->intro.="[".get_system_config('web', 'title')."]为您提供最新[$team->name_zh]队的数据和信息,[".get_system_config('web', 'title')."]同时为您提供最新的[$team->name_zh]队直播数据";
+
+
         View::assign('data',$matchList);
         View::assign('luxiang',$luxiang);
         View::assign('jijin',$jijin);
