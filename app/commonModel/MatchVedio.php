@@ -21,15 +21,17 @@ class MatchVedio extends Model
                 $compId = FootballMatch::where('id',$item['match_id'])->value('competition_id');
                 $compInfo = (new FootballCompetition())->getShortNameZh($compId);
                 $item['sphere_type'] = 'zuqiu';
-                $item['short_name_py'] = $compInfo['short_name_py'];
             }else{
                 $compId = BasketballMatch::where('id',$item['match_id'])->value('competition_id');
                 $compInfo = (new BasketballCompetition())->getShortNameZh($compId);
                 $item['sphere_type'] = 'lanqiu';
-                $item['short_name_py'] = $compInfo['short_name_py'];
             }
-            $item['title'] = replaceTitleWeb($item['title']);
-            $res[] = $item;
+            if(!empty($compInfo)){
+                $item['short_name_py'] = $compInfo['short_name_py'];
+                $item['title'] = replaceTitleWeb($item['title']);
+                $res[] = $item;
+            }
+
         }
 
         return $res;
