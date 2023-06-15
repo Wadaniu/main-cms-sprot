@@ -10,10 +10,18 @@
         <div class="intro">
             <p class="name">{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}</p>
             <ul>
-                <li>英文名称：</li>
-                <li>所属联赛：</li>
-                <li>现任主教练：</li>
-                <li>所在城市：</li>
+                <li>英文名称：{$data_info.name_en}</li>
+                {if !empty($data_info.competition)}
+                <li>所属联赛：{$data_info.competition.name_zh}</li>
+                {/if}
+                {if !empty($data_info.coach)}
+                <li>现任主教练：{$data_info.coach.name_zh}</li>
+                {/if}
+                {if !empty($data_info.venue)}
+                <li>
+                    {$data_info.ball=='zuqiu'?'主场球馆':'所在城市'}：{$data_info.ball=='zuqiu'?$data_info.venue.name_zh:$data_info.venue.city}
+                </li>
+                {/if}
             </ul>
         </div>
         <div class="title">
@@ -27,8 +35,9 @@
             <p class="tit"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
         </div>
         <div class="play-list">
+            {foreach $data as $i=>$team}
+            <p class="play-date">{$team.match_time|date='Y-m-d'}</p>
             <dl class="list-cont nodata">
-                {foreach $data as $i=>$team}
                 <dd>
                     <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}/">{$team.competition_text}</a>
                     </p>
@@ -38,8 +47,8 @@
                     <a class="right-btn" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i
                             class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                 </dd>
-                {/foreach}
             </dl>
+            {/foreach}
         </div>
     </div>
     <div class="model">
@@ -61,7 +70,7 @@
         <dl class="list-back nodata">
             {foreach $jijin as $i=>$item}
             <dd>
-                <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}/" >{$item.title}</a>
+                <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}/">{$item.title}</a>
             </dd>
             {/foreach}
         </dl>
