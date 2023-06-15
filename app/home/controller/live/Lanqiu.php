@@ -71,6 +71,7 @@ class Lanqiu extends BaseController
         $this->tdk->short_name_zh = $analysis['info']['competition_text'] ?? '';
 
         $this->getTdk('live_lanqiu_detail',$this->tdk);
+        $matchLive['ball'] = 'lanqiu';
         //var_dump($analysis);die;
         View::assign("analysis",$analysis);
         View::assign("players",$players);
