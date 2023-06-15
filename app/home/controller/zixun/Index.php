@@ -40,13 +40,13 @@ class Index extends BaseController
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
             $competition = $model->getArticleCompetition($v);
+            //var_dump($competition,$v);exit;
             if($competition){
                 $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
         }
         $this->getTdk(self::RouteTag,$this->tdk);
-        //print_r($param);exit;
         View::assign("list",$list);
         View::assign('param',$param);
         return View::fetch($this->tempPath);
