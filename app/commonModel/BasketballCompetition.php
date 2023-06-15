@@ -259,7 +259,7 @@ class BasketballCompetition extends Model
             $query->whereRaw("name_zh like :word OR short_name_zh = :key",['word'=>'%'.$keyword.'%','key'=>$keyword]);
         }
         $count = $query->count();
-        $list = $query->limit($page,$rows)->order($order)->select()->toArray();
+        $list = $query->limit($page * $rows,$rows)->order($order)->select()->toArray();
 
         foreach ($list as &$item){
             $item['sphere_type'] = 'lanqiu';
