@@ -137,7 +137,8 @@ return [
         'keywords'      =>  [
             'title'     =>  '文章标题',
             'keyword'   =>  '文章关键字',
-            'desc'      =>  '文章简介'
+            'desc'      =>  '文章简介',
+            'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'zixun_lanqiu'      => [
@@ -153,7 +154,8 @@ return [
         'keywords'      =>  [
             'title'     =>  '文章标题',
             'keyword'   =>  '文章关键字',
-            'desc'      =>  '文章简介'
+            'desc'      =>  '文章简介',
+            'short_name_zh'   =>  '联赛简称'
         ]
     ],
 

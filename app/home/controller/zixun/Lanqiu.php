@@ -38,14 +38,20 @@ class Lanqiu extends BaseController
             throw new \think\exception\HttpException(404, '找不到页面');
         }
         $this->getTempPath('zixun_lanqiu_detail');
-        $this->getTdk('zixun_lanqiu_detail',$this->tdk);
+
         $info = $comp->toArray();
         $this->tdk->title = $info['title'];
         $this->tdk->keyword = $info['title'];
         $this->tdk->desc = $info['desc'];
+        $this->tdk->short_name_zh = '篮球';
+        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh($comp->competition_id);
+        if($competition){
+            $this->tdk->short_name_zh = $competition['short_name_zh'];
+        }
         $info['author'] = Admin::where(['id'=>$info['admin_id']])->find()->toArray();
         $info['pre'] = Article::where("id","<",$matchId)->order("id desc")->find();
         $info['next'] = Article::where("id",">",$matchId)->order("id asc")->find();
+        $this->getTdk('zixun_lanqiu_detail',$this->tdk);
         View::assign('article',['data'=>getZiXun(2,$info['competition_id'])]);
         View::assign("info",$info);
         View::assign("comp",['id'=>$info['competition_id']]);
@@ -57,7 +63,7 @@ class Lanqiu extends BaseController
         $param['page'] = isset($param['page'])?$param['page']:1;
         $param['limit'] = 10;
         $model = new Article();
-        $this->getTdk('zixun_lanqiu',$this->tdk);
+
         $this->tdk->short_name_zh = '';
         //$list = $model->getArticleDatalist(['cate_id'=>2,'status'=>1,'delete_time'=>0],[]);
         if(isset($param['compname']) && $param['compname']){
@@ -85,6 +91,7 @@ class Lanqiu extends BaseController
             }
         }
         //$list['current_page'] = $param['page'];
+        $this->getTdk('zixun_lanqiu',$this->tdk);
         View::assign("list",$list);
         View::assign('param',$param);
         $this->getTempPath('zixun_lanqiu');
