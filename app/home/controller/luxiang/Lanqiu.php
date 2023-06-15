@@ -42,9 +42,9 @@ class Lanqiu extends BaseController
 
     function getMatchList($param){
         $this->getTempPath('luxiang_lanqiu');
-        $this->getTdk('luxiang_lanqiu',$this->tdk);
         list($list,$competition_id,$param,$short_name_zh)=getMatchVedio(['type'=>2,'video_type'=>1]);
         $this->tdk->short_name_zh =  $short_name_zh==''?'蓝球':$short_name_zh;
+        $this->getTdk('luxiang_lanqiu',$this->tdk);
         View::assign("list",$list);
         View::assign("index","录像");
         View::assign("href","/luxiang/lanqiu/");

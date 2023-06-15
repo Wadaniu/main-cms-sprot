@@ -39,14 +39,20 @@ class Zuqiu extends BaseController
             throw new \think\exception\HttpException(404, '找不到页面');
         }
         $this->getTempPath('zixun_zuqiu_detail');
-        $this->getTdk('zixun_zuqiu_detail',$this->tdk);
+
         $info = $comp->toArray();
         $this->tdk->title = $info['title'];
         $this->tdk->keyword = $info['title'];
         $this->tdk->desc = $info['desc'];
+        $this->tdk->short_name_zh = '足球';
+        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh($comp->competition_id);
+        if($competition){
+            $this->tdk->short_name_zh = $competition['short_name_zh'];
+        }
         $info['author'] = Admin::where(['id'=>$info['admin_id']])->find()->toArray();
         $info['pre'] = articlePrev($matchId);
         $info['next'] = articleNext($matchId);
+        $this->getTdk('zixun_zuqiu_detail',$this->tdk);
         View::assign('article',['data'=>getZiXun(1,$info['competition_id'])]);
 
         View::assign("info",$info);
@@ -60,7 +66,7 @@ class Zuqiu extends BaseController
         $param['page'] = isset($param['page'])?$param['page']:1;
         $param['limit'] = 10;
         //print_r($param);exit;
-        $this->getTdk('zixun_zuqiu',$this->tdk);
+
         $this->tdk->short_name_zh = '';
         $model = new Article();
         if(isset($param['compname']) && $param['compname']){
@@ -89,6 +95,7 @@ class Zuqiu extends BaseController
         //print_r($list);
         //exit;
         //$list['current_page'] = $param['page'];
+        $this->getTdk('zixun_zuqiu',$this->tdk);
         View::assign("list",$list);
         View::assign('param',$param);
         $this->getTempPath('zixun_zuqiu');
