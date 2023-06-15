@@ -233,7 +233,11 @@ class Article extends Model
 
     function getArticleCompetition($info){
         //$info = $this->getArticleById($id);
-        switch ($info['cate_id']){
+        $cate_id = $info['cate_id'];
+        if(!in_array($cate_id,[1,2])){
+            $cate_id = ArticleCate::where("id",$cate_id)->value('pid');
+        }
+        switch ($cate_id){
             case 1:
                 $competition = (new FootballCompetition())->getShortNameZh($info['competition_id']);
                 break;
