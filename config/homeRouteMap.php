@@ -122,7 +122,9 @@ return [
     'zixun'           => [
         'route_name'    => '资讯',
         'route_path'    =>  '',
-        'keywords'      =>  []
+        'keywords'      =>  [
+            'keyword'   =>  '关键字'
+        ]
     ],
     'zixun_zuqiu'       => [
         'route_name'    => '足球资讯',
@@ -137,7 +139,8 @@ return [
         'keywords'      =>  [
             'title'     =>  '文章标题',
             'keyword'   =>  '文章关键字',
-            'desc'      =>  '文章简介'
+            'desc'      =>  '文章简介',
+            'short_name_zh'   =>  '联赛简称'
         ]
     ],
     'zixun_lanqiu'      => [
@@ -153,7 +156,8 @@ return [
         'keywords'      =>  [
             'title'     =>  '文章标题',
             'keyword'   =>  '文章关键字',
-            'desc'      =>  '文章简介'
+            'desc'      =>  '文章简介',
+            'short_name_zh'   =>  '联赛简称'
         ]
     ],
 

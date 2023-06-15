@@ -69,14 +69,17 @@
                 <p class="name">{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}</p>
                 <ul>
                     <li>英文名称：{$data_info.name_en}</li>
-                    <li>所属联赛：{if !empty($data_info.competition)}{$data_info.competition.name_zh}{/if}</li>
-                    <li>现任主教练：{if !empty($data_info.coach)}{$data_info.coach.name_zh}{/if}</li>
-                    <li>
-                        {$data_info.ball=='zuqiu'?'主场球馆':'所在城市'}：
-                        {if !empty($data_info.venue)}
-                            {$data_info.ball=='zuqiu'?$data_info.venue.name_zh:$data_info.venue.city}
+                    {if $data_info.type=='team'}
+                        {if !empty($data_info.competition)}
+                            <li>所属联赛：{$data_info.competition.name_zh}</li>
                         {/if}
-                    </li>
+                        {if !empty($data_info.coach)}
+                            <li>现任主教练：{$data_info.coach.name_zh}</li>
+                        {/if}
+                        {if !empty($data_info.venue)}
+                            <li>{$data_info.ball=='zuqiu'?'主场球馆':'所在城市'}： {$data_info.ball=='zuqiu'?$data_info.venue.name_zh:$data_info.venue.city}</li>
+                        {/if}
+                    {/if}
                 </ul>
             </div>
             <div class="title">
