@@ -447,7 +447,7 @@ class FootballMatch extends Model
 
     public function getMatchLive($id)
     {
-        $info = self::field('id,is_link,mobile_link,pc_link')->where('id', $id)->where('status_id','IN',[1,2,3,4,5,7])->findOrEmpty();
+        $info = self::field('id,is_link,mobile_link,pc_link,competition_id,home_team_id,away_team_id')->where('id', $id)->where('status_id','IN',[1,2,3,4,5,7])->findOrEmpty();
         return $info;
     }
 
