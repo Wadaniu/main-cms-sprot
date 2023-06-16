@@ -111,14 +111,19 @@
         </div>
         <div class="type-cont">
             <ul class="playtxt">
-                <li>赛事名称：{$analysis.info.competition_text}</li>
-                <li>比赛队伍：{$analysis.info.home_team_text}vs{$analysis.info.away_team_text}</li>
-                <li>比赛时间：{$analysis.info.match_time|date='Y-m-d H:i'}</li>
+                <li>【赛事名称】：{$analysis.info.competition_text}</li>
+                <li>【比赛队伍】：{$analysis.info.home_team_text}  vs   {$analysis.info.away_team_text}</li>
+                <li>【比赛时间】：{$analysis.info.match_time|date='Y-m-d H:i'}</li>
                 <li>
-                    赛事信息：本场包含了{$analysis.info.home_team_text}vs{$analysis.info.away_team_text}直播信息,{$web_name}直播将对本场进行免费视频直播。
+                    【赛事信息】：本场包含了{$analysis.info.home_team_text}vs{$analysis.info.away_team_text}直播信息,{$web_name}直播将对本场进行免费视频直播。
                 </li>
                 <li>
-                    {$web_name}直播为您提供{$analysis.info.home_team_text}对阵{$analysis.info.away_team_text}高清无插件直播地址，{$analysis.info.home_team_text}直播和{$analysis.info.away_team_text}直播信号将在开赛前实时更新，刷新本页面或进入{$web_name}直播首页即可获取最新直播信号。喜欢看{$analysis.info.home_team_text}VS{$analysis.info.away_team_text}比赛的朋友可以提前收藏本页面以免错过您喜欢的赛事直播。
+                    {$web_name}直播为您提供{$analysis.info.home_team_text}对阵{$analysis.info.away_team_text}高清【无插件】直播地址，{$analysis.info.home_team_text}直播和{$analysis.info.away_team_text}直播信号将在开赛前实时更新，
+                    所有直播信号均为全网收集和网友提供，本站并不生产直播信号，只是体育爱好者的搬运工。
+                </li>
+                <li>【比赛标签】：<a href="/liansai-{$matchLive.ball}/{$matchLive.competition_id}">{$analysis.info.competition_text}</a>
+                    <a href="/qiudui-{$matchLive.ball}/{$matchLive.home_team_id}">{$analysis.info.home_team_text}</a>
+                    <a href="/qiudui-{$matchLive.ball}/{$matchLive.away_team_id}">{$analysis.info.away_team_text}</a>
                 </li>
             </ul>
         </div>
