@@ -23,7 +23,7 @@
                         </a>
                         <p class="other">
                             <span>
-                                {if !empty($l['short_name_zh'])}
+                                {if !empty($l['short_name_zh']) && $l['short_name_zh']!='zuqiu' && $l['short_name_zh']!='lanqiu'}
                                 <i>
                                     <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}/">{$l.short_name_zh}</a>
                                 </i>

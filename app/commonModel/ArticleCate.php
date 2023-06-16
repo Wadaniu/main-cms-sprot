@@ -6,6 +6,7 @@
  */
 namespace app\commonModel;
 use think\model;
+use think\facade\Cache;
 
 class ArticleCate extends Model
 {
@@ -101,6 +102,38 @@ class ArticleCate extends Model
     public function getCateAllById($id): array
     {
         return self::field('id')->where('id',$id)->whereOr('pid',$id)->select()->toArray();
+    }
+
+
+
+    /**
+     * 获取足球子分类
+     * */
+    public function getFootCate(){
+        $key = "FootballCate";
+        $data = Cache::store('common_redis')->get($key);
+        if($data){
+            return $data;
+        }
+        $data = self::where("pid",1)->column("id");
+        $data[] = 1;
+        Cache::store('common_redis')->set($key,$data,300);
+        return $data;
+    }
+
+    /**
+     * 获取篮球子分类
+     * */
+    public function getBasketCate(){
+        $key = "BasketballCate";
+        $data = Cache::store('common_redis')->get($key);
+        if($data){
+            return $data;
+        }
+        $data = self::where("pid",2)->column("id");
+        $data[] = 2;
+        Cache::store('common_redis')->set($key,$data,300);
+        return $data;
     }
 }
 
