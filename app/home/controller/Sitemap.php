@@ -70,7 +70,7 @@ class Sitemap
                         $matchIdArr = $existFootballMatchIdMap[$comp['id']];
                         //赛程详情
                         foreach ($matchIdArr as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
@@ -87,7 +87,7 @@ class Sitemap
                         $matchIdArr = $existBasketballMatchIdMap[$comp['id']];
                         //赛程详情
                         foreach ($matchIdArr as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
@@ -109,7 +109,7 @@ class Sitemap
                         }
                         //录像详情
                         foreach ($matchVideoIds as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
@@ -129,7 +129,7 @@ class Sitemap
                         }
                         //录像详情
                         foreach ($matchVideoIds as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
@@ -149,7 +149,7 @@ class Sitemap
                         }
                         //录像详情
                         foreach ($matchVideoIds as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
@@ -169,7 +169,7 @@ class Sitemap
                         }
                         //录像详情
                         foreach ($matchVideoIds as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
@@ -186,7 +186,7 @@ class Sitemap
                         }
                         //录像详情
                         foreach ($aids as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
@@ -203,7 +203,7 @@ class Sitemap
                         }
                         //录像详情
                         foreach ($aids as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
@@ -211,7 +211,7 @@ class Sitemap
                     $keywords = Keywords::limit(100)->column('id');
                     //关键字详情
                     foreach ($keywords as $id){
-                        $sitemap->addItem($route['name'].'index_1/'.$id, '0.8', 'daily', date('Y-m-d H:i:s'));
+                        $sitemap->addItem($route['name'].'index_1/'.$id.'.html', '0.8', 'daily', date('Y-m-d H:i:s'));
                     }
                     break;
                 case '/liansai-zuqiu/':
