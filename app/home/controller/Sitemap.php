@@ -10,6 +10,7 @@ use app\commonModel\BasketballTeam;
 use app\commonModel\FootballCompetition;
 use app\commonModel\FootballMatch;
 use app\commonModel\FootballTeam;
+use app\commonModel\Keywords;
 use app\commonModel\MatchVedio;
 use app\exception\Sitemap as SitemapVendor;
 use DOMDocument;
@@ -207,7 +208,7 @@ class Sitemap
                     }
                     break;
                 case '/zixun/':
-                    $keywords = ArticleKeywords::limit(100)->column('keywords_id');
+                    $keywords = Keywords::limit(100)->column('id');
                     //关键字详情
                     foreach ($keywords as $id){
                         $sitemap->addItem($route['name'].'index_1/'.$id, '0.8', 'daily', date('Y-m-d H:i:s'));

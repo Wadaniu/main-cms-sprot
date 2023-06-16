@@ -46,9 +46,12 @@ class Lanqiu extends BaseController
         $model = new BasketballMatch();
         $matchLive = $model->getMatchLive($matchId);
 
-        if ($matchLive){
-            $matchLive['mobile_link'] = json_decode($matchLive['mobile_link']??'',true);
-            $matchLive['pc_link'] = json_decode($matchLive['pc_link']??'',true);
+        if ($matchLive->isEmpty()){
+            $matchLive['mobile_link'] = [];
+            $matchLive['pc_link'] = [];
+        }else{
+            $matchLive['mobile_link'] = json_decode($matchLive['mobile_link'],true);
+            $matchLive['pc_link'] = json_decode($matchLive['pc_link'],true);
         }
 
         //历史交锋

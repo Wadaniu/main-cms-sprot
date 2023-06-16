@@ -5,7 +5,7 @@
     <div class="model">
         {include file="assembly/subnav" subnav="subnav('积分')"/}
         <div class="category">
-            {volist name="typelist" id="item"}
+            {volist name="typelist" id="item" length='20'}
             <a data-link="/{$item.short_name_py}" href="/jifen-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>
             {/volist}
         </div>

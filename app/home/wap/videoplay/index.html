@@ -20,15 +20,16 @@
     <div class="video-intro">
         <p class="tit">{$index}</p>
         <ul class="playtxt">
+            <li>【温馨提示】：如有出现版权问题，请点击右侧的播放列表-->源站播放</li>
             {if !empty($matchLive.team.home_team) && !empty($matchLive.team.away_team)}
-            <li>{$index}：在线观看录像-{$matchLive.match_time|date="m-d H:i"}
-                {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}，{$web_name}为你提供{$matchLive.match_time|date="m-d
-                H:i"}
-                {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}导航资源，本站不制作、不存储{$matchLive.match_time|date="m-d
-                H:i"} {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}视频资源，只作为技术探索的导航学习用途。
-            </li>
+            <li>【{$index}】：在线观看录像-{$matchLive.match_time|date="m-d H:i"} {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}，{$web_name}为你提供{$matchLive.match_time|date="m-d H:i"} {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}导航资源，本站不制作、不存储{$matchLive.match_time|date="m-d H:i"} {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}视频资源，只作为技术探索的导航学习用途。</li>
             {/if}
-            <li>添加时间：{$matchLive.created_at}</li>
+            <li>【比赛时间】：{$matchLive.match_time}</li>
+            <li>【热门标签】:
+                <a href="/{$matchLive.type=='1'?'jijin':'luxiang'}-{$matchLive.video_type=='0'?'zuqiu':'lanqiu'}/{$matchLive.short_name_py}">{$matchLive.short_name_zh}</a>
+                <a href="/qiudui-{$matchLive.video_type=='0'?'zuqiu':'lanqiu'}/{$matchLive.team.home_team.id}">{$matchLive.team.home_team.name_zh}</a>
+                <a href="/qiudui-{$matchLive.video_type=='0'?'zuqiu':'lanqiu'}/{$matchLive.team.away_team.id}">{$matchLive.team.away_team.name_zh}</a>
+            </li>
         </ul>
     </div>
 </div>
