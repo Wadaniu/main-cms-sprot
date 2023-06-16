@@ -15,12 +15,12 @@
             <div class="connect">
                 {if !empty($info['pre'])}
                 <span>上一篇：
-                    <a href="/zixun-{$info.pre.cate_id==1?'zuqiu':'lanqiu'}/{$info.pre.short_name_py}/{$info.pre.id}">{$info.pre.title}</a>
+                    <a href="/zixun-{$info.pre.cate_id==1?'zuqiu':'lanqiu'}/{$info.pre.short_name_py}/{$info.pre.id}.html">{$info.pre.title}</a>
                 </span>
                 {/if}
                 {if !empty($info['next'])}
                 <span>下一篇：
-                    <a href="/zixun-{$info.next.cate_id==1?'zuqiu':'lanqiu'}/{$info.next.short_name_py}/{$info.next.id}">{$info.next.title}</a>
+                    <a href="/zixun-{$info.next.cate_id==1?'zuqiu':'lanqiu'}/{$info.next.short_name_py}/{$info.next.id}.html">{$info.next.title}</a>
                 </span>
                 {/if}
             </div>

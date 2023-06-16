@@ -14,10 +14,10 @@
             <dl class="news-list nodata">
                 {foreach $list.data as $l}
                 <dd>
-                    <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}/{$l.id}" target="_blank"><img
+                    <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}/{$l.id}.html" target="_blank"><img
                             src="{$l.origin_url}"></a>
                     <div>
-                        <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}/{$l.id}" target="_blank">
+                        <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}/{$l.id}.html" target="_blank">
                             <h4 title="{$l.title}">{$l.title}</h4>
                             <p class="desc"> {$l.desc}</p>
                         </a>

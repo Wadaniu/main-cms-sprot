@@ -15,7 +15,7 @@
         <div class="zt-list">
             <div class="logo-list">
                 {foreach $data.data as $key=>$item}
-                <a href="/{$typesrc}-{$item.sphere_type}/{$item.id}" >
+                <a href="/{$typesrc}-{$item.sphere_type}/{$item.id}.html" >
                     <img src="{$item.logo}" title="{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}">
                     <p>{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</p>
                 </a>
