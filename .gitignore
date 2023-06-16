@@ -7,4 +7,5 @@
 *.htaccess
 /.env
 /*.env
+/public/sitemap.*
 /public/storage/*

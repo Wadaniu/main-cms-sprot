@@ -19,7 +19,7 @@
                         <p class="team">{$team.home_team_text}<img src="{$team.home_team_logo}"></p>
                         <p class="vs">VS</p>
                         <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
-                        <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                        <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                     </dd>
                     {/foreach}
                 </dl>
@@ -33,7 +33,7 @@
                 {foreach $luxiang as $i=>$item}
                 <dd>
                     <p class="back-cont">
-                        <a href="/luxiang-{$item.sphere_type}/{$item.short_name_py}/{$item.id}/" target="_blank"><span></span>{$item.title}</a>
+                        <a href="/luxiang-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html" target="_blank"><span></span>{$item.title}</a>
                     </p>
                     <p class="back-team">
 
@@ -50,7 +50,7 @@
                 {foreach $jijin as $i=>$item}
                 <dd>
                     <p class="back-cont">
-                        <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}/" target="_blank"><span></span>{$item.title}</a>
+                        <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html" target="_blank"><span></span>{$item.title}</a>
                     </p>
                     <p class="back-team">
                     </p>

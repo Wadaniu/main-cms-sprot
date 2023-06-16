@@ -27,8 +27,8 @@
             <li>【比赛时间】：{$matchLive.match_time}</li>
             <li>【热门标签】:
                 <a href="/{$matchLive.type=='1'?'jijin':'luxiang'}-{$matchLive.video_type=='0'?'zuqiu':'lanqiu'}/{$matchLive.short_name_py}">{$matchLive.short_name_zh}</a>
-                <a href="/qiudui-{$matchLive.video_type=='0'?'zuqiu':'lanqiu'}/{$matchLive.team.home_team.id}">{$matchLive.team.home_team.name_zh}</a>
-                <a href="/qiudui-{$matchLive.video_type=='0'?'zuqiu':'lanqiu'}/{$matchLive.team.away_team.id}">{$matchLive.team.away_team.name_zh}</a>
+                <a href="/qiudui-{$matchLive.video_type=='0'?'zuqiu':'lanqiu'}/{$matchLive.team.home_team.id}.html">{$matchLive.team.home_team.name_zh}</a>
+                <a href="/qiudui-{$matchLive.video_type=='0'?'zuqiu':'lanqiu'}/{$matchLive.team.away_team.id}.html">{$matchLive.team.away_team.name_zh}</a>
             </li>
         </ul>
     </div>
