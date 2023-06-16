@@ -67,7 +67,10 @@ return [
         'route_name'    => '足球录像详情',
         'route_path'    =>  '/luxiang-zuqiu/[:compname]/[:vid]',
         'keywords'      =>  [
-            'title'   =>  '录像标题'
+            'title'   =>  '录像标题',
+            'short_name_zh'=>'联赛简称',
+            'home_team_name'=>'主队简称',
+            'away_team_name'=>'客队简称',
         ]
     ],
     'luxiang_lanqiu'    => [
@@ -81,7 +84,10 @@ return [
         'route_name'    => '篮球录像详情',
         'route_path'    =>  '/luxiang-lanqiu/[:compname]/[:vid]',
         'keywords'      =>  [
-            'title'   =>  '录像标题'
+            'title'   =>  '录像标题',
+            'short_name_zh'=>'联赛简称',
+            'home_team_name'=>'主队简称',
+            'away_team_name'=>'客队简称',
         ]
     ],
 
@@ -101,7 +107,10 @@ return [
         'route_name'    => '足球集锦详情',
         'route_path'    =>  '/jijin-zuqiu/[:compname]/[:vid]',
         'keywords'      =>  [
-            'title'   =>  '录像标题'
+            'title'   =>  '录像标题',
+            'short_name_zh'=>'联赛简称',
+            'home_team_name'=>'主队简称',
+            'away_team_name'=>'客队简称',
         ]
     ],
     'jijin_lanqiu'      => [
@@ -115,7 +124,10 @@ return [
         'route_name'    => '篮球集锦详情',
         'route_path'    =>  '/jijin-lanqiu/[:compname]/[:vid]',
         'keywords'      =>  [
-            'title'   =>  '录像标题'
+            'title'   =>  '录像标题',
+            'short_name_zh'=>'联赛简称',
+            'home_team_name'=>'主队简称',
+            'away_team_name'=>'客队简称',
         ]
     ],
 
@@ -123,7 +135,7 @@ return [
         'route_name'    => '资讯',
         'route_path'    =>  '',
         'keywords'      =>  [
-            'keyword'   =>  '关键字'
+            'keyword'   =>  '关键字',
         ]
     ],
     'zixun_zuqiu'       => [
