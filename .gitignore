@@ -5,6 +5,7 @@
 *.ini
 .env
 *.env
+/public/sitemap.*
 /runtime/*
 *.htaccess
 /public/storage/*
