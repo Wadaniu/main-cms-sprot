@@ -67,9 +67,9 @@ class Lanqiu extends BaseController
         $team->venue = (new \app\commonModel\BasketballVenue())->getVenueById($team->venue_id);
 
 
-        $team->intro = $team->name_zh." 队 (简称： ".$team->short_name_zh."队)，";
+        $team->intro = $team->name_zh."队(简称： ".$team->short_name_zh."队)，";
         if(!empty($team->competition)){
-            $team->intro.="$team->name_zh 队所在联赛是".$team->competition['name_zh']."联赛，";
+            $team->intro.=$team->name_zh."队所在联赛是".$team->competition['name_zh']."联赛，";
         }
         if(!empty($team->coach)){
             $team->intro.="现".$team->name_zh."队主教练是由".$team->coach['name_zh']."带领，";

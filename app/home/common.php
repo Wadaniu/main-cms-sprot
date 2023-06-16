@@ -94,13 +94,17 @@ function articlePrev($id, $cateId = 0)
     if (!$article) {
         return [];
     }
-    if ($article['cate_id'] == 1) {
-        $competition = (new \app\commonModel\FootballCompetition())->where("id", $article['competition_id'])->find();
+
+    $footCate = (new \app\commonModel\ArticleCate())->getFootCate();
+    if (in_array($article['cate_id'],$footCate)) {
+        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh( $article['competition_id']);
+        $article['cate_id'] =1;
     } else {
-        $competition = (new \app\commonModel\BasketballCompetition())->where("id", $article['competition_id'])->find();
+        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh( $article['competition_id']);
+        $article['cate_id']=2;
     }
     if (!$competition) {
-        $article['short_name_py'] = '';
+        $article['short_name_py'] = in_array($article['cate_id'],$footCate)?'zuqiu':'lanqiu';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
@@ -123,13 +127,16 @@ function articleNext($id, $cateId = 0)
     if (!$article) {
         return [];
     }
-    if ($article['cate_id'] == 1) {
-        $competition = (new \app\commonModel\FootballCompetition())->where("id", $article['competition_id'])->find();
+    $footCate = (new \app\commonModel\ArticleCate())->getFootCate();
+    if (in_array($article['cate_id'],$footCate)) {
+        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh( $article['competition_id']);
+        $article['cate_id'] =1;
     } else {
-        $competition = (new \app\commonModel\BasketballCompetition())->where("id", $article['competition_id'])->find();
+        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh( $article['competition_id']);
+        $article['cate_id'] =2;
     }
     if (!$competition) {
-        $article['short_name_py'] = $article['cate_id'] == 1 ? '足球' : '篮球';
+        $article['short_name_py'] = in_array($article['cate_id'],$footCate)?'zuqiu':'lanqiu';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
@@ -375,8 +382,16 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
     }
     $model = (new \app\commonModel\Article());
     $list = $model->where("status", 1);
+    $foot_cate = (new \app\commonModel\ArticleCate())->getFootCate();
     if ($cate_id) {
-        $list = $list->where("cate_id", $cate_id);
+        if($cate_id==1){
+            $list = $list->where("cate_id", 'in',$foot_cate);
+        }else if($cate_id==2){
+            $basket_cate = (new \app\commonModel\ArticleCate())->getBasketCate();
+            $list = $list->where("cate_id", 'in',$basket_cate);
+        }else{
+            $list = $list->where("cate_id", $cate_id);
+        }
     }
     if ($competition_id) {
         $list = $list->where("competition_id", $competition_id);
@@ -387,13 +402,14 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         ->select()
         ->toArray();
     foreach ($data as $k => $v) {
-        $data[$k]['short_name_zh'] = '';
-        $data[$k]['short_name_py'] = $v['cate_id'] == '1' ? 'zuqiu' : 'lanqiu';
+        $data[$k]['short_name_zh'] = in_array($v['cate_id'],$foot_cate)?'足球':'篮球';;
+        $data[$k]['short_name_py'] = in_array($v['cate_id'],$foot_cate)? 'zuqiu' : 'lanqiu';
         $competition = $model->getArticleCompetition($v);
         if ($competition) {
             $data[$k]['short_name_zh'] = $competition['short_name_zh'];
             $data[$k]['short_name_py'] = $competition['short_name_py'];
         }
+        $data[$k]['cate_id'] = in_array($v['cate_id'],$foot_cate)?1:2;
     }
     Cache::store('redis')->set($key, $data, 300);
     return $data;

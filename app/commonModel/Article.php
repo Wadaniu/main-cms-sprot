@@ -232,18 +232,14 @@ class Article extends Model
 
 
     function getArticleCompetition($info){
-        //$info = $this->getArticleById($id);
-        $cate_id = $info['cate_id'];
-        if(!in_array($cate_id,[1,2])){
-            $cate_id = ArticleCate::where("id",$cate_id)->value('pid');
-        }
-        //var_dump($cate_id);
-        switch ($cate_id){
-            case 1:
+        $footCate = (new ArticleCate())->getFootCate();
+        $in = in_array($info['cate_id'],$footCate);
+        switch ($in){
+            case true:
                 $competition = (new FootballCompetition())->getShortNameZh($info['competition_id']);
                 $ball = 'zuqiu';
                 break;
-            case 2:
+            case false:
                 $competition = (new BasketballCompetition())->getShortNameZh($info['competition_id']);;
                 $ball = 'lanqiu';
                 break;

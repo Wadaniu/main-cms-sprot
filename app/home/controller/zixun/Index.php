@@ -36,9 +36,12 @@ class Index extends BaseController
             $list = $model->getArticleDatalist(['status'=>1,'delete_time'=>0],$param);
         }
 
+        //找出足球的分类以及子分类
+        $cateIds = (new \app\commonModel\ArticleCate())->getFootCate();;
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['short_name_zh'] = '';
-            $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
+            $list['data'][$k]['short_name_py'] = in_array($v['cate_id'],$cateIds)?'zuqiu':'lanqiu';
+            $list['data'][$k]['cate_id'] = in_array($v['cate_id'],$cateIds)?1:2;
             $competition = $model->getArticleCompetition($v);
             //var_dump($competition,$v);exit;
             if($competition){
