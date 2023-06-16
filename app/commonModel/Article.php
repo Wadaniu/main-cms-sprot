@@ -237,18 +237,21 @@ class Article extends Model
         if(!in_array($cate_id,[1,2])){
             $cate_id = ArticleCate::where("id",$cate_id)->value('pid');
         }
+        //var_dump($cate_id);
         switch ($cate_id){
             case 1:
                 $competition = (new FootballCompetition())->getShortNameZh($info['competition_id']);
+                $ball = 'zuqiu';
                 break;
             case 2:
                 $competition = (new BasketballCompetition())->getShortNameZh($info['competition_id']);;
+                $ball = 'lanqiu';
                 break;
             default:
                 $competition = null;
         }
         if(!$competition){
-            return ['short_name_zh'=>'','short_name_py'=>''];
+            return ['short_name_zh'=>$ball,'short_name_py'=>$ball];
         }
         return $competition;
     }

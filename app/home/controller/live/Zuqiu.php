@@ -46,10 +46,8 @@ class Zuqiu extends BaseController
         $model = new FootballMatch();
         $matchLive = $model->getMatchLive($matchId);
 
-        if ($matchLive){
-            $matchLive['mobile_link'] = json_decode($matchLive['mobile_link']??'',true);
-            $matchLive['pc_link'] = json_decode($matchLive['pc_link']??'',true);
-        }
+        $matchLive['mobile_link'] = json_decode($matchLive['mobile_link']??'',true);
+        $matchLive['pc_link'] = json_decode($matchLive['pc_link']??'',true);
 
         //历史交锋
         $analysis = [
