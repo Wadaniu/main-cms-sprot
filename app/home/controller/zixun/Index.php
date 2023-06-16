@@ -23,14 +23,15 @@ class Index extends BaseController
         $param = $this->parmas;
         $param['page'] = isset($param['page'])?$param['page']:1;
         $param['limit'] = 10;
-        $tdk = new Tdk();
-        $this->getTdk(self::RouteTag,$tdk);
+        $this->tdk = new Tdk();
+
         $this->getTempPath(self::RouteTag);
         $model = new Article();
-        //print_r($param);exit;
+        $this->tdk->keyword = '';
         if(isset($param['keywords_id']) && $param['keywords_id']){
-            $aid = \app\commonModel\ArticleKeywords::where("keywords_id",$param['keywords_id'])->column("aid");
+            $aid = \app\commonModel\ArticleKeywords::where("keywords_id",$param['keywords_id'])->column('aid');
             $list = $model->getArticleDatalist(['status'=>1,'delete_time'=>0,'id'=>$aid],$param);
+            $this->tdk->keyword = (new \app\commonModel\Keywords())->where("id",$param['keywords_id'])->value('title');
         }else{
             $list = $model->getArticleDatalist(['status'=>1,'delete_time'=>0],$param);
         }
@@ -39,12 +40,13 @@ class Index extends BaseController
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = $v['cate_id']=='1'?'zuqiu':'lanqiu';
             $competition = $model->getArticleCompetition($v);
+            //var_dump($competition,$v);exit;
             if($competition){
                 $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
         }
-        //print_r($param);exit;
+        $this->getTdk(self::RouteTag,$this->tdk);
         View::assign("list",$list);
         View::assign('param',$param);
         return View::fetch($this->tempPath);

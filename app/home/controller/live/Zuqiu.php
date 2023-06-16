@@ -71,7 +71,7 @@ class Zuqiu extends BaseController
         $this->tdk->short_name_zh = $analysis['info']['competition_text'] ?? '';
 
         $this->getTdk('live_zuqiu_detail',$this->tdk);
-
+        $matchLive['ball'] = 'zuqiu';
         View::assign("analysis",$analysis);
         View::assign("teamStats",$teamStats);
         View::assign("video",$video);

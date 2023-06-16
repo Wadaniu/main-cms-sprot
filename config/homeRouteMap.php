@@ -122,7 +122,9 @@ return [
     'zixun'           => [
         'route_name'    => '资讯',
         'route_path'    =>  '',
-        'keywords'      =>  []
+        'keywords'      =>  [
+            'keyword'   =>  '关键字'
+        ]
     ],
     'zixun_zuqiu'       => [
         'route_name'    => '足球资讯',

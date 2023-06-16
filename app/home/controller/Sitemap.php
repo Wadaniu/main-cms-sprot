@@ -2,150 +2,260 @@
 
 namespace app\home\controller;
 
+use app\commonModel\Article;
+use app\commonModel\ArticleKeywords;
+use app\commonModel\BasketballCompetition;
+use app\commonModel\BasketballMatch;
+use app\commonModel\BasketballTeam;
+use app\commonModel\FootballCompetition;
+use app\commonModel\FootballMatch;
+use app\commonModel\FootballTeam;
+use app\commonModel\Keywords;
+use app\commonModel\MatchVedio;
 use app\exception\Sitemap as SitemapVendor;
 use DOMDocument;
-use think\facade\Db;
-use think\facade\Env;
 use think\facade\Request;
 use think\facade\Route;
 use XSLTProcessor;
 
 class Sitemap
 {
-    const GPriorityArray = array("1"=>"1.0", "2"=>"0.8", "3"=>"0.6", "4"=>"0.5");				// 按照层级对应优先级，第一层优先级为1，第二级为0.8，第三级为0.6
-    const PlayBackLimit = 60;
-
-    const INFO_INDEX_TITLE = [
-        'sqfx'  =>  '赛前分析',
-        'zbxx'  =>  '直播信息',
-        'jstj'  =>  '技术统计',
-        'jjlx'  =>  '集锦录像'
-    ];
     function createSitemap() {
         $sitemap = new SitemapVendor(Request::host());
         $routeList = Route::getRuleList();
 
-        $teamIdArr = [];
-        $compIdArr = [];
-        $matchIdArr = [];
-        $aidArr = [];
+        $existFootballMatchIdMap = [];
+        $existBasketballMatchIdMap = [];
 
+        //获取热门联赛
+        $basketballComp = getBasketballHotComp();
+        $footballComp = getFootballHotComp();
+
+        $footballMatchModel = new FootballMatch();
+        $basketballMatchModel = new BasketballMatch();
+        $matchVideo = new MatchVedio();
+        $articleModel = new Article();
+
+        foreach ($basketballComp as $comp){
+            $matchIdArr = $basketballMatchModel->where('match_time','>=',time() - 86400)->where('competition_id',$comp['id'])->column('id');
+            if (empty($matchIdArr)){
+                continue;
+            }
+            $existBasketballMatchIdMap[$comp['id']] = $matchIdArr;
+        }
+
+        foreach ($footballComp as $comp){
+            $matchIdArr = $footballMatchModel->where('match_time','>=',time() - 86400)->where('competition_id',$comp['id'])->column('id');
+            if (empty($matchIdArr)){
+                continue;
+            }
+            $existFootballMatchIdMap[$comp['id']] = $matchIdArr;
+        }
         //遍历路由
         foreach ($routeList as $route){
             switch ($route['name']){
                 case '/':
                     $sitemap->addItem('/', '1.0', 'daily', date('Y-m-d H:i:s'));
                     break;
-                case 'integral':
-                    $sitemap->addItem('/integral.html', '0.8', 'daily', date('Y-m-d H:i:s'));
-                    break;
-                case 'playerdata':
-                    $sitemap->addItem('/playerdata/shooter.html','0.8','daily', date('Y-m-d H:i:s'));
-                    $sitemap->addItem('/playerdata/assists.html','0.8','daily', date('Y-m-d H:i:s'));
-                    break;
-                case 'comp':
-                    //获取热门联赛id
-                    $footballCompetition = new  \app\commonModel\FootballCompetition();
-                    $footballHotData = $footballCompetition->getHotData();
-                    $model = new \app\commonModel\FootballMatch();
-                    //热门联赛ids
-                    $compIds = array_column($footballHotData,'id');
-                    $compIdArr = array_merge($compIdArr,$compIds);
-                    //获取赛程
-                    $match = $model->getWeekData($compIds);
-                    //赛程ids
-                    $matchIds = array_column($match,'id');
-                    $matchIdArr = array_unique(array_merge($matchIdArr,$matchIds));
-                    //队伍ids
-                    $homeTeamIds = array_column($match,'home_team_id');
-                    $awayTeamIds = array_column($match,'away_team_id');
-                    $teamIdArr = array_unique(array_merge($teamIdArr,$homeTeamIds,$awayTeamIds));
+                case '/live-zuqiu/':
+                    //足球直播
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+                    foreach ($footballComp as $comp){
+                        //联赛直播
+                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
 
-                    //获取各个联赛下赛程
-                    foreach ($compIds as $compId){
-                        $match = $model->getFootballMatchIndex($compId);
-                        //赛程ids
-                        $matchIds = array_column($match,'id');
-                        $matchIdArr = array_unique(array_merge($matchIdArr,$matchIds));
-                        //队伍ids
-                        $homeTeamIds = array_column($match,'home_team_id');
-                        $awayTeamIds = array_column($match,'away_team_id');
-                        $teamIdArr = array_unique(array_merge($teamIdArr,$homeTeamIds,$awayTeamIds));
-                    }
-                    break;
-                case 'news':
-                    //新闻列表
-                    $aidArr = Db::name('article')->where('delete_time',0)->column('id');
-                    $page = ceil(count($aidArr) / get_config('app.page_size'));
-                    for ($i = 1;$i <= $page; $i++){
-                        $sitemap->addItem("/news/$i.html",'0.8','always', date('Y-m-d H:i:s'));
-                    }
-                    //获取所有标签页
-                    $keywordsModel = new \app\commonModel\Keywords();
-                    $keywords = $keywordsModel->getHot();
-                    foreach ($keywords as $keyword){
-                        $count = Db::name('article_keywords')->where(['status'=>1,'keywords_id'=>$keyword['id']])->count();
-                        $page = ceil($count / get_config('app.page_size'));
-                        for ($i = 1;$i <= $page; $i++){
-                            $sitemap->addItem("/news/$i/".$keyword['id'].".html",'0.8','always', date('Y-m-d H:i:s'));
+                        if (!isset($existFootballMatchIdMap[$comp['id']])){
+                            continue;
+                        }
+                        $matchIdArr = $existFootballMatchIdMap[$comp['id']];
+                        //赛程详情
+                        foreach ($matchIdArr as $id){
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
                     break;
-                case 'playback':
+                case '/live-lanqiu/':
+                    //篮球直播
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+                    foreach ($basketballComp as $comp){
+                        //联赛直播
+                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
 
-                    $endDate = '';
-                    $startDate = '';
-
-                    //获取近两个月回放数据
-                    for ($i=self::PlayBackLimit;$i >= 0; $i--){
-                        $date = date('Ymd',strtotime("-$i day"));
-                        if (empty($compIdArr)){
-                            $compId = Env::get('Home.HOME_SPACE');
-                            $sitemap->addItem("/playback/$compId/$date.html",'0.8','always', date('Y-m-d H:i:s'));
-                        }else{
-                            foreach ($compIdArr as $compId){
-                                $sitemap->addItem("/playback/$compId/$date.html",'0.8','always', date('Y-m-d H:i:s'));
-                            }
+                        if (!isset($existBasketballMatchIdMap[$comp['id']])){
+                            continue;
                         }
-
-                        //取开始时间和结束时间
-                        if ($i == self::PlayBackLimit){
-                            $startDate = $date;
-                        }elseif ($i == 0){
-                            $endDate = $date;
+                        $matchIdArr = $existBasketballMatchIdMap[$comp['id']];
+                        //赛程详情
+                        foreach ($matchIdArr as $id){
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
                         }
                     }
-
-                    //获取近两个月赛程
-                    $model = new \app\commonModel\FootballMatch();
-                    //获取赛程
-                    $match = $model->getMatchByDate([Env::get('HOME.HOME_SPACE')],$startDate,$endDate);
-                    //赛程ids
-                    $matchIds = array_column($match,'id');
-                    $matchIdArr = array_unique(array_merge($matchIdArr,$matchIds));
-                    //队伍ids
-                    $homeTeamIds = array_column($match,'home_team_id');
-                    $awayTeamIds = array_column($match,'away_team_id');
-                    $teamIdArr = array_unique(array_merge($teamIdArr,$homeTeamIds,$awayTeamIds));
                     break;
-            }
-        }
-        //添加联赛
-        foreach ($compIdArr as $compId){
-            $sitemap->addItem("/comp/$compId.html", '0.8', 'daily',  date('Y-m-d H:i:s'));
-        }
-        //获取所有文章详情
-        foreach ($aidArr as $aid){
-            $sitemap->addItem("/newcont/$aid.html",'0.6','always', date('Y-m-d H:i:s'));
-        }
-        //添加team
-        foreach ($teamIdArr as $teamId){
-            $sitemap->addItem("/team/$teamId.html", '0.6', 'daily',  date('Y-m-d H:i:s'));
-        }
-        //添加赛程
-        foreach ($matchIdArr as $matchId){
-            foreach (self::INFO_INDEX_TITLE as $key=>$item){
-                $sitemap->addItem("/info/$key/$matchId.html", '0.6', 'daily',  date('Y-m-d H:i:s'));
+                case '/luxiang-zuqiu/':
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                    foreach ($footballComp as $comp){
+                        //联赛录像
+                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                        if (!isset($existFootballMatchIdMap[$comp['id']])){
+                            continue;
+                        }
+                        $matchIdArr = $existFootballMatchIdMap[$comp['id']];
+
+                        $matchVideoIds = $matchVideo->where('match_id','in',$matchIdArr)->where('type',2)->where('video_type',0)->column('id');
+                        if (empty($matchVideoIds)){
+                            continue;
+                        }
+                        //录像详情
+                        foreach ($matchVideoIds as $id){
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                        }
+                    }
+                    break;
+                case '/luxiang-lanqiu/':
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                    foreach ($basketballComp as $comp){
+                        //联赛录像
+                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+                        if (!isset($existBasketballMatchIdMap[$comp['id']])){
+                            continue;
+                        }
+                        $matchIdArr = $existBasketballMatchIdMap[$comp['id']];
+                        $matchVideoIds = $matchVideo->where('match_id','in',$matchIdArr)->where('type',2)->where('video_type',1)->column('id');
+                        if (empty($matchVideoIds)){
+                            continue;
+                        }
+                        //录像详情
+                        foreach ($matchVideoIds as $id){
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                        }
+                    }
+                    break;
+                case '/jijin-zuqiu/':
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                    foreach ($footballComp as $comp){
+                        //联赛录像
+                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+                        if (!isset($existFootballMatchIdMap[$comp['id']])){
+                            continue;
+                        }
+                        $matchIdArr = $existFootballMatchIdMap[$comp['id']];
+                        $matchVideoIds = $matchVideo->where('match_id','in',$matchIdArr)->where('type',1)->where('video_type',0)->column('id');
+                        if (empty($matchVideoIds)){
+                            continue;
+                        }
+                        //录像详情
+                        foreach ($matchVideoIds as $id){
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                        }
+                    }
+                    break;
+                case '/jijin-lanqiu/':
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                    foreach ($basketballComp as $comp){
+                        //联赛录像
+                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+                        if (!isset($existBasketballMatchIdMap[$comp['id']])){
+                            continue;
+                        }
+                        $matchIdArr = $existBasketballMatchIdMap[$comp['id']];
+                        $matchVideoIds = $matchVideo->where('match_id','in',$matchIdArr)->where('type',1)->where('video_type',1)->column('id');
+                        if (empty($matchVideoIds)){
+                            continue;
+                        }
+                        //录像详情
+                        foreach ($matchVideoIds as $id){
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                        }
+                    }
+                    break;
+                case '/zixun-zuqiu/':
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                    foreach ($footballComp as $comp){
+                        //联赛录像
+                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                        $aids = $articleModel->where('competition_id',$comp['id'])->order('id','desc')->limit(50)->column('id');
+                        if (empty($aids)){
+                            continue;
+                        }
+                        //录像详情
+                        foreach ($aids as $id){
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                        }
+                    }
+                    break;
+                case '/zixun-lanqiu/':
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                    foreach ($basketballComp as $comp){
+                        //联赛录像
+                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+
+                        $aids = $articleModel->where('competition_id',$comp['id'])->order('id','desc')->limit(50)->column('id');
+                        if (empty($aids)){
+                            continue;
+                        }
+                        //录像详情
+                        foreach ($aids as $id){
+                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id, '0.6', 'daily', date('Y-m-d H:i:s'));
+                        }
+                    }
+                    break;
+                case '/zixun/':
+                    $keywords = Keywords::limit(100)->column('id');
+                    //关键字详情
+                    foreach ($keywords as $id){
+                        $sitemap->addItem($route['name'].'index_1/'.$id, '0.8', 'daily', date('Y-m-d H:i:s'));
+                    }
+                    break;
+                case '/liansai-zuqiu/':
+                    //获取所有联赛统计数
+                    $count = FootballCompetition::count();
+                    $pageMax = ceil($count / 24);
+                    for ($i = 1;$i <= $pageMax;$i++){
+                        $sitemap->addItem($route['name'].'index_'.$i.'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+                    }
+                    break;
+                case '/liansai-lanqiu/':
+                    //获取所有联赛统计数
+                    $count = BasketballCompetition::count();
+                    $pageMax = ceil($count / 24);
+                    for ($i = 1;$i <= $pageMax;$i++){
+                        $sitemap->addItem($route['name'].'index_'.$i.'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+                    }
+                    break;
+                case '/qiudui-zuqiu/':
+                    $count = FootballTeam::count();
+                    $pageMax = ceil($count / 24);
+                    for ($i = 1;$i <= $pageMax;$i++){
+                        $sitemap->addItem($route['name'].'index_'.$i.'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+                    }
+                    break;
+                case '/qiudui-lanqiu/':
+                    $count = BasketballTeam::count();
+                    $pageMax = ceil($count / 24);
+                    for ($i = 1;$i <= $pageMax;$i++){
+                        $sitemap->addItem($route['name'].'index_'.$i.'/', '0.8', 'daily', date('Y-m-d H:i:s'));
+                    }
+                    break;
+                case '/jifen-lanqiu/':
+                    foreach ($basketballComp as $comp){
+                        //联赛直播
+                        $sitemap->addItem($route['name'].$comp['short_name_py'], '0.8', 'daily', date('Y-m-d H:i:s'));
+                    }
+                    break;
+                case '/jifen-zuqiu/':
+                    foreach ($footballComp as $comp){
+                        //联赛直播
+                        $sitemap->addItem($route['name'].$comp['short_name_py'], '0.8', 'daily', date('Y-m-d H:i:s'));
+                    }
+                    break;
             }
         }
 
