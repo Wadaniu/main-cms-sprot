@@ -7,7 +7,7 @@
         <dl class="list-back nodata">
             {foreach $list.data as $row}
             <dd>
-                <a href="/{$row.type=='1'?'jijin':'luxiang'}-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.short_name_py}/{$row.id}"
+                <a href="/{$row.type=='1'?'jijin':'luxiang'}-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.short_name_py}/{$row.id}.html"
                    title="{$row.title}"><span>{$row.date}</span>{$row.title}</a>
             </dd>
             {/foreach}

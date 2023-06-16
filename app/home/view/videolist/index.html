@@ -16,7 +16,7 @@
                 <dd>
                     <p class="back-cont">
                         <!-----type:1集锦，2录像  video_type:0足球，1篮球----------------------------------->
-                        <a target="_blank" href="/{$row.type=='1'?'jijin':'luxiang'}-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.short_name_py}/{$row.id}" title="{$row.title}"><span>{$row.date}</span>{$row.title}</a>
+                        <a target="_blank" href="/{$row.type=='1'?'jijin':'luxiang'}-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.short_name_py}/{$row.id}.html" title="{$row.title}"><span>{$row.date}</span>{$row.title}</a>
                     </p>
                     <p class="back-team">
                         {if $row.short_name_zh!=''}
@@ -24,7 +24,7 @@
                         {/if}
                         {foreach $row.teamArr as $t}
                             {if $t.id!=0}
-                                <a href="/qiudui-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$t.id}" target="_blank">{$t.short_name_zh}</a>
+                                <a href="/qiudui-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$t.id}.html" target="_blank">{$t.short_name_zh}</a>
                             {/if}
                         {/foreach}
                     </p>
