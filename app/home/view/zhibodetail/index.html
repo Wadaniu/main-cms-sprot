@@ -203,10 +203,10 @@
                 {foreach $keylist as $key=>$item}
                 <div class="census contrast">
                     <p class="left"><i <?php echo getstyle($teamStats[0][$item],$teamStats[1][$item]) ?>></i>
-                        <span>{$teamStats.0[$item]}{$key==0&&$islanqiu?'%':''}</span></p>
+                        <span>{$teamStats.0[$item]}{$key==0&&!$islanqiu?'%':''}</span></p>
                     <p class="center">{$namelist[$key]}</p>
                     <p class="right">
-                        <span>{$teamStats.1[$item]}{$key==0&&$islanqiu?'%':''}</span><i <?php echo getstyle($teamStats[1][$item],$teamStats[0][$item]) ?>
+                        <span>{$teamStats.1[$item]}{$key==0&&!$islanqiu?'%':''}</span><i <?php echo getstyle($teamStats[1][$item],$teamStats[0][$item]) ?>
                         ></i></p>
                 </div>
                 {/foreach}
