@@ -52,7 +52,7 @@ class Lanqiu extends BaseController
 //        }
 
         $videoModel = new MatchVedio();
-        $matchId = BasketballMatch::where("competition_id",$compid)->column("id");
+        $matchId = BasketballMatch::where("competition_id",$compid)->limit(200)->order('id','DESC')->column("id");
         //录像
         $luxiang = $videoModel->getByMatchId($matchId,1,self::MainLimit,2);
         //集锦

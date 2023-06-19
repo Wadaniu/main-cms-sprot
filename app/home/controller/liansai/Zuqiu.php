@@ -52,7 +52,7 @@ class Zuqiu extends BaseController
 
 
         $videoModel = new MatchVedio();
-        $matchId = FootballMatch::where("competition_id",$compid)->column("id");
+        $matchId = FootballMatch::where("competition_id",$compid)->limit(200)->order('id','DESC')->column("id");
         //录像
         $luxiang = $videoModel->getByMatchId($matchId,0,self::MainLimit,2);
         //集锦
