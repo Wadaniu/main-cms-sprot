@@ -134,6 +134,10 @@ class FootballTeam extends Model
      */
     public function getShortNameZhLogo($id){
 
+        if (empty($id)){
+            return '';
+        }
+
         $limit = 3000;
         $k = intval($id/3000);
         $key = self::$CACHE_SHORT_NAME_ZH.$k;

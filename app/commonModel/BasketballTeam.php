@@ -129,6 +129,9 @@ class BasketballTeam extends Model
      * 根据ID缓存球队信息，取数据每3000取一次去缓存
      */
     public function getShortNameZhLogo($id){
+        if (empty($id)){
+            return '';
+        }
         $limit = 3000;
         $k = intval($id/3000);
         $key = self::$CACHE_SHORT_NAME_ZH.$k;
