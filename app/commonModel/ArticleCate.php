@@ -78,16 +78,16 @@ class ArticleCate extends Model
     */
     public function delArticleCateById($id,$type=0)
     {
-		if($type==0){
-			//逻辑删除
-			try {
-				$this->where('id', $id)->update(['delete_time'=>time()]);
-				add_log('delete', $id);
-			} catch(\Exception $e) {
-				return to_assign(1, '操作失败，原因：'.$e->getMessage());
-			}
-		}
-		else{
+//		if($type==0){
+//			//逻辑删除
+//			try {
+//				$this->where('id', $id)->update(['delete_time'=>time()]);
+//				add_log('delete', $id);
+//			} catch(\Exception $e) {
+//				return to_assign(1, '操作失败，原因：'.$e->getMessage());
+//			}
+//		}
+//		else{
 			//物理删除
 			try {
 				$this->where('id', $id)->delete();
@@ -95,7 +95,7 @@ class ArticleCate extends Model
 			} catch(\Exception $e) {
 				return to_assign(1, '操作失败，原因：'.$e->getMessage());
 			}
-		}
+		//}
 		return to_assign();
     }
 

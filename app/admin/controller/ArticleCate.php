@@ -36,21 +36,25 @@ class ArticleCate extends BaseController
     {
         if (request()->isAjax()) {
             $list = Db::table("fb_article_cate")
-                ->alias('a')
-                ->join('fb_comp_sort b', 'a.competition_id = b.comp_id', 'LEFT')->field("a.*,b.comp_id,b.type")
                 ->select()
                 ->toArray()
             ;
             $foot = new FootballCompetition();
             $bas = new BasketballCompetition();
+            $footcate = (new \app\commonModel\ArticleCate())->where("pid",1)->column("id");
+            $footcate[] = 1;
             foreach ($list as &$v){
                 $v['competition_title'] = '';
-                if($v['type']=='0'){
-                    $football = $foot->getShortNameZh($v['comp_id']);
-                    $v['competition_title']="足球:".$football['name_zh']."（简称：".$football['short_name_zh']."）";
-                }elseif ($v['type']=='1'){
-                    $basketball = $bas->getShortNameZh($v['comp_id']);
-                    $v['competition_title']="蓝球:".$basketball['name_zh']."（简称：".$basketball['short_name_zh']."）";
+                if(in_array($v['id'],$footcate)){
+                    $football = $foot->getShortNameZh($v['competition_id']);
+                    if($football){
+                        $v['competition_title']="足球:".$football['name_zh']."（简称：".$football['short_name_zh']."）";
+                    }
+                }else{
+                    $basketball = $bas->getShortNameZh($v['competition_id']);
+                    if($basketball){
+                        $v['competition_title']="蓝球:".$basketball['name_zh']."（简称：".$basketball['short_name_zh']."）";
+                    }
                 }
             }
             return to_assign(0, '', $list);
