@@ -45,7 +45,8 @@ $(function () {
 
     $(".nodata").each(function (i, item) {
         if ($(item).children().length == 0) {
-            $(item).append("<p class=nodata>暂无数据</p>")
+            let txt = $(item).parents('.model').find('.tit').text();
+            $(item).append(`<p class=nodata>近期暂无${txt}</p>`)
         }
     })
 
