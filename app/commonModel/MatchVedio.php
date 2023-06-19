@@ -13,16 +13,16 @@ class MatchVedio extends Model
         if ($limit > 0){
             $query->limit($limit);
         }
-        $data = $query->select()->toArray();
+        $data = $query->order('id','desc')->select()->toArray();
 
         $res = [];
         foreach ($data as $item){
             if ($video_type == 0){
-                $compId = FootballMatch::where('id',$item['match_id'])->order('id','desc')->value('competition_id');
+                $compId = FootballMatch::where('id',$item['match_id'])->value('competition_id');
                 $compInfo = (new FootballCompetition())->getShortNameZh($compId);
                 $item['sphere_type'] = 'zuqiu';
             }else{
-                $compId = BasketballMatch::where('id',$item['match_id'])->order('id','desc')->value('competition_id');
+                $compId = BasketballMatch::where('id',$item['match_id'])->value('competition_id');
                 $compInfo = (new BasketballCompetition())->getShortNameZh($compId);
                 $item['sphere_type'] = 'lanqiu';
             }
