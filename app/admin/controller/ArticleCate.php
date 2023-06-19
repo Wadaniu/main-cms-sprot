@@ -43,17 +43,25 @@ class ArticleCate extends BaseController
             ;
             $foot = new FootballCompetition();
             $bas = new BasketballCompetition();
+            $data = [];
+            $footcate = (new \app\commonModel\ArticleCate())->getFootCate();
+            $bascate = (new \app\commonModel\ArticleCate())->getBasketCate();
+            //var_dump($footcate,$bascate,$list);
             foreach ($list as &$v){
                 $v['competition_title'] = '';
-                if($v['type']=='0'){
+                if($v['type']=='0' && in_array($v['id'],$footcate)){
                     $football = $foot->getShortNameZh($v['comp_id']);
                     $v['competition_title']="足球:".$football['name_zh']."（简称：".$football['short_name_zh']."）";
-                }elseif ($v['type']=='1'){
+                    $data[] = $v;
+                }elseif ($v['type']=='1' && in_array($v['id'],$bascate)){
                     $basketball = $bas->getShortNameZh($v['comp_id']);
                     $v['competition_title']="蓝球:".$basketball['name_zh']."（简称：".$basketball['short_name_zh']."）";
+                    $data[] = $v;
+                }elseif($v['type']==null){
+                    $data[] = $v;
                 }
             }
-            return to_assign(0, '', $list);
+            return to_assign(0, '', $data);
         }
         else{
             return view();
