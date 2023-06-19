@@ -57,6 +57,9 @@ class Lanqiu extends BaseController
         list($matchLive,$competition_id) = getMatchVedioById($matchId);
         //处理tdk关键字
         $this->tdk->title = $matchLive['title'];
+        $this->tdk->short_name_zh = $matchLive['short_name_zh'];
+        $this->tdk->home_team_name = $matchLive['team']['home_team']['name_zh']??'';
+        $this->tdk->away_team_name = $matchLive['team']['away_team']['name_zh']??'';
         View::assign("matchLive",$matchLive);
         $this->getTempPath("luxiang_lanqiu_detail");
         $this->getTdk('luxiang_lanqiu_detail',$this->tdk);

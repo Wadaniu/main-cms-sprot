@@ -64,6 +64,9 @@ class Zuqiu extends BaseController
         list($matchLive,$competition_id) = getMatchVedioById($matchId);
         //print_r($competition_id);exit;
         $this->tdk->title = $matchLive['title'];
+        $this->tdk->short_name_zh = $matchLive['short_name_zh'];
+        $this->tdk->home_team_name = $matchLive['team']['home_team']['name_zh']??'';
+        $this->tdk->away_team_name = $matchLive['team']['away_team']['name_zh']??'';
         $this->getTempPath("luxiang_zuqiu_detail");
         $this->getTdk('luxiang_zuqiu_detail',$this->tdk);
 
