@@ -24,7 +24,7 @@
                         {/if}
                         {foreach $row.teamArr as $t}
                             {if $t.id!=0}
-                                <a href="/qiudui-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$t.id}.html" target="_blank">{$t.short_name_zh}</a>
+                                <a href="/qiudui-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$t.id}" target="_blank">{$t.short_name_zh}</a>
                             {/if}
                         {/foreach}
                     </p>
