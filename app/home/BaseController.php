@@ -125,7 +125,8 @@ abstract class BaseController
                 if (in_array('date',$tempArr)){
                     $replace = date($tempArr[1],time());
                 }else{
-                    $replace = date($tempArr[1],$tdkObj->$temp);
+                    $tempName = $tempArr[0];
+                    $replace = date($tempArr[1],$tdkObj->$tempName);
                 }
             }
 
