@@ -489,7 +489,7 @@ class FootballMatch extends Model
         return $data;
     }
 
-    public function getByTeam($id)
+    public function getByTeam($id,$where = [],$order = 'match_time ASC',$limit = 5)
     {
         $key = 'footballTeamMatch'.$id;
         $data = Cache::store('common_redis')->get($key);
@@ -497,22 +497,26 @@ class FootballMatch extends Model
             return $data;
         }
 
-        $data = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time')
-            ->where('match_time','>',time()-6000)
-            ->whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$id,'aid'=>$id])
-            ->order('match_time','ASC')->select()
-            ->each(function ($item, $key) {
+        $query = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time')
+            ->whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$id,'aid'=>$id]);
+
+        if (!empty($where)){
+            $query->where($where);
+        }
+
+        $footballCompetition = new  FootballCompetition();
+        $footballTeam = new  FootballTeam();
+        $data = $query->limit($limit)->order($order)->select()
+            ->each(function ($item, $key)use ($footballCompetition,$footballTeam) {
             if(isset(self::$STATUSID[$item->status_id])){
                 $item->status_text = self::$STATUSID[$item->status_id];
             }
 
-                $footballCompetition = new  FootballCompetition();
                 $comp = $footballCompetition->getShortNameZh($item->competition_id);
                 $item->competition_text = isset($comp['short_name_zh']) && !empty($comp['short_name_zh']) ?
                     $comp['short_name_zh'] : (isset($comp['name_zh']) && !empty($comp['name_zh']) ? $comp['name_zh'] : '');
                 $item->comp_py = $comp['short_name_py']??'';
 
-                $footballTeam = new  FootballTeam();
                 $info = $footballTeam->getShortNameZhLogo($item->home_team_id);
                 $item->home_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');

@@ -35,7 +35,7 @@
             <p class="tit"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
         </div>
         <div class="play-list">
-            {foreach $data as $i=>$team}
+            {volist name="data" id="team" length='20'}
             <p class="play-date">{$team.match_time|date='Y-m-d'}</p>
             <dl class="list-cont nodata">
                 <dd>
@@ -48,7 +48,7 @@
                             class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                 </dd>
             </dl>
-            {/foreach}
+            {/volist}
         </div>
     </div>
     <div class="model">

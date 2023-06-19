@@ -404,29 +404,32 @@ class BasketballMatch extends Model
         return $info;
     }
 
-    public function getByTeam($id)
+    public function getByTeam($id,$where = [],$order = 'match_time ASC',$limit = 5)
     {
-        $redisKey = 'basketballTeamMatch'.$id;
-        $data = Cache::store('common_redis')->get($redisKey);
-        if ($data){
+        $key = 'basketballTeamMatch'.$id;
+        $data = Cache::store('common_redis')->get($key);
+        if(!empty($data)){
             return $data;
         }
 
-        $data = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time')
-            ->where('match_time','>',time()-6000)
-            ->whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$id,'aid'=>$id])
-            ->order('match_time','ASC')->select()
-            ->each(function ($item, $key) {
+        $query = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time')
+                    ->whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$id,'aid'=>$id]);
+
+        if (!empty($where)){
+            $query->where($where);
+        }
+        $basketballCompetition = new  BasketballCompetition();
+        $basketballTeam = new  BasketballTeam();
+        $data = $query->where($limit)->order($order)->select()
+            ->each(function ($item, $key)use ($basketballCompetition,$basketballTeam) {
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];
                 }
-                $basketballCompetition = new  BasketballCompetition();
                 $comp = $basketballCompetition->getShortNameZh($item->competition_id);
                 $item->competition_text = isset($comp['short_name_zh']) && !empty($comp['short_name_zh']) ?
                     $comp['short_name_zh'] : (isset($comp['name_zh']) && !empty($comp['name_zh']) ? $comp['name_zh'] : '');
                 $item->comp_py = $comp['short_name_py']??'';
 
-                $basketballTeam = new  BasketballTeam();
                 $info = $basketballTeam->getShortNameZhLogo($item->home_team_id);
                 $item->home_team_text = isset($info['short_name_zh']) && !empty($info['short_name_zh']) ?
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
@@ -440,7 +443,7 @@ class BasketballMatch extends Model
                 $item->sphere_type="lanqiu";
             })->toArray();
 
-        Cache::store('common_redis')->set($redisKey, $data,120);
+        Cache::store('common_redis')->set($key,$data,120);
         return $data;
     }
 

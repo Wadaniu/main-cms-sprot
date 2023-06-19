@@ -37,10 +37,10 @@
         <div class="hontlink">
             <?php if($typesrc=='liansai'): ?>
             <?php $type=hotlive('liansai'); ?>
-            热门联赛：{volist name="type" id="item" length='20'}<a href="/liansai-{$item.type}/{$item.id}.html" target="_blank">{$item.title}</a>{/volist}
+            热门联赛：{volist name="type" id="item" length='20'}<a href="/liansai-{$item.type}/{$item.id}" target="_blank">{$item.title}</a>{/volist}
             <?php else: ?>
             <?php $type=getHotTeam(); ?>
-            热门球队：{volist name="type" id="item" length='20'}<a href="/qiudui-{$item.sphere_type}/{$item.id}.html" target="_blank">{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</a>{/volist}
+            热门球队：{volist name="type" id="item" length='20'}<a href="/qiudui-{$item.sphere_type}/{$item.id}" target="_blank">{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</a>{/volist}
             <?php endif; ?>
         </div>
 
@@ -54,7 +54,7 @@
     <div class="zt-list">
         <div class="logo-list">
             {foreach $data.data as $key=>$item}
-            <a href="/{$typesrc}-{$item.sphere_type}/{$item.id}.html" target="_blank">
+            <a href="/{$typesrc}-{$item.sphere_type}/{$item.id}" target="_blank">
                 <img src="{$item.logo}" title="{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}">
                 <p>{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</p>
             </a>
