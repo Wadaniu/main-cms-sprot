@@ -1874,7 +1874,7 @@ a.right-btn span {
 }
 
 p.nodata {
-    width: 76%;
+    width: 84%;
     margin: 4% auto;
     padding: 4%;
     border: 3px dashed #ddd;
@@ -1882,6 +1882,10 @@ p.nodata {
     color: #ddd;
     font-size: 2em;
     background-color: #fbfbfb;
+}
+
+.list-cont p.nodata {
+    width: calc(84% + 40px);
 }
 
 .jifen-tab {
