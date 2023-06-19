@@ -12,7 +12,7 @@
             </div>
             <div class="play-list">
                 <dl class="list-cont nodata">
-                    {foreach $data as $i=>$team}
+                    {volist name="data" id="team" length='20'}
                     <dd>
                         <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='m-d H:i'}</p>
                         <p class="type"><a href="/live-{$team.sphere_type}/{$team.comp_py}/" target="_blank">{$team.competition_text}</a></p>
@@ -21,7 +21,7 @@
                         <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
                         <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                     </dd>
-                    {/foreach}
+                    {/volist}
                 </dl>
             </div>
         </div>
