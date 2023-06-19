@@ -267,6 +267,15 @@ i.iconfont {
     padding-bottom: 10px;
 }
 
+.copyright .main .botm-link {
+    padding-bottom: 10px;
+}
+
+.copyright .main .botm-link a {
+    padding-right: 10px;
+    color: var(--main-color);
+}
+
 .copyright .main .link {
     text-align: center;
 }

@@ -1,4 +1,12 @@
 <div id="bottom">
+    <?php if(get_path()==""): ?>
+    <div class="botm-link">
+        友情链接：
+        {foreach :getLink() as $vo}
+        <a href="{$vo.src}" target="_blank">{$vo.name}</a>
+        {/foreach}
+    </div>
+    <?php endif; ?>
     <p class="link">
         <a href="javascript:0">联系我们</a>|<a href="/sitemap.xml">网站地图</a>|<a href="https://beian.miit.gov.cn/" rel="nofollow">{:get_system_config('web','icp')}</a>
     </p>
