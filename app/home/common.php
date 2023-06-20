@@ -85,11 +85,12 @@ function articlePrev($id, $cateId = 0)
         $map[] = ["cate_id", '=', $cateId];
     }
     $map[] = ["id", '<', $id];
+    $map[] = ['delete_time','=',0];
     $article = \think\facade\Db::name('article')
         ->where($map)
         ->field("id,competition_id,title,cate_id")
         ->order("id desc")
-        ->cache(true, 300)
+        //->cache(true, 300)
         ->find();
     if (!$article) {
         return [];
@@ -118,11 +119,12 @@ function articleNext($id, $cateId = 0)
         $map[] = ["cate_id", '=', $cateId];
     }
     $map[] = ["id", '>', $id];
+    $map[] = ['delete_time','=',0];
     $article = \think\facade\Db::name('article')
         ->where($map)
         ->field("id,competition_id,title,cate_id")
         ->order("id asc")
-        ->cache(true, 300)
+        //->cache(true, 300)
         ->find();
     if (!$article) {
         return [];
@@ -381,7 +383,7 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         return $data;
     }
     $model = (new \app\commonModel\Article());
-    $list = $model->where("status", 1);
+    $list = $model->where("status", 1)->where("delete_time",0);
     $foot_cate = (new \app\commonModel\ArticleCate())->getFootCate();
     if ($cate_id) {
         if($cate_id==1){
