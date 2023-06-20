@@ -383,7 +383,7 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         return $data;
     }
     $model = (new \app\commonModel\Article());
-    $list = $model->where("status", 1);
+    $list = $model->where("status", 1)->where("delete_time",0);
     $foot_cate = (new \app\commonModel\ArticleCate())->getFootCate();
     if ($cate_id) {
         if($cate_id==1){
