@@ -85,11 +85,12 @@ function articlePrev($id, $cateId = 0)
         $map[] = ["cate_id", '=', $cateId];
     }
     $map[] = ["id", '<', $id];
+    $map[] = ['delete_time','=',0];
     $article = \think\facade\Db::name('article')
         ->where($map)
         ->field("id,competition_id,title,cate_id")
         ->order("id desc")
-        ->cache(true, 300)
+        //->cache(true, 300)
         ->find();
     if (!$article) {
         return [];
@@ -118,11 +119,12 @@ function articleNext($id, $cateId = 0)
         $map[] = ["cate_id", '=', $cateId];
     }
     $map[] = ["id", '>', $id];
+    $map[] = ['delete_time','=',0];
     $article = \think\facade\Db::name('article')
         ->where($map)
         ->field("id,competition_id,title,cate_id")
         ->order("id asc")
-        ->cache(true, 300)
+        //->cache(true, 300)
         ->find();
     if (!$article) {
         return [];
