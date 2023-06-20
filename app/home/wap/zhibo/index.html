@@ -10,7 +10,7 @@
             <dl class="list-cont">
                 {foreach $item as $i=>$team}
                 <dd>
-                    <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}/">{$team.competition_text}</a></p>
+                    <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}">{$team.competition_text}</a></p>
                     <p class="team"><img src="{$team.home_team_logo}">{$team.home_team_text}</p>
                     <p class="vs">VS</p>
                     <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>

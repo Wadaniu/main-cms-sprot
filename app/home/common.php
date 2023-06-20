@@ -292,7 +292,7 @@ function typeselect(): array
         $typelist[] = [
             'title' => $item['short_name_zh'],
             'py' => '/' . $item['short_name_py'],
-            'src' => (substr($alllink, -1) == '/' ? $alllink : $alllink . '/') . $item['short_name_py'] . '/'
+            'src' => (substr($alllink, -1) == '/' ? $alllink : $alllink . '/') . $item['short_name_py']
         ];
     }
     return $typelist;
