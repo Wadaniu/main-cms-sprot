@@ -224,7 +224,7 @@ function getplaydata($data)
 function moresrc($name)
 {
     $compname = get_params('compname');
-    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu') . ($compname && !strpos($compname, '_') ? $compname : '');
+    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu/') . ($compname && !strpos($compname, '_') ? $compname : '');
 }
 
 function getHistoryMatch(): array
