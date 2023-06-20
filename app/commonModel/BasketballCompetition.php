@@ -68,7 +68,7 @@ class BasketballCompetition extends Model
 			return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }
         Cache::delete(self::$HOT_DATA);
-        Cache::delete(self::$CACHE_SHORT_NAME_ZH);
+        Cache::store('common_redis')->delete(self::$CACHE_SHORT_NAME_ZH);
 		return to_assign(0,'操作成功',['aid'=>$insertId]);
     }
 
@@ -97,7 +97,7 @@ class BasketballCompetition extends Model
         } catch(\Exception $e) {
             return to_assign(1, '操作失败，原因：'.$e->getMessage());
         }
-        Cache::store('common_redis')->delete(self::$HOT_DATA);
+        Cache::delete(self::$HOT_DATA);
         Cache::store('common_redis')->delete(self::$CACHE_SHORT_NAME_ZH);
         return to_assign();
     }
@@ -135,7 +135,7 @@ class BasketballCompetition extends Model
 				return to_assign(1, '操作失败，原因：'.$e->getMessage());
 			}
         Cache::delete(self::$HOT_DATA);
-        Cache::delete(self::$CACHE_SHORT_NAME_ZH);
+        Cache::store('common_redis')->delete(self::$CACHE_SHORT_NAME_ZH);
 		return to_assign();
     }
 
@@ -144,7 +144,7 @@ class BasketballCompetition extends Model
      */
     public function getHotData($limit = 0){
         $key = self::$HOT_DATA;
-        $data = Cache::store('common_redis')->get($key);
+        $data = Cache::get($key);
         if(!empty($data)){
             if ($limit > 0){
                 $data = array_slice($data,0,$limit);
@@ -159,7 +159,7 @@ class BasketballCompetition extends Model
             $item['sphere_type'] = 'lanqiu';
         }
         array_multisort(array_column($data,'sort'),SORT_DESC,$data);
-        Cache::store('common_redis')->set($key,$data);
+        Cache::set($key,$data);
 
         if ($limit > 0){
             $data = array_slice($data,0,$limit);
