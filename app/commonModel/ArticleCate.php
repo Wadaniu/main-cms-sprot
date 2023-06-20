@@ -111,13 +111,13 @@ class ArticleCate extends Model
      * */
     public function getFootCate(){
         $key = "FootballCate";
-        $data = Cache::store('common_redis')->get($key);
+        $data = Cache::store('redis')->get($key);
         if($data){
             return $data;
         }
         $data = self::where("pid",1)->column("id");
         $data[] = 1;
-        Cache::store('common_redis')->set($key,$data,300);
+        Cache::store('redis')->set($key,$data,300);
         return $data;
     }
 
@@ -126,13 +126,13 @@ class ArticleCate extends Model
      * */
     public function getBasketCate(){
         $key = "BasketballCate";
-        $data = Cache::store('common_redis')->get($key);
+        $data = Cache::store('redis')->get($key);
         if($data){
             return $data;
         }
         $data = self::where("pid",2)->column("id");
         $data[] = 2;
-        Cache::store('common_redis')->set($key,$data,300);
+        Cache::store('redis')->set($key,$data,300);
         return $data;
     }
 }
