@@ -83,13 +83,13 @@ i.iconfont {
     margin-right: 70px;
     padding-left: 20px;
     -webkit-mask-position: 20px 0;
-    -webkit-mask-size: auto 40px;
+    -webkit-mask-size: auto 55px;
     -webkit-mask-repeat: no-repeat;
     background-color: var(--main-color);
 }
 
 .head h1.logo img {
-    height: 40px;
+    height: 55px;
     width: auto;
     opacity: 0;
 }
