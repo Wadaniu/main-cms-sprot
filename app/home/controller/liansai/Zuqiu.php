@@ -62,7 +62,7 @@ class Zuqiu extends BaseController
         $articleModel = new Article();
         $article = $articleModel->getListByCompId(0,['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
-        $this->tdk->short_name_zh = $comp->short_name_zh ?? '';
+        $this->tdk->short_name_zh =  empty($comp->short_name_zh) ? ($comp->name_zh ?? '') : $comp->short_name_zh;
         $this->getTdk('liansai_zuqiu_detail',$this->tdk);
         //var_dump($luxiang);die;
         View::assign('data',$matchList);

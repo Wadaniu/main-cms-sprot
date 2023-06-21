@@ -29,6 +29,10 @@ class Index extends BaseController
         $model = new Article();
         $this->tdk->keyword = '';
         if(isset($param['keywords_id']) && $param['keywords_id']){
+            $exist = \app\commonModel\Keywords::where("id",$param['keywords_id'])->find();
+            if(!$exist){
+                throw new \think\exception\HttpException(404, '找不到页面');
+            }
             $aid = \app\commonModel\ArticleKeywords::where("keywords_id",$param['keywords_id'])->column('aid');
             $list = $model->getArticleDatalist(['status'=>1,'delete_time'=>0,'id'=>$aid],$param);
             $this->tdk->keyword = (new \app\commonModel\Keywords())->where("id",$param['keywords_id'])->value('title');
