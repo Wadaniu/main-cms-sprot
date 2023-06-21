@@ -15,7 +15,7 @@
                     {volist name="data" id="team" length='20'}
                     <dd>
                         <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='m-d H:i'}</p>
-                        <p class="type"><a href="/live-{$team.sphere_type}/{$team.comp_py}/" target="_blank">{$team.competition_text}</a></p>
+                        <p class="type"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
                         <p class="team">{$team.home_team_text}<img src="{$team.home_team_logo}"></p>
                         <p class="vs">VS</p>
                         <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>

@@ -224,7 +224,7 @@ function getplaydata($data)
 function moresrc($name)
 {
     $compname = get_params('compname');
-    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu') . ($compname && !strpos($compname, '_') ? $compname : '');
+    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu/') . ($compname && !strpos($compname, '_') ? $compname : '');
 }
 
 function getHistoryMatch(): array
@@ -292,7 +292,7 @@ function typeselect(): array
         $typelist[] = [
             'title' => $item['short_name_zh'],
             'py' => '/' . $item['short_name_py'],
-            'src' => (substr($alllink, -1) == '/' ? $alllink : $alllink . '/') . $item['short_name_py'] . '/'
+            'src' => (substr($alllink, -1) == '/' ? $alllink : $alllink . '/') . $item['short_name_py']
         ];
     }
     return $typelist;
