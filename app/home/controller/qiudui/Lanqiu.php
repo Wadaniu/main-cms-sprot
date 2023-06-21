@@ -61,7 +61,7 @@ class Lanqiu extends BaseController
 //        $articleModel = new Article();
 //        $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
-        $this->tdk->short_name_zh = $team->short_name_zh ?? '';
+        $this->tdk->short_name_zh =  empty($team->short_name_zh) ? ($team->name_zh ?? '') : '';
         $this->getTdk('qiudui_lanqiu_detail',$this->tdk);
 
         $team->competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh($team->competition_id);

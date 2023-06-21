@@ -62,7 +62,7 @@ class Zuqiu extends BaseController
 //        $articleModel = new Article();
 //        $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
-        $this->tdk->short_name_zh = $team->short_name_zh ?? '';
+        $this->tdk->short_name_zh =  empty($team->short_name_zh) ? ($team->name_zh ?? '') : '';
         $this->getTdk('qiudui_zuqiu_detail',$this->tdk);
         //$team = $team->toArray();
         $team->competition = (new \app\commonModel\FootballCompetition())->getShortNameZh($team->competition_id);
