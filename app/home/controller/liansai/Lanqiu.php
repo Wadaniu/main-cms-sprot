@@ -62,7 +62,7 @@ class Lanqiu extends BaseController
         $articleModel = new Article();
         $article = $articleModel->getListByCompId(1,['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
-        $this->tdk->short_name_zh =  empty($comp->short_name_zh) ? ($comp->name_zh ?? '') : '';
+        $this->tdk->short_name_zh =  empty($comp->short_name_zh) ? ($comp->name_zh ?? '') : $comp->short_name_zh;
         $this->getTdk('liansai_lanqiu_detail',$this->tdk);
 
         View::assign('data',$matchList);
