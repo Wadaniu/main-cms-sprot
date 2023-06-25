@@ -42,6 +42,7 @@ class Index extends BaseController
 
         //找出足球的分类以及子分类
         $cateIds = (new \app\commonModel\ArticleCate())->getFootCate();;
+        $title = get_system_config("web",'title');
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = in_array($v['cate_id'],$cateIds)?'zuqiu':'lanqiu';
@@ -52,6 +53,8 @@ class Index extends BaseController
                 $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
+            $list['data'][$k]['desc'] = str_replace('JRS直播',$title,$v['desc']);
+            $list['data'][$k]['desc'] = str_replace('直播吧',$title,$list['data'][$k]['desc']);
         }
         $this->getTdk(self::RouteTag,$this->tdk);
         View::assign("list",$list);

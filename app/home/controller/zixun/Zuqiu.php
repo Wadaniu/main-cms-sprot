@@ -41,6 +41,12 @@ class Zuqiu extends BaseController
         $this->getTempPath('zixun_zuqiu_detail');
 
         $info = $comp->toArray();
+        $title = get_system_config("web",'title');
+        $info['content'] = str_replace('JRS直播',$title,$info['content']);
+        $info['desc'] = str_replace('JRS直播',$title,$info['desc']);
+
+        $info['content'] = str_replace('直播吧',$title,$info['content']);
+        $info['desc'] = str_replace('直播吧',$title,$info['desc']);
         $this->tdk->title = $info['title'];
         $this->tdk->keyword = $info['title'];
         $this->tdk->desc = $info['desc'];
@@ -82,7 +88,7 @@ class Zuqiu extends BaseController
         }else{
             $list = $model->getArticleDatalist(['cate_id'=>$cateIds,'status'=>1,'delete_time'=>0],$param);
         }
-
+        $title = get_system_config("web",'title');
         foreach ($list['data'] as $k=>$v){
             $list['data'][$k]['short_name_zh'] = '';
             $list['data'][$k]['short_name_py'] = 'zuqiu';
@@ -92,6 +98,8 @@ class Zuqiu extends BaseController
                 $list['data'][$k]['short_name_zh'] =$competition['short_name_zh'] ;
                 $list['data'][$k]['short_name_py'] =$competition['short_name_py'] ;
             }
+            $list['data'][$k]['desc'] = str_replace('JRS直播',$title,$v['desc']);
+            $list['data'][$k]['desc'] = str_replace('直播吧',$title,$list['data'][$k]['desc']);
         }
 
         //print_r($list);
