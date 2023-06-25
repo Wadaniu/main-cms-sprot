@@ -21,15 +21,13 @@
     {block name="css"}{/block}
     {block name="style"}{/block}
     {block name="js"}
+    <script>var webcolor="#{:get_system_config('web','webcolor')}";</script>
     <script src="{__JS__}/jquery-1.12.4.min.js"></script>
     <script src="{__JS__}/environment.js"></script>
     <script defer src="{__JS__}/layer/layer.js"></script>
     {/block}
 </head>
 <body>
-<script>
-    var webcolor="{:get_system_config('web','webcolor')}";
-</script>
 <!-- 主体 -->
 {block name="body"}{/block}
 <!-- /主体 -->
