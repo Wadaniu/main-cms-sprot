@@ -95,6 +95,15 @@
 			</td>
 		</tr>
 
+		<tr>
+			<td class="layui-td-gray">主色调</td>
+			<td>
+				<input type="text" lay-verify="required" name="webcolor" autocomplete="off" placeholder="请输入网站主色调"
+					   lay-reqText="请输入网站主色调" class="layui-input" {notempty name="$config.webcolor" }
+					   value="{$config.webcolor}" {/notempty}>
+			</td>
+		</tr>
+
 
 		<tr>
 			<td class="layui-td-gray">版权信息</td>
