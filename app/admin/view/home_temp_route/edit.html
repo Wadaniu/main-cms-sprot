@@ -47,8 +47,8 @@
 			var upload = layui.upload;
 
 			//执行实例
-			var uploadInst = upload.render({
-				elem: '#test1' //绑定元素
+			upload.render({
+				elem: '#uploadWebTemp' //绑定元素
 				,url: '/admin/api/upload' //上传接口
 				,accept:'file'
 				,data:{
@@ -60,13 +60,13 @@
 						return layer.msg(res.msg);
 					}
 					//上传成功
-					$('#temp_AP').attr('value', '/home' + res.data.filepath);
-					console.log(123)
+					$('#web_temp_AP').attr('value', '/home' + res.data.filepath);
 				}
 				,error: function(){
 					//请求异常回调
 				}
 			});
+
 			upload.render({
 				elem: '#uploadWapTemp' //绑定元素
 				,url: '/admin/api/upload' //上传接口

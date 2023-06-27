@@ -66,24 +66,25 @@
 					//请求异常回调
 				}
 			});
+
 			upload.render({
 				elem: '#uploadWapTemp' //绑定元素
-				,url: '/admin/api/upload' //上传接口
-				,accept:'file'
-				,data:{
-					file_type:'weptemp'
+						,url: '/admin/api/upload' //上传接口
+					,accept:'file'
+					,data:{
+				file_type:'weptemp'
+			}
+			,done: function(res){
+				//上传完毕回调
+				if (res.code == 1) {
+					return layer.msg(res.msg);
 				}
-				,done: function(res){
-					//上传完毕回调
-					if (res.code == 1) {
-						return layer.msg(res.msg);
-					}
-					//上传成功
-					$('#wap_temp_AP').attr('value', '/home' + res.data.filepath);
-				}
-				,error: function(){
-					//请求异常回调
-				}
+				//上传成功
+				$('#wap_temp_AP').attr('value', '/home' + res.data.filepath);
+			}
+			,error: function(){
+				//请求异常回调
+			}
 			});
 		});
 				
