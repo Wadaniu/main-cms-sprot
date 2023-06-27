@@ -147,7 +147,7 @@ return [
     ],
     'zixun_zuqiu_detail'=> [
         'route_name'    => '足球资讯详情',
-        'route_path'    =>  '/zixun-zuqiu/[:compname]/[:aid]',
+        'route_path'    =>  '/zixun-zuqiu/[:aid]',
         'keywords'      =>  [
             'title'     =>  '文章标题',
             'keyword'   =>  '文章关键字',
@@ -164,7 +164,7 @@ return [
     ],
     'zixun_lanqiu_detail'=> [
         'route_name'    => '篮球资讯详情',
-        'route_path'    =>  '/zixun-lanqiu/[:compname]/[:aid]',
+        'route_path'    =>  '/zixun-lanqiu/[:aid]',
         'keywords'      =>  [
             'title'     =>  '文章标题',
             'keyword'   =>  '文章关键字',
