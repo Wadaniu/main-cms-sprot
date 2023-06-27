@@ -53,9 +53,11 @@ function get_system_config($name,$key='')
         return $config;
     }
 	else{
-		if($config[$key]){
+		if(isset($config[$key])){
 			return $config[$key];
-		}				
+		}else{
+		    return '';
+        }
 	}
 }
 

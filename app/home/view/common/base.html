@@ -5,6 +5,7 @@
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" sizes="any" mask="" href="{:get_system_config('web','icon')}">
     {block name="meta"}
     <link rel="mobile-prefetch" href=""/>
     {/block}
@@ -20,6 +21,7 @@
     {block name="css"}{/block}
     {block name="style"}{/block}
     {block name="js"}
+    <script>var webcolor="#{:get_system_config('web','webcolor')}";</script>
     <script src="{__JS__}/jquery-1.12.4.min.js"></script>
     <script src="{__JS__}/environment.js"></script>
     <script defer src="{__JS__}/layer/layer.js"></script>
@@ -41,5 +43,10 @@
 </body>
 <!-- 脚本 -->
 {block name="script"}{/block}
+
+<p>
+    {:get_system_config('web','code')}
+</p>
+
 <!-- /脚本 -->
 </html>
