@@ -15,6 +15,7 @@
 <script type="text/html" id="toolbarDemo">
 	<div class="layui-btn-container">
 		<span class="layui-btn layui-btn-sm" lay-event="add" data-title="添加模组配置管理">+ 添加模组配置管理</span>
+		<span class="layui-btn layui-btn-sm" lay-event="edithomecss" data-title="上传客户端css">+ 上传客户端css</span>
 	</div>
 </script>
 
@@ -84,6 +85,10 @@
 		table.on('toolbar(home_temp_route)', function(obj){
 			if (obj.event === 'add') {
 				tool.side("/admin/home_temp_route/add");
+				return false;
+			}
+			if (obj.event === 'edithomecss') {
+				tool.side("/admin/home_temp_route/edithomecss");
 				return false;
 			}
 		});
