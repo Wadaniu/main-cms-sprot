@@ -36,7 +36,7 @@
                 <ul>
                     <?php  $zuqiuZx = getZiXun(1);  ?>
                     {foreach $zuqiuZx as $row}
-                    <li><i class="iconfont icon-zuqiu"></i><a href="/zixun-zuqiu/{$row.short_name_py}/{$row.id}.html" target="_blank">{$row.title}</a></li>
+                    <li><i class="iconfont icon-zuqiu"></i><a href="/zixun-zuqiu/{$row.id}.html" target="_blank">{$row.title}</a></li>
                     {/foreach}
                 </ul>
             </div>
@@ -61,7 +61,7 @@
                 <ul>
                     <?php  $lanqiuZx = getZiXun(2);  ?>
                     {foreach $lanqiuZx as $row}
-                    <li><i class="iconfont icon-lanqiu"></i><a href="/zixun-lanqiu/{$row.short_name_py}/{$row.id}.html" target="_blank">{$row.title}</a></li>
+                    <li><i class="iconfont icon-lanqiu"></i><a href="/zixun-lanqiu/{$row.id}.html" target="_blank">{$row.title}</a></li>
                     {/foreach}
                 </ul>
             </div>

@@ -4,15 +4,11 @@ $(function () {
     }
 
     //获取默认配色
-    $.get('/api/FootballCompetitionCount/info', res => {
-        //let color = `--main-color:${res.data.primary_color};${torgb(res.data.primary_color)}`;
-        let color = `--main-color:#029d94;${torgb('#029d94')}`;
-        if (localStorage.getItem('theme') != color) {
-            $("body").attr('style', color)
-            localStorage.setItem('theme', color)
-        }
-        $(".type-name").text(res.data.short_name_zh)
-    })
+    let color = `--main-color:${webcolor};${torgb(webcolor)}`;
+    if (localStorage.getItem('theme') != color) {
+        $("body").attr('style', color)
+        localStorage.setItem('theme', color)
+    }
 
     if (document.body.scrollHeight < (window.innerHeight || document.documentElement.clientHeight)) {
         $("#bottom").addClass("hold");
@@ -46,7 +42,7 @@ $(function () {
     $(".nodata").each(function (i, item) {
         if ($(item).children().length == 0) {
             let txt = $(item).parents('.model').find('.tit').text();
-            let dom = txt?`<p class=nodata>近期暂无${txt}</p>`:'<p class=nodata>暂无相关数据</p>';
+            let dom = txt ? `<p class=nodata>近期暂无${txt}</p>` : '<p class=nodata>暂无相关数据</p>';
             $(item).append(dom)
         }
     })
