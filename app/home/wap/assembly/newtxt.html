@@ -5,7 +5,7 @@
     <div class="lists">
         <ul class="nodata">
             {foreach $article.data as $i=>$item}
-            <li><a href="/zixun-{$item.cate_id=='1'?'zuqiu':'lanqiu'}/{$item.short_name_py}/{$item.id}.html" title="{$item.title}" >{$item.title}</a></li>
+            <li><a href="/zixun-{$item.cate_id=='1'?'zuqiu':'lanqiu'}/{$item.id}.html" title="{$item.title}" >{$item.title}</a></li>
             {/foreach}
         </ul>
     </div>
