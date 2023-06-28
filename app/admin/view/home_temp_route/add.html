@@ -8,14 +8,22 @@
 			<td><input type="text" name="temp_name" id="temp_name" lay-verify="required" lay-reqText="请完善模板名称" value="" autocomplete="off" placeholder="请输入模板名称" class="layui-input"></td><td class="layui-td-gray-2">模板路径<font>*</font></td>
 			<td><input type="text" name="temp_path" id="temp_path"  lay-verify="required" lay-reqText="请完善模板路径" value="" autocomplete="off" placeholder="请输入模板路径" class="layui-input"></td>
 		</tr>
-				<tr><td class="layui-td-gray-2">模板绝对路径<font>*</font></td>
-			<td><input type="text" name="temp_AP" id="temp_AP" lay-verify="required"  lay-reqText="请完善模板绝对路径" value="" autocomplete="off" placeholder="请输入模板绝对路径" class="layui-input"></td><td colspan='4'></td>
+		<tr>
+			<td class="layui-td-gray-2">PC模板绝对路径<font>*</font></td>
+			<td colspan="4"><input type="text" name="temp_AP" id="web_temp_AP" lay-reqText="请完善PC模板绝对路径" disabled value="" autocomplete="off" placeholder="请输入PC模板绝对路径" class="layui-input"></td>
 		</tr>
 		<tr>
-			<button type="button" class="layui-btn" id="test1">
-				<i class="layui-icon">&#xe67c;</i>上传模板
+			<td class="layui-td-gray-2">移动端模板绝对路径<font>*</font></td>
+			<td colspan="4"><input type="text" name="wap_temp_AP" id="wap_temp_AP" lay-reqText="请完善移动端模板绝对路径" disabled value="" autocomplete="off" placeholder="请输入移动端模板绝对路径" class="layui-input"></td>
+		</tr>
+		<tr>
+			<button type="button" class="layui-btn" id="uploadWebTemp">
+				<i class="layui-icon">&#xe67c;</i>上传PC模板
 			</button>
 			<span style="color:red">(以zip压缩格式上传)</span>
+			<button type="button" class="layui-btn" id="uploadWapTemp">
+				<i class="layui-icon">&#xe67c;</i>上传移动端模板
+			</button>
 		</tr>
 	</table>
 	<div class="pt-3">
@@ -39,12 +47,12 @@
 			var upload = layui.upload;
 
 			//执行实例
-			var uploadInst = upload.render({
-				elem: '#test1' //绑定元素
+			upload.render({
+				elem: '#uploadWebTemp' //绑定元素
 				,url: '/admin/api/upload' //上传接口
 				,accept:'file'
 				,data:{
-					file_type:'temp'
+					file_type:'webtemp'
 				}
 				,done: function(res){
 					//上传完毕回调
@@ -52,11 +60,31 @@
 						return layer.msg(res.msg);
 					}
 					//上传成功
-					$('#temp_AP').attr('value', '/home' + res.data.filepath);
+					$('#web_temp_AP').attr('value', '/home' + res.data.filepath);
 				}
 				,error: function(){
 					//请求异常回调
 				}
+			});
+
+			upload.render({
+				elem: '#uploadWapTemp' //绑定元素
+						,url: '/admin/api/upload' //上传接口
+					,accept:'file'
+					,data:{
+				file_type:'weptemp'
+			}
+			,done: function(res){
+				//上传完毕回调
+				if (res.code == 1) {
+					return layer.msg(res.msg);
+				}
+				//上传成功
+				$('#wap_temp_AP').attr('value', '/home' + res.data.filepath);
+			}
+			,error: function(){
+				//请求异常回调
+			}
 			});
 		});
 				

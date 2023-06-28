@@ -167,6 +167,7 @@
 		var uploadInst = upload.render({
 			elem: '#uploadBtn1',
 			url: "/admin/api/upload",
+			exts:'jpg|png|gif|bmp|jpeg|ico',
 			done: function (res) {
 				if (res.code == 1) {
 					layer.msg('上传失败');
