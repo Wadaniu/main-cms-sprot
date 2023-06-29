@@ -49,7 +49,7 @@ class Api extends BaseController
         $sha1 = $file->hash('sha1');
         $md5 = $file->hash('md5');
         $rule = [
-            'image' => 'jpg,png,jpeg,gif',
+            'image' => 'jpg,png,jpeg,gif,ico',
             'doc' => 'doc,docx,ppt,pptx,xls,xlsx,pdf',
             'file' => 'zip',
             'video' => 'mpg,mp4,mpeg,avi,wmv,mov,flv,m4v',

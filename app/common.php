@@ -818,18 +818,26 @@ if (!function_exists('trim_space')) {
  * @return boolean true|false
 
  */
-function uzip($filename,$toDir){
+function uzip($filename,$toDir,$isDel = false){
     //解压缩 php自带的解压类
     $zip = new \ZipArchive;
     //要解压的文件
-    $zipfile = dirname(__FILE__).$filename;
+    $zipfile = $filename;
     $res = $zip->open($zipfile);
     if($res!==true){
         return false;
     }
+
     if(!file_exists($toDir)) {
         mkdir($toDir,755);
+    }else{
+        if ($isDel){
+            //清空文件夹下目录
+            deldir($toDir);
+            mkdir($toDir,755);
+        }
     }
+
     //获取压缩包中的文件数（含目录）
     $docnum = $zip->numFiles;
     $addonname="";
@@ -854,42 +862,43 @@ function uzip($filename,$toDir){
     return $addonname;
 }
 
-function deldir($path){
+function deldir($dir) {
 
-    //如果是目录则继续
+    //先删除目录下的文件：
 
-    if(is_dir($path)){
-        //扫描一个文件夹内的所有文件夹和文件并返回数组
-        $p = scandir($path);
-        foreach($p as $val){
+    $dh=opendir($dir);
 
-            //排除目录中的.和..
+    while ($file=readdir($dh)) {
 
-            if($val !="." && $val !=".."){
+        if($file!="." && $file!="..") {
 
-                //如果是目录则递归子目录，继续操作
+            $fullpath=$dir."/".$file;
 
-                if(is_dir($path.$val)){
+            if(!is_dir($fullpath)) {
 
-                    //子目录中操作删除文件夹和文件
+                unlink($fullpath);
 
-                    deldir($path.$val.'/');
+            } else {
 
-                    //目录清空后删除空文件夹
-
-                    @rmdir($path.$val.'/');
-
-                }else{
-
-                    //如果是文件直接删除
-
-                    unlink($path.$val);
-
-                }
+                deldir($fullpath);
 
             }
 
         }
+
+    }
+
+    closedir($dh);
+
+    //删除当前文件夹：
+
+    if(rmdir($dir)) {
+
+        return true;
+
+    } else {
+
+        return false;
 
     }
 

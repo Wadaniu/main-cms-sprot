@@ -60,7 +60,7 @@ class HomeTempRoute extends BaseController
             }
 
             //将模板压缩包解压
-            uzip($param['temp_AP'],get_config('filesystem.disks.view_temp.root'));
+            uzip($param['temp_AP'],get_config('filesystem.disks.web_view_temp.root'));
 
             $this->model->addHomeTempRoute($param);
         }else{
@@ -85,8 +85,15 @@ class HomeTempRoute extends BaseController
                 return to_assign(1, $e->getError());
             }
 
-            //将模板压缩包解压
-            uzip($param['temp_AP'],get_config('filesystem.disks.view_temp.root'));
+            if (isset($param['temp_AP']) && !empty($param['temp_AP'])){
+                //将模板压缩包解压
+                uzip($param['temp_AP'],get_config('filesystem.disks.web_view_temp.root'));
+            }
+            if (isset($param['wap_temp_AP']) && !empty($param['wap_temp_AP'])){
+                //将模板压缩包解压
+                uzip($param['temp_AP'],get_config('filesystem.disks.wep_view_temp.root'));
+            }
+
             $this->model->editHomeTempRoute($param);
         }else{
 			$id = isset($param['id']) ? $param['id'] : 0;
@@ -131,5 +138,23 @@ class HomeTempRoute extends BaseController
 		$type = isset($param['type']) ? $param['type'] : 0;
 
         $this->model->delHomeTempRouteById($id,$type);
+   }
+
+   public function edithomecss()
+   {
+       $param = get_params();
+
+       if (request()->isAjax()) {
+
+           if (!isset($param['temp_AP']) || empty($param['temp_AP'])){
+               throw new \think\exception\HttpException(404, '参数错误');
+           }
+
+           //将模板压缩包解压
+           uzip('../public'.$param['temp_AP'],get_config('filesystem.disks.home_css.root'),true);
+           return to_assign();
+       }else{
+           return view();
+       }
    }
 }

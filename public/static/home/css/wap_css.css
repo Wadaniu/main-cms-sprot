@@ -320,8 +320,8 @@ i.iconfont {
 }
 
 .right-btn span {
-    display: inline-block;
-    line-height: 0.52rem;
+    display: flex;
+    align-items: center;
     padding: 0 0.12rem;
     color: var(--main-color);
 }
