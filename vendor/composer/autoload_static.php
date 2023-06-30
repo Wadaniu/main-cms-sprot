@@ -12,6 +12,8 @@ class ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
+        '6ca3f08a814c4fd9d5830fc6808a9488' => __DIR__ . '/..' . '/fukuball/jieba-php/src/vendor/multi-array/MultiArray.php',
+        '4d5ee3c1cc66ee941937c247fe6b7d6e' => __DIR__ . '/..' . '/fukuball/jieba-php/src/vendor/multi-array/Factory/MultiArrayFactory.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
     );
@@ -52,6 +54,7 @@ class ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1
         ),
         'F' => 
         array (
+            'Fukuball\\Jieba\\' => 15,
             'Firebase\\JWT\\' => 13,
         ),
     );
@@ -132,6 +135,10 @@ class ComposerStaticInit00f395ebc27cdffd84aa7754e604fba1
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
+        'Fukuball\\Jieba\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fukuball/jieba-php/src/class',
         ),
         'Firebase\\JWT\\' => 
         array (
