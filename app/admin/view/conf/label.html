@@ -13,7 +13,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="layui-td-gray-3">是否开启联赛、球队标签{$config.liansaiteam}</td>
+			<td class="layui-td-gray-3">是否开启联赛、球队标签</td>
 			<td colspan="3">
 				{empty name="$config.liansaiteam"}
 				<input type="radio" name="liansaiteam" value="1" title="开启" checked>
@@ -24,6 +24,22 @@
 				{/empty}
 			</td>
 		</tr>
+
+		<tr>
+			<td class="layui-td-gray-3">联赛、球队标签是否新开窗口</td>
+			<td colspan="3">
+				{empty name="$config.target"}
+				<input type="radio" name="target" value="1" title="开启" checked>
+				<input type="radio" name="target" value="2" title="不开启">
+				{else/}
+				<input type="radio" name="target" value="1" title="开启"   {if $config.target=='1'} checked="checked" {/if} >
+				<input type="radio" name="target" value="2" title="不开启" {if $config.target=='2'} checked="checked" {/if} >
+				{/empty}
+			</td>
+		</tr>
+
+
+
 	</table>
 	<div class="py-3">
 		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
