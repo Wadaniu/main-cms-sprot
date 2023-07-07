@@ -57,6 +57,7 @@ class Article extends BaseController
     */
     public function add()
     {
+        ini_set('max_execution_time', '0');
         if (request()->isAjax()) {		
 			$param = get_params();	
 			if (isset($param['table-align'])) {
@@ -107,6 +108,7 @@ class Article extends BaseController
     */
     public function edit()
     {
+        ini_set('max_execution_time', '0');
 		$param = get_params();
         $ArticleModel = new ArticleModel();
 		
