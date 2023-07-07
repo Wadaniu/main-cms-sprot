@@ -903,3 +903,18 @@ function deldir($dir) {
     }
 
 }
+
+function str_replace_first($search, $replace, $subject) {
+    $pos = strpos($subject, $search);
+    if ($pos !== false) {
+        $subject = substr_replace($subject, $replace, $pos, strlen($search));
+    }
+    return $subject;
+}
+
+function replace_keyword_outside_html($search, $replace, $subject) {
+    $pattern = "/$search(?![^<>]*>)/i";
+    return preg_replace($pattern, $replace, $subject,1);
+}
+
+

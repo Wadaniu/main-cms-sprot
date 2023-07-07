@@ -170,7 +170,7 @@ class BasketballCompetition extends Model
     /**
      * 中文简称
      */
-    public function getShortNameZh($id){
+    public function getShortNameZh($id,$isAll = false){
         $key = self::$CACHE_SHORT_NAME_ZH;
         $data = Cache::store('common_redis')->get($key);
         if(empty($data)){
@@ -178,12 +178,35 @@ class BasketballCompetition extends Model
             $data = array_column($data,null,'id');
             Cache::store('common_redis')->set($key,$data);
         }
+        if ($isAll){
+            return $data;
+        }
         if(isset($data[$id])){
             return $data[$id];
         }
         return "";
     }
 
+    public function getCacheByName($name = ''){
+
+        if (empty($name)){
+            return false;
+        }
+
+        //获取所有联赛
+        $compList = $this->getShortNameZh(0,true);
+        if(!empty($compList)){
+            $snzIndex = array_column($compList,null,'short_name_zh');
+            if (isset($snzIndex[$name])){
+                return $snzIndex[$name];
+            }
+            $nzIndex = array_column($compList,null,'name_zh');
+            if (isset($nzIndex[$name])){
+                return $nzIndex[$name];
+            }
+        }
+        return false;
+    }
 
     public function autoSync(){
         $url = "/api/v5/basketball/competition/list";
