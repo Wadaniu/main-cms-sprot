@@ -560,10 +560,16 @@ function getKeywords()
  * */
 function replaceTitleWeb($str)
 {
+    $first = '';
+    if(preg_match('/国语/',$str)){
+        $first = '[国语]';
+    }
+    if(preg_match('/原声/',$str)){
+        $first = '[原声]';
+    }
     $start = stripos($str, "[");
     $end = stripos($str, "]")+1;
-    //return $str;
-    return substr_replace($str, '', $start, $end);
+    return $first.substr_replace($str, '', $start, $end);
 
 }
 

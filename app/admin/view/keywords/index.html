@@ -14,10 +14,15 @@
 <script type="text/html" id="status">
 	<i class="layui-icon {{#  if(d.status == 1){ }}layui-icon-ok{{#  } else { }}layui-icon-close{{#  } }}"></i>
 </script>
+<script type="text/html" id="source">
+	<i class="layui-icon {{#  if(d.status == 1){ }}layui-icon-ok{{#  } else { }}layui-icon-close{{#  } }}"></i>
+</script>
 <script type="text/html" id="toolbarDemo">
 	<div class="layui-btn-container">
 	<button class="layui-btn layui-btn-sm" lay-event="add">+ 添加关键字</button>
-		<button class="layui-btn layui-btn-sm" ><a href="/admin/conf/index" style="color: white;">标签设置</a></button>
+		<button class="layui-btn layui-btn-sm" ><a href="/admin/conf/index" style="color: white;">标签配置</a></button>
+		<button class="layui-btn layui-btn-sm" lay-event="batchDel" >批量删除</button>
+		<button class="layui-btn layui-btn-sm" lay-event="batchupload" >批量添加</button>
   </div>
 </script>
 {/block}
@@ -37,7 +42,7 @@
 			page: true, //开启分页				
 			limit: 20,
 			cols: [
-				[{
+				[{ type: 'checkbox' },{
 					field: 'id',
 					width: 80,
 					title: 'ID编号',
@@ -51,6 +56,21 @@
 				}, {
 					field: 'title',
 					title: '关键字名称',
+					edit: "text"
+				}, {
+						field: 'source',
+						title: '来源',
+						edit: "#source",
+						templet(d){
+							if(d.souce==1){
+								return '后台添加';
+							}else{
+								return '程序自动匹配添加';
+							}
+						}
+				},{
+					field: 'herf',
+					title: '跳转链接',
 					edit: "text"
 				}, {
 					field: 'status',
@@ -91,6 +111,32 @@
 		table.on('toolbar(keywords)', function(obj){
 			if (obj.event === 'add') {
 				tool.side("/admin/keywords/add");
+				return;
+			}else if(obj.event === 'batchDel'){
+				var checkData = table.checkStatus(obj.config.id).data;
+				var len = checkData.length;
+				var tables = [];
+				if (len == 0) {
+					layer.msg('请先选择需要删除数据');
+					return false;
+				}
+				for (var i = 0; i < len; i++) {
+					tables.push(checkData[i].id);
+				}
+				$.ajax({
+					url: "/admin/keywords/batch_delete",
+					type: 'post',
+					data: { 'ids': tables },
+					success: function (res) {
+						layer.msg(res.msg);
+						setTimeout(function () {
+							window.location.reload();
+						}, 2000);
+
+					}
+				})
+			}else if(obj.event=='batchupload'){
+				tool.side("/admin/keywords/batchupload");
 				return;
 			}
 		});
