@@ -113,6 +113,7 @@ class Conf extends BaseController
             }
             View::assign('id', $id);
             View::assign('config', $config);
+            //var_dump($config);exit;
             if(isTemplate($template)){
                 return view($conf['name']);
             }else{                

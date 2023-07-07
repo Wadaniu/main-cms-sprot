@@ -169,6 +169,39 @@ class FootballTeam extends Model
         return "";
     }
 
+    public function getTeamCacheByName($teamName = ''){
+        if (empty($teamName)){
+            return false;
+        }
+        //由于team缓存是每3000条分一个缓存，故取出所有team缓存key遍历获取所有team缓存
+        $handler = Cache::store('common_redis')->handler();
+        $keys = $handler->keys('sport_'.self::$CACHE_SHORT_NAME_ZH.'*');
+
+        if (count($keys) <= 0){
+            return false;
+        }
+
+        foreach ($keys as $key){
+            //去掉前缀
+            list($pre,$key) = explode('_',$key);
+            $data = Cache::store('common_redis')->get($key);
+            if(!empty($data)){
+                $snzIndex = array_column($data,null,'short_name_zh');
+                if (isset($snzIndex[$teamName])){
+                    return $snzIndex[$teamName];
+                }
+                $nzIndex = array_column($data,null,'name_zh');
+                if (isset($nzIndex[$teamName])){
+                    return $nzIndex[$teamName];
+                }
+            }
+        }
+
+        //添加关键字及关键字关联
+
+        return false;
+    }
+
     public function sync(){
         $getApiInfo = $this->autoSync(false);
         if($getApiInfo["code"]==0){

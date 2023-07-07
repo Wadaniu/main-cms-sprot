@@ -57,6 +57,14 @@ class Lanqiu extends BaseController
         $info['author'] = Admin::where(['id'=>$info['admin_id']])->find()->toArray();
         $info['pre'] = articlePrev($matchId);
         $info['next'] = articleNext($matchId);
+        $articleKeyWords = ArticleKeywords::alias("a")
+            ->field('a.*,b.title')->where("aid",$matchId)
+            ->join("keywords b"," a.keywords_id=b.id ")
+            ->order("a.id desc")
+            ->limit(5)
+            ->select();
+        ;
+        View::assign('keywords',$articleKeyWords);
         $this->getTdk('zixun_lanqiu_detail',$this->tdk);
         View::assign('article',['data'=>getZiXun(2,$info['competition_id'])]);
         View::assign("info",$info);
