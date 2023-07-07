@@ -10,6 +10,10 @@ use think\facade\Cache;
 
 class ArticleCate extends Model
 {
+
+    const FootballCate = 0;
+    const BasketballCate = 1;
+
     /**
     * 获取分页列表
     * @param $where
@@ -134,6 +138,20 @@ class ArticleCate extends Model
         $data[] = 2;
         Cache::store('redis')->set($key,$data,300);
         return $data;
+    }
+
+    public function judgeCateById($cate_id){
+        $footCate = $this->getFootCate();
+        $basketCate = $this->getBasketCate();
+
+        if (in_array($cate_id,$footCate)){
+            return self::FootballCate;
+        }
+
+        if (in_array($cate_id,$basketCate)){
+            return self::BasketballCate;
+        }
+        return self::FootballCate;
     }
 }
 
