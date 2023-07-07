@@ -17,24 +17,26 @@
         {
             "name": "yunwuxin",
             "email": "448901948@qq.com"
-        }        
+        }
     ],
     "require": {
         "php": ">=7.4",
-        "topthink/framework": "^6.1",
-		"topthink/think-filesystem": "^2.0",
-        "topthink/think-orm": "^2.0",
-        "topthink/think-multi-app": "^1.0",
-        "topthink/think-view": "^1.0",
-        "topthink/think-captcha": "^3.0",
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-xsl": "*",
+        "ext-zip": "*",
+        "firebase/php-jwt": "^6.1",
+        "fukuball/jieba-php": "^0.34.0",
         "phpmailer/phpmailer": "^6.6",
-		"firebase/php-jwt": "^6.1",
-		"symfony/var-exporter": "^5.4",
-      "ext-dom": "*",
-      "ext-xsl": "*",
-      "ext-json": "*",
-      "ext-zip": "*",
-        "fukuball/jieba-php": "^0.34.0"
+        "phpoffice/phpexcel": "^1.8",
+        "phpoffice/phpspreadsheet": "^1.29",
+        "symfony/var-exporter": "^5.4",
+        "topthink/framework": "^6.1",
+        "topthink/think-captcha": "^3.0",
+        "topthink/think-filesystem": "^2.0",
+        "topthink/think-multi-app": "^1.0",
+        "topthink/think-orm": "^2.0",
+        "topthink/think-view": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
@@ -49,7 +51,13 @@
         }
     },
     "config": {
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "platform": {
+            "ext-pcntl": "7.3",
+            "ext-posix": "7.3"
+        }
     },
     "scripts": {
         "post-autoload-dump": [

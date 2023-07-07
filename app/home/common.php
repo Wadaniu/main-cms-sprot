@@ -377,7 +377,8 @@ function getHotComp($limit = 9)
  * */
 function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
 {
-    $key = "zinxun:" . $cate_id . '_' . $limit . "_" . $competition_id;
+    //$key = "zinxun:" . $cate_id . '_' . $limit . "_" . $competition_id;
+    $key = "zinxun:" . $cate_id . '_' . $limit;
     $data = Cache::store('redis')->get($key);
     if ($data) {
         return $data;
@@ -396,7 +397,7 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         }
     }
     if ($competition_id) {
-        $list = $list->where("competition_id", $competition_id);
+        //$list = $list->where("competition_id", $competition_id);
     }
     $data = $list->order("id desc ")
         //->field("id,title,cate_id")
@@ -559,10 +560,16 @@ function getKeywords()
  * */
 function replaceTitleWeb($str)
 {
+    $first = '';
+    if(preg_match('/国语/',$str)){
+        $first = '[国语]';
+    }
+    if(preg_match('/原声/',$str)){
+        $first = '[原声]';
+    }
     $start = stripos($str, "[");
     $end = stripos($str, "]")+1;
-    //return $str;
-    return substr_replace($str, '', $start, $end);
+    return $first.substr_replace($str, '', $start, $end);
 
 }
 

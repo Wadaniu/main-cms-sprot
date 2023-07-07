@@ -47,12 +47,13 @@ class Api extends BaseController
 
         // 获取上传文件的hash散列值
         $sha1 = $file->hash('sha1');
-        $md5 = $file->hash('md5');
+        $md5 = $param['filename']??$file->hash('md5');
         $rule = [
             'image' => 'jpg,png,jpeg,gif,ico',
             'doc' => 'doc,docx,ppt,pptx,xls,xlsx,pdf',
             'file' => 'zip',
             'video' => 'mpg,mp4,mpeg,avi,wmv,mov,flv,m4v',
+            'ico'   =>'ico',
         ];
         $fileExt = $rule['image'] . ',' . $rule['doc'] . ',' . $rule['file'] . ',' . $rule['video'];
         //1M=1024*1024=1048576字节
@@ -74,6 +75,9 @@ class Api extends BaseController
         $dataPath = date('Ym');
         $use = 'thumb';
 
+
+
+
         //判断是否上传模板文件
         if ($file_type == 'temp'){
             $filename = \think\facade\Filesystem::disk('view_temp')->putFile($dataPath, $file, function () use ($md5) {
@@ -81,6 +85,9 @@ class Api extends BaseController
             });
             $path = get_config('filesystem.disks.view_temp.url');
         }else{
+            if(isset($param['filename']) && $param['filename']=='favicon' && isset($param['type']) && $param['type']=='ico'){
+                @unlink($_SERVER['DOCUMENT_ROOT'].get_config('filesystem.disks.public.url'). '/'.$dataPath.'/'.$md5.".ico");
+            }
             $filename = \think\facade\Filesystem::disk('public')->putFile($dataPath, $file, function () use ($md5) {
                 return $md5;
             });
