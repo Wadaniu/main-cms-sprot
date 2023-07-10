@@ -13,6 +13,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Model;
+use think\facade\Db;
 
 // 关键字模型
 class Keywords extends Model
@@ -144,4 +145,144 @@ class Keywords extends Model
         $article['keyword_names'] = $replaceArr;
         return $article;
     }
+
+
+
+    /**
+     * 标签替换步骤
+     * 1：先用标签库
+     * 2：球队、联赛
+     * */
+    public function replaceLabel3A($article){
+
+        //$keyword_names = [];
+
+        $config = get_system_config('label');
+        $amount = $config['amount'];
+        if(intval($amount)<=0){
+            return $article;
+        }
+        $replaceArr = [];
+
+        //keywords标签库开始
+        $keywords = self::where("status",1)->field("title,herf,id")->select();
+        if($keywords){
+            foreach ($keywords->toArray() as $kds){
+                if($amount<=0){
+                    return $article;
+                }
+                if(in_array($kds['title'],$replaceArr)){
+                    continue;
+                }
+
+                //$pos = strpos($article['content'], $kds['title']);
+                $pos = preg_match("/".$kds['title']."/",$article['content']);
+                if ($pos) {
+                    $replaceArr[] = $kds['title'];
+                    $amount-=1;
+                    //$article['content'] = substr_replace($article['content'],$kds['herf'],$pos,strlen($kds['title']));
+                    $article['content'] = replace_keyword_outside_html($kds['title'],$kds['herf'],$article['content']);
+                    $article['keyword_names'][] = [
+                        'keyword'=>$kds['title'],
+                        'replace'=>$kds['herf'],
+                        'souce'=>2,
+                    ];
+                }
+            }
+        }
+        //keywords标签库执行完成
+
+
+        //联赛球队开始
+        $footCate = (new ArticleCate())->getFootCate();
+        if(in_array($article['cate_id'],$footCate)){
+            $compId =  Db::name('comp_sort')
+                ->where("type",0)
+                ->order("sort desc")
+                ->limit($config['rank'])
+                ->column("comp_id");
+            $competition = FootballCompetition::where("id", "in",$compId)
+                ->field("id,name_zh,short_name_zh")
+                ->select()
+                ->toArray();
+            $team = FootballTeam::where("competition_id","in",$compId)
+                ->field("id,name_zh,short_name_zh")
+                ->select()
+                ->toArray();
+        }else{
+            $compId =  Db::name('comp_sort')
+                ->where("type",1)
+                ->order("sort desc")
+                ->limit($config['rank'])
+                ->column("comp_id");
+            $competition = BasketballCompetition::where("id", "in",$compId)
+                ->field("id,name_zh,short_name_zh")
+                ->select()
+                ->toArray();
+            $team = BasketballTeam::where("competition_id","in",$compId)
+                ->field("id,name_zh,short_name_zh")
+                ->select()
+                ->toArray();
+        }
+        foreach ($competition as $com){
+            if($amount<=0){
+                return $article;
+            }
+            if(in_array($com['short_name_zh'],$replaceArr) || $com['short_name_zh']==''){
+                continue;
+            }
+            if($teamKeywords = Keywords::where("title",$com['short_name_zh'])->find()){
+                continue;
+            }
+            $pos = preg_match("/".$com['short_name_zh']."/",$article['content']);
+            if($pos){
+                $replaceArr[] = $com['short_name_zh'];
+                $amount-=1;
+                $link = "/liansai-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
+                $insert = [
+                    'keyword'=>$com['short_name_zh'],
+                    'replace'=>"<a href='".$link."'>".$com['short_name_zh']."</a>",
+                    'souce'=>2,
+                ];
+                $article['content'] = replace_keyword_outside_html($com['short_name_zh'],$insert['replace'],$article['content']);
+                $article['keyword_names'][] = $insert;
+            }
+        }
+
+        //var_dump($compId);exit;
+
+        foreach ($team as $com){
+            if($amount<=0){
+                return $article;
+            }
+            if(in_array($com['short_name_zh'],$replaceArr) || $com['short_name_zh']==''){
+                continue;
+            }
+            if($teamKeywords = Keywords::where("title",$com['short_name_zh'])->find()){
+                continue;
+            }
+            $pos = preg_match("/".$com['short_name_zh']."/",$article['content']);
+            if($pos){
+                $replaceArr[] = $com['short_name_zh'];
+                $amount-=1;
+                $link = "/qiudui-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
+                $insert = [
+                    'keyword'=>$com['short_name_zh'],
+                    'replace'=>"<a href='".$link."'>".$com['short_name_zh']."</a>",
+                    'souce'=>2,
+                ];
+                $article['content'] = replace_keyword_outside_html($com['short_name_zh'],$insert['replace'],$article['content']);
+                $article['keyword_names'][] = $insert;
+            }
+        }
+
+
+        //联赛球队结束
+        return $article;
+    }
+
+
+
+
+
 }

@@ -61,7 +61,7 @@ class Lanqiu extends BaseController
             ->field('a.*,b.title')->where("aid",$matchId)
             ->join("keywords b"," a.keywords_id=b.id ")
             ->order("a.id desc")
-            ->limit(5)
+            //->limit(5)
             ->select();
         ;
         View::assign('keywords',$articleKeyWords);
