@@ -90,7 +90,8 @@ class Article extends Model
 		$insertId = 0;
         try {
             $keywordModel = new Keywords();
-            $param = $keywordModel->replaceLabel2A($param);
+            //$param = $keywordModel->replaceLabel2A($param);
+            $param = $keywordModel->replaceLabel3A($param);
 			$param['create_time'] = time();
 			$insertId = $this->strict(false)->field(true)->insertGetId($param);
 			//关联关键字
@@ -113,7 +114,8 @@ class Article extends Model
         try {
             //调用替换关键字
             $keywordModel = new Keywords();
-            $param = $keywordModel->replaceLabel2A($param);
+            //$param = $keywordModel->replaceLabel2A($param);
+            $param = $keywordModel->replaceLabel3A($param);
             $param['update_time'] = time();
             $this->where('id', $param['id'])->strict(false)->field(true)->update($param);
 			//关联关键字
