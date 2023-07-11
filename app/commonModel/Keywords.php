@@ -191,7 +191,9 @@ class Keywords extends Model
             }
         }
         //keywords标签库执行完成
-
+        if($config['liansaiteam']==2){//不需要匹配联赛球队
+            return $article;
+        }
 
         //联赛球队开始
         $footCate = (new ArticleCate())->getFootCate();
