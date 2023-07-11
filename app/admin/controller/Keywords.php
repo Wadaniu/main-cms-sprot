@@ -98,7 +98,7 @@ class Keywords extends BaseController
         $data['status'] = '-1';
         $data['id'] = $id;
         $data['update_time'] = time();
-        if (Db::name('Keywords')->update($data) !== false) {
+        if (Db::name('Keywords')->where("id",$id)->delete()) {
             add_log('delete', $id, $data);
             return to_assign(0, "删除成功");
         } else {
