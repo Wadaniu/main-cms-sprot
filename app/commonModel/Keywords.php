@@ -200,6 +200,7 @@ class Keywords extends Model
         if(in_array($article['cate_id'],$footCate)){
             $compId =  Db::name('comp_sort')
                 ->where("type",0)
+                ->where("is_hot",1)
                 ->order("sort desc")
                 ->limit($config['rank'])
                 ->column("comp_id");
@@ -214,6 +215,7 @@ class Keywords extends Model
         }else{
             $compId =  Db::name('comp_sort')
                 ->where("type",1)
+                ->where("is_hot",1)
                 ->order("sort desc")
                 ->limit($config['rank'])
                 ->column("comp_id");
