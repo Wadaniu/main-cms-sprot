@@ -37,7 +37,11 @@ class Keywords extends BaseController
             $content = Db::name('Keywords')
                 ->order('id desc')
                 ->where($where)
-                ->paginate($rows, false, ['query' => $param]);
+                ->paginate($rows, false, ['query' => $param])
+                ->toArray();
+            foreach ($content['data'] as &$data){
+                $data['create_time'] = date("Y-m-d H:i:s",$data['create_time']);
+            }
             return table_assign(0, '', $content);
         } else {
             return view();

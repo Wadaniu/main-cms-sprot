@@ -918,3 +918,10 @@ function replace_keyword_outside_html($search, $replace, $subject) {
 }
 
 
+
+function replace_keyword_outside_html2($search, $replace, $subject) {
+    $pattern = "/$search(?![^<>]*>)/i";
+    return preg_replace($pattern, "<font style='font-weight: bold;'>".$replace."</font>", $subject,1);
+}
+
+

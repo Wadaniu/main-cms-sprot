@@ -9,6 +9,7 @@ use think\facade\View;
 use app\commonModel\Article;
 use app\commonModel\FootballCompetition;
 use app\commonModel\BasketballCompetition;
+use app\commonModel\ArticleKeywords;
 
 class Index extends BaseController
 {
@@ -55,6 +56,12 @@ class Index extends BaseController
             }
             $list['data'][$k]['desc'] = str_replace('JRS直播',$title,$v['desc']);
             $list['data'][$k]['desc'] = str_replace('直播吧',$title,$list['data'][$k]['desc']);
+            $list['data'][$k]['label'] = ArticleKeywords::alias("a")
+                ->field('a.*,b.title')->where("aid",$v['id'])
+                ->join("keywords b"," a.keywords_id=b.id ")
+                ->order("a.id desc")
+                ->select();
+            ;
         }
         $this->getTdk(self::RouteTag,$this->tdk);
         View::assign("list",$list);
