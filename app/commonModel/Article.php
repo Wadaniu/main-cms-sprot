@@ -182,7 +182,11 @@ class Article extends Model
     {
         $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
         $order = empty($param['order']) ? 'a.id desc' : $param['order'];
-        $list = self::where($where)->where('delete_time',0)->alias('a')
+        $query = self::where($where)->where('delete_time',0);
+        if ($query->count() <= 0){
+            $query = self::where('delete_time',0);
+        }
+        $list = $query->alias('a')
             ->field('a.id,a.cate_id,a.competition_id,a.title,a.desc,a.origin_url,a.read,a.create_time')
             ->order($order)
             ->paginate($rows, false, ['query' => $param])

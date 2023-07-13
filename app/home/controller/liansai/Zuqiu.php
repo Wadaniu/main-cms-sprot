@@ -45,10 +45,10 @@ class Zuqiu extends BaseController
 
         //直播数据
         $matchModel = new FootballMatch();
-        $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7]],['match_time','>',time()-8000]],[$compid],self::MainLimit,"status_id asc,match_time asc");
-//        if (empty($matchList)){
-//            $matchList = $matchModel->getMatchInfo([['status_id','=',8]],[$compid],self::MainLimit,'match_time desc');
-//        }
+        $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7]],['match_time','>',time()-10000]],[$compid],self::MainLimit,"status_id asc,match_time asc");
+        if (empty($matchList)){
+            $matchList = $matchModel->getMatchInfo([['status_id','=',8]],[$compid],self::MainLimit,'match_time desc');
+        }
 
 
         $videoModel = new MatchVedio();
