@@ -165,7 +165,10 @@ class Keywords extends Model
         $replaceArr = [];
 
         //keywords标签库开始
-        $keywords = self::where("status",1)->field("title,herf,id")->select();
+        $keywords = self::where("status",1)
+            ->field("title,herf,id")
+            ->order("sort desc")
+            ->select();
         if($keywords){
             foreach ($keywords->toArray() as $kds){
                 if($amount<=0){
@@ -180,8 +183,8 @@ class Keywords extends Model
                 if ($pos) {
                     $replaceArr[] = $kds['title'];
                     $amount-=1;
-                    //$article['content'] = substr_replace($article['content'],$kds['herf'],$pos,strlen($kds['title']));
-                    $article['content'] = replace_keyword_outside_html($kds['title'],$kds['herf'],$article['content']);
+                    $link = "<a href='".$kds['herf']."' target='_blank' title='".$kds['title']."'>".$kds['title']."</a>";
+                    $article['content'] = replace_keyword_outside_html2($kds['title'],$link,$article['content']);
                     $article['keyword_names'][] = [
                         'keyword'=>$kds['title'],
                         'replace'=>$kds['herf'],
@@ -191,17 +194,21 @@ class Keywords extends Model
             }
         }
         //keywords标签库执行完成
-
+        if($config['liansaiteam']==2){//不需要匹配联赛球队
+            return $article;
+        }
 
         //联赛球队开始
         $footCate = (new ArticleCate())->getFootCate();
         if(in_array($article['cate_id'],$footCate)){
             $compId =  Db::name('comp_sort')
                 ->where("type",0)
+                ->where("is_hot",1)
                 ->order("sort desc")
                 ->limit($config['rank'])
                 ->column("comp_id");
             $competition = FootballCompetition::where("id", "in",$compId)
+                ->where("status",1)
                 ->field("id,name_zh,short_name_zh")
                 ->select()
                 ->toArray();
@@ -212,10 +219,12 @@ class Keywords extends Model
         }else{
             $compId =  Db::name('comp_sort')
                 ->where("type",1)
+                ->where("is_hot",1)
                 ->order("sort desc")
                 ->limit($config['rank'])
                 ->column("comp_id");
             $competition = BasketballCompetition::where("id", "in",$compId)
+                ->where("status",1)
                 ->field("id,name_zh,short_name_zh")
                 ->select()
                 ->toArray();
@@ -224,54 +233,71 @@ class Keywords extends Model
                 ->select()
                 ->toArray();
         }
+        //处理联赛数据
         foreach ($competition as $com){
-            if($amount<=0){
-                return $article;
-            }
-            if(in_array($com['short_name_zh'],$replaceArr) || $com['short_name_zh']==''){
-                continue;
-            }
-            if($teamKeywords = Keywords::where("title",$com['short_name_zh'])->find()){
-                continue;
-            }
+            //中文简称
             $pos = preg_match("/".$com['short_name_zh']."/",$article['content']);
-            if($pos){
+            if($com['short_name_zh'] && $amount>0 && !in_array($com['short_name_zh'],$replaceArr) && $pos){
                 $replaceArr[] = $com['short_name_zh'];
                 $amount-=1;
                 $link = "/liansai-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
                 $insert = [
                     'keyword'=>$com['short_name_zh'],
-                    'replace'=>"<a href='".$link."'>".$com['short_name_zh']."</a>",
+                    'replace'=>$link,
                     'souce'=>2,
                 ];
-                $article['content'] = replace_keyword_outside_html($com['short_name_zh'],$insert['replace'],$article['content']);
+                $replace = "<a href='".$link."' ".($config['target']==1?" target='_blank'":"")." title='".$com['short_name_zh']."'>".$com['short_name_zh']."</a>";
+                $article['content'] = replace_keyword_outside_html2($com['short_name_zh'],$replace,$article['content']);
                 $article['keyword_names'][] = $insert;
             }
+            //中文全称
+            $pos = preg_match("/".$com['name_zh']."/",$article['content']);
+            if($com['name_zh'] && $amount>0 && !in_array($com['name_zh'],$replaceArr) && $pos){
+                $replaceArr[] = $com['name_zh'];
+                $amount-=1;
+                $link = "/liansai-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
+                $insert = [
+                    'keyword'=>$com['name_zh'],
+                    'replace'=>$link,
+                    'souce'=>2,
+                ];
+                $replace = "<a href='".$link."' ".($config['target']==1?" target='_blank'":"")." title='".$com['name_zh']."'>".$com['name_zh']."</a>";
+                $article['content'] = replace_keyword_outside_html2($com['name_zh'],$replace,$article['content']);
+                $article['keyword_names'][] = $insert;
+            }
+
         }
 
         //var_dump($compId);exit;
 
         foreach ($team as $com){
-            if($amount<=0){
-                return $article;
-            }
-            if(in_array($com['short_name_zh'],$replaceArr) || $com['short_name_zh']==''){
-                continue;
-            }
-            if($teamKeywords = Keywords::where("title",$com['short_name_zh'])->find()){
-                continue;
-            }
             $pos = preg_match("/".$com['short_name_zh']."/",$article['content']);
-            if($pos){
+            if($com['short_name_zh'] && $amount>0 && !in_array($com['short_name_zh'],$replaceArr) && $pos){
                 $replaceArr[] = $com['short_name_zh'];
                 $amount-=1;
                 $link = "/qiudui-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
                 $insert = [
                     'keyword'=>$com['short_name_zh'],
-                    'replace'=>"<a href='".$link."'>".$com['short_name_zh']."</a>",
+                    'replace'=>$link,
                     'souce'=>2,
                 ];
-                $article['content'] = replace_keyword_outside_html($com['short_name_zh'],$insert['replace'],$article['content']);
+                $replace = "<a href='".$link."' ".($config['target']==1?" target='_blank'":"")." title='".$com['short_name_zh']."'>".$com['short_name_zh']."</a>";
+                $article['content'] = replace_keyword_outside_html2($com['short_name_zh'],$replace,$article['content']);
+                $article['keyword_names'][] = $insert;
+            }
+
+            $pos = preg_match("/".$com['name_zh']."/",$article['content']);
+            if($com['name_zh'] && $amount>0 && !in_array($com['name_zh'],$replaceArr) && $pos){
+                $replaceArr[] = $com['name_zh'];
+                $amount-=1;
+                $link = "/qiudui-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
+                $insert = [
+                    'keyword'=>$com['name_zh'],
+                    'replace'=>$link,
+                    'souce'=>2,
+                ];
+                $replace = "<a href='".$link."' ".($config['target']==1?" target='_blank'":"")." title='".$com['name_zh']."'>".$com['name_zh']."</a>";
+                $article['content'] = replace_keyword_outside_html2($com['name_zh'],$replace,$article['content']);
                 $article['keyword_names'][] = $insert;
             }
         }
