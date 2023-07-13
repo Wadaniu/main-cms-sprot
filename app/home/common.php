@@ -223,7 +223,7 @@ function getplaydata($data)
 
 function moresrc($name)
 {
-    $compname = $name == 'zixun' ? '' : get_params('compname');
+    $compname = get_params('compname');
     return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu/') . ($compname && !strpos($compname, '_') ? $compname : '');
 }
 
@@ -493,25 +493,35 @@ function getCompTables($limit = 5, $type = 0, $compId = 0): array
 
 function getLive($limit = 5, $type = 'zuqiu', $compId = 0)
 {
-
+    $origin = true;
     switch ($type) {
         case 'zuqiu':
             $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId, $limit);
+            if (count($data) <= 0) {
+                goto defaultCase;
+            }
             break;
         case 'lanqiu' :
             $data = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId, $limit);
+            if (count($data) <= 0) {
+                goto defaultCase;
+            }
             break;
         default :
+            defaultCase:
             $halfLimit = ceil($limit / 2);
             $basketball = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId, $halfLimit);
             $otherLimit = $limit - count($basketball);
             $football = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId, $otherLimit);
             $data = array_merge($basketball, $football);
+            $origin = false;
             break;
     }
 
-
-    return $data;
+    return [
+        'origin' => $origin,
+        'data' => $data
+    ];
 }
 
 function getMainMatchLive()

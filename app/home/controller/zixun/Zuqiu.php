@@ -9,6 +9,7 @@ use think\facade\View;
 use app\commonModel\Article;
 use app\commonModel\FootballCompetition;
 use app\commonModel\Admin;
+use app\commonModel\ArticleKeywords;
 
 class Zuqiu extends BaseController
 {
@@ -58,6 +59,15 @@ class Zuqiu extends BaseController
         $info['author'] = Admin::where(['id'=>$info['admin_id']])->find()->toArray();
         $info['pre'] = articlePrev($matchId);
         $info['next'] = articleNext($matchId);
+        $articleKeyWords = ArticleKeywords::alias("a")
+            ->field('a.*,b.title')->where("aid",$matchId)
+            ->join("keywords b"," a.keywords_id=b.id")
+            ->order("a.id desc")
+            //->limit(5)
+            ->select();
+        ;
+
+        View::assign('keywords',$articleKeyWords);
         $this->getTdk('zixun_zuqiu_detail',$this->tdk);
         View::assign('article',['data'=>getZiXun(1,$info['competition_id'])]);
 
@@ -100,6 +110,12 @@ class Zuqiu extends BaseController
             }
             $list['data'][$k]['desc'] = str_replace('JRS直播',$title,$v['desc']);
             $list['data'][$k]['desc'] = str_replace('直播吧',$title,$list['data'][$k]['desc']);
+            $list['data'][$k]['label'] = ArticleKeywords::alias("a")
+                ->field('a.*,b.title')->where("aid",$v['id'])
+                ->join("keywords b"," a.keywords_id=b.id ")
+                ->order("a.id desc")
+                ->select();
+            ;
         }
 
         //print_r($list);

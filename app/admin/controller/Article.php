@@ -57,6 +57,7 @@ class Article extends BaseController
     */
     public function add()
     {
+        ini_set('max_execution_time', '0');
         if (request()->isAjax()) {		
 			$param = get_params();	
 			if (isset($param['table-align'])) {
@@ -88,7 +89,7 @@ class Article extends BaseController
             $param['desc'] = @msubstr(checkStrHtml($param['content']), 0, 100, false);
             //截取第一个图片做缩略图
             $param['origin_url'] = get_html_first_imgurl($param['content']);
-            $param['keyword_names'] = str_replace('</p>','',$param['keyword_names']);
+            //$param['keyword_names'] = str_replace('</p>','',$param['keyword_names']);
             if(!isset($param['competition_id']) || !$param['competition_id']){
                 $param['competition_id'] = \app\commonModel\ArticleCate::where("id",$param['cate_id'])->value("competition_id");
             }
@@ -107,6 +108,7 @@ class Article extends BaseController
     */
     public function edit()
     {
+        ini_set('max_execution_time', '0');
 		$param = get_params();
         $ArticleModel = new ArticleModel();
 		

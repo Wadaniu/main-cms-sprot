@@ -166,8 +166,8 @@
 		//icon图标上传
 		var uploadInst = upload.render({
 			elem: '#uploadBtn1',
-			url: "/admin/api/upload",
-			exts:'jpg|png|gif|bmp|jpeg|ico',
+			url: "/admin/api/upload?filename=favicon&type=ico",
+			exts:'ico',
 			done: function (res) {
 				if (res.code == 1) {
 					layer.msg('上传失败');

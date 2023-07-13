@@ -12,6 +12,12 @@
             <div class="cont">
                 {$info.content|raw}
             </div>
+            <div class="keyword" style="text-align: left;margin-bottom: 20px;">
+                <label>相关标签 : </label>
+                {foreach $keywords as $k}
+                <span><a href="/zixun/index_1/{$k.keywords_id}">{$k.title}</a></span>
+                {/foreach}
+            </div>
             <div class="connect">
                 {if !empty($info['pre'])}
                 <span>上一篇：
@@ -24,10 +30,6 @@
                 </span>
                 {/if}
             </div>
-<!--            <div class="keyword">-->
-<!--                <label>标签 : </label>-->
-<!--                <span><a href="">西甲</a></span>-->
-<!--            </div>-->
         </div>
         {include file="assembly/newtxt"/}
     </div>

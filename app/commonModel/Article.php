@@ -27,12 +27,14 @@ class Article extends Model
                 continue;
             }
             $keywords_id = (new Keywords())->increase($value);
-            $insert[] = ['aid' => $aid,
+            $insert[] = [
+                'aid' => $aid,
                 'keywords_id' => $keywords_id,
                 'create_time' => $time,
             ];
         }
         $res = Db::name('ArticleKeywords')->strict(false)->field(true)->insertAll($insert);
+        return $res;
     }
     /**
     * 获取分页列表
@@ -87,12 +89,14 @@ class Article extends Model
     {
 		$insertId = 0;
         try {
+            $keywordModel = new Keywords();
+            //$param = $keywordModel->replaceLabel2A($param);
+            $param = $keywordModel->replaceLabel3A($param);
 			$param['create_time'] = time();
 			$insertId = $this->strict(false)->field(true)->insertGetId($param);
 			//关联关键字
 			if (isset($param['keyword_names']) && $param['keyword_names']) {
-				$keywordArray = explode(',', $param['keyword_names']);
-				$res_keyword = $this->insertKeyword($keywordArray,$insertId);
+				$res_keyword = $this->insertKeyword($param['keyword_names'],$insertId);
 			}
 			add_log('add', $insertId, $param);
         } catch(\Exception $e) {
@@ -108,13 +112,16 @@ class Article extends Model
     public function editArticle($param)
     {
         try {
+            //调用替换关键字
+            $keywordModel = new Keywords();
+            //$param = $keywordModel->replaceLabel2A($param);
+            $param = $keywordModel->replaceLabel3A($param);
             $param['update_time'] = time();
             $this->where('id', $param['id'])->strict(false)->field(true)->update($param);
 			//关联关键字
 			if (isset($param['keyword_names']) && $param['keyword_names']) {
 				\think\facade\Db::name('ArticleKeywords')->where(['aid'=>$param['id']])->delete();
-				$keywordArray = explode(',', $param['keyword_names']);
-				$res_keyword = $this->insertKeyword($keywordArray,$param['id']);
+				$res_keyword = $this->insertKeyword($param['keyword_names'],$param['id']);
 			}
 			add_log('edit', $param['id'], $param);
         } catch(\Exception $e) {

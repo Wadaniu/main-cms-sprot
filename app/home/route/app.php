@@ -33,15 +33,11 @@ Route::get('/zixun/:page?/:keywords_id?', CommonSpace.'\zixun\Index@index')->nam
 Route::get('/liansai-zuqiu/:compid?', CommonSpace.'\liansai\Zuqiu@index')->name('/liansai-zuqiu/');
 //篮球联赛
 Route::get('/liansai-lanqiu/:compid?', CommonSpace.'\liansai\Lanqiu@index')->name('/liansai-lanqiu/');
-//联赛首页
-Route::get('/liansai/:page?/:keyword?', CommonSpace.'\liansai\Index@index')->name('/liansai/');
 
 //足球球队
 Route::get('/qiudui-zuqiu/:teamid?', CommonSpace.'\qiudui\Zuqiu@index')->name('/qiudui-zuqiu/');
 //篮球球队
 Route::get('/qiudui-lanqiu/:teamid?', CommonSpace.'\qiudui\Lanqiu@index')->name('/qiudui-lanqiu/');
-//球队首页
-Route::get('/qiudui/:page?/:keyword?', CommonSpace.'\qiudui\Index@index')->name('/qiudui/');
 
 //篮球积分榜
 Route::get('/jifen-lanqiu/:compname?', CommonSpace.'\jifen\Lanqiu@index')->name('/jifen-lanqiu/');
