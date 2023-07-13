@@ -421,8 +421,9 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
  *录像集锦数据
  * type:1集锦，2录像
  * video_type:0足球，1篮球
+ * source 是否来自本身的联赛相关
  * */
-function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5)
+function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5,$source=true)
 {
     $key = "matchVedio" . $type . "_" . $video_type . "_" . $limit . "_" . $competition_id;
     $data = Cache::store('common_redis')->get($key);
@@ -442,11 +443,16 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5)
     }
     $list->order("a.id desc");
     $data = $list->limit($limit)->select()->toArray();
+
+    if(empty($data) && $competition_id){
+        return getLuxiangJijin($type,$video_type,0,5,false);
+    }
     foreach ($data as $k => $v) {
         $competition = $model->getCompetitionInfo($v);
         $data[$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
         $data[$k]['title'] = replaceTitleWeb($v['title']);
     }
+    $data = ['source'=>$source,'data'=>$data];
     Cache::store('common_redis')->set($key, $data, 300);
     return $data;
 }
