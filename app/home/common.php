@@ -396,7 +396,7 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         }
     }
     if ($competition_id) {
-        $list = $list->where("competition_id", $competition_id);
+        //$list = $list->where("competition_id", $competition_id);
     }
     $data = $list->order("id desc ")
         //->field("id,title,cate_id")
