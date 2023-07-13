@@ -200,7 +200,7 @@ class Article extends Model
                 }else{
                     $comp = (new BasketballCompetition())->getShortNameZh($item->competition_id);
                 }
-                $item->short_name_py = $comp['short_name_py'];
+                $item->short_name_py = $comp['short_name_py']??'';
             })->toArray();
         return $list;
     }

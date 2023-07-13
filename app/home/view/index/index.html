@@ -23,14 +23,14 @@
                 </div>
                 <ul class="cur">
                     <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
-                    {foreach $zuqiuLx as $row}
+                    {foreach $zuqiuLx.data as $row}
                     <li><i class="iconfont icon-zuqiu"></i><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html"
                                                               target="_blank">{$row.title}</a></li>
                     {/foreach}
                 </ul>
                 <ul>
                     <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>
-                    {foreach $zuqiuJj as $row}
+                    {foreach $zuqiuJj.data as $row}
                     <li><i class="iconfont icon-zuqiu"></i><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}.html"
                                                               target="_blank">{$row.title}</a></li>
                     {/foreach}
@@ -51,7 +51,7 @@
                 </div>
                 <ul class="cur">
                     <?php  $lanqiuLx = getLuxiangJijin(2,1);  ?>
-                    {foreach $lanqiuLx as $row}
+                    {foreach $lanqiuLx.data as $row}
                     <li><i class="iconfont icon-lanqiu"></i><a
                             href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html" target="_blank">{$row.title}</a>
                     </li>
@@ -59,7 +59,7 @@
                 </ul>
                 <ul>
                     <?php  $lanqiuJj = getLuxiangJijin(1,1);  ?>
-                    {foreach $lanqiuJj as $row}
+                    {foreach $lanqiuJj.data as $row}
                     <li><i class="iconfont icon-lanqiu"></i><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}.html"
                                                                target="_blank">{$row.title}</a></li>
                     {/foreach}

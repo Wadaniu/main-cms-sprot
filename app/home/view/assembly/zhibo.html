@@ -5,7 +5,7 @@
         <p class="more"><a href="{:moresrc('live')}">更多</a></p>
     </div>
     <dl class="live nodata">
-        {foreach $zbdata as $i=>$item}
+        {foreach $zbdata.data as $i=>$item}
         <dd>
             <p class="info">
                 <a href="/live-{$item.sphere_type}/{$item.comp_py}" target="_blank">{$item.competition_text}</a>

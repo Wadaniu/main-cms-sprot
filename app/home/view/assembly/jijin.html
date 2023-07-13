@@ -6,7 +6,7 @@
     </div>
     <div class="lists">
         <ul class="nodata">
-            {foreach $jjdata as $jj}
+            {foreach $jjdata.data as $jj}
             <li><a href="/{$jj.type=='1'?'jijin':'luxiang'}-{$jj.video_type=='0'?'zuqiu':'lanqiu'}/{$jj.short_name_py}/{$jj.id}.html" title="{$jj.title}" target="_blank">{$jj.title}</a></li>
             {/foreach}
         </ul>

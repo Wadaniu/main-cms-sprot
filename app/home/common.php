@@ -515,9 +515,9 @@ function getLive($limit = 5, $type = 'zuqiu', $compId = 0)
         default :
             defaultCase:
             $halfLimit = ceil($limit / 2);
-            $basketball = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId, $halfLimit);
+            $basketball = (new app\commonModel\BasketballMatch())->getCompetitionListInfo(0, $halfLimit);
             $otherLimit = $limit - count($basketball);
-            $football = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId, $otherLimit);
+            $football = (new app\commonModel\FootballMatch())->getCompetitionListInfo(0, $otherLimit);
             $data = array_merge($basketball, $football);
             $origin = false;
             break;

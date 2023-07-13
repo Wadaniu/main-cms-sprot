@@ -5,7 +5,7 @@
         <p class="more"><a href="{:moresrc('luxiang')}" target="_blank">更多</a></p>
     </div>
     <div class="video nodata">
-        {foreach $lxdata as $i=>$item}
+        {foreach $lxdata.data as $i=>$item}
         <div class="play">
             <a href="/luxiang-{$item.video_type=='0'?'zuqiu':'lanqiu'}/{$item.short_name_py}/{$item.id}.html" rel="nofollow"
                target="_blank">
