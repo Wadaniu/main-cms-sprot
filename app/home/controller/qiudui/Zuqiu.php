@@ -45,7 +45,7 @@ class Zuqiu extends BaseController
 
         //直播数据
         $matchModel = new FootballMatch();
-        $matchList = $matchModel->getByTeam($teamid,[['status_id','IN',[1,2,3,4,5,7]],['match_time','>',time()-10000]]);
+        $matchList = $matchModel->getByTeam($teamid,[['status_id','IN',[1,2,3,4,5,7]],['match_time','>',time()-8000]]);
         if (count($matchList) == 0){
             $matchList = $matchModel->getByTeam($teamid,[['status_id','=',8]],'match_time DESC');
         }
