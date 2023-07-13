@@ -221,10 +221,11 @@ function getplaydata($data)
     return $playdata;
 }
 
-function moresrc($name)
+function moresrc($name, $bool = true)
 {
     $compname = get_params('compname');
-    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu/') . ($compname && !strpos($compname, '_') ? $compname : '');
+    $subdivision = $bool ? ($compname && !strpos($compname, '_') ? $compname : '') : '';
+    return '/' . $name . '-' . (strpos(get_ruleName(), 'zuqiu') ? 'zuqiu/' : 'lanqiu/') . $subdivision;
 }
 
 function getHistoryMatch(): array
@@ -396,7 +397,7 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         }
     }
     if ($competition_id) {
-        $list = $list->where("competition_id", $competition_id);
+        //$list = $list->where("competition_id", $competition_id);
     }
     $data = $list->order("id desc ")
         //->field("id,title,cate_id")
@@ -421,14 +422,13 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
  *录像集锦数据
  * type:1集锦，2录像
  * video_type:0足球，1篮球
- * source 是否来自本身的联赛相关
  * */
-function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5,$source=true)
+function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5, $source = true)
 {
     $key = "matchVedio" . $type . "_" . $video_type . "_" . $limit . "_" . $competition_id;
     $data = Cache::store('common_redis')->get($key);
     if ($data) {
-        return $data;
+        return ['source' => $source, 'data' => $data];
     }
     $model = (new \app\commonModel\MatchVedio());
     $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*");
@@ -444,17 +444,16 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5,$so
     $list->order("a.id desc");
     $data = $list->limit($limit)->select()->toArray();
 
-    if(empty($data) && $competition_id){
-        return getLuxiangJijin($type,$video_type,0,5,false);
+    if (empty($data) && $competition_id) {
+        return getLuxiangJijin($type, $video_type, 0, 5, false);
     }
     foreach ($data as $k => $v) {
         $competition = $model->getCompetitionInfo($v);
         $data[$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
         $data[$k]['title'] = replaceTitleWeb($v['title']);
     }
-    $data = ['source'=>$source,'data'=>$data];
     Cache::store('common_redis')->set($key, $data, 300);
-    return $data;
+    return ['source' => $source, 'data' => $data];
 }
 
 /**
@@ -577,10 +576,16 @@ function getKeywords()
  * */
 function replaceTitleWeb($str)
 {
+    $first = '';
+    if(preg_match('/国语/',$str)){
+        $first = '[国语]';
+    }
+    if(preg_match('/原声/',$str)){
+        $first = '[原声]';
+    }
     $start = stripos($str, "[");
-    $end = stripos($str, "]") + 1;
-    //return $str;
-    return substr_replace($str, '', $start, $end);
+    $end = stripos($str, "]")+1;
+    return $first.substr_replace($str, '', $start, $end);
 
 }
 

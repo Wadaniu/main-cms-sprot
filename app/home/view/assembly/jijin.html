@@ -1,8 +1,12 @@
-<?php $typid=strpos(get_ruleName(), 'zuqiu') ? 0 : (strpos(get_ruleName(), 'lanqiu') ? 1 : ''); $compid=$comp['id']??0; $jjdata=getLuxiangJijin(1,$typid,$compid,5);?>
+<?php
+$typid=strpos(get_ruleName(), 'zuqiu') ? 0 : (strpos(get_ruleName(), 'lanqiu') ? 1 : '');
+$compid=$comp['id']??0;
+$jjdata=getLuxiangJijin(1,$typid,$compid,5);
+?>
 <div class="model">
     <div class="title">
-        <p class="tit"><i class="iconfont icon-jijin"></i><span class="prefix">集锦</span></p>
-        <p class="more"><a href="{:moresrc('jijin')}">更多</a></p>
+        <p class="tit"><i class="iconfont icon-jijin"></i><span class="{$jjdata.source?='prefix'}">{$jjdata.source==false?='热门'}集锦</span></p>
+        <p class="more"><a href="{:moresrc('jijin',$jjdata.source)}">更多</a></p>
     </div>
     <div class="lists">
         <ul class="nodata">
