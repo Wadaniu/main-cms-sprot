@@ -443,6 +443,10 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5)
     }
     $list->order("a.id desc");
     $data = $list->limit($limit)->select()->toArray();
+    if(empty($data) && $competition_id){
+        return getLuxiangJijin($type,$video_type);
+    }
+
     foreach ($data as $k => $v) {
         $competition = $model->getCompetitionInfo($v);
         $data[$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
