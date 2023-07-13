@@ -24,20 +24,26 @@ $(function () {
         })
     })
 
-    let prefix;
-    let curname = $(".category a.cur").text();
-    let cururl = location.pathname;
-    if (curname == "全部") {
-        prefix = cururl.indexOf('zuqiu') > 0 ? '足球' : cururl.indexOf('lanqiu') > 0 ? '篮球' : '';
-    } else if (curname == "") {
-        prefix = "相关";
-    } else {
-        prefix = curname;
-    }
-    $(".prefix").each(function (i, item) {
-        let otitle = $(item).text()
-        $(item).text(prefix + otitle)
-    })
+    // document.addEventListener("error", function (e) {
+    //     var elem = e.target;
+    //     console.log(elem.naturalWidth)
+    // }, true);
+
+
+    // let prefix;
+    // let curname = $(".category a.cur").text();
+    // let cururl = location.pathname;
+    // if (curname == "全部") {
+    //     prefix = cururl.indexOf('zuqiu') > 0 ? '足球' : cururl.indexOf('lanqiu') > 0 ? '篮球' : '';
+    // } else if (curname == "") {
+    //     prefix = "相关";
+    // } else {
+    //     prefix = curname;
+    // }
+    // $(".prefix").each(function (i, item) {
+    //     let otitle = $(item).text()
+    //     $(item).text(prefix + otitle)
+    // })
 
     $(".nodata").each(function (i, item) {
         if ($(item).children().length == 0) {
@@ -70,6 +76,10 @@ $(function () {
         }
         return rgb;
     }
+
+    $(".moredata").click(function (){
+        console.log(123)
+    })
 
     $(window).scroll(function () {
         if ($(document).scrollTop() > 400) {

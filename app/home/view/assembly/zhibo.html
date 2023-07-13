@@ -14,9 +14,9 @@
             <div class="cont">
                 <p class="team">
                     <span><img
-                            src="{$item.home_team_logo}">{$item.home_team_text}</span>
+                            src="{$item.home_team_logo}"><a href="/qiudui-{$item.sphere_type}/{$item.home_team_id}" target="_blank">{$item.home_team_text}</a></span>
                     <span href=""><img
-                            src="{$item.away_team_logo}">{$item.away_team_text}</span>
+                            src="{$item.away_team_logo}"><a href="/qiudui-{$item.sphere_type}/{$item.away_team_id}" target="_blank">{$item.away_team_text}</a></span>
                 </p>
                 <a class="right-btn" target="_blank" href="/live-{$item.sphere_type}/{$item.comp_py}/{$item.id}.html"><i class="iconfont <?php echo getzt($item['status_id'],0,$item['sphere_type']) ?>"></i><span><?php echo getzt($item['status_id'],1,$item['sphere_type']) ?></span></a>
             </div>

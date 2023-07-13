@@ -5,7 +5,7 @@ use think\facade\Route;//引用门面路由类
 const CommonSpace = '\app\home\controller';
 
 //首页
-Route::get('/', 'index/index')->name('/');
+//Route::get('/', 'index/index')->name('/');
 
 //直播足球
 Route::get('/live-zuqiu/:compname?/:matchid?', CommonSpace.'\live\Zuqiu@index')->name('/live-zuqiu/');
@@ -44,3 +44,4 @@ Route::get('/jifen-lanqiu/:compname?', CommonSpace.'\jifen\Lanqiu@index')->name(
 //足球积分榜
 Route::get('/jifen-zuqiu/:compname?', CommonSpace.'\jifen\Zuqiu@index')->name('/jifen-zuqiu/');
 
+Route::get('/:id?', 'index/index')->name('/');
