@@ -85,7 +85,7 @@ function articlePrev($id, $cateId = 0)
         $map[] = ["cate_id", '=', $cateId];
     }
     $map[] = ["id", '<', $id];
-    $map[] = ['delete_time','=',0];
+    $map[] = ['delete_time', '=', 0];
     $article = \think\facade\Db::name('article')
         ->where($map)
         ->field("id,competition_id,title,cate_id")
@@ -97,15 +97,15 @@ function articlePrev($id, $cateId = 0)
     }
 
     $footCate = (new \app\commonModel\ArticleCate())->getFootCate();
-    if (in_array($article['cate_id'],$footCate)) {
-        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh( $article['competition_id']);
-        $article['cate_id'] =1;
+    if (in_array($article['cate_id'], $footCate)) {
+        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh($article['competition_id']);
+        $article['cate_id'] = 1;
     } else {
-        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh( $article['competition_id']);
-        $article['cate_id']=2;
+        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh($article['competition_id']);
+        $article['cate_id'] = 2;
     }
     if (!$competition) {
-        $article['short_name_py'] = in_array($article['cate_id'],$footCate)?'zuqiu':'lanqiu';
+        $article['short_name_py'] = in_array($article['cate_id'], $footCate) ? 'zuqiu' : 'lanqiu';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
@@ -119,7 +119,7 @@ function articleNext($id, $cateId = 0)
         $map[] = ["cate_id", '=', $cateId];
     }
     $map[] = ["id", '>', $id];
-    $map[] = ['delete_time','=',0];
+    $map[] = ['delete_time', '=', 0];
     $article = \think\facade\Db::name('article')
         ->where($map)
         ->field("id,competition_id,title,cate_id")
@@ -130,15 +130,15 @@ function articleNext($id, $cateId = 0)
         return [];
     }
     $footCate = (new \app\commonModel\ArticleCate())->getFootCate();
-    if (in_array($article['cate_id'],$footCate)) {
-        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh( $article['competition_id']);
-        $article['cate_id'] =1;
+    if (in_array($article['cate_id'], $footCate)) {
+        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh($article['competition_id']);
+        $article['cate_id'] = 1;
     } else {
-        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh( $article['competition_id']);
-        $article['cate_id'] =2;
+        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh($article['competition_id']);
+        $article['cate_id'] = 2;
     }
     if (!$competition) {
-        $article['short_name_py'] = in_array($article['cate_id'],$footCate)?'zuqiu':'lanqiu';
+        $article['short_name_py'] = in_array($article['cate_id'], $footCate) ? 'zuqiu' : 'lanqiu';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
@@ -383,15 +383,15 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         return $data;
     }
     $model = (new \app\commonModel\Article());
-    $list = $model->where("status", 1)->where("delete_time",0);
+    $list = $model->where("status", 1)->where("delete_time", 0);
     $foot_cate = (new \app\commonModel\ArticleCate())->getFootCate();
     if ($cate_id) {
-        if($cate_id==1){
-            $list = $list->where("cate_id", 'in',$foot_cate);
-        }else if($cate_id==2){
+        if ($cate_id == 1) {
+            $list = $list->where("cate_id", 'in', $foot_cate);
+        } else if ($cate_id == 2) {
             $basket_cate = (new \app\commonModel\ArticleCate())->getBasketCate();
-            $list = $list->where("cate_id", 'in',$basket_cate);
-        }else{
+            $list = $list->where("cate_id", 'in', $basket_cate);
+        } else {
             $list = $list->where("cate_id", $cate_id);
         }
     }
@@ -404,14 +404,14 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         ->select()
         ->toArray();
     foreach ($data as $k => $v) {
-        $data[$k]['short_name_zh'] = in_array($v['cate_id'],$foot_cate)?'足球':'篮球';;
-        $data[$k]['short_name_py'] = in_array($v['cate_id'],$foot_cate)? 'zuqiu' : 'lanqiu';
+        $data[$k]['short_name_zh'] = in_array($v['cate_id'], $foot_cate) ? '足球' : '篮球';;
+        $data[$k]['short_name_py'] = in_array($v['cate_id'], $foot_cate) ? 'zuqiu' : 'lanqiu';
         $competition = $model->getArticleCompetition($v);
         if ($competition) {
             $data[$k]['short_name_zh'] = $competition['short_name_zh'];
             $data[$k]['short_name_py'] = $competition['short_name_py'];
         }
-        $data[$k]['cate_id'] = in_array($v['cate_id'],$foot_cate)?1:2;
+        $data[$k]['cate_id'] = in_array($v['cate_id'], $foot_cate) ? 1 : 2;
     }
     Cache::store('redis')->set($key, $data, 300);
     return $data;
@@ -422,12 +422,12 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
  * type:1集锦，2录像
  * video_type:0足球，1篮球
  * */
-function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5)
+function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5, $source = true)
 {
     $key = "matchVedio" . $type . "_" . $video_type . "_" . $limit . "_" . $competition_id;
     $data = Cache::store('common_redis')->get($key);
     if ($data) {
-        return ['source'=>$source,'data'=>$data];
+        return ['source' => $source, 'data' => $data];
     }
     $model = (new \app\commonModel\MatchVedio());
     $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*");
@@ -442,13 +442,17 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5)
     }
     $list->order("a.id desc");
     $data = $list->limit($limit)->select()->toArray();
+
+    if (empty($data) && $competition_id) {
+        return getLuxiangJijin($type, $video_type, 0, 5, false);
+    }
     foreach ($data as $k => $v) {
         $competition = $model->getCompetitionInfo($v);
         $data[$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
         $data[$k]['title'] = replaceTitleWeb($v['title']);
     }
     Cache::store('common_redis')->set($key, $data, 300);
-    return ['source'=>$source,'data'=>$data];
+    return ['source' => $source, 'data' => $data];
 }
 
 /**
@@ -572,7 +576,7 @@ function getKeywords()
 function replaceTitleWeb($str)
 {
     $start = stripos($str, "[");
-    $end = stripos($str, "]")+1;
+    $end = stripos($str, "]") + 1;
     //return $str;
     return substr_replace($str, '', $start, $end);
 
