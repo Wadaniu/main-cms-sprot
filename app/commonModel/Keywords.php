@@ -183,8 +183,8 @@ class Keywords extends Model
                 if ($pos) {
                     $replaceArr[] = $kds['title'];
                     $amount-=1;
-                    //$article['content'] = substr_replace($article['content'],$kds['herf'],$pos,strlen($kds['title']));
-                    $article['content'] = replace_keyword_outside_html2($kds['title'],$kds['herf'],$article['content']);
+                    $link = "<a href='".$kds['herf']."' target='_blank' title='".$kds['title']."'>".$kds['title']."</a>";
+                    $article['content'] = replace_keyword_outside_html2($kds['title'],$link,$article['content']);
                     $article['keyword_names'][] = [
                         'keyword'=>$kds['title'],
                         'replace'=>$kds['herf'],
@@ -243,10 +243,11 @@ class Keywords extends Model
                 $link = "/liansai-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
                 $insert = [
                     'keyword'=>$com['short_name_zh'],
-                    'replace'=>"<a href='".$link."' ".($config['target']==1?" target='_blank'":"").">".$com['short_name_zh']."</a>",
+                    'replace'=>$link,
                     'souce'=>2,
                 ];
-                $article['content'] = replace_keyword_outside_html2($com['short_name_zh'],$insert['replace'],$article['content']);
+                $replace = "<a href='".$link."' ".($config['target']==1?" target='_blank'":"")." title='".$com['short_name_zh']."'>".$com['short_name_zh']."</a>";
+                $article['content'] = replace_keyword_outside_html2($com['short_name_zh'],$replace,$article['content']);
                 $article['keyword_names'][] = $insert;
             }
             //中文全称
@@ -257,10 +258,11 @@ class Keywords extends Model
                 $link = "/liansai-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
                 $insert = [
                     'keyword'=>$com['name_zh'],
-                    'replace'=>"<a href='".$link."' ".($config['target']==1?" target='_blank'":"").">".$com['name_zh']."</a>",
+                    'replace'=>$link,
                     'souce'=>2,
                 ];
-                $article['content'] = replace_keyword_outside_html2($com['name_zh'],$insert['replace'],$article['content']);
+                $replace = "<a href='".$link."' ".($config['target']==1?" target='_blank'":"")." title='".$com['name_zh']."'>".$com['name_zh']."</a>";
+                $article['content'] = replace_keyword_outside_html2($com['name_zh'],$replace,$article['content']);
                 $article['keyword_names'][] = $insert;
             }
 
@@ -276,10 +278,11 @@ class Keywords extends Model
                 $link = "/qiudui-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
                 $insert = [
                     'keyword'=>$com['short_name_zh'],
-                    'replace'=>"<a href='".$link."' ".($config['target']==1?" target='_blank'":"").">".$com['short_name_zh']."</a>",
+                    'replace'=>$link,
                     'souce'=>2,
                 ];
-                $article['content'] = replace_keyword_outside_html2($com['short_name_zh'],$insert['replace'],$article['content']);
+                $replace = "<a href='".$link."' ".($config['target']==1?" target='_blank'":"")." title='".$com['short_name_zh']."'>".$com['short_name_zh']."</a>";
+                $article['content'] = replace_keyword_outside_html2($com['short_name_zh'],$replace,$article['content']);
                 $article['keyword_names'][] = $insert;
             }
 
@@ -290,10 +293,11 @@ class Keywords extends Model
                 $link = "/qiudui-".(in_array($article['cate_id'],$footCate)?"zuqiu":"lanqiu")."/".$com['id'];
                 $insert = [
                     'keyword'=>$com['name_zh'],
-                    'replace'=>"<a href='".$link."' ".($config['target']==1?" target='_blank'":"").">".$com['name_zh']."</a>",
+                    'replace'=>$link,
                     'souce'=>2,
                 ];
-                $article['content'] = replace_keyword_outside_html2($com['name_zh'],$insert['replace'],$article['content']);
+                $replace = "<a href='".$link."' ".($config['target']==1?" target='_blank'":"")." title='".$com['name_zh']."'>".$com['name_zh']."</a>";
+                $article['content'] = replace_keyword_outside_html2($com['name_zh'],$replace,$article['content']);
                 $article['keyword_names'][] = $insert;
             }
         }

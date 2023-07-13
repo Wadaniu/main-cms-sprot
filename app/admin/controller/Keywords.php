@@ -21,6 +21,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use \app\commonModel\Keywords as model;
+#use PhpOffice\PhpSpreadsheet\Spreadsheet;
+#use PhpOfficePhpSpreadsheetWriterXlsx;
 
 class Keywords extends BaseController
 {
@@ -135,44 +137,6 @@ class Keywords extends BaseController
      * */
     function batchupload(){
         if(request()->isAjax()){
-//            $icon = get_params("icon");
-//            $inputFileName = $_SERVER['DOCUMENT_ROOT'].$icon;
-//            try {
-//                $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
-//                $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-//                $objPHPExcel = $objReader->load($inputFileName);
-//            } catch(Exception $e) {
-//                die('加载文件发生错误："'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
-//            }
-//            $sheet = $objPHPExcel->getSheet(0);
-//            $data=$sheet->toArray();//该方法读取不到图片 图片需单独处理
-//            $imageFilePath=$_SERVER['DOCUMENT_ROOT'].'/storage/'.date('Ymd').'/';//图片在本地存储的路径
-//            if (! file_exists ( $imageFilePath )) {
-//                mkdir("$imageFilePath", 0777, true);
-//            }
-////处理图片
-//            foreach($sheet->getDrawingCollection() as $img) {
-//                list($startColumn,$startRow)= PHPExcel_Cell::coordinateFromString($img->getCoordinates());//获取图片所在行和列
-//                $imageFileName = $img->getCoordinates() . mt_rand(100, 999);
-//
-//                switch($img->getExtension()) {
-//                    case 'jpg':
-//                        $imageFileName.='.jpg';
-//                        imagejpeg(imagecreatefromjpeg($img->getPath()),$imageFilePath.$imageFileName);
-//                        break;
-//                    case 'gif':
-//                        $imageFileName.='.gif';
-//                        imagegif(imagecreatefromgif($img->getPath()),$imageFilePath.$imageFileName);
-//                        break;
-//                    case 'png':
-//                        $imageFileName.='.png';
-//                        imagepng(imagecreatefrompng($img->getPath()),$imageFilePath.$imageFileName);
-//                        break;
-//                }
-//                $startColumn = $this->ABC2decimal($startColumn);//由于图片所在位置的列号为字母，转化为数字
-//                $data[$startRow-1][$startColumn]=$imageFilePath.$imageFileName;//把图片插入到数组中
-//            }
-//            exit;
             $icon = get_params("icon");
             $info = explode('.', $icon);
             $file_extension = $info[1];
@@ -200,20 +164,19 @@ class Keywords extends BaseController
                 }
                 $rows[]=$rowData;
             }
-           //echo "<pre>";
-            //var_dump($highestRow,$highestColumn,$data,$rows);exit;
-            if(model::where("title",'in',$data)->count()){
-                return to_assign(1, "excel表格中有与数据库相同的数据");
-            }
             $insert = [];
-            foreach ($rows as $d){
-                $insert[]=[
-                    'title'=>$d['A'],
-                    'herf'=>$d['B'],
-                ];
-            }
             Db::startTrans();
             try{
+                foreach ($rows as $d){
+                    if(model::where("title",$d['A'])->find()){
+                        model::where("title",$d['A'])->save(['herf'=>$d['B']]);
+                    }else{
+                        $insert[]=[
+                            'title'=>$d['A'],
+                            'herf'=>$d['B'],
+                        ];
+                    }
+                }
                 model::insertAll($insert);
                 Db::commit();
                 return to_assign(0, "导入成功");
@@ -225,7 +188,6 @@ class Keywords extends BaseController
         }else{
             return view();
         }
-
     }
 
     function ABC2decimal($abc){
@@ -239,6 +201,39 @@ class Keywords extends BaseController
         }
         return $ten;
     }
+
+
+    public function downloadall(){
+        $data = Db::name('keywords')->field("title,herf")->select()->toArray();
+        $data = array_merge(
+            [
+                0=>[
+                    'title'=>'关键字',
+                    'herf'=>'链接',
+                ]
+            ],
+            $data
+        );
+
+        // 创建一份新的Excel文件
+        $spreadsheet = new Spreadsheet();
+
+        // 设置工作表名
+        $spreadsheet->getActiveSheet()->setTitle('标签数据');
+
+        // 将数据写入工作表中
+        $spreadsheet->getActiveSheet()
+            ->fromArray($data, null, 'A1');
+
+        // 保存Excel文件
+        $writer = new Xlsx($spreadsheet);
+        $fileName = date("Ymd").'标签数据.xlsx';
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
+        exit;
+    }
+
+
 
 
 
