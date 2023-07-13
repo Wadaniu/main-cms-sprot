@@ -428,7 +428,7 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5,$so
     $key = "matchVedio" . $type . "_" . $video_type . "_" . $limit . "_" . $competition_id;
     $data = Cache::store('common_redis')->get($key);
     if ($data) {
-        return $data;
+        return ['source'=>$source,'data'=>$data];
     }
     $model = (new \app\commonModel\MatchVedio());
     $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*");
@@ -452,9 +452,8 @@ function getLuxiangJijin($type, $video_type, $competition_id = 0, $limit = 5,$so
         $data[$k]['short_name_py'] = empty($competition['competition']) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['competition']['short_name_py'];
         $data[$k]['title'] = replaceTitleWeb($v['title']);
     }
-    $data = ['source'=>$source,'data'=>$data];
     Cache::store('common_redis')->set($key, $data, 300);
-    return $data;
+    return ['source'=>$source,'data'=>$data];
 }
 
 /**
