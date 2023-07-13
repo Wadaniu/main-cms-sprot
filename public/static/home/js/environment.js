@@ -30,20 +30,20 @@ $(function () {
     // }, true);
 
 
-    // let prefix;
-    // let curname = $(".category a.cur").text();
-    // let cururl = location.pathname;
-    // if (curname == "全部") {
-    //     prefix = cururl.indexOf('zuqiu') > 0 ? '足球' : cururl.indexOf('lanqiu') > 0 ? '篮球' : '';
-    // } else if (curname == "") {
-    //     prefix = "相关";
-    // } else {
-    //     prefix = curname;
-    // }
-    // $(".prefix").each(function (i, item) {
-    //     let otitle = $(item).text()
-    //     $(item).text(prefix + otitle)
-    // })
+    let prefix;
+    let curname = $(".category a.cur").text();
+    let cururl = location.pathname;
+    if (curname == "全部") {
+        prefix = cururl.indexOf('zuqiu') > 0 ? '足球' : cururl.indexOf('lanqiu') > 0 ? '篮球' : '';
+    } else if (curname == "") {
+        prefix = "相关";
+    } else {
+        prefix = curname;
+    }
+    $(".prefix").each(function (i, item) {
+        let otitle = $(item).text()
+        $(item).text(prefix + otitle)
+    })
 
     $(".nodata").each(function (i, item) {
         if ($(item).children().length == 0) {
