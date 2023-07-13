@@ -921,7 +921,13 @@ function replace_keyword_outside_html($search, $replace, $subject) {
 
 function replace_keyword_outside_html2($search, $replace, $subject) {
     $pattern = "/$search(?![^<>]*>)/i";
-    return preg_replace($pattern, "<font style='font-weight: bold;'>".$replace."</font>", $subject,1);
+    $config = get_system_config('label');
+    if($config['bold']=='1'){
+        return preg_replace($pattern, "<font style='font-weight: bold;'>".$replace."</font>", $subject,1);
+    }else{
+        return preg_replace($pattern, $replace, $subject,1);
+    }
+
 }
 
 
