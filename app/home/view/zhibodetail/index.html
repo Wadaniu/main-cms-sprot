@@ -27,9 +27,9 @@
     <!--    </div>-->
     <div class="play match-info">
         <div class="team">
-            <p class="name">{$analysis.info.home_team_text}<span>({$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]})</span>
+            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank">{$analysis.info.home_team_text}</a><span>({$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]})</span>
             </p>
-            <p class="team-logo"><img src="{$analysis.info.home_team_logo}"></p>
+            <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank"><img src="{$analysis.info.home_team_logo}"></a></p>
         </div>
         <div class="info">
             <p>{$analysis.info.status_text}</p>
@@ -37,8 +37,8 @@
             <p>{$analysis.info.match_time|date='Y-m-d H:i'}</p>
         </div>
         <div class="team">
-            <p class="team-logo"><img src="{$analysis.info.away_team_logo}"></p>
-            <p class="name">{$analysis.info.away_team_text}<span>({$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]})</span>
+            <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank"><img src="{$analysis.info.away_team_logo}"></a></p>
+            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank">{$analysis.info.away_team_text}</a><span>({$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]})</span>
             </p>
         </div>
     </div>

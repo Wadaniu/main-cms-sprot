@@ -85,7 +85,7 @@ function articlePrev($id, $cateId = 0)
         $map[] = ["cate_id", '=', $cateId];
     }
     $map[] = ["id", '<', $id];
-    $map[] = ['delete_time','=',0];
+    $map[] = ['delete_time', '=', 0];
     $article = \think\facade\Db::name('article')
         ->where($map)
         ->field("id,competition_id,title,cate_id")
@@ -97,15 +97,15 @@ function articlePrev($id, $cateId = 0)
     }
 
     $footCate = (new \app\commonModel\ArticleCate())->getFootCate();
-    if (in_array($article['cate_id'],$footCate)) {
-        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh( $article['competition_id']);
-        $article['cate_id'] =1;
+    if (in_array($article['cate_id'], $footCate)) {
+        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh($article['competition_id']);
+        $article['cate_id'] = 1;
     } else {
-        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh( $article['competition_id']);
-        $article['cate_id']=2;
+        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh($article['competition_id']);
+        $article['cate_id'] = 2;
     }
     if (!$competition) {
-        $article['short_name_py'] = in_array($article['cate_id'],$footCate)?'zuqiu':'lanqiu';
+        $article['short_name_py'] = in_array($article['cate_id'], $footCate) ? 'zuqiu' : 'lanqiu';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
@@ -119,7 +119,7 @@ function articleNext($id, $cateId = 0)
         $map[] = ["cate_id", '=', $cateId];
     }
     $map[] = ["id", '>', $id];
-    $map[] = ['delete_time','=',0];
+    $map[] = ['delete_time', '=', 0];
     $article = \think\facade\Db::name('article')
         ->where($map)
         ->field("id,competition_id,title,cate_id")
@@ -130,15 +130,15 @@ function articleNext($id, $cateId = 0)
         return [];
     }
     $footCate = (new \app\commonModel\ArticleCate())->getFootCate();
-    if (in_array($article['cate_id'],$footCate)) {
-        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh( $article['competition_id']);
-        $article['cate_id'] =1;
+    if (in_array($article['cate_id'], $footCate)) {
+        $competition = (new \app\commonModel\FootballCompetition())->getShortNameZh($article['competition_id']);
+        $article['cate_id'] = 1;
     } else {
-        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh( $article['competition_id']);
-        $article['cate_id'] =2;
+        $competition = (new \app\commonModel\BasketballCompetition())->getShortNameZh($article['competition_id']);
+        $article['cate_id'] = 2;
     }
     if (!$competition) {
-        $article['short_name_py'] = in_array($article['cate_id'],$footCate)?'zuqiu':'lanqiu';
+        $article['short_name_py'] = in_array($article['cate_id'], $footCate) ? 'zuqiu' : 'lanqiu';
     } else {
         $article['short_name_py'] = $competition['short_name_py'];
     }
@@ -377,27 +377,26 @@ function getHotComp($limit = 9)
  * */
 function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
 {
-    //$key = "zinxun:" . $cate_id . '_' . $limit . "_" . $competition_id;
-    $key = "zinxun:" . $cate_id . '_' . $limit;
+    $key = "zinxun:" . $cate_id . '_' . $limit . "_" . $competition_id;
     $data = Cache::store('redis')->get($key);
     if ($data) {
         return $data;
     }
     $model = (new \app\commonModel\Article());
-    $list = $model->where("status", 1)->where("delete_time",0);
+    $list = $model->where("status", 1)->where("delete_time", 0);
     $foot_cate = (new \app\commonModel\ArticleCate())->getFootCate();
     if ($cate_id) {
-        if($cate_id==1){
-            $list = $list->where("cate_id", 'in',$foot_cate);
-        }else if($cate_id==2){
+        if ($cate_id == 1) {
+            $list = $list->where("cate_id", 'in', $foot_cate);
+        } else if ($cate_id == 2) {
             $basket_cate = (new \app\commonModel\ArticleCate())->getBasketCate();
-            $list = $list->where("cate_id", 'in',$basket_cate);
-        }else{
+            $list = $list->where("cate_id", 'in', $basket_cate);
+        } else {
             $list = $list->where("cate_id", $cate_id);
         }
     }
     if ($competition_id) {
-        //$list = $list->where("competition_id", $competition_id);
+        $list = $list->where("competition_id", $competition_id);
     }
     $data = $list->order("id desc ")
         //->field("id,title,cate_id")
@@ -405,14 +404,14 @@ function getZiXun($cate_id = 0, $competition_id = 0, $limit = 5)
         ->select()
         ->toArray();
     foreach ($data as $k => $v) {
-        $data[$k]['short_name_zh'] = in_array($v['cate_id'],$foot_cate)?'足球':'篮球';;
-        $data[$k]['short_name_py'] = in_array($v['cate_id'],$foot_cate)? 'zuqiu' : 'lanqiu';
+        $data[$k]['short_name_zh'] = in_array($v['cate_id'], $foot_cate) ? '足球' : '篮球';;
+        $data[$k]['short_name_py'] = in_array($v['cate_id'], $foot_cate) ? 'zuqiu' : 'lanqiu';
         $competition = $model->getArticleCompetition($v);
         if ($competition) {
             $data[$k]['short_name_zh'] = $competition['short_name_zh'];
             $data[$k]['short_name_py'] = $competition['short_name_py'];
         }
-        $data[$k]['cate_id'] = in_array($v['cate_id'],$foot_cate)?1:2;
+        $data[$k]['cate_id'] = in_array($v['cate_id'], $foot_cate) ? 1 : 2;
     }
     Cache::store('redis')->set($key, $data, 300);
     return $data;
@@ -498,13 +497,13 @@ function getLive($limit = 5, $type = 'zuqiu', $compId = 0)
     switch ($type) {
         case 'zuqiu':
             $data = (new app\commonModel\FootballMatch())->getCompetitionListInfo($compId, $limit);
-            if (count($data) <= 0){
+            if (count($data) <= 0) {
                 goto defaultCase;
             }
             break;
         case 'lanqiu' :
             $data = (new app\commonModel\BasketballMatch())->getCompetitionListInfo($compId, $limit);
-            if (count($data) <= 0){
+            if (count($data) <= 0) {
                 goto defaultCase;
             }
             break;
@@ -520,8 +519,8 @@ function getLive($limit = 5, $type = 'zuqiu', $compId = 0)
     }
 
     return [
-        'origin'    =>  $origin,
-        'data'      =>  $data
+        'origin' => $origin,
+        'data' => $data
     ];
 }
 
@@ -572,16 +571,10 @@ function getKeywords()
  * */
 function replaceTitleWeb($str)
 {
-    $first = '';
-    if(preg_match('/国语/',$str)){
-        $first = '[国语]';
-    }
-    if(preg_match('/原声/',$str)){
-        $first = '[原声]';
-    }
     $start = stripos($str, "[");
-    $end = stripos($str, "]")+1;
-    return $first.substr_replace($str, '', $start, $end);
+    $end = stripos($str, "]") + 1;
+    //return $str;
+    return substr_replace($str, '', $start, $end);
 
 }
 

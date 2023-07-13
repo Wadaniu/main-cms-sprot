@@ -1374,6 +1374,10 @@ a.right-btn span {
     text-align: center;
 }
 
+.match-info .team .name a {
+    color: #fff;
+}
+
 .match-info .team .name span {
     font-size: 30px;
     display: block;
@@ -1991,4 +1995,19 @@ p.nodata {
     width: 30px;
     height: 30px;
     object-fit: contain;
+}
+
+.moredata {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 34px;
+    color: var(--main-color);
+    background-color: rgba(var(--main-r), var(--main-g), var(--main-b), 0.2);
+    border-bottom: 1px solid rgba(var(--main-r), var(--main-g), var(--main-b), 0.3);
+}
+
+.moredata i {
+    margin-right: 10px;
 }
