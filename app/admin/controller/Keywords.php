@@ -174,6 +174,7 @@ class Keywords extends BaseController
                         $insert[]=[
                             'title'=>$d['A'],
                             'herf'=>$d['B'],
+                            'create_time'=>time(),
                         ];
                     }
                 }
