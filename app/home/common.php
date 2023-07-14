@@ -347,6 +347,26 @@ function subnav($name)
     return $sublist;
 }
 
+function formatList($list)
+{
+    $formatdata = ['ywj' => [], 'zbz' => [], 'wks' => []];
+    foreach ($list as $i => $item) {
+        $status_name = getzt($item['status_id'], 1, $item['sphere_type']);
+        switch ($status_name) {
+            case '赛前分析':
+                $formatdata['wks'][] = $item;
+                break;
+            case '锦集/录像':
+                $formatdata['ywj'][] = $item;
+                break;
+            case '直播中...':
+                $formatdata['zbz'][] = $item;
+                break;
+        }
+    }
+    return $formatdata;
+}
+
 function getFootballHotComp($limit = 0)
 {
     $Competition = new  \app\commonModel\FootballCompetition();
@@ -577,15 +597,15 @@ function getKeywords()
 function replaceTitleWeb($str)
 {
     $first = '';
-    if(preg_match('/国语/',$str)){
+    if (preg_match('/国语/', $str)) {
         $first = '[国语]';
     }
-    if(preg_match('/原声/',$str)){
+    if (preg_match('/原声/', $str)) {
         $first = '[原声]';
     }
     $start = stripos($str, "[");
-    $end = stripos($str, "]")+1;
-    return $first.substr_replace($str, '', $start, $end);
+    $end = stripos($str, "]") + 1;
+    return $first . substr_replace($str, '', $start, $end);
 
 }
 

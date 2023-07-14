@@ -29,11 +29,19 @@
             </ul>
             <p class="close"><i class="iconfont icon-close"></i></p>
         </div>
+        <div class="category">
+            <a>全部</a>
+            <a>直播中</a>
+            <a>未开赛</a>
+            <a>已完结</a>
+        </div>
         <div class="play-list nodata">
             {foreach $data as $key=>$item}
             <p class="play-date">{$key}</p>
-            <dl class="list-cont">
-                {foreach $item as $i=>$team}
+            <?php $formatdata=formatList($item);?>
+            {foreach $formatdata as $key=>$category}
+            <dl class="list-cont sp">
+                {foreach $category as $i=>$team}
                 <dd>
                     <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}">{$team.competition_text}</a></p>
                     <p class="team"><img src="{$team.home_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" >{$team.home_team_text}</a></p>
@@ -44,6 +52,7 @@
                 </dd>
                 {/foreach}
             </dl>
+            {/foreach}
             {/foreach}
         </div>
     </div>
@@ -128,5 +137,36 @@
         let parents = $(this).parents('.collect-box');
         $(parents).find("ul").removeClass('cur').eq($(this).index()).addClass('cur')
     });
+
+    $(".category a").click(function () {
+        $(this).addClass('cur').siblings().removeClass();
+        switch ($(this).index()) {
+            case 0:
+                $(".list-cont").removeClass('cur')
+                if ($(".list-cont").eq(1).find('.nodata').length == 0) {
+                    $(".list-cont").eq(1).addClass('cur')
+                }
+                if ($(".list-cont").eq(2).find('.nodata').length == 0) {
+                    $(".list-cont").eq(2).addClass('cur')
+                }
+                break;
+            case 1:
+                $(".list-cont").removeClass('cur').eq(1).addClass('cur')
+                break;
+            case 2:
+                $(".list-cont").removeClass('cur').eq(2).addClass('cur')
+                break;
+            case 3:
+                $(".list-cont").removeClass('cur').eq(0).addClass('cur')
+                break;
+        }
+    })
+
+    $(".list-cont").each(function (i, item) {
+        if ($(item).children().length == 0) {
+            $(item).append(`<p class='nodata sp'>暂无相关数据</p>`)
+        }
+        $(".category a").eq(0).trigger('click')
+    })
 </script>
 {/block}
