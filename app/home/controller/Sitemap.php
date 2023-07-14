@@ -37,7 +37,7 @@ class Sitemap
         $articleModel = new Article();
 
         foreach ($basketballComp as $comp){
-            $matchIdArr = $basketballMatchModel->where('match_time','>=',time() - 86400)->where('competition_id',$comp['id'])->column('id');
+            $matchIdArr = $basketballMatchModel->where('match_time','>=',time())->where('competition_id',$comp['id'])->limit(500)->column('id');
             if (empty($matchIdArr)){
                 continue;
             }
@@ -45,7 +45,7 @@ class Sitemap
         }
 
         foreach ($footballComp as $comp){
-            $matchIdArr = $footballMatchModel->where('match_time','>=',time() - 86400)->where('competition_id',$comp['id'])->column('id');
+            $matchIdArr = $footballMatchModel->where('match_time','>=',time())->where('competition_id',$comp['id'])->limit(500)->column('id');
             if (empty($matchIdArr)){
                 continue;
             }
@@ -180,7 +180,7 @@ class Sitemap
                         //联赛录像
                         $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
 
-                        $aids = $articleModel->where('competition_id',$comp['id'])->order('id','desc')->limit(50)->column('id');
+                        $aids = $articleModel->where('competition_id',$comp['id'])->order('id','desc')->limit(500)->column('id');
                         if (empty($aids)){
                             continue;
                         }
@@ -197,7 +197,7 @@ class Sitemap
                         //联赛录像
                         $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
 
-                        $aids = $articleModel->where('competition_id',$comp['id'])->order('id','desc')->limit(50)->column('id');
+                        $aids = $articleModel->where('competition_id',$comp['id'])->order('id','desc')->limit(500)->column('id');
                         if (empty($aids)){
                             continue;
                         }
