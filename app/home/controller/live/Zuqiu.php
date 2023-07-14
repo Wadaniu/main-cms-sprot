@@ -63,10 +63,6 @@ class Zuqiu extends BaseController
         //队伍统计
         $teamStats = is_null($matchInfo['team_stats']) ? [] : json_decode($matchInfo['team_stats'],true);
 
-        //集锦/录像
-        $matchVideoModel = new MatchVedio();
-        $video = $matchVideoModel->getByMatchId($matchId,0);
-
         //处理tdk关键字
         $this->tdk->home_team_name = $analysis['info']['home_team_text'] ?? '';
         $this->tdk->away_team_name = $analysis['info']['away_team_text'] ?? '';
@@ -77,7 +73,6 @@ class Zuqiu extends BaseController
         $matchLive['ball'] = 'zuqiu';
         View::assign("analysis",$analysis);
         View::assign("teamStats",$teamStats);
-        View::assign("video",$video);
         View::assign("matchLive",$matchLive);
         View::assign("comp",['id'=>$analysis['info']['competition_id']]);
     }
