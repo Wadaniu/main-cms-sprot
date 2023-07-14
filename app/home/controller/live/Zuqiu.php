@@ -89,13 +89,13 @@ class Zuqiu extends BaseController
         $footballModel = new FootballMatch();
         if (empty($compName)){
             //篮球数据
-            $data = $footballModel->getCompetitionListInfo(0,0);
+            $data = $footballModel->getCompetitionListInfo(0,50);
             $this->tdk->short_name_zh = '足球';
         }else{
             //获取联赛id
             $comp = FootballCompetition::getByPY($compName);
             //过滤联赛
-            $data = $footballModel->getCompetitionListInfo($comp['id'],0);
+            $data = $footballModel->getCompetitionListInfo($comp['id'],50);
             //tdk关键字
             $this->tdk->short_name_zh = $comp['short_name_zh'];
 
