@@ -63,10 +63,6 @@ class Lanqiu extends BaseController
         //队伍统计
         $players = is_null($matchInfo['players']) ? [] : json_decode($matchInfo['players'],true);
 
-        //集锦/录像
-        $matchVideoModel = new MatchVedio();
-        $video = $matchVideoModel->getByMatchId($matchId,1);
-
         //处理tdk关键字
         $this->tdk->home_team_name = $analysis['info']['home_team_text'] ?? '';
         $this->tdk->away_team_name = $analysis['info']['away_team_text'] ?? '';
@@ -78,7 +74,6 @@ class Lanqiu extends BaseController
         //var_dump($analysis);die;
         View::assign("analysis",$analysis);
         View::assign("players",$players);
-        View::assign("video",$video);
         View::assign("matchLive",$matchLive);
         View::assign("comp",['id'=>$analysis['info']['competition_id']]);
     }
