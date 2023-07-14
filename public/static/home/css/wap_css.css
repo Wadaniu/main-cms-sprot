@@ -389,6 +389,14 @@ a.right-btn span {
     padding: 0 0.2rem;
 }
 
+.list-cont.sp {
+    display: none;
+}
+
+.list-cont.cur {
+    display: block;
+}
+
 .list-cont dd {
     display: flex;
     justify-content: space-between;
@@ -847,8 +855,12 @@ a.right-btn span {
     margin-top: 10%;
 }
 
-.match-info .team-name {
+.match-info .name {
     padding-top: 0.2rem;
+}
+
+.match-info .name a {
+    color: #fff;
 }
 
 .match-info .info {

@@ -89,12 +89,14 @@ class Article extends Model
     {
 		$insertId = 0;
         try {
+            $keywordModel = new Keywords();
+            //$param = $keywordModel->replaceLabel2A($param);
+            $param = $keywordModel->replaceLabel3A($param);
 			$param['create_time'] = time();
 			$insertId = $this->strict(false)->field(true)->insertGetId($param);
 			//关联关键字
 			if (isset($param['keyword_names']) && $param['keyword_names']) {
-				$keywordArray = explode(',', $param['keyword_names']);
-				$res_keyword = $this->insertKeyword($keywordArray,$insertId);
+				$res_keyword = $this->insertKeyword($param['keyword_names'],$insertId);
 			}
 			add_log('add', $insertId, $param);
         } catch(\Exception $e) {
@@ -112,7 +114,8 @@ class Article extends Model
         try {
             //调用替换关键字
             $keywordModel = new Keywords();
-            $param = $keywordModel->replaceLabel2A($param);
+            //$param = $keywordModel->replaceLabel2A($param);
+            $param = $keywordModel->replaceLabel3A($param);
             $param['update_time'] = time();
             $this->where('id', $param['id'])->strict(false)->field(true)->update($param);
 			//关联关键字
@@ -179,7 +182,11 @@ class Article extends Model
     {
         $rows = empty($param['limit']) ? get_config('app.page_size') : $param['limit'];
         $order = empty($param['order']) ? 'a.id desc' : $param['order'];
-        $list = self::where($where)->where('delete_time',0)->alias('a')
+        $query = self::where($where)->where('delete_time',0);
+        if ($query->count() <= 0){
+            $query = self::where('delete_time',0);
+        }
+        $list = $query->alias('a')
             ->field('a.id,a.cate_id,a.competition_id,a.title,a.desc,a.origin_url,a.read,a.create_time')
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
@@ -193,7 +200,7 @@ class Article extends Model
                 }else{
                     $comp = (new BasketballCompetition())->getShortNameZh($item->competition_id);
                 }
-                $item->short_name_py = $comp['short_name_py'];
+                $item->short_name_py = $comp['short_name_py']??'';
             })->toArray();
         return $list;
     }

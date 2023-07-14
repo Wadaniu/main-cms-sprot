@@ -46,9 +46,9 @@ class Zuqiu extends BaseController
         //直播数据
         $matchModel = new FootballMatch();
         $matchList = $matchModel->getByTeam($teamid,[['status_id','IN',[1,2,3,4,5,7]],['match_time','>',time()-8000]]);
-//        if (count($matchList) == 0){
-//            $matchList = $matchModel->getByTeam($teamid,[['status_id','=',8]],'match_time DESC');
-//        }
+        if (count($matchList) == 0){
+            $matchList = $matchModel->getByTeam($teamid,[['status_id','=',8]],'match_time DESC');
+        }
 
         $videoModel = new MatchVedio();
         $matchId = FootballMatch::whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$teamid,'aid'=>$teamid])->column("id");
@@ -57,10 +57,6 @@ class Zuqiu extends BaseController
         $luxiang = $videoModel->getByMatchId($matchId,0,self::MainLimit,2);
         //集锦
         $jijin = $videoModel->getByMatchId($matchId,0,self::MainLimit);
-//
-//        //资讯
-//        $articleModel = new Article();
-//        $article = $articleModel->getListByCompId(['competition_id'=>$compid],['limit'=>self::MainLimit]);
 
         $this->tdk->short_name_zh =  empty($team->short_name_zh) ? ($team->name_zh ?? '') : $team->short_name_zh;
         $this->getTdk('qiudui_zuqiu_detail',$this->tdk);

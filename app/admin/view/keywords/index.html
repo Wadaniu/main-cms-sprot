@@ -23,6 +23,8 @@
 		<button class="layui-btn layui-btn-sm" ><a href="/admin/conf/index" style="color: white;">标签配置</a></button>
 		<button class="layui-btn layui-btn-sm" lay-event="batchDel" >批量删除</button>
 		<button class="layui-btn layui-btn-sm" lay-event="batchupload" >批量添加</button>
+		<button class="layui-btn layui-btn-sm"><a href="/admin/keywords/downloadall" style="color: white;" target="_blank">全部下载</a></button>
+
   </div>
 </script>
 {/block}
@@ -52,26 +54,30 @@
 					width: 80,
 					title: '排序',
 					align: 'center',
-					edit: "text"
 				}, {
 					field: 'title',
 					title: '关键字名称',
-					edit: "text"
+					width: 160,
 				}, {
 						field: 'source',
 						title: '来源',
-						edit: "#source",
+
+						width: 160,
 						templet(d){
-							if(d.souce==1){
+							if(d.souce=='1'){
 								return '后台添加';
 							}else{
 								return '程序自动匹配添加';
 							}
 						}
 				},{
+					field: 'create_time',
+					title: '添加时间',
+					width:160,
+				},{
 					field: 'herf',
 					title: '跳转链接',
-					edit: "text"
+					//width:200
 				}, {
 					field: 'status',
 					width: 80,

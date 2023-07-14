@@ -24,6 +24,12 @@ $(function () {
         })
     })
 
+    // document.addEventListener("error", function (e) {
+    //     var elem = e.target;
+    //     console.log(elem.naturalWidth)
+    // }, true);
+
+
     let prefix;
     let curname = $(".category a.cur").text();
     let cururl = location.pathname;
@@ -39,7 +45,7 @@ $(function () {
         $(item).text(prefix + otitle)
     })
 
-    $(".nodata").each(function (i, item) {
+    $(".nodata:not(.sp)").each(function (i, item) {
         if ($(item).children().length == 0) {
             let txt = $(item).parents('.model').find('.tit').text();
             let dom = txt ? `<p class=nodata>近期暂无${txt}</p>` : '<p class=nodata>暂无相关数据</p>';
@@ -70,6 +76,10 @@ $(function () {
         }
         return rgb;
     }
+
+    $(".moredata").click(function (){
+        console.log(123)
+    })
 
     $(window).scroll(function () {
         if ($(document).scrollTop() > 400) {

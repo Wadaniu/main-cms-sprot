@@ -15,7 +15,7 @@
 <div class="container">
     <div class="model">
         <div class="title">
-            <div class="tit"><i class="iconfont icon-zhibo"></i><span>直播</span></div>
+            <div class="tit"><i class="iconfont icon-zhibo"></i><span>热门直播</span></div>
             <div class="right-btn showsel"><i class="iconfont icon-shaixuan"></i><span>筛选</span></div>
         </div>
         <div class="moresel">
@@ -29,21 +29,30 @@
             </ul>
             <p class="close"><i class="iconfont icon-close"></i></p>
         </div>
+        <div class="category">
+            <a>全部</a>
+            <a>直播中</a>
+            <a>未开赛</a>
+            <a>已完结</a>
+        </div>
         <div class="play-list nodata">
             {foreach $data as $key=>$item}
             <p class="play-date">{$key}</p>
-            <dl class="list-cont">
-                {foreach $item as $i=>$team}
+            <?php $formatdata=formatList($item);?>
+            {foreach $formatdata as $key=>$category}
+            <dl class="list-cont sp">
+                {foreach $category as $i=>$team}
                 <dd>
                     <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}">{$team.competition_text}</a></p>
-                    <p class="team"><img src="{$team.home_team_logo}">{$team.home_team_text}</p>
+                    <p class="team"><img src="{$team.home_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" >{$team.home_team_text}</a></p>
                     <p class="vs">VS</p>
-                    <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
+                    <p class="team"><img src="{$team.away_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" >{$team.away_team_text}</a></p>
                     <a class="right-btn" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html"><i
                             class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                 </dd>
                 {/foreach}
             </dl>
+            {/foreach}
             {/foreach}
         </div>
     </div>
@@ -56,14 +65,14 @@
             </div>
             <ul class="cur">
                 <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
-                {foreach $zuqiuLx as $row}
+                {foreach $zuqiuLx.data as $row}
                 <li><i class="iconfont icon-zuqiu"></i><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html"
                 >{$row.title}</a></li>
                 {/foreach}
             </ul>
             <ul>
                 <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>
-                {foreach $zuqiuJj as $row}
+                {foreach $zuqiuJj.data as $row}
                 <li><i class="iconfont icon-zuqiu"></i><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}.html"
                 >{$row.title}</a></li>
                 {/foreach}
@@ -84,14 +93,14 @@
             </div>
             <ul class="cur">
                 <?php  $lanqiuLx = getLuxiangJijin(2,1);  ?>
-                {foreach $lanqiuLx as $row}
+                {foreach $lanqiuLx.data as $row}
                 <li><i class="iconfont icon-lanqiu"></i><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html"
                 >{$row.title}</a></li>
                 {/foreach}
             </ul>
             <ul>
                 <?php  $lanqiuJj = getLuxiangJijin(1,1);  ?>
-                {foreach $lanqiuJj as $row}
+                {foreach $lanqiuJj.data as $row}
                 <li><i class="iconfont icon-lanqiu"></i><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}.html"
                 >{$row.title}</a></li>
                 {/foreach}
@@ -128,5 +137,36 @@
         let parents = $(this).parents('.collect-box');
         $(parents).find("ul").removeClass('cur').eq($(this).index()).addClass('cur')
     });
+
+    $(".category a").click(function () {
+        $(this).addClass('cur').siblings().removeClass();
+        switch ($(this).index()) {
+            case 0:
+                $(".list-cont").removeClass('cur')
+                if ($(".list-cont").eq(1).find('.nodata').length == 0) {
+                    $(".list-cont").eq(1).addClass('cur')
+                }
+                if ($(".list-cont").eq(2).find('.nodata').length == 0) {
+                    $(".list-cont").eq(2).addClass('cur')
+                }
+                break;
+            case 1:
+                $(".list-cont").removeClass('cur').eq(1).addClass('cur')
+                break;
+            case 2:
+                $(".list-cont").removeClass('cur').eq(2).addClass('cur')
+                break;
+            case 3:
+                $(".list-cont").removeClass('cur').eq(0).addClass('cur')
+                break;
+        }
+    })
+
+    $(".list-cont").each(function (i, item) {
+        if ($(item).children().length == 0) {
+            $(item).append(`<p class='nodata sp'>暂无相关数据</p>`)
+        }
+        $(".category a").eq(0).trigger('click')
+    })
 </script>
 {/block}

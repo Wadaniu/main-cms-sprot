@@ -9,6 +9,7 @@ use think\facade\View;
 use app\commonModel\Article;
 use app\commonModel\BasketballCompetition;
 use app\commonModel\Admin;
+use app\commonModel\ArticleKeywords;
 
 class Lanqiu extends BaseController
 {
@@ -61,7 +62,7 @@ class Lanqiu extends BaseController
             ->field('a.*,b.title')->where("aid",$matchId)
             ->join("keywords b"," a.keywords_id=b.id ")
             ->order("a.id desc")
-            ->limit(5)
+            //->limit(5)
             ->select();
         ;
         View::assign('keywords',$articleKeyWords);
@@ -106,6 +107,12 @@ class Lanqiu extends BaseController
             }
             $list['data'][$k]['desc'] = str_replace('JRS直播',$title,$v['desc']);
             $list['data'][$k]['desc'] = str_replace('直播吧',$title,$list['data'][$k]['desc']);
+            $list['data'][$k]['label'] = ArticleKeywords::alias("a")
+                ->field('a.*,b.title')->where("aid",$v['id'])
+                ->join("keywords b"," a.keywords_id=b.id ")
+                ->order("a.id desc")
+                ->select();
+            ;
         }
         //$list['current_page'] = $param['page'];
         $this->getTdk('zixun_lanqiu',$this->tdk);

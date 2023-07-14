@@ -10,9 +10,15 @@ class MatchVedio extends Model
     public function getByMatchId($id, $video_type = 0,$limit = 0,$type = 1)
     {
         $query = self::where(['match_id'=>$id])->where(['video_type'=>$video_type,'type'=>$type]);
+
+        if ($query->count() <= 0){
+            $query = self::where(['video_type'=>$video_type,'type'=>$type]);
+        }
+
         if ($limit > 0){
             $query->limit($limit);
         }
+
         $data = $query->order('id','desc')->select()->toArray();
 
         $res = [];

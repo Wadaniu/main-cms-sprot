@@ -3,10 +3,9 @@
 /.gitee
 *.log
 *.ini
-/public/sitemap.*
 /runtime/*
 *.htaccess
 /.env
 /*.env
+/public/sitemap.*
 /public/storage/*
-/vendor

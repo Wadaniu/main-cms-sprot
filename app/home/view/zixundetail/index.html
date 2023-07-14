@@ -7,13 +7,13 @@
 <div class="container">
     <div class="left-main">
         <div class="new-content">
-            <h1>{$info.title}<p><span>发布时间：{$info.create_time}</span><span>作者：{$web_name}</span></p>
+            <h1><span>{$info.title}</span><p><span>发布时间：{$info.create_time}</span><span>作者：{$web_name}</span></p>
             </h1>
             <div class="cont">
                 {$info.content|raw}
             </div>
             <div class="keyword" style="text-align: left;margin-bottom: 20px;">
-                <label>标签 : </label>
+                <label>相关标签 : </label>
                 {foreach $keywords as $k}
                 <span><a href="/zixun/index_1/{$k.keywords_id}">{$k.title}</a></span>
                 {/foreach}

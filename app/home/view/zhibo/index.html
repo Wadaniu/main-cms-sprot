@@ -32,15 +32,16 @@
                     <dd>
                         <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='H:i'}</p>
                         <p class="type"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
-                        <p class="team">{$team.home_team_text}<img src="{$team.home_team_logo}"></p>
+                        <p class="team"><a href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" target="_blank">{$team.home_team_text}</a><img src="{$team.home_team_logo}"></p>
                         <p class="vs">VS</p>
-                        <p class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</p>
+                        <p class="team"><img src="{$team.away_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" target="_blank">{$team.away_team_text}</a></p>
                         <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                     </dd>
                     {/foreach}
                 </dl>
                 {/foreach}
             </div>
+<!--            <div class="moredata"><i class="iconfont icon-xia"></i>点击查看更多...</div>-->
         </div>
     </div>
     <div class="right-main">

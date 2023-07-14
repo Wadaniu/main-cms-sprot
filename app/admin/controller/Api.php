@@ -50,7 +50,7 @@ class Api extends BaseController
         $md5 = $param['filename']??$file->hash('md5');
         $rule = [
             'image' => 'jpg,png,jpeg,gif,ico',
-            'doc' => 'doc,docx,ppt,pptx,xls,xlsx,pdf',
+            'doc' => 'doc,docx,ppt,pptx,xls,xlsx,pdf,csv',
             'file' => 'zip',
             'video' => 'mpg,mp4,mpeg,avi,wmv,mov,flv,m4v',
             'ico'   =>'ico',

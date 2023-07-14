@@ -13,7 +13,8 @@
             <ul>
                 {foreach $COMMON_NAV as $item}
                 <?php $childlink = isset($item['list'])&&is_array($item['list'])&&count($item['list'])>0; ?>
-                <li><a {$childlink?'':'href='.url($item.src . $item.param)}>{$item.title}<i class="iconfont icon-xia"></i></a>
+                <li><a {$childlink?'':'href='.url($item.src . $item.param)}>{$item.title}<i
+                        class="iconfont icon-xia"></i></a>
                     <?php if($childlink): ?>
                     <div class="sub">
                         {foreach $item.list as $t}
@@ -26,10 +27,10 @@
             </ul>
         </nav>
         <div class="search">
-<!--            <form action="" target="_blank" onsubmit="return isEmpty()">-->
-<!--                <input id="keyword" name="s" autocomplete="off">-->
-<!--                <button type="submit"><i class="iconfont icon-sousuo"></i></button>-->
-<!--            </form>-->
+            <!--            <form action="" target="_blank" onsubmit="return isEmpty()">-->
+            <!--                <input id="keyword" name="s" autocomplete="off">-->
+            <!--                <button type="submit"><i class="iconfont icon-sousuo"></i></button>-->
+            <!--            </form>-->
         </div>
     </div>
 </div>
@@ -43,7 +44,10 @@
         } else {
             if (thelink == curlink) cur = true;
         }
-        if (cur) $(item).parents('li').addClass('cur');
+        if (cur) {
+            $(item).addClass('target')
+            $(item).parents('li').addClass('cur')
+        }
     })
 
     function isEmpty() {

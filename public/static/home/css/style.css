@@ -491,6 +491,14 @@ a.right-btn span {
     padding: 0 20px;
 }
 
+.list-cont.sp {
+    display: none;
+}
+
+.list-cont.cur {
+    display: block;
+}
+
 .list-cont dd {
     display: flex;
     align-items: center;
@@ -768,6 +776,7 @@ a.right-btn span {
     margin-right: 10px;
     padding: 4px 8px;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .category a.cur {
@@ -1372,6 +1381,10 @@ a.right-btn span {
     padding: 0 30px;
     font-size: 24px;
     text-align: center;
+}
+
+.match-info .team .name a {
+    color: #fff;
 }
 
 .match-info .team .name span {
@@ -1991,4 +2004,19 @@ p.nodata {
     width: 30px;
     height: 30px;
     object-fit: contain;
+}
+
+.moredata {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 34px;
+    color: var(--main-color);
+    background-color: rgba(var(--main-r), var(--main-g), var(--main-b), 0.2);
+    border-bottom: 1px solid rgba(var(--main-r), var(--main-g), var(--main-b), 0.3);
+}
+
+.moredata i {
+    margin-right: 10px;
 }

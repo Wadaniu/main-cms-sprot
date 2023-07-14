@@ -39,6 +39,26 @@
 		</tr>
 
 
+		<tr>
+			<td class="layui-td-gray">获取排名前几</td>
+			<td colspan="3">
+				<input type="text" name="rank" autocomplete="off" placeholder="获取排名前几" lay-reqText="获取排名前几"
+					   class="layui-input" {notempty name="$config.rank" } value="{$config.rank}" {/notempty}>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="layui-td-gray-3">标签是否加粗</td>
+			<td colspan="3">
+				{empty name="$config.bold"}
+				<input type="radio" name="bold" value="1" title="加粗" checked>
+				<input type="radio" name="bold" value="2" title="不加粗">
+				{else/}
+				<input type="radio" name="bold" value="1" title="加粗"   {if $config.bold=='1'} checked="checked" {/if} >
+				<input type="radio" name="bold" value="2" title="不加粗" {if $config.bold=='2'} checked="checked" {/if} >
+				{/empty}
+			</td>
+		</tr>
 
 	</table>
 	<div class="py-3">
