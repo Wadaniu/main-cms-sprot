@@ -10,7 +10,7 @@
             <div class="title">
                 <p class="tit"><i class="iconfont icon-zixun"></i><span><span class="prefix">资讯</span></p>
             </div>
-
+            {include file="assembly/typeselect"/}
             <dl class="news-list nodata">
                 {foreach $list.data as $l}
                 <dd>
@@ -41,7 +41,6 @@
             <div class="pages">
                 <div class="pages">
                     <?php
-                    $curparam=get_params('compname');
                     $cur=$list['current_page'];
                     $total=ceil($list['total']/$list['per_page']);
                     $start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
