@@ -51,7 +51,9 @@ class Lanqiu extends BaseController
         $matchModel = new BasketballMatch();
         $matchList = $matchModel->getByTeam($teamid,[['status_id','IN',[1,2,3,4,5,7,8,9]],['match_time','>',time()-8000]]);
         if (count($matchList) == 0){
-            $matchList = $matchModel->getByTeam($teamid,[['status_id','=',10]],'match_time DESC');
+            $basketballComp = getBasketballHotComp();
+            $hotBasketballCompId = array_column($basketballComp,'id');
+            $matchList = $matchModel->getTodayData($hotBasketballCompId,[1,2,3,4,5,6,7,8,9],5);
         }
 
         $videoModel = new MatchVedio();
