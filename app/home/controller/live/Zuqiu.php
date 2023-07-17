@@ -31,10 +31,10 @@ class Zuqiu extends BaseController
             }
         }
 
-        if ($matchId > 0){
-            $this->getMatchInfo($matchId);
-        }else{
+        if (empty($matchId)){
             $this->getMatchList($compName);
+        }else{
+            $this->getMatchInfo($matchId);
         }
         return View::fetch($this->tempPath);
     }
