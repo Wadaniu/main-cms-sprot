@@ -420,7 +420,7 @@ class BasketballMatch extends Model
         }
         $basketballCompetition = new  BasketballCompetition();
         $basketballTeam = new  BasketballTeam();
-        $data = $query->where($limit)->order($order)->select()
+        $data = $query->limit($limit)->order($order)->select()
             ->each(function ($item, $key)use ($basketballCompetition,$basketballTeam) {
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];

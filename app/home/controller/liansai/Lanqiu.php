@@ -20,8 +20,11 @@ class Lanqiu extends BaseController
     }
     public function index(){
         $param = $this->parmas;
-
         $compid = $param['compid'] ?? 0;
+
+        if(!is_numeric($compid)){
+            abort(404, '参数错误');
+        }
 
         $this->tdk = new Tdk();
 
@@ -52,7 +55,7 @@ class Lanqiu extends BaseController
         }
 
         $videoModel = new MatchVedio();
-        $matchId = BasketballMatch::where("competition_id",$compid)->limit(200)->order('id','DESC')->column("id");
+        $matchId = BasketballMatch::where("competition_id",$compid)->where('match_time','<',time())->limit(200)->order('id','DESC')->column("id");
         //录像
         $luxiang = $videoModel->getByMatchId($matchId,1,self::MainLimit,2);
 
