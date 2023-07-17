@@ -35,7 +35,7 @@ class Zuqiu extends BaseController
 //        exit;
         $this->tdk = new Tdk();
 
-        if ($matchId > 0){
+        if (!empty($matchId)){
             $this->getMatchInfo($matchId,$param['compname']);
         }else{
             $this->getMatchList($param);

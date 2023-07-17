@@ -172,7 +172,7 @@ class BasketballMatch extends Model
         $startTime = strtotime(date('Y-m-d',time()).' 00:00:00');
         $endTime = strtotime(date('Y-m-d',time()).' 23:59:59');
         $where[] = ['match_time','between',[$startTime,$endTime]];
-//        $where[] = ['status_id','IN',[1,2,3,4,5,7,8,9]];
+        $where[] = ['status_id','IN',[1,2,3,4,5,6,7,8,9,10]];
         return $this->getMatchInfo($where,$competitionIds,0);
     }
 
@@ -420,7 +420,7 @@ class BasketballMatch extends Model
         }
         $basketballCompetition = new  BasketballCompetition();
         $basketballTeam = new  BasketballTeam();
-        $data = $query->where($limit)->order($order)->select()
+        $data = $query->limit($limit)->order($order)->select()
             ->each(function ($item, $key)use ($basketballCompetition,$basketballTeam) {
                 if(isset(self::$STATUSID[$item->status_id])){
                     $item->status_text = self::$STATUSID[$item->status_id];

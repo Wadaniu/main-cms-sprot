@@ -30,11 +30,14 @@ class Zuqiu extends BaseController
                 abort(404, '参数错误');
             }
         }
+        if(!is_numeric($matchId)){
+            abort(404, '参数错误');
+        }
 
-        if ($matchId > 0){
-            $this->getMatchInfo($matchId);
-        }else{
+        if (empty($matchId)){
             $this->getMatchList($compName);
+        }else{
+            $this->getMatchInfo($matchId);
         }
         return View::fetch($this->tempPath);
     }

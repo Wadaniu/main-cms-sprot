@@ -20,15 +20,18 @@ class Zuqiu extends BaseController
     }
     public function index(){
         $param = $this->parmas;
-
         $compid = $param['compid'] ?? 0;
+
+        if(!is_numeric($compid)){
+            abort(404, '参数错误');
+        }
 
         $this->tdk = new Tdk();
 
-        if ($compid > 0){
-            $this->getCompInfo($compid);
-        }else{
+        if (empty($compid)){
             $this->getCompList($param);
+        }else{
+            $this->getCompInfo($compid);
         }
         return View::fetch($this->tempPath);
     }
@@ -50,9 +53,9 @@ class Zuqiu extends BaseController
             $matchList = $matchModel->getMatchInfo([['status_id','=',8]],[$compid],self::MainLimit,'match_time desc');
         }
 
-
         $videoModel = new MatchVedio();
-        $matchId = FootballMatch::where("competition_id",$compid)->limit(200)->order('id','DESC')->column("id");
+        $matchId = FootballMatch::where("competition_id",$compid)->where('match_time','<',time())->limit(200)->order('id','DESC')->column("id");
+
         //录像
         $luxiang = $videoModel->getByMatchId($matchId,0,self::MainLimit,2);
         //集锦
