@@ -24,10 +24,10 @@ class Zuqiu extends BaseController
 
         $this->tdk = new Tdk();
 
-        if ($teamid > 0){
-            $this->getTeamInfo($teamid);
-        }else{
+        if (empty($matchId)){
             $this->getTeamList($param);
+        }else{
+            $this->getTeamInfo($teamid);
         }
         return View::fetch($this->tempPath);
     }

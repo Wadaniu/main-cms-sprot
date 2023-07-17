@@ -24,7 +24,7 @@ class Zuqiu extends BaseController
 
         $this->tdk = new Tdk();
 
-        if ($teamid > 0){
+        if (!empty($matchId)){
             $this->getCompInfo($teamid);
         }else{
             $this->getArticleList();
