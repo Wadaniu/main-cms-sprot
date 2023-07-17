@@ -34,7 +34,9 @@ class Zuqiu extends BaseController
 
     protected function getCompInfo($matchId)
     {
-
+        if(!is_numeric($matchId)){
+            throw new \think\exception\HttpException(404, '找不到页面');
+        }
         $comp = Article::where('id',$matchId)->where("delete_time",0)->findOrEmpty();
         if ($comp->isEmpty()) {
             throw new \think\exception\HttpException(404, '找不到页面');

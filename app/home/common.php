@@ -682,6 +682,9 @@ function getMatchVedio($where = [])
  * */
 function getMatchVedioById($matchId,$com)
 {
+    if(!is_numeric($matchId)){
+        throw new \think\exception\HttpException(404, '找不到页面');
+    }
     $model = new \app\commonModel\MatchVedio();
 
     $comp = $model->where('id', $matchId)->findOrEmpty();
