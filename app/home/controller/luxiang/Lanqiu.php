@@ -31,7 +31,7 @@ class Lanqiu extends BaseController
         $this->tdk = new Tdk();
 
         if ($matchId > 0){
-            $this->getMatchInfo($matchId);
+            $this->getMatchInfo($matchId,$param['compname']);
         }else{
             $this->getMatchList($param);
         }
@@ -53,8 +53,8 @@ class Lanqiu extends BaseController
         View::assign("jijin",getLuxiangJijin(1,1,$competition_id));
     }
 
-    function getMatchInfo($matchId){
-        list($matchLive,$competition_id) = getMatchVedioById($matchId);
+    function getMatchInfo($matchId,$comp){
+        list($matchLive,$competition_id) = getMatchVedioById($matchId,$comp);
         //处理tdk关键字
         $this->tdk->title = $matchLive['title'];
         $this->tdk->short_name_zh = $matchLive['short_name_zh'];
