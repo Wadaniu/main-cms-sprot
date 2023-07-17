@@ -25,10 +25,10 @@ class Zuqiu extends BaseController
 
         $this->tdk = new Tdk();
 
-        if ($compid > 0){
-            $this->getCompInfo($compid);
-        }else{
+        if (empty($matchId)){
             $this->getCompList($param);
+        }else{
+            $this->getCompInfo($compid);
         }
         return View::fetch($this->tempPath);
     }
