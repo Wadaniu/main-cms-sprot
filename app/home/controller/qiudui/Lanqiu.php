@@ -24,6 +24,10 @@ class Lanqiu extends BaseController
 
         $this->tdk = new Tdk();
 
+        if(!is_numeric($teamid)){
+            abort(404, '参数错误');
+        }
+
         if (empty($teamid)){
             $this->getTeamList($param);
         }else{

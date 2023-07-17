@@ -173,7 +173,7 @@ class FootballMatch extends Model
         $startTime = strtotime(date('Y-m-d',time()).' 00:00:00');
         $endTime = strtotime(date('Y-m-d',time()).' 23:59:59');
         $where[] = ['match_time','between',[$startTime,$endTime]];
-//        $where[] = ['status_id','IN',[1,2,3,4,5,7]];
+        $where[] = ['status_id','IN',[1,2,3,4,5,7,8]];
         return $this->getMatchInfo($where,$competitionIds,0);
     }
 

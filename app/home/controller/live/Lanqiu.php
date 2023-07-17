@@ -31,6 +31,9 @@ class Lanqiu extends BaseController
                 abort(404, '参数错误');
             }
         }
+        if(!is_numeric($matchId)){
+            abort(404, '参数错误');
+        }
 
         if (empty($matchId)){
             $this->getMatchList($compName);
