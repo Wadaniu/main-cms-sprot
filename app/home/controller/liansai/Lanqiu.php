@@ -25,7 +25,7 @@ class Lanqiu extends BaseController
 
         $this->tdk = new Tdk();
 
-        if (empty($matchId)){
+        if (empty($compid)){
             $this->getCompList($param);
         }else{
             $this->getCompInfo($compid);
