@@ -84,7 +84,7 @@
 <script>
     function worldlist(val) {
         let txt = $.trim(val);
-        let name = location.href.indexOf('liansai') > 0 ? 'liansai' : 'qiudui';
+        let name = location.href.indexOf('liansai') > 0 ? 'liansai-search' : 'qiudui-search';
         if (txt != "") {
             location.href = `${location.origin}/${name}/index_1/${txt}`
         }

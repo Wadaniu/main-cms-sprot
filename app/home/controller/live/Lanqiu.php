@@ -25,10 +25,17 @@ class Lanqiu extends BaseController
 
         $this->tdk = new Tdk();
 
-        if ($matchId > 0){
-            $this->getMatchInfo($matchId);
-        }else{
+        if (!empty($compName)){
+            $count = BasketballCompetition::where('short_name_py',$compName)->count();
+            if ($count <= 0){
+                abort(404, '参数错误');
+            }
+        }
+
+        if (empty($matchId)){
             $this->getMatchList($compName);
+        }else{
+            $this->getMatchInfo($matchId);
         }
         return View::fetch($this->tempPath);
     }

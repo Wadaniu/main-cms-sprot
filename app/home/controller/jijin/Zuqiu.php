@@ -33,7 +33,7 @@ class Zuqiu extends BaseController
         $this->tdk = new Tdk();
 
         if ($matchId > 0){
-            $this->getMatchInfo($matchId);
+            $this->getMatchInfo($matchId,$param['compname']);
         }else{
             $this->getMatchList($param);
         }
@@ -56,8 +56,8 @@ class Zuqiu extends BaseController
         View::assign("luxiang",getLuxiangJijin(2,0,$competition_id,4));
     }
 
-    function getMatchInfo($matchId){
-        list($matchLive,$competition_id) = getMatchVedioById($matchId);
+    function getMatchInfo($matchId,$comp){
+        list($matchLive,$competition_id) = getMatchVedioById($matchId,$comp);
         $this->tdk->title = $matchLive['title'];
         $this->tdk->short_name_zh = $matchLive['short_name_zh'];
         $this->tdk->home_team_name = $matchLive['team']['home_team']['name_zh']??'';

@@ -5,7 +5,6 @@ namespace app\home\controller\live;
 use app\commonModel\FootballCompetition;
 use app\commonModel\FootballMatch;
 use app\commonModel\FootballMatchInfo;
-use app\commonModel\MatchVedio;
 use app\home\BaseController;
 use app\home\Tdk;
 use think\App;
@@ -25,10 +24,17 @@ class Zuqiu extends BaseController
 
         $this->tdk = new Tdk();
 
-        if ($matchId > 0){
-            $this->getMatchInfo($matchId);
-        }else{
+        if (!empty($compName)){
+            $count = FootballCompetition::where('short_name_py',$compName)->count();
+            if ($count <= 0){
+                abort(404, '参数错误');
+            }
+        }
+
+        if (empty($matchId)){
             $this->getMatchList($compName);
+        }else{
+            $this->getMatchInfo($matchId);
         }
         return View::fetch($this->tempPath);
     }

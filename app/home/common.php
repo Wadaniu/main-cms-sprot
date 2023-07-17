@@ -680,7 +680,7 @@ function getMatchVedio($where = [])
 /**
  * 获取集锦、录像详情
  * */
-function getMatchVedioById($matchId)
+function getMatchVedioById($matchId,$com)
 {
     $model = new \app\commonModel\MatchVedio();
 
@@ -694,6 +694,11 @@ function getMatchVedioById($matchId)
     } else {
         $match = (new \app\commonModel\FootballMatch())->getMatchInfo("id=" . $matchLive['match_id'], [], 1);
     }
+    if($match[0]['comp_py']!=$com){
+        throw new \think\exception\HttpException(404, '找不到页面');
+    }
+
+
     $competition_id = 0;
     $matchLive['team'] = [];
     $matchLive['match_time'] = '';

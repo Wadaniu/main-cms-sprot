@@ -758,7 +758,7 @@ a.right-btn span {
 .new-content .keyword {
     padding-top: 0.2rem;
     border-top: 1px dashed #eee;
-    text-align: right;
+    text-align: left;
 }
 
 .new-content .keyword span {

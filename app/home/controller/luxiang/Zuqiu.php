@@ -36,7 +36,7 @@ class Zuqiu extends BaseController
         $this->tdk = new Tdk();
 
         if ($matchId > 0){
-            $this->getMatchInfo($matchId);
+            $this->getMatchInfo($matchId,$param['compname']);
         }else{
             $this->getMatchList($param);
         }
@@ -59,9 +59,9 @@ class Zuqiu extends BaseController
 
     }
 
-    function getMatchInfo($matchId){
+    function getMatchInfo($matchId,$comp){
         //处理tdk关键字
-        list($matchLive,$competition_id) = getMatchVedioById($matchId);
+        list($matchLive,$competition_id) = getMatchVedioById($matchId,$comp);
         //print_r($competition_id);exit;
         $this->tdk->title = $matchLive['title'];
         $this->tdk->short_name_zh = $matchLive['short_name_zh'];
