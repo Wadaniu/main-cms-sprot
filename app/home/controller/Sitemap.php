@@ -179,7 +179,7 @@ class Sitemap
                     $aids = $articleModel->where('cate_id',1)->order('id','desc')->limit(1000)->column('id');
                     //录像详情
                     foreach ($aids as $id){
-                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
+                        $sitemap->addItem($route['name'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                     }
                     break;
                 case '/zixun-lanqiu/':
@@ -188,7 +188,7 @@ class Sitemap
                     $aids = $articleModel->where('cate_id',2)->order('id','desc')->limit(1000)->column('id');
                     //录像详情
                     foreach ($aids as $id){
-                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
+                        $sitemap->addItem($route['name'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                     }
                     break;
                 case '/liansai-zuqiu/':
