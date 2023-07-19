@@ -7,7 +7,7 @@
         <ul class="news-list nodata">
             {foreach $list.data as $l}
             <li>
-                <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.id}.html">
+                <a href="/zixun-{$l.cate_id=='1'?'zuqiu':'lanqiu'}/{$l.short_name_py}/{$l.id}.html">
                     <div class="img">
                         <img src="{$l.origin_url}">
                     </div>

@@ -197,10 +197,12 @@ class Article extends Model
 
                 if ($compType == 0){
                     $comp = (new FootballCompetition())->getShortNameZh($item->competition_id);
+                    $qiu = "zuqiu";
                 }else{
                     $comp = (new BasketballCompetition())->getShortNameZh($item->competition_id);
+                    $qiu = "lanqiu";
                 }
-                $item->short_name_py = $comp['short_name_py']??'';
+                $item->short_name_py = $comp['short_name_py']??$qiu;
             })->toArray();
         return $list;
     }
