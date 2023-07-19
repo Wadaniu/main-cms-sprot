@@ -37,7 +37,7 @@ class Sitemap
         $articleModel = new Article();
 
         foreach ($basketballComp as $comp){
-            $matchIdArr = $basketballMatchModel->where('match_time','>=',time())->where('competition_id',$comp['id'])->limit(500)->column('id');
+            $matchIdArr = $basketballMatchModel->where('match_time','>=',time()-86400)->where('competition_id',$comp['id'])->limit(1000)->column('id');
             if (empty($matchIdArr)){
                 continue;
             }
@@ -45,7 +45,7 @@ class Sitemap
         }
 
         foreach ($footballComp as $comp){
-            $matchIdArr = $footballMatchModel->where('match_time','>=',time())->where('competition_id',$comp['id'])->limit(500)->column('id');
+            $matchIdArr = $footballMatchModel->where('match_time','>=',time()-86400)->where('competition_id',$comp['id'])->limit(1000)->column('id');
             if (empty($matchIdArr)){
                 continue;
             }
@@ -176,48 +176,26 @@ class Sitemap
                 case '/zixun-zuqiu/':
                     $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
 
-                    foreach ($footballComp as $comp){
-                        //联赛录像
-                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
-
-                        $aids = $articleModel->where('competition_id',$comp['id'])->order('id','desc')->limit(500)->column('id');
-                        if (empty($aids)){
-                            continue;
-                        }
-                        //录像详情
-                        foreach ($aids as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
-                        }
+                    $aids = $articleModel->where('cate_id',1)->order('id','desc')->limit(1000)->column('id');
+                    //录像详情
+                    foreach ($aids as $id){
+                        $sitemap->addItem($route['name'].$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                     }
                     break;
                 case '/zixun-lanqiu/':
                     $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
 
-                    foreach ($basketballComp as $comp){
-                        //联赛录像
-                        $sitemap->addItem($route['name'].$comp['short_name_py'].'/', '0.8', 'daily', date('Y-m-d H:i:s'));
-
-                        $aids = $articleModel->where('competition_id',$comp['id'])->order('id','desc')->limit(500)->column('id');
-                        if (empty($aids)){
-                            continue;
-                        }
-                        //录像详情
-                        foreach ($aids as $id){
-                            $sitemap->addItem($route['name'].$comp['short_name_py'].'/'.$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
-                        }
-                    }
-                    break;
-                case '/zixun/':
-                    $keywords = Keywords::limit(100)->column('id');
-                    //关键字详情
-                    foreach ($keywords as $id){
-                        $sitemap->addItem($route['name'].'index_1/'.$id.'.html', '0.8', 'daily', date('Y-m-d H:i:s'));
+                    $aids = $articleModel->where('cate_id',2)->order('id','desc')->limit(1000)->column('id');
+                    //录像详情
+                    foreach ($aids as $id){
+                        $sitemap->addItem($route['name'].$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
                     }
                     break;
                 case '/liansai-zuqiu/':
                     //获取所有联赛统计数
                     $count = FootballCompetition::count();
                     $pageMax = ceil($count / 24);
+                    $pageMax = $pageMax > 1000 ? 1000 : $pageMax;
                     for ($i = 1;$i <= $pageMax;$i++){
                         $sitemap->addItem($route['name'].'index_'.$i.'/', '0.8', 'daily', date('Y-m-d H:i:s'));
                     }
@@ -226,6 +204,7 @@ class Sitemap
                     //获取所有联赛统计数
                     $count = BasketballCompetition::count();
                     $pageMax = ceil($count / 24);
+                    $pageMax = $pageMax > 1000 ? 1000 : $pageMax;
                     for ($i = 1;$i <= $pageMax;$i++){
                         $sitemap->addItem($route['name'].'index_'.$i.'/', '0.8', 'daily', date('Y-m-d H:i:s'));
                     }
@@ -233,6 +212,7 @@ class Sitemap
                 case '/qiudui-zuqiu/':
                     $count = FootballTeam::count();
                     $pageMax = ceil($count / 24);
+                    $pageMax = $pageMax > 1000 ? 1000 : $pageMax;
                     for ($i = 1;$i <= $pageMax;$i++){
                         $sitemap->addItem($route['name'].'index_'.$i.'/', '0.8', 'daily', date('Y-m-d H:i:s'));
                     }
@@ -240,6 +220,7 @@ class Sitemap
                 case '/qiudui-lanqiu/':
                     $count = BasketballTeam::count();
                     $pageMax = ceil($count / 24);
+                    $pageMax = $pageMax > 1000 ? 1000 : $pageMax;
                     for ($i = 1;$i <= $pageMax;$i++){
                         $sitemap->addItem($route['name'].'index_'.$i.'/', '0.8', 'daily', date('Y-m-d H:i:s'));
                     }

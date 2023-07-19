@@ -156,7 +156,7 @@ class Keywords extends Model
     public function replaceLabel3A($article){
 
         //$keyword_names = [];
-        $article['keyword_names']=[];
+        $article['keyword_names'] = [];
         $config = get_system_config('label');
         $amount = $config['amount'];
         if(intval($amount)<=0){

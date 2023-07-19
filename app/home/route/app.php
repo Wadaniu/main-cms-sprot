@@ -48,6 +48,8 @@ Route::get('/jifen-lanqiu/:compname?', CommonSpace.'\jifen\Lanqiu@index')->name(
 //足球积分榜
 Route::get('/jifen-zuqiu/:compname?', CommonSpace.'\jifen\Zuqiu@index')->name('/jifen-zuqiu/');
 
+Route::get('/Sitemap/createSitemap', CommonSpace.'\Sitemap@createSitemap')->name('/Sitemap/createSitemap/');
+
 //Route::get('/:id?', 'index/index')->name('/');
 Route::miss(function () {
     throw new \think\exception\HttpException(404, '找不到页面');
