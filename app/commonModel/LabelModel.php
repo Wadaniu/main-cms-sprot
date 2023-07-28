@@ -43,7 +43,7 @@ class LabelModel extends Model
 
         $config = get_system_config("web");
         $ch = curl_init($config['labeldomain']);
-        $data_json = json_encode(["url"=>$config["domain"],'id'=>$this->id]);
+        $data_json = json_encode(["url"=>\think\facade\Request::host(),'id'=>$this->id]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
