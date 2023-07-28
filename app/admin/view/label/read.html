@@ -1,0 +1,37 @@
+{extend name="common/base"/}
+{block name="style"}
+<style>
+.content-article img{max-width:88%!important; height:auto!important; margin:6px 0!important; border-radius:4px;}
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<div class="layui-form p-4">
+	<h3 class="pb-3">文章详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">标签标题<font>*</font></td>
+			<td colspan="7"> {$detail.name}</td>
+			<td class="layui-td-gray">状态<font>*</font></td>
+			<td>
+				{eq name="$detail.status" value="1" }正常{/eq}
+				{eq name="$detail.status" value="0" }下线{/eq}
+			</td>
+
+		</tr>
+		<tr>
+			<td class="layui-td-gray">是否需要重新生成描述<font>*</font></td>
+			<td colspan="9">
+				 {eq name="$detail.isNewDes" value="1" }生成{/eq}
+				{eq name="$detail.isNewDes" value="0"
+					   }不生成{/eq}
+			</td>
+		</tr>
+		<tr>			
+			<td class="layui-td-gray">描述</td>
+			<td colspan="9">{$detail.desc}</td>
+		</tr>
+	</table>
+</div>
+{/block}
+<!-- /主体 -->

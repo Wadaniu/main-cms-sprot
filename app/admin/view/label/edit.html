@@ -1,0 +1,121 @@
+{extend name="common/base"/}
+{block name="style"}
+<style type="text/css">
+.editormd-code-toolbar select {display: inline-block}
+.editormd li {list-style: inherit;}
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑标签</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">标签标题<font>*</font></td>
+			<td colspan="7"> <input type="text" name="name" lay-verify="required" lay-reqText="请输入文章标题"
+					autocomplete="off" placeholder="请输入文章标题" class="layui-input" value="{$detail.name}"></td>
+			<td class="layui-td-gray">状态<font>*</font></td>
+			<td>
+				<input type="radio" name="status" value="1" title="正常" {eq name="$detail.status" value="1"
+					}checked{/eq}>
+				<input type="radio" name="status" value="0" title="下架" {eq name="$detail.status" value="0"
+					}checked{/eq}>
+			</td>
+
+		</tr>
+		<tr>
+			<td class="layui-td-gray">是否需要重新生成描述<font>*</font></td>
+			<td colspan="3">
+				<input type="radio" name="isNewDes" value="1" title="生成" {eq name="$detail.isNewDes" value="1"
+					   }checked{/eq}>
+				<input type="radio" name="isNewDes" value="0" title="不生成" {eq name="$detail.isNewDes" value="0"
+					   }checked{/eq}>
+			</td>
+		</tr>
+	</table>
+	<div class="pt-3">
+		<input type="hidden" name="id" value="{$detail.id}"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const editorType = '{$editor}';
+	var moduleInit;
+	if (editorType == 1) {
+		moduleInit = ['tool', 'tagpicker', 'tinymce'];
+	}
+	else {
+		moduleInit = ['tool', 'tagpicker', 'editormd'];
+	}
+
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool,tagpicker = layui.tagpicker;
+		//日期选择
+		layui.laydate.render({
+			type:'datetime',
+			elem: '#laydate_jijin_time' //指定元素
+		});
+		var tags = new tagpicker({
+			'url': '/admin/api/get_keyword_cate',
+			'target': 'keyword_name',
+			'tag_ids': 'keyword_id',
+			'tag_tags': 'keyword_name',
+			'height': 500,
+			'isDiy': 1
+		});
+		
+		//上传缩略图
+		var upload_thumb = layui.upload.render({
+			elem: '#upload_btn_thumb',
+			url: '/admin/api/upload',
+			done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					layer.msg('上传失败');
+					return false;
+				}
+				//上传成功
+				$('#upload_box_thumb input').attr('value', res.data.id);
+				$('#upload_box_thumb img').attr('src', res.data.filepath);
+			}
+		});
+
+		if (editorType == 1) {
+			var editor = layui.tinymce;
+			var edit = editor.render({
+				selector: "#container_content",
+				height: 500
+			});
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			//监听提交
+			form.on('submit(webform)', function (data) {
+				tool.post("/admin/label/edit", data.field, callback);
+				return false;
+			});
+		}
+		else {
+			var editor = layui.editormd;
+			var edit = editor.render('docContent', {
+				markdown: document.getElementById('mdContent').value
+			});
+			//监听提交
+			form.on('submit(webform)', function (data) {
+				tool.post("/admin/label/edit", data.field, callback);
+				return false;
+			});
+		}
+	}
+</script>
+{/block}
+<!-- /脚本 -->
