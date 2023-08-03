@@ -154,7 +154,7 @@ class BasketballTeam extends Model
                 ];
             }
             if(!empty($data)){
-                Cache::store('common_redis')->set($key,$data,86400);
+                Cache::store('common_redis')->set($key,$data);
             }
         }
 
