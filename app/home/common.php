@@ -159,6 +159,12 @@ function getzt($id, $type, $iszq): string
         case 1:
             $back = $boolean ? '赛前分析' : ($id == ($iszq == 'zuqiu' ? 8 : 10) ? '锦集/录像' : '直播中...');
             break;
+        case 2:
+            $back = $boolean ? 'not' : ($id == ($iszq == 'zuqiu' ? 8 : 10) ? 'over' : 'ing');
+            break;
+        case 3:
+            $back = $boolean ? '未开赛' : ($id == ($iszq == 'zuqiu' ? 8 : 10) ? '已完结' : 'VS');
+            break;
     }
 
     return $back;
