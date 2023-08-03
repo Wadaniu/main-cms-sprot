@@ -726,3 +726,32 @@ function getMatchVedioById($matchId,$com)
     }
     return [$matchLive, $competition_id];
 }
+
+/**
+ * 根据比赛ID获取比赛的录像和集锦
+ * $matchid 比赛ID
+ * $video_type 0足球，1篮球
+ * */
+function getLxAndJjByMatchId($matchid,$video_type){
+    $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*,b.competition_id");
+    if ($video_type == '0') {
+        $list = $list->leftJoin("fb_football_match b", "a.match_id=b.id")->where("match_id",$matchid)->where("video_type", $video_type);
+    } else if ($video_type == '1') {
+        $list = $list->leftJoin("fb_basketball_match b", "a.match_id=b.id")->where("match_id",$matchid)->where("video_type", $video_type);
+    }
+
+
+    $list->order("a.id desc");
+    $data = $list->select()->toArray();
+    if($video_type==0){
+        $com = (new \app\commonModel\FootballCompetition());
+    }else{
+        $com = (new \app\commonModel\BasketballCompetition());
+    }
+    foreach ($data as $k => $v) {
+        $competition = $com->getShortNameZh($v['competition_id']);
+        $data[$k]['short_name_py'] = empty($competition) ? ($v['video_type'] == '0' ? 'zuqiu' : 'lanqiu') : $competition['short_name_py'];
+        $data[$k]['title'] = replaceTitleWeb($v['title']);
+    }
+    return $data;
+}
