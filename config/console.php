@@ -19,6 +19,7 @@ return [
 		'crud-a' => 'app\crud\command\CrudAdd',
 		'crud-e' => 'app\crud\command\CrudEdit',
 		'crud-r' => 'app\crud\command\CrudRead',
+        'test'   => 'app\command\test',
     ],
 
 ];
