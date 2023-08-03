@@ -74,13 +74,13 @@ class Lanqiu extends BaseController
 
         $team->intro = $team->name_zh."队(简称： ".$team->short_name_zh."队)，";
         if(!empty($team->competition)){
-            $team->intro.=$team->name_zh."队所在联赛是".$team->competition['name_zh']."联赛，";
+            $team->intro.=$team->name_zh."队所在联赛是".$team->competition['name_zh']."，";
         }
         if(!empty($team->coach)){
             $team->intro.="现".$team->name_zh."队主教练是由".$team->coach['name_zh']."带领，";
         }
         if(!empty($team->venue)){
-            $team->intro.=$team->name_zh."队是".$team->venue['city']."的职业篮球队，";
+            $team->intro.=$team->name_zh."队是".$team->venue['city']."市(州)的职业篮球队，";
         }
         $team->intro.=get_system_config('web', 'title')."为您提供最新".$team->name_zh."队的数据和信息，".get_system_config('web', 'title')."同时为您提供最新的".$team->name_zh."队直播数据。";
         $team->type='team';
