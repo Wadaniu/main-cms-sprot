@@ -150,7 +150,6 @@
         $(parents).find("ul").removeClass('cur').eq($(this).index()).addClass('cur')
     })
     $(".live-lists .tool a").click(function () {
-        console.log($(this))
         $(this).addClass('cur').siblings().removeClass();
         switch ($(this).index()) {
             case 0:

@@ -370,6 +370,7 @@ function formatList($list)
                 break;
         }
     }
+    $formatdata['ywj'] = array_reverse($formatdata['ywj']);
     return $formatdata;
 }
 
@@ -686,9 +687,9 @@ function getMatchVedio($where = [])
 /**
  * 获取集锦、录像详情
  * */
-function getMatchVedioById($matchId,$com)
+function getMatchVedioById($matchId, $com)
 {
-    if(!is_numeric($matchId)){
+    if (!is_numeric($matchId)) {
         throw new \think\exception\HttpException(404, '找不到页面');
     }
     $model = new \app\commonModel\MatchVedio();
@@ -703,7 +704,7 @@ function getMatchVedioById($matchId,$com)
     } else {
         $match = (new \app\commonModel\FootballMatch())->getMatchInfo("id=" . $matchLive['match_id'], [], 1);
     }
-    if($match[0]['comp_py']!=$com){
+    if ($match[0]['comp_py'] != $com) {
         throw new \think\exception\HttpException(404, '找不到页面');
     }
 

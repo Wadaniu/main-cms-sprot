@@ -17,12 +17,15 @@
             </div>
         </div>
         <?php else: ?>
-        <img class="infoimg" src="/static/home/images/{:strpos(get_ruleName(),'zuqiu')?'zuqiubg':'lanqiubg'}.jpg" />
+        <img class="infoimg" src="/static/home/images/{:strpos(get_ruleName(),'zuqiu')?'zuqiubg':'lanqiubg'}.jpg"/>
         <?php endif; ?>
         <div class="main-model">
             <div class="title">
                 <p class="name"><i class="iconfont icon-zhibo"></i><span class="prefix">直播</span></p>
                 <div class="tool">
+                    <?php if(isset($comp)): ?>
+                    <p id="spbtn" class="spbtn"><span>未开赛</span><span>已完结</span><i></i></p>
+                    <?php endif; ?>
                     {include file="assembly/typeselect"/}
                 </div>
             </div>
@@ -35,23 +38,27 @@
                         <div class="item-box">
                             <div class="left">
                                 <p class="time">{$team.match_time|date='H:i'}</p>
-                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
+                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a>
+                                </p>
                             </div>
                             <div class="center">
-                                <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" target="_blank">
+                                <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}"
+                                   target="_blank">
                                     <p>{$team.home_team_text}</p>
                                     <img class="" src="{$team.home_team_logo}" alt="">
                                     <span class="bf">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span>
                                 </a>
                                 <span class="zt"><?php echo getzt($team['status_id'],3,$team['sphere_type']) ?></span>
-                                <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" target="_blank">
+                                <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}"
+                                   target="_blank">
                                     <span class="bf">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span>
                                     <img class="" src="{$team.away_team_logo}" alt="">
                                     <p>{$team.away_team_text}</p>
                                 </a>
                             </div>
                             <div class="right">
-                                <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html" target="_blank"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                                <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html" target="_blank"><i
+                                        class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                             </div>
                         </div>
                     </dd>
@@ -73,7 +80,56 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
+    $(function () {
+        let curitem = $(".category .cur");
+        let btn = $("#spbtn");
+        btn.css("left", curitem.position().left + (curitem.outerWidth() - btn.outerWidth()) / 2 + "px");
 
+        //获取最后一个符合条件元素的父级的下标
+        let index = $(".play-list .over").last().parent().index();
+        //获取当前全部元素
+        let ywj = $(".play-list").children();
+        //根据下标将不符合条件的元素从全部元素中删除另存
+        let wks = ywj.splice(index + 1);
+        //对删除剩余的元素循环处理，每次递增2
+        for (let i = 0; i < ywj.length; i += 2) {
+            //将每组奇偶元素交换
+            [ywj[i], ywj[i + 1]] = [ywj[i + 1], ywj[i]];
+            //如果元素包含子元素，将子元素倒序排列
+            let dom = $(ywj[i]).children().get().reverse();
+            //将元素清空，并放入已倒序的元素
+            $(ywj[i]).empty().append(dom)
+        }
+        //点击切换显示不同元素内容
+        $("#spbtn span:not(.cur)").click(function () {
+            $(this).addClass('cur').siblings().removeClass();
+            $(".play-list").empty();//清空容器
+            let fragment = document.createDocumentFragment();
+            //根据点击按钮用不同插入方式
+            switch ($(this).index()) {
+                case 0:
+                    $.each(wks, function (i, item) {
+                        //从后面依次插入元素
+                        fragment.append(item)
+                    })
+                    break;
+                case 1:
+                    $.each(ywj, function (i, item) {
+                        //从前面依次插入
+                        fragment.prepend(item)
+                    })
+                    break;
+            }
+            $(".play-list").append(fragment)
+        });
+        //模拟第一次点击
+        $("#spbtn span").eq(0).trigger('click');
+
+        // let num1=1;
+        // let num2=2;
+        // num2 = num1 + (num1 = num2) - num2
+        // console.log(num1, num2)
+    })
 </script>
 {/block}
 <!-- /脚本 -->

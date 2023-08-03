@@ -19,7 +19,7 @@
                     <dd class="<?php echo getzt($team['status_id'],2,$team['sphere_type']) ?>">
                         <div class="item-box">
                             <div class="left">
-                                <p class="time">{$team.match_time|date='H:i'}</p>
+                                <p class="time">{$team.match_time|date='m-d H:i'}</p>
                                 <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
                             </div>
                             <div class="center">

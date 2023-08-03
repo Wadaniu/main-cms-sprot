@@ -16,7 +16,8 @@
                 <ul>
                     <li class="cur">
                         <p class="title">{$matchLive.title}</p>
-                        <a href="{$matchLive.pc_link}" target="_blank" rel="nofollow"><i class="iconfont icon-bofang"></i><span>源站播放</span></a>
+                        <a href="{$matchLive.pc_link}" target="_blank" rel="nofollow"><i
+                                class="iconfont icon-bofang"></i><span>源站播放</span></a>
                     </li>
                 </ul>
             </div>
@@ -30,7 +31,9 @@
             <ul class="playtxt">
                 <li>【温馨提示】：如有出现版权问题，请点击右侧的播放列表-->源站播放</li>
                 {if !empty($matchLive.team.home_team) && !empty($matchLive.team.away_team)}
-                    <li>【{$index}】：在线观看录像-{$matchLive.match_time|date="m-d H:i"} {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}，{$web_name}为你提供{$matchLive.match_time|date="m-d H:i"} {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}导航资源，本站不制作、不存储{$matchLive.match_time|date="m-d H:i"} {$matchLive.team.home_team.name_zh}vs{$matchLive.team.away_team.name_zh}视频资源，只作为技术探索的导航学习用途。</li>
+                <li>
+                    【{$index}】：当前观看录像为{$matchLive.short_name_zh}在北京时间:{$matchLive.match_time}由{$matchLive.team.home_team.name_zh}VS{$matchLive.team.away_team.name_zh}的精彩比赛，{$web_name}为您提供高清无插件在线免费视频观看资源，{$web_name}不制作不存储{$matchLive.team.home_team.name_zh}VS{$matchLive.team.away_team.name_zh}比赛视频，只为广大球迷爱好着作球迷的搬运工。
+                </li>
                 {/if}
                 <li>【比赛时间】：{$matchLive.match_time}</li>
                 <li>【热门标签】:

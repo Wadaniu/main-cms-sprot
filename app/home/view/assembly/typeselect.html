@@ -1,11 +1,12 @@
 <?php $type=typeselect(); $curparam=get_params('compname'); if(count($type)>0): ?>
-<p class="category" style="<?php if(strpos($_SERVER['REQUEST_URI'], 'zixun')||strpos($_SERVER['REQUEST_URI'], 'search')) echo 'display:none'; ?>">
+<p class="category"
+   style="<?php if(strpos($_SERVER['REQUEST_URI'], 'zixun')||strpos($_SERVER['REQUEST_URI'], 'search')) echo 'display:none'; ?>">
     {volist name="type" id="item" length='10'}<a href="{$item.src}" data-link="{$item.py}">{$item.title}</a>{/volist}
 </p>
 <?php endif; ?>
 <script>
     let linkname = curlink.split('/')[2];
-    if (linkname&&linkname.indexOf('_')==-1) {
+    if (linkname && linkname.indexOf('_') == -1) {
         $(".category a").each(function (i, item) {
             let thelink = $(item).data('link');
             if ('/' + linkname == thelink) {
