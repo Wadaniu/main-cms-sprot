@@ -6,11 +6,13 @@
 {include file="common/header" nav='info' /}
 <div class="container">
     <div class="left-main">
-        <div class="model">
+        <div class="main-model">
             <div class="title">
-                <p class="tit"><i class="iconfont {$index=='录像'?'icon-luxiang':'icon-jijin'}"></i><span class="prefix">{$index}</span></p>
+                <p class="name"><i class="iconfont {$index=='录像'?'icon-luxiang':'icon-jijin'}"></i><span class="prefix">{$index}</span></p>
+                <div class="tool">
+                    {include file="assembly/typeselect"/}
+                </div>
             </div>
-            {include file="assembly/typeselect"/}
             <dl class="list-back nodata">
                 {foreach $list.data as $row}
                 <dd>

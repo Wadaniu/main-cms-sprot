@@ -3,12 +3,12 @@ $typid=strpos(get_ruleName(), 'zuqiu') ? 0 : (strpos(get_ruleName(), 'lanqiu') ?
 $compid=$comp['id']??0;
 $jjdata=getLuxiangJijin(1,$typid,$compid,5);
 ?>
-<div class="model">
+<div class="sub-model">
     <div class="title">
-        <p class="tit"><i class="iconfont icon-jijin"></i><span class="{$jjdata.source?='prefix'}">{$jjdata.source==false?='热门'}集锦</span></p>
+        <p class="name"><span class="{$jjdata.source?='prefix'}">{$jjdata.source==false?='热门'}集锦</span></p>
         <p class="more"><a href="{:moresrc('jijin',$jjdata.source)}">更多</a></p>
     </div>
-    <div class="lists">
+    <div class="cont item-list">
         <ul class="nodata">
             {foreach $jjdata.data as $jj}
             <li><a href="/{$jj.type=='1'?'jijin':'luxiang'}-{$jj.video_type=='0'?'zuqiu':'lanqiu'}/{$jj.short_name_py}/{$jj.id}.html" title="{$jj.title}" target="_blank">{$jj.title}</a></li>

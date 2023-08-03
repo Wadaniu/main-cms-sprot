@@ -4,25 +4,6 @@
 <!-- 主体 -->
 {block name="body"}
 {include file="common/header" nav='info' /}
-<!--<div class="breadcrumbs">-->
-<!--    <ul>-->
-<!--        <li>-->
-<!--            <a href="">首页</a>-->
-<!--        </li>-->
-<!--        <li>&gt;</li>-->
-<!--        <li>-->
-<!--            <a href="">首页</a>-->
-<!--        </li>-->
-<!--        <li>&gt;</li>-->
-<!--        <li>-->
-<!--            <a href="">首页</a>-->
-<!--        </li>-->
-<!--        <li>&gt;</li>-->
-<!--        <li>-->
-<!--            首页666-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--</div>-->
 <div class="zhuanti">
     <?php $typesrc=strpos($_SERVER['REQUEST_URI'], 'liansai') ? 'liansai' : 'qiudui'; $linkname=get_ruleName(); ?>
     <div class="ztbg">
@@ -37,13 +18,12 @@
         <div class="hontlink">
             <?php if($typesrc=='liansai'): ?>
             <?php $type=hotlive('liansai'); ?>
-            热门联赛：{volist name="type" id="item" length='20'}<a href="/liansai-{$item.type}/{$item.id}" target="_blank">{$item.title}</a>{/volist}
+            热门联赛：{volist name="type" id="item" length='40'}<a href="/liansai-{$item.type}/{$item.id}" target="_blank">{$item.title}</a>{/volist}
             <?php else: ?>
             <?php $type=getHotTeam(); ?>
-            热门球队：{volist name="type" id="item" length='20'}<a href="/qiudui-{$item.sphere_type}/{$item.id}" target="_blank">{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</a>{/volist}
+            热门球队：{volist name="type" id="item" length='40'}<a href="/qiudui-{$item.sphere_type}/{$item.id}" target="_blank">{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</a>{/volist}
             <?php endif; ?>
         </div>
-
     </div>
     <div class="ztnav-bg">
         <div class="ztnav">

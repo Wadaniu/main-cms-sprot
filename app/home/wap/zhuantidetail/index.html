@@ -39,13 +39,22 @@
             <p class="play-date">{$team.match_time|date='Y-m-d'}</p>
             <dl class="list-cont nodata">
                 <dd>
-                    <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}">{$team.competition_text}</a>
-                    </p>
-                    <p class="team"><img src="{$team.home_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.home_team_id}">{$team.home_team_text}</a></p>
-                    <p class="vs">VS</p>
-                    <p class="team"><img src="{$team.away_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.away_team_id}">{$team.away_team_text}</a></p>
-                    <a class="right-btn" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html"><i
-                            class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                    <a class="middle-container" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
+                        <div class="team">
+                            <img src="{$team.home_team_logo}">
+                            <div class="name">{$team.home_team_text}</div>
+                        </div>
+                        <div class="info">
+                            {$team.match_time|date='H:i'}
+                            <div class="score">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)} : {$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</div>
+                            {$team.competition_text}
+                        </div>
+                        <div class="team">
+                            <img src="{$team.away_team_logo}">
+                            <div class="name">{$team.away_team_text}</div>
+                        </div>
+                        <div class="btn">锦集/录像</div>
+                    </a>
                 </dd>
             </dl>
             {/volist}

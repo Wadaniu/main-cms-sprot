@@ -3,12 +3,12 @@ $typid=strpos(get_ruleName(), 'zuqiu') ? 0 : (strpos(get_ruleName(), 'lanqiu') ?
 $compid=$comp['id']??0;
 $lxdata=getLuxiangJijin(2,$typid,$compid,4);
 ?>
-<div class="model">
+<div class="sub-model">
     <div class="title">
-        <p class="tit"><i class="iconfont icon-luxiang"></i><span class="{$lxdata.source?='prefix'}">{$lxdata.source==false?='热门'}录像</span></p>
+        <p class="name"><span class="{$lxdata.source?='prefix'}">{$lxdata.source==false?='热门'}录像</span></p>
         <p class="more"><a href="{:moresrc('luxiang',$lxdata.source)}" target="_blank">更多</a></p>
     </div>
-    <div class="video nodata">
+    <div class="cont video-list">
         {foreach $lxdata.data as $i=>$item}
         <div class="play">
             <a href="/luxiang-{$item.video_type=='0'?'zuqiu':'lanqiu'}/{$item.short_name_py}/{$item.id}.html" rel="nofollow"

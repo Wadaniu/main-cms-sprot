@@ -1,14 +1,15 @@
 <?php $copmid=strpos($_SERVER['REQUEST_URI'], 'liansai') ? $data_info['id'] : 0; $type=$copmid?(strpos($_SERVER['REQUEST_URI'], 'lanqiu') ? 'lanqiu' : 'zuqiu'):''; $limit=$copmid?0:10; $qddata=getHotTeam($limit,$type,$copmid);?>
-<div class="model">
+<div class="sub-model">
     <div class="title">
-        <p class="tit"><i class="iconfont icon-duiwu"></i><span>球队</span></p>
+        <p class="name">球队</p>
         <p class="more"><a href="/qiudui-zuqiu/">更多</a></p>
     </div>
-    <div class="team-name">
+    <div class="cont team-type">
         {foreach $qddata as $i=>$item}
         <a href="/qiudui-{$item.sphere_type}/{$item.id}" target="_blank">
             <img src="{$item.logo}"
-                 alt="{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}">{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}
+                 alt="{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}">
+            <p>{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</p>
         </a>
         {/foreach}
     </div>

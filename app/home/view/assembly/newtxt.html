@@ -1,8 +1,9 @@
-<div class="model">
+<div class="sub-model">
     <div class="title">
-        <p class="tit"><i class="iconfont icon-zixun"></i><span>相关资讯</span></p>
+        <p class="name">相关资讯</p>
+        <p class="more"></p>
     </div>
-    <div class="about-new lists">
+    <div class="cont item-list about-new">
         <ul class="nodata">
             {foreach $article.data as $i=>$item}
                 <li><a href="/zixun-{$item.cate_id=='1'?'zuqiu':'lanqiu'}/{$item.id}.html" title="{$item.title}" target="_blank">{$item.title}</a></li>

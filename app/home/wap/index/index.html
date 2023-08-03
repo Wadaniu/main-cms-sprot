@@ -13,7 +13,7 @@
     </ul>
 </div>
 <div class="container">
-    <div class="model">
+    <div class="model live-list">
         <div class="title">
             <div class="tit"><i class="iconfont icon-zhibo"></i><span>热门直播</span></div>
             <div class="right-btn showsel"><i class="iconfont icon-shaixuan"></i><span>筛选</span></div>
@@ -43,12 +43,22 @@
             <dl class="list-cont sp">
                 {foreach $category as $i=>$team}
                 <dd>
-                    <p class="time">{$team.match_time|date='H:i'}<a href="/live-{$team.sphere_type}/{$team.comp_py}">{$team.competition_text}</a></p>
-                    <p class="team"><img src="{$team.home_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" >{$team.home_team_text}</a></p>
-                    <p class="vs">VS</p>
-                    <p class="team"><img src="{$team.away_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" >{$team.away_team_text}</a></p>
-                    <a class="right-btn" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html"><i
-                            class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                    <a class="middle-container" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
+                        <div class="team">
+                            <img src="{$team.home_team_logo}">
+                            <div class="name">{$team.home_team_text}</div>
+                        </div>
+                        <div class="info">
+                            {$team.match_time|date='H:i'}
+                            <div class="score">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)} : {$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</div>
+                            {$team.competition_text}
+                        </div>
+                        <div class="team">
+                            <img src="{$team.away_team_logo}">
+                            <div class="name">{$team.away_team_text}</div>
+                        </div>
+                        <div class="btn">锦集/录像</div>
+                    </a>
                 </dd>
                 {/foreach}
             </dl>
@@ -56,60 +66,62 @@
             {/foreach}
         </div>
     </div>
-    <div class="collect">
-        <div class="collect-box">
-            <div class="collect-tab">
-                <p class="cur">足球录像</p>
-                <p>足球集锦</p>
-                <p>足球资讯</p>
-            </div>
+    <div class="model collect">
+        <div class="title">
+            <div class="tit"><i class="iconfont icon-zuqiu"></i><span>足球</span></div>
+        </div>
+        <div class="category">
+            <a class="cur">录像</a>
+            <a class="">集锦</a>
+            <a class="">资讯</a>
+        </div>
+        <div class="list">
             <ul class="cur">
                 <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
                 {foreach $zuqiuLx.data as $row}
-                <li><i class="iconfont icon-zuqiu"></i><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html"
-                >{$row.title}</a></li>
+                <li><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>
                 {/foreach}
             </ul>
             <ul>
                 <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>
                 {foreach $zuqiuJj.data as $row}
-                <li><i class="iconfont icon-zuqiu"></i><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}.html"
-                >{$row.title}</a></li>
+                <li><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>
                 {/foreach}
             </ul>
             <ul>
                 <?php  $zuqiuZx = getZiXun(1);  ?>
                 {foreach $zuqiuZx as $row}
-                <li><i class="iconfont icon-zuqiu"></i><a href="/zixun-zuqiu/{$row.id}.html"
-                >{$row.title}</a></li>
+                <li><a href="/zixun-zuqiu/{$row.id}.html">{$row.title}</a></li>
                 {/foreach}
             </ul>
         </div>
-        <div class="collect-box">
-            <div class="collect-tab">
-                <p class="cur">篮球录像</p>
-                <p>篮球集锦</p>
-                <p>篮球资讯</p>
-            </div>
+    </div>
+    <div class="model collect">
+        <div class="title">
+            <div class="tit"><i class="iconfont icon-lanqiu"></i><span>篮球</span></div>
+        </div>
+        <div class="category">
+            <a class="cur">录像</a>
+            <a class="">集锦</a>
+            <a class="">资讯</a>
+        </div>
+        <div class="list">
             <ul class="cur">
-                <?php  $lanqiuLx = getLuxiangJijin(2,1);  ?>
-                {foreach $lanqiuLx.data as $row}
-                <li><i class="iconfont icon-lanqiu"></i><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html"
-                >{$row.title}</a></li>
+                <?php  $zuqiuLx = getLuxiangJijin(2,1);  ?>
+                {foreach $zuqiuLx.data as $row}
+                <li><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>
                 {/foreach}
             </ul>
             <ul>
-                <?php  $lanqiuJj = getLuxiangJijin(1,1);  ?>
-                {foreach $lanqiuJj.data as $row}
-                <li><i class="iconfont icon-lanqiu"></i><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}.html"
-                >{$row.title}</a></li>
+                <?php  $zuqiuJj = getLuxiangJijin(1,1);  ?>
+                {foreach $zuqiuJj.data as $row}
+                <li><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>
                 {/foreach}
             </ul>
             <ul>
-                <?php  $lanqiuZx = getZiXun(2);  ?>
-                {foreach $lanqiuZx as $row}
-                <li><i class="iconfont icon-lanqiu"></i><a href="/zixun-lanqiu/{$row.id}.html"
-                >{$row.title}</a></li>
+                <?php  $zuqiuZx = getZiXun(2);  ?>
+                {foreach $zuqiuZx as $row}
+                <li><a href="/zixun-lanqiu/{$row.id}.html">{$row.title}</a></li>
                 {/foreach}
             </ul>
         </div>
@@ -132,13 +144,13 @@
         $(".moresel").fadeOut(300);
         $("body").css("overflow","");
     });
-    $(".collect-tab p").click(function () {
+    $(".collect .category a").click(function () {
         $(this).addClass('cur').siblings().removeClass('cur');
-        let parents = $(this).parents('.collect-box');
+        let parents = $(this).parents('.collect');
         $(parents).find("ul").removeClass('cur').eq($(this).index()).addClass('cur')
-    });
+    })
 
-    $(".category a").click(function () {
+    $(".live-list .category a").click(function () {
         $(this).addClass('cur').siblings().removeClass();
         switch ($(this).index()) {
             case 0:
@@ -166,7 +178,7 @@
         if ($(item).children().length == 0) {
             $(item).append(`<p class='nodata sp'>暂无相关数据</p>`)
         }
-        $(".category a").eq(0).trigger('click')
+        $(".live-list .category a").eq(0).trigger('click')
     })
 </script>
 {/block}

@@ -1,30 +1,42 @@
 <?php
 $typid=strpos(get_ruleName(), 'zuqiu') ? 'zuqiu' : (strpos(get_ruleName(), 'lanqiu') ? 'lanqiu' : '');
 $compid=$comp['id']??0;
-$zbdata=getLive(5,$typid,$compid);
+$zbdata=getLive(is_numeric('[num]')?[num]:5,$typid,$compid);
 ?>
-<div class="model">
+<div class="sub-model">
     <div class="title">
-        <p class="tit"><i class="iconfont icon-zhibo"></i><span class="{$zbdata.origin?='prefix'}">{$zbdata.origin==false?='热门'}直播</span></p>
+        <p class="name"><span class="{$zbdata.origin?='prefix'}">{$zbdata.origin==false?='热门'}直播</span></p>
         <p class="more"><a href="{:moresrc('live',$zbdata.origin)}">更多</a></p>
     </div>
-    <dl class="live nodata">
-        {foreach $zbdata.data as $i=>$item}
-        <dd>
-            <p class="info">
-                <a href="/live-{$item.sphere_type}/{$item.comp_py}" target="_blank">{$item.competition_text}</a>
-                <span>{$item.match_time|date='m-d H:i'}</span>
-            </p>
-            <div class="cont">
-                <p class="team">
-                    <span><img
-                            src="{$item.home_team_logo}"><a href="/qiudui-{$item.sphere_type}/{$item.home_team_id}" target="_blank">{$item.home_team_text}</a></span>
-                    <span href=""><img
-                            src="{$item.away_team_logo}"><a href="/qiudui-{$item.sphere_type}/{$item.away_team_id}" target="_blank">{$item.away_team_text}</a></span>
-                </p>
-                <a class="right-btn" target="_blank" href="/live-{$item.sphere_type}/{$item.comp_py}/{$item.id}.html"><i class="iconfont <?php echo getzt($item['status_id'],0,$item['sphere_type']) ?>"></i><span><?php echo getzt($item['status_id'],1,$item['sphere_type']) ?></span></a>
-            </div>
-        </dd>
-        {/foreach}
-    </dl>
+    <div class="cont live-list">
+        <dl class="nodata">
+            {foreach $zbdata.data as $i=>$item}
+            <dd>
+                <div class="top-container">
+                    <div class="left-part">
+                        <div class="time">{$item.match_time|date='m-d H:i'}</div>
+                        <div class="league"><a href="/live-{$item.sphere_type}/{$item.comp_py}" target="_blank">{$item.competition_text}</a></div>
+                    </div>
+                    <div class="right-part">
+                        <a href="/live-{$item.sphere_type}/{$item.comp_py}/{$item.id}.html" target="_blank"><i class="iconfont <?php echo getzt($item['status_id'],0,$item['sphere_type']) ?>"></i><span><?php echo getzt($item['status_id'],1,$item['sphere_type']) ?></span></a>
+                    </div>
+                </div>
+                <div class="middle-container">
+                    <div class="team">
+                        <img src="{$item.home_team_logo}">
+                        <div class="name"><a href="/qiudui-{$item.sphere_type}/{$item.home_team_id}" target="_blank">{$item.home_team_text}</a></div>
+                    </div>
+                    <div class="info">
+                        <div class="score">{$item.sphere_type=='zuqiu'?$item.home_scores[0]:getScore($item.home_scores)} : {$item.sphere_type=='zuqiu'?$item.away_scores[0]:getScore($item.away_scores)}</div>
+                        <div class="status"><?php echo getzt($item['status_id'],3,$item['sphere_type']) ?></div>
+                    </div>
+                    <div class="team">
+                        <img src="{$item.away_team_logo}">
+                        <div class="name"><a href="/qiudui-{$item.sphere_type}/{$item.away_team_id}" target="_blank">{$item.away_team_text}</a></div>
+                    </div>
+                </div>
+            </dd>
+            {/foreach}
+        </dl>
+    </div>
 </div>

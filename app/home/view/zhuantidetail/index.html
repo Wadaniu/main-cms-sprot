@@ -6,28 +6,50 @@
 {include file="common/header" nav='info' /}
 <div class="container">
     <div class="left-main">
-        <div class="model">
+        <div class="main-model">
             <div class="title">
-                <p class="tit"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
+                <p class="name"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
+                <div class="tool">
+                    <p></p>
+                </div>
             </div>
             <div class="play-list">
                 <dl class="list-cont nodata">
                     {volist name="data" id="team" length='20'}
-                    <dd>
-                        <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='m-d H:i'}</p>
-                        <p class="type"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
-                        <p class="team"><a href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" target="_blank">{$team.home_team_text}</a><img src="{$team.home_team_logo}"></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img src="{$team.away_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" target="_blank">{$team.away_team_text}</a></p>
-                        <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                    <dd class="<?php echo getzt($team['status_id'],2,$team['sphere_type']) ?>">
+                        <div class="item-box">
+                            <div class="left">
+                                <p class="time">{$team.match_time|date='H:i'}</p>
+                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
+                            </div>
+                            <div class="center">
+                                <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" target="_blank">
+                                    <p>{$team.home_team_text}</p>
+                                    <img class="" src="{$team.home_team_logo}" alt="">
+                                    <span class="bf">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span>
+                                </a>
+                                <span class="zt"><?php echo getzt($team['status_id'],3,$team['sphere_type']) ?></span>
+                                <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" target="_blank">
+                                    <span class="bf">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span>
+                                    <img class="" src="{$team.away_team_logo}" alt="">
+                                    <p>{$team.away_team_text}</p>
+                                </a>
+                            </div>
+                            <div class="right">
+                                <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html" target="_blank"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                            </div>
+                        </div>
                     </dd>
                     {/volist}
                 </dl>
             </div>
         </div>
-        <div class="model">
+        <div class="main-model">
             <div class="title">
-                <p class="tit"><i class="iconfont icon-luxiang"></i><span>录像</span></p>
+                <p class="name"><i class="iconfont icon-luxiang"></i>录像</p>
+                <div class="tool">
+                    <p></p>
+                </div>
             </div>
             <dl class="list-back nodata">
                 {foreach $luxiang as $i=>$item}
@@ -35,16 +57,17 @@
                     <p class="back-cont">
                         <a href="/luxiang-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html" target="_blank"><span></span>{$item.title}</a>
                     </p>
-                    <p class="back-team">
-
-                    </p>
+                    <p class="back-team"></p>
                 </dd>
                 {/foreach}
             </dl>
         </div>
-        <div class="model">
+        <div class="main-model">
             <div class="title">
-                <p class="tit"><i class="iconfont icon-jijin"></i><span>集锦</span></p>
+                <p class="name"><i class="iconfont icon-jijin"></i>集锦</p>
+                <div class="tool">
+                    <p></p>
+                </div>
             </div>
             <dl class="list-back nodata">
                 {foreach $jijin as $i=>$item}
@@ -52,8 +75,7 @@
                     <p class="back-cont">
                         <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html" target="_blank"><span></span>{$item.title}</a>
                     </p>
-                    <p class="back-team">
-                    </p>
+                    <p class="back-team"></p>
                 </dd>
                 {/foreach}
             </dl>
@@ -61,7 +83,7 @@
         {include file="assembly/newimg"/}
     </div>
     <div class="right-main">
-        <div class="model specific">
+        <div class="sub-model specific">
             <div class="logo">
                 <img src="{$data_info.logo}" />
             </div>
@@ -83,7 +105,8 @@
                 </ul>
             </div>
             <div class="title">
-                <p class="tit"><i class="iconfont icon-jianjie"></i><span>球队简介</span></p>
+                <p class="name">球队简介</p>
+                <p class="more"></p>
             </div>
             <div class="info">
                 {$data_info.intro}

@@ -7,16 +7,13 @@
 <div class="container">
     <div class="left-main">
         <div class="new-content">
-            <h1><span>{$info.title}</span><p><span>发布时间：{$info.create_time}</span><span>作者：{$web_name}</span></p>
-            </h1>
+            <h1>{$info.title}</h1>
+            <p class="info"><span>作者：{$web_name}</span><span>{$info.create_time}</span></p>
             <div class="cont">
                 {$info.content|raw}
             </div>
-            <div class="keyword" style="text-align: left;margin-bottom: 20px;">
-                <label>相关标签 : </label>
-                {foreach $keywords as $k}
-                <span><a href="/search/index_1/{$k.keywords_id}">{$k.title}</a></span>
-                {/foreach}
+            <div class="keyword">
+                {foreach $keywords as $k}<a href="/search/index_1/{$k.keywords_id}">{$k.title}</a>{/foreach}
             </div>
             <div class="connect">
                 {if !empty($info['pre'])}

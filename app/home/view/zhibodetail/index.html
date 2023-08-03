@@ -6,40 +6,21 @@
 {include file="common/header" nav='info' /}
 <?php $islanqiu=isset($players) ?>
 <div class="playbg">
-    <!--    <div class="breadcrumbs">-->
-    <!--        <ul>-->
-    <!--            <li>-->
-    <!--                <a href="">首页</a>-->
-    <!--            </li>-->
-    <!--            <li>&gt;</li>-->
-    <!--            <li>-->
-    <!--                <a href="">首页</a>-->
-    <!--            </li>-->
-    <!--            <li>&gt;</li>-->
-    <!--            <li>-->
-    <!--                <a href="">首页</a>-->
-    <!--            </li>-->
-    <!--            <li>&gt;</li>-->
-    <!--            <li>-->
-    <!--                首页-->
-    <!--            </li>-->
-    <!--        </ul>-->
-    <!--    </div>-->
     <div class="play match-info">
         <div class="team">
-            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank">{$analysis.info.home_team_text}</a><span>({$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]})</span>
-            </p>
             <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank"><img src="{$analysis.info.home_team_logo}"></a></p>
+            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank">{$analysis.info.home_team_text}</a></p>
         </div>
+        <div class="bf">{$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}</div>
         <div class="info">
-            <p>{$analysis.info.status_text}</p>
-            <p class="type">{$analysis.info.competition_text}</p>
             <p>{$analysis.info.match_time|date='Y-m-d H:i'}</p>
+            <p class="zt">{$analysis.info.status_text}</p>
+            <p>{$analysis.info.competition_text}</p>
         </div>
+        <div class="bf">{$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}</div>
         <div class="team">
             <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank"><img src="{$analysis.info.away_team_logo}"></a></p>
-            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank">{$analysis.info.away_team_text}</a><span>({$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]})</span>
-            </p>
+            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank">{$analysis.info.away_team_text}</a></p>
         </div>
     </div>
     <div class="live-link">
@@ -56,14 +37,15 @@
 </div>
 <div class="container">
     <div class="left-main">
-        <div class="model">
+        <div class="main-model">
             <div class="type-tabs">
                 <p class="cur">赛前分析</p>
                 <p>直播信息</p>
-                <p>技术统计</p>
+                <p>球队</p>
                 <?php if($islanqiu): ?>
-                <p>球员统计</p>
+                <p>球员</p>
                 <?php endif; ?>
+                <p>集锦/录像</p>
             </div>
             <div class="type-cont">
                 <ul class="name-tab">
@@ -273,12 +255,11 @@
                 <?php endif; ?>
             </div>
             <?php endif; ?>
+            <div class="type-cont">集锦/录像</div>
         </div>
-
     </div>
     <div class="right-main">
-        {include file="assembly/luxiang"/}
-        {include file="assembly/jijin"/}
+        {include file="assembly/zhibo" num="8"/}
     </div>
 </div>
 {/block}

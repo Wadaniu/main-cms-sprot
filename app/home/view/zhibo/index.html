@@ -19,29 +19,46 @@
         <?php else: ?>
         <img class="infoimg" src="/static/home/images/{:strpos(get_ruleName(),'zuqiu')?'zuqiubg':'lanqiubg'}.jpg" />
         <?php endif; ?>
-        <div class="model">
+        <div class="main-model">
             <div class="title">
-                <p class="tit"><i class="iconfont icon-zhibo"></i><span class="prefix">直播</span></p>
+                <p class="name"><i class="iconfont icon-zhibo"></i><span class="prefix">直播</span></p>
+                <div class="tool">
+                    {include file="assembly/typeselect"/}
+                </div>
             </div>
-            {include file="assembly/typeselect"/}
-            <div class="play-list nodata">
+            <div class="play-list">
                 {foreach $data as $key=>$item}
                 <p class="play-date">{$key}</p>
                 <dl class="list-cont">
                     {foreach $item as $i=>$team}
-                    <dd>
-                        <p class="time"><i class="iconfont {$team.sphere_type=='zuqiu'?'icon-zuqiu':'icon-lanqiu'}"></i>{$team.match_time|date='H:i'}</p>
-                        <p class="type"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
-                        <p class="team"><a href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" target="_blank">{$team.home_team_text}</a><img src="{$team.home_team_logo}"></p>
-                        <p class="vs">VS</p>
-                        <p class="team"><img src="{$team.away_team_logo}"><a href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" target="_blank">{$team.away_team_text}</a></p>
-                        <a class="right-btn" target="_blank" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                    <dd class="<?php echo getzt($team['status_id'],2,$team['sphere_type']) ?>">
+                        <div class="item-box">
+                            <div class="left">
+                                <p class="time">{$team.match_time|date='H:i'}</p>
+                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
+                            </div>
+                            <div class="center">
+                                <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" target="_blank">
+                                    <p>{$team.home_team_text}</p>
+                                    <img class="" src="{$team.home_team_logo}" alt="">
+                                    <span class="bf">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span>
+                                </a>
+                                <span class="zt"><?php echo getzt($team['status_id'],3,$team['sphere_type']) ?></span>
+                                <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" target="_blank">
+                                    <span class="bf">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span>
+                                    <img class="" src="{$team.away_team_logo}" alt="">
+                                    <p>{$team.away_team_text}</p>
+                                </a>
+                            </div>
+                            <div class="right">
+                                <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html" target="_blank"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                            </div>
+                        </div>
                     </dd>
                     {/foreach}
                 </dl>
                 {/foreach}
             </div>
-<!--            <div class="moredata"><i class="iconfont icon-xia"></i>点击查看更多...</div>-->
         </div>
     </div>
     <div class="right-main">
@@ -56,6 +73,7 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
+
 </script>
 {/block}
 <!-- /脚本 -->

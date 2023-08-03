@@ -1,11 +1,12 @@
 <?php $keywords = getKeywords(); ?>
-<div class="model">
+<div class="sub-model">
     <div class="title">
-        <p class="tit"><i class="iconfont icon-tag"></i><span>热门标签</span></p>
+        <p class="name">热门标签</p>
+        <p class="more"></p>
     </div>
-    <div class="tags">
+    <div class="cont hot-tags">
         {volist name="keywords" id="row" length='20'}
-            <a href="/search/index_1/{$row.id}" target="_blank">{$row.title}</a>
+        <a href="/search/index_1/{$row.id}" target="_blank">{$row.title}</a>
         {/volist}
     </div>
 </div>

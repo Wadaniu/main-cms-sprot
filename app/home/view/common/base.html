@@ -15,11 +15,11 @@
     <meta name="description" content="{:$seo.description}"/>
     {/block}
     <link rel="stylesheet" href="{__CSS__}/base.css">
-    <link rel="stylesheet" href="{__CSS__}/style.css">
-    <link rel="stylesheet" href="{__CSS__}/theme/theme.css">
+    <link rel="stylesheet" href="{__CSS__}/newstyle.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4038676_87h40eucsxq.css">
     {block name="css"}{/block}
-    {block name="style"}{/block}
+    {block name="style"}
+    {/block}
     {block name="js"}
     <script>var webcolor="#{:get_system_config('web','webcolor')}";</script>
     <script src="{__JS__}/jquery-1.12.4.min.js"></script>
@@ -42,7 +42,8 @@
 <!-- /统计代码 -->
 </body>
 <!-- 脚本 -->
-{block name="script"}{/block}
+{block name="script"}
+{/block}
 
 <p>
     {:get_system_config('web','code')}
