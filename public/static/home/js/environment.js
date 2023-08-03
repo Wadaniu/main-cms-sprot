@@ -45,6 +45,13 @@ $(function () {
         $(item).text(prefix + otitle)
     })
 
+    let titledom = $(".main-model .name span");
+    if (titledom.height() > 40) {
+        titledom.css({
+            "font-size": "20px"
+        })
+    }
+
     $(".nodata:not(.sp)").each(function (i, item) {
         if ($(item).children().length == 0) {
             let txt = $(item).parents('.model').find('.tit').text();
@@ -77,7 +84,7 @@ $(function () {
         return rgb;
     }
 
-    $(".moredata").click(function (){
+    $(".moredata").click(function () {
         console.log(123)
     })
 

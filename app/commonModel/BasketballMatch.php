@@ -237,7 +237,7 @@ class BasketballMatch extends Model
             $where[] = ["competition_id","in",$competitionIds];
         }
 
-        $field="id,competition_id,home_team_id,away_team_id,status_id,match_time";
+        $field="id,competition_id,home_team_id,away_team_id,status_id,match_time,home_scores,away_scores";
         $model = self::where($where)
             ->field($field)
             ->order($order);
@@ -272,6 +272,8 @@ class BasketballMatch extends Model
                 $item->away_team_id = $info["id"]??'';
 
                 $item->sphere_type="lanqiu";
+                $item->home_scores = json_decode($item->home_scores);
+                $item->away_scores = json_decode($item->away_scores);
             })
             ->toArray();
         Cache::store('common_redis')->set($key,$data,120);
