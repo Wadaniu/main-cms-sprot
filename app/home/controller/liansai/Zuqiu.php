@@ -46,18 +46,23 @@ class Zuqiu extends BaseController
             abort(404, '参数错误');
         }
 
-        $footballModel = new \app\commonModel\FootballMatch();
-        $doneData = $footballModel->getCompetitionListByDone($comp['id'],self::MainLimit);
+        $matchModel = new FootballMatch();
+        $doneData = $matchModel->getCompetitionListByDone($comp['id'],self::MainLimit);
+        if(!$doneData){
+            $footballComp = getFootballHotComp();
+            $hotFootballCompId = array_column($footballComp,'id');
+            $doneData = $matchModel->getTodayData($hotFootballCompId,[8],self::MainLimit);
+        }
 
         //直播数据
-        $matchModel = new FootballMatch();
+
         $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7]],['match_time','>',time()-8000]],[$compid],self::MainLimit);
         if (empty($matchList)){
             $footballComp = getFootballHotComp();
             $hotFootballCompId = array_column($footballComp,'id');
-            $matchList = $matchModel->getTodayData($hotFootballCompId,[1,2,3,4,5,7],5);
+            $matchList = $matchModel->getTodayData($hotFootballCompId,[1,2,3,4,5,7],self::MainLimit);
         }
-        $matchList = array($matchList,$doneData);
+        $matchList = array_merge($matchList,$doneData);
         $videoModel = new MatchVedio();
         $matchId = FootballMatch::where("competition_id",$compid)->where('match_time','<',time())->limit(200)->order('id','DESC')->column("id");
 
