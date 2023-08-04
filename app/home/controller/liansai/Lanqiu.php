@@ -13,7 +13,7 @@ use think\facade\View;
 
 class Lanqiu extends BaseController
 {
-    const MainLimit = 5;
+    const MainLimit = 8;
     public function __construct(App $app)
     {
         parent::__construct($app);
