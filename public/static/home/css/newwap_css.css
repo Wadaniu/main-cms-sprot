@@ -1036,7 +1036,7 @@ p.nodata {
     justify-content: center;
     align-items: center;
     color: #fff;
-    font-size: 0.3rem;
+    font-size: 0.28rem;
     padding: 0.4rem 0;
     background: url(../images/match-info.jpg) no-repeat center/cover;
 }
@@ -1359,6 +1359,15 @@ p.nodata {
 
 .type-cont .name-cont:nth-of-type(1) {
     display: block;
+}
+
+.type-cont .linklist li {
+    line-height: 0.66rem;
+    font-size: 0.28rem;
+    list-style: inside;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .name-cont ul {

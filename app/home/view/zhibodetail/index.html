@@ -260,9 +260,9 @@
                 <?php endif; ?>
             </div>
             <?php endif; ?>
-            <div class="type-cont nodata">
+            <div class="type-cont">
                 <?php $jjlxdata=getLxAndJjByMatchId(get_params()['matchid'],$islanqiu?1 : 0);?>
-                <ol class="linklist">
+                <ol class="linklist nodata">
                     {foreach $jjlxdata as $key=>$row}
                     <li><a target="_blank" href="/{$row.type=='1'?'jijin':'luxiang'}-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.short_name_py}/{$row.id}.html" title="{$row.title}">{$row.title}</a></li>
                     {/foreach}
