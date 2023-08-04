@@ -8,8 +8,10 @@
 <div class="playbg">
     <div class="play match-info">
         <div class="team">
-            <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank"><img src="{$analysis.info.home_team_logo}"></a></p>
-            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank">{$analysis.info.home_team_text}</a></p>
+            <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank"><img
+                    src="{$analysis.info.home_team_logo}"></a></p>
+            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.home_team_id}" target="_blank">{$analysis.info.home_team_text}</a>
+            </p>
         </div>
         <div class="bf">{$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}</div>
         <div class="info">
@@ -19,8 +21,10 @@
         </div>
         <div class="bf">{$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}</div>
         <div class="team">
-            <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank"><img src="{$analysis.info.away_team_logo}"></a></p>
-            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank">{$analysis.info.away_team_text}</a></p>
+            <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank"><img
+                    src="{$analysis.info.away_team_logo}"></a></p>
+            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$analysis.info.away_team_id}" target="_blank">{$analysis.info.away_team_text}</a>
+            </p>
         </div>
     </div>
     <div class="live-link">
@@ -120,7 +124,7 @@
             <div class="type-cont">
                 <ul class="playtxt">
                     <li>【赛事名称】：{$analysis.info.competition_text}</li>
-                    <li>【比赛队伍】：{$analysis.info.home_team_text}  vs   {$analysis.info.away_team_text}</li>
+                    <li>【比赛队伍】：{$analysis.info.home_team_text} vs {$analysis.info.away_team_text}</li>
                     <li>【比赛时间】：{$analysis.info.match_time|date='Y-m-d H:i'}</li>
                     <li>
                         【赛事信息】：本场包含了{$analysis.info.home_team_text}vs{$analysis.info.away_team_text}直播信息,{$web_name}直播将对本场进行免费视频直播。
@@ -138,8 +142,9 @@
             <div class="type-cont nodata">
                 <?php $keylist=$islanqiu?["mingzhong","toulan","sanzhong","santou","fazhong","fatou","gongban","fangban","lanban","zhugong","qiang","gaimao","shiwu","fangui","bifen"]:["ball_possession","shots","shots_on_target","passes","passes_accuracy","freekicks","corner_kicks","offsides","fouls","yellow_cards","red_cards","yellow2red_cards","goals_against","tackles","interceptions"];
 				    $namelist=$islanqiu?["命中次数","投篮次数","三分命中","三分投篮","罚球命中","罚球投篮","进攻篮板","防守篮板","总篮板","助攻数","抢断数","盖帽数","失误","个人犯规","比分"]:["控球率","射门","射正","传球","传球成功","任意球","角球","越位","角球","犯规","黄牌","红牌","两黄变红","失球","抢断","拦截"];
-						$teamStats=$islanqiu?(count($players)>0?getteamStats($keylist,$players[2],$players[3],$analysis['info']):[]):$teamStats;
-						if(is_array($teamStats)&&count($teamStats)>0): ?>
+						$teamStats=$islanqiu?(count($players)>
+                0?getteamStats($keylist,$players[2],$players[3],$analysis['info']):[]):$teamStats;
+                if(is_array($teamStats)&&count($teamStats)>0): ?>
                 <?php if($islanqiu): ?>
                 <table class="player-data">
                     <tr>
@@ -255,7 +260,14 @@
                 <?php endif; ?>
             </div>
             <?php endif; ?>
-            <div class="type-cont">集锦/录像</div>
+            <div class="type-cont nodata">
+                <?php $jjlxdata=getLxAndJjByMatchId(get_params()['matchid'],$islanqiu?1 : 0);?>
+                <ol class="linklist">
+                    {foreach $jjlxdata as $key=>$row}
+                    <li><a target="_blank" href="/{$row.type=='1'?'jijin':'luxiang'}-{$row.video_type=='0'?'zuqiu':'lanqiu'}/{$row.short_name_py}/{$row.id}.html" title="{$row.title}">{$row.title}</a></li>
+                    {/foreach}
+                </ol>
+            </div>
         </div>
     </div>
     <div class="right-main">

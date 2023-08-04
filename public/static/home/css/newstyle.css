@@ -1370,6 +1370,12 @@ i.iconfont {
     display: block;
 }
 
+.type-cont .linklist li {
+    line-height: 40px;
+    font-size: 16px;
+    list-style: inside;
+}
+
 .name-cont ul {
     border: 1px solid #ddd;
     margin-top: 30px;

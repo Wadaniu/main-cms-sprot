@@ -120,7 +120,10 @@
                     })
                     break;
             }
-            $(".play-list").append(fragment)
+            $(".play-list").append(fragment);
+            if ($(".play-list").children().length == 0) {
+                $(".play-list").append(`<p class=nodata>近期暂无${curitem.text()}直播</p>`)
+            }
         });
         //模拟第一次点击
         $("#spbtn span").eq(0).trigger('click');
