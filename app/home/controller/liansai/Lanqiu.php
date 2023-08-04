@@ -47,6 +47,10 @@ class Lanqiu extends BaseController
             abort(404, '参数错误');
         }
 
+        $basketballModel = new \app\commonModel\BasketballMatch();
+        $doneData = $basketballModel->getCompetitionListByDone($comp['id'],self::MainLimit);
+
+
         //直播数据
         $matchModel = new BasketballMatch();
         $matchList = $matchModel->getMatchInfo([['status_id','IN',[1,2,3,4,5,7,8,9]],['match_time','>',time()-8000]],[$compid],self::MainLimit);
@@ -55,6 +59,8 @@ class Lanqiu extends BaseController
             $hotBasketballCompId = array_column($basketballComp,'id');
             $matchList = $matchModel->getTodayData($hotBasketballCompId,[1,2,3,4,5,6,7,8,9],5);
         }
+
+        $matchList = array($matchList,$doneData);
 
         $videoModel = new MatchVedio();
         $matchId = BasketballMatch::where("competition_id",$compid)->where('match_time','<',time())->limit(200)->order('id','DESC')->column("id");
