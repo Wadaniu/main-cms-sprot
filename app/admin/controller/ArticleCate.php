@@ -53,7 +53,7 @@ class ArticleCate extends BaseController
                 }else{
                     $basketball = $bas->getShortNameZh($v['competition_id']);
                     if($basketball){
-                        $v['competition_title']="蓝球:".$basketball['name_zh']."（简称：".$basketball['short_name_zh']."）";
+                        $v['competition_title']="篮球:".$basketball['name_zh']."（简称：".$basketball['short_name_zh']."）";
                     }
                 }
             }
