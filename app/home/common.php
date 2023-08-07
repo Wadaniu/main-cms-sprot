@@ -370,6 +370,7 @@ function formatList($list)
                 break;
         }
     }
+    $formatdata['ywj'] = array_reverse($formatdata['ywj']);
     return $formatdata;
 }
 

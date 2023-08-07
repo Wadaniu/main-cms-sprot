@@ -12,15 +12,17 @@
             <ul>
                 <li>英文名称：{$data_info.name_en}</li>
                 {if $data_info.type=='team'}
-                    {if !empty($data_info.competition)}
-                    <li>所属联赛：{$data_info.competition.name_zh}</li>
-                    {/if}
-                    {if !empty($data_info.coach)}
-                    <li>现任主教练：{$data_info.coach.name_zh}</li>
-                    {/if}
-                    {if !empty($data_info.venue)}
-                    <li>{$data_info.ball=='zuqiu'?'主场球馆':'所在城市'}： {$data_info.ball=='zuqiu'?$data_info.venue.name_zh:$data_info.venue.city}</li>
-                    {/if}
+                {if !empty($data_info.competition)}
+                <li>所属联赛：{$data_info.competition.name_zh}</li>
+                {/if}
+                {if !empty($data_info.coach)}
+                <li>现任主教练：{$data_info.coach.name_zh}</li>
+                {/if}
+                {if !empty($data_info.venue)}
+                <li>{$data_info.ball=='zuqiu'?'主场球馆':'所在城市'}：
+                    {$data_info.ball=='zuqiu'?$data_info.venue.name_zh:$data_info.venue.city}
+                </li>
+                {/if}
                 {/if}
             </ul>
         </div>
@@ -34,10 +36,15 @@
         <div class="title">
             <p class="tit"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
         </div>
-        <div class="play-list nodata">
-            {volist name="data" id="team" length='20'}
-            <p class="play-date">{$team.match_time|date='Y-m-d'}</p>
-            <dl class="list-cont nodata">
+        <div class="category">
+            <a>未开赛</a>
+            <a>已完结</a>
+        </div>
+        <div class="play-list">
+            <?php $formatdata=formatList($data);?>
+            {foreach $formatdata as $key=>$category}
+            <dl class="list-cont sp">
+                {foreach $category as $i=>$team}
                 <dd>
                     <a class="middle-container" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
                         <div class="team">
@@ -45,19 +52,23 @@
                             <div class="name">{$team.home_team_text}</div>
                         </div>
                         <div class="info">
-                            {$team.match_time|date='H:i'}
-                            <div class="score">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)} : {$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</div>
+                            {$team.match_time|date='m-d H:i'}
+                            <div class="score">
+                                {$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)} :
+                                {$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}
+                            </div>
                             {$team.competition_text}
                         </div>
                         <div class="team">
                             <img src="{$team.away_team_logo}">
                             <div class="name">{$team.away_team_text}</div>
                         </div>
-                        <div class="btn">锦集/录像</div>
+                        <div class="btn"><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></div>
                     </a>
                 </dd>
+                {/foreach}
             </dl>
-            {/volist}
+            {/foreach}
         </div>
     </div>
     <div class="model">
@@ -88,5 +99,30 @@
 </div>
 {/block}
 {block name="script"}
+<script>
+    $(".category a").click(function () {
+        $(this).addClass('cur').siblings().removeClass();
+        switch ($(this).index()) {
+            case 0:
+                $(".list-cont").removeClass('cur')
+                if ($(".list-cont").eq(1).find('.nodata').length == 0) {
+                    $(".list-cont").eq(1).addClass('cur')
+                }
+                if ($(".list-cont").eq(2).find('.nodata').length == 0) {
+                    $(".list-cont").eq(2).addClass('cur')
+                }
+                break;
+            case 1:
+                $(".list-cont").removeClass('cur').eq(0).addClass('cur')
+                break;
+        }
+    })
 
+    $(".list-cont").each(function (i, item) {
+        if ($(item).children().length == 0) {
+            $(item).append(`<p class='nodata sp'>暂无相关数据</p>`)
+        }
+        $(".category a").eq(0).trigger('click')
+    })
+</script>
 {/block}

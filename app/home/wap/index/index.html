@@ -57,7 +57,7 @@
                             <img src="{$team.away_team_logo}">
                             <div class="name">{$team.away_team_text}</div>
                         </div>
-                        <div class="btn">锦集/录像</div>
+                        <div class="btn"><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></div>
                     </a>
                 </dd>
                 {/foreach}

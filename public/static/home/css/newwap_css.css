@@ -317,6 +317,64 @@ i.iconfont {
     text-indent: 0;
 }
 
+.switch {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.switch-checked {
+    display: flex;
+    align-items: center;
+    width: 1rem;
+    height: 0.48rem;
+    border-radius: 0.48rem;
+    border: 1px solid var(--main-color);
+    background-color: #fff;
+    position: relative;
+    transition: .2s;
+}
+
+.switch-btn {
+    width: 0.44rem;
+    height: 0.44rem;
+    border-radius: 0.44rem;
+    background-color: var(--main-color);
+    position: absolute;
+    left: 0.02rem;
+    transition: .2s;
+}
+
+.switch .txt {
+    padding-left: 0.2rem;
+    color: var(--main-color);
+}
+
+.switch .ywj { display: block;
+
+}
+
+.switch .wks {
+    display: none;
+}
+
+.change .ywj {display: none;
+
+}
+
+.change .wks {
+    display: block;
+}
+
+.change .switch-checked {
+    background-color: var(--main-color);
+}
+
+.change .switch-btn {
+    left: 0.52rem;
+    background-color: #fff;
+}
+
 .close {
     position: absolute;
     bottom: -1.2rem;
@@ -450,13 +508,15 @@ p.nodata {
     text-overflow: ellipsis;
     padding-top: 0.2rem;
 }
-.list-cont .middle-container .btn{
+
+.list-cont .middle-container .btn {
     width: 20%;
     border: 1px solid var(--main-color);
     color: var(--main-color);
     padding: 0.14rem 0;
     box-shadow: 0 2px 3px #0003;
 }
+
 .collect .list {
     padding: 0.3rem;
 }

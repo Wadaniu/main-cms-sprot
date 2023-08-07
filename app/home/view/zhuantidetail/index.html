@@ -10,38 +10,45 @@
             <div class="title">
                 <p class="name"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
                 <div class="tool">
-                    <p></p>
+                    <p><a>未开赛</a><a>已完结</a></p>
                 </div>
             </div>
             <div class="play-list">
-                <dl class="list-cont nodata">
-                    {volist name="data" id="team" length='20'}
+                <?php $formatdata=formatList($data);?>
+                {foreach $formatdata as $key=>$category}
+                <dl class="list-cont sp">
+                    {foreach $category as $i=>$team}
                     <dd class="<?php echo getzt($team['status_id'],2,$team['sphere_type']) ?>">
                         <div class="item-box">
                             <div class="left">
                                 <p class="time">{$team.match_time|date='m-d H:i'}</p>
-                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
+                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a>
+                                </p>
                             </div>
                             <div class="center">
-                                <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" target="_blank">
+                                <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}"
+                                   target="_blank">
                                     <p>{$team.home_team_text}</p>
                                     <img class="" src="{$team.home_team_logo}" alt="">
                                     <span class="bf">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span>
                                 </a>
                                 <span class="zt"><?php echo getzt($team['status_id'],3,$team['sphere_type']) ?></span>
-                                <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" target="_blank">
+                                <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}"
+                                   target="_blank">
                                     <span class="bf">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span>
                                     <img class="" src="{$team.away_team_logo}" alt="">
                                     <p>{$team.away_team_text}</p>
                                 </a>
                             </div>
                             <div class="right">
-                                <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html" target="_blank"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                                <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html" target="_blank"><i
+                                        class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                             </div>
                         </div>
                     </dd>
-                    {/volist}
+                    {/foreach}
                 </dl>
+                {/foreach}
             </div>
         </div>
         <div class="main-model">
@@ -55,7 +62,8 @@
                 {foreach $luxiang as $i=>$item}
                 <dd>
                     <p class="back-cont">
-                        <a href="/luxiang-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html" target="_blank"><span></span>{$item.title}</a>
+                        <a href="/luxiang-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html"
+                           target="_blank"><span></span>{$item.title}</a>
                     </p>
                     <p class="back-team"></p>
                 </dd>
@@ -73,7 +81,8 @@
                 {foreach $jijin as $i=>$item}
                 <dd>
                     <p class="back-cont">
-                        <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html" target="_blank"><span></span>{$item.title}</a>
+                        <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html"
+                           target="_blank"><span></span>{$item.title}</a>
                     </p>
                     <p class="back-team"></p>
                 </dd>
@@ -85,22 +94,24 @@
     <div class="right-main">
         <div class="sub-model specific">
             <div class="logo">
-                <img src="{$data_info.logo}" />
+                <img src="{$data_info.logo}"/>
             </div>
             <div class="intro">
                 <p class="name">{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}</p>
                 <ul>
                     <li>英文名称：{$data_info.name_en}</li>
                     {if $data_info.type=='team'}
-                        {if !empty($data_info.competition)}
-                            <li>所属联赛：{$data_info.competition.name_zh}</li>
-                        {/if}
-                        {if !empty($data_info.coach)}
-                            <li>现任主教练：{$data_info.coach.name_zh}</li>
-                        {/if}
-                        {if !empty($data_info.venue)}
-                            <li>{$data_info.ball=='zuqiu'?'主场球馆':'所在城市'}： {$data_info.ball=='zuqiu'?$data_info.venue.name_zh:$data_info.venue.city}</li>
-                        {/if}
+                    {if !empty($data_info.competition)}
+                    <li>所属联赛：{$data_info.competition.name_zh}</li>
+                    {/if}
+                    {if !empty($data_info.coach)}
+                    <li>现任主教练：{$data_info.coach.name_zh}</li>
+                    {/if}
+                    {if !empty($data_info.venue)}
+                    <li>{$data_info.ball=='zuqiu'?'主场球馆':'所在城市'}：
+                        {$data_info.ball=='zuqiu'?$data_info.venue.name_zh:$data_info.venue.city}
+                    </li>
+                    {/if}
                     {/if}
                 </ul>
             </div>
@@ -120,7 +131,30 @@
 <!-- 脚本 -->
 {block name="script"}
 <script>
+    $(".tool a").click(function () {
+        $(this).addClass('cur').siblings().removeClass();
+        switch ($(this).index()) {
+            case 0:
+                $(".list-cont").removeClass('cur')
+                if ($(".list-cont").eq(1).find('.nodata').length == 0) {
+                    $(".list-cont").eq(1).addClass('cur')
+                }
+                if ($(".list-cont").eq(2).find('.nodata').length == 0) {
+                    $(".list-cont").eq(2).addClass('cur')
+                }
+                break;
+            case 1:
+                $(".list-cont").removeClass('cur').eq(0).addClass('cur')
+                break;
+        }
+    })
 
+    $(".list-cont").each(function (i, item) {
+        if ($(item).children().length == 0) {
+            $(item).append(`<p class='nodata sp'>暂无相关数据</p>`)
+        }
+        $(".tool a").eq(0).trigger('click')
+    })
 </script>
 {/block}
 <!-- /脚本 -->

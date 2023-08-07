@@ -2,5 +2,8 @@
     {foreach :[subnav] as $item}
     <a href="{$item.link}" class="{$item.cur?'cur':''}">{$item.title}</a>
     {/foreach}
-    <span>1111</span>
+    <?php if(strpos(get_ruleName(), 'live') && !empty(get_params()['compname'])): ?>
+    <p class="switch"><span class="switch-checked"><span class="switch-btn"></span></span><span class="txt wks">未开赛</span><span
+            class="txt ywj">已完结</span></p>
+    <?php endif; ?>
 </div>
