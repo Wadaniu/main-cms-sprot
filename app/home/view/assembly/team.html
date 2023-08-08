@@ -1,4 +1,4 @@
-<?php $copmid=strpos($_SERVER['REQUEST_URI'], 'liansai') ? $data_info['id'] : 0; $type=$copmid?(strpos($_SERVER['REQUEST_URI'], 'lanqiu') ? 'lanqiu' : 'zuqiu'):''; $limit=$copmid?0:10; $qddata=getHotTeam($limit,$type,$copmid);?>
+<?php $copmid=strpos($_SERVER['REQUEST_URI'], 'liansai') ? $data_info['id'] : 0; $type=$copmid?(strpos($_SERVER['REQUEST_URI'], 'lanqiu') ? 'lanqiu' : 'zuqiu'):''; $limit=$copmid?0:20; $qddata=getHotTeam($limit,$type,$copmid);?>
 <div class="sub-model">
     <div class="title">
         <p class="name">球队</p>
