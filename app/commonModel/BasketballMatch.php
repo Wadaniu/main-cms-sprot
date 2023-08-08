@@ -421,6 +421,9 @@ class BasketballMatch extends Model
     public function getByTeam($id,$where = [],$order = 'match_time ASC',$limit = 5)
     {
         $key = 'basketballTeamMatch'.$id;
+        if(!empty($where)){
+            $key .= json_encode($where);
+        }
         $data = Cache::store('common_redis')->get($key);
         if(!empty($data)){
             return $data;
