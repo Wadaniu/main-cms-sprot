@@ -42,8 +42,26 @@ class Index extends BaseController
         $basketballModel = new BasketballMatch();
         $basketballData = $basketballModel->getTodayData($hotBasketballCompId);
 
-        $matchData = array_merge($basketballData,$footballData);
-        array_multisort(array_column($matchData,'match_time'),SORT_ASC,$matchData);
+        $footballDone = [];
+        foreach ($footballData as $k=>$v){
+            
+        }
+
+
+        $startTime = strtotime(date('Y-m-d',time()).' 00:00:00');
+        $endTime = strtotime(date('Y-m-d',time()).' 23:59:59');
+
+        //已完结的要倒序，未开赛和直播中要正序
+        $footballData1 = $footballModel->getMatchInfo([["match_time","between",[$startTime,$endTime]],['status_id','IN',[1,2,3,4,5,7]]],$hotFootballCompId,50,$order="status_id desc,match_time asc");
+        $footballDone = $footballModel->getMatchInfo([["match_time","between",[$startTime,$endTime]],['status_id','IN',[8]]],$hotFootballCompId,50,$order="status_id desc,match_time desc");
+
+
+        $basketballData1 = $basketballModel->getMatchInfo([["match_time","between",[$startTime,$endTime]],['status_id','IN',[1,2,3,4,5,6,7,8,9]]],$hotBasketballCompId,50,$order="status_id desc,match_time asc");
+        $basketballDone = $basketballModel->getMatchInfo([["match_time","between",[$startTime,$endTime]],['status_id','IN',[10]]],$hotBasketballCompId,50,$order="status_id desc,match_time desc");
+
+
+        $matchData = array_merge($footballData1,$footballDone,$basketballData1,$basketballDone);
+        //array_multisort(array_column($matchData,'match_time'),SORT_ASC,$matchData);
 
         $res = [];
         foreach ($matchData as $item){
