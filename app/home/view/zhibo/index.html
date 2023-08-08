@@ -83,7 +83,11 @@
     $(function () {
         let curitem = $(".category .cur");
         let btn = $("#spbtn");
-        btn.css("left", curitem.position().left + (curitem.outerWidth() - btn.outerWidth()) / 2 + "px");
+        if (curitem.length > 0) {
+            btn.css("left", curitem.position().left + (curitem.outerWidth() - btn.outerWidth()) / 2 + "px");
+        } else {
+            btn.addClass('nocur')
+        }
 
         //获取最后一个符合条件元素的父级的下标
         let index = $(".play-list .over").last().parent().index();
