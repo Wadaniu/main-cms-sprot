@@ -368,7 +368,6 @@ i.iconfont {
     position: absolute;
     bottom: -40px;
     border-radius: 3px;
-    left: 40px;
     font-size: 12px;
     color: #fff6;
     background-color: var(--main-color);
@@ -398,6 +397,15 @@ i.iconfont {
     border-color: transparent;
     border-style: solid;
     border-bottom-color: var(--main-color);
+}
+
+.main-model .title .tool .nocur {
+    bottom: -50px;
+    right: 20px;
+}
+
+.main-model .title .tool .nocur i {
+    display: none;
 }
 
 .right-btn {
