@@ -45,11 +45,23 @@
             let index = $(".play-list .over").last().parent().index();
             let ywj = $(".play-list").children();
             let wks = ywj.splice(index + 1);
-            for (let i = 0; i < ywj.length; i += 2) {
-                [ywj[i], ywj[i + 1]] = [ywj[i + 1], ywj[i]];
-                let dom = $(ywj[i]).children().get().reverse();
-                $(ywj[i]).empty().append(dom)
+
+            let spdom = $("<dl class=list-cont></dl>")
+            $.each($(ywj[1]).children(), function (i, item) {
+                if (!$(item).hasClass('over')) {
+                    $(spdom).append(item)
+                }
+            })
+            if ($(spdom).children().length) {
+                wks.unshift(spdom[0])
+                wks.unshift(ywj[0])
             }
+
+            // for (let i = 0; i < ywj.length; i += 2) {
+            //     [ywj[i], ywj[i + 1]] = [ywj[i + 1], ywj[i]];
+            //     let dom = $(ywj[i]).children().get().reverse();
+            //     $(ywj[i]).empty().append(dom)
+            // }
 
             $(".switch").click(function () {
                 $(this).toggleClass('change');
@@ -64,7 +76,7 @@
                         break;
                     case 1:
                         $.each(ywj, function (i, item) {
-                            fragment.prepend(item)
+                            fragment.append(item)
                         })
                         break;
                 }
