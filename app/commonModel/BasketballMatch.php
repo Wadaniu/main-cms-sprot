@@ -199,7 +199,7 @@ class BasketballMatch extends Model
         return $this->getMatchInfo($where,$competitionIds,$limit);
     }
 
-    public function getCompetitionListByDone($competitionId = 0,$limit = 20,$order="match_time desc"): array
+    public function getCompetitionListByDone($competitionId = 0,$limit = 20): array
     {
         $competitionIds = [];
         if ($competitionId > 0){
@@ -208,7 +208,7 @@ class BasketballMatch extends Model
         //比赛时间大于当前时间-5400s
         $where[] = ["match_time","<",time()];
         $where[] = ['status_id','IN',[10]];
-        return $this->getMatchInfo($where,$competitionIds,$limit,$order);
+        return $this->getMatchInfo($where,$competitionIds,$limit);
     }
 
     /**

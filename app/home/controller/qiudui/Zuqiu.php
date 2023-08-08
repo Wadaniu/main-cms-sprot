@@ -49,7 +49,7 @@ class Zuqiu extends BaseController
 
         //直播数据
         $matchModel = new FootballMatch();
-        $doneData = $matchModel->getByTeam($teamid,[['status_id','IN',[8]]],'match_time DESC',self::MainLimit);
+        $doneData = $matchModel->getByTeam($teamid,[['status_id','IN',[8]]],'match_time ASC',self::MainLimit);
         if(!$doneData){
             $footballComp = getFootballHotComp();
             $hotFootballCompId = array_column($footballComp,'id');
