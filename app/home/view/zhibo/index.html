@@ -96,14 +96,14 @@
         //根据下标将不符合条件的元素从全部元素中删除另存
         let wks = ywj.splice(index + 1);
         //对删除剩余的元素循环处理，每次递增2
-        for (let i = 0; i < ywj.length; i += 2) {
-            //将每组奇偶元素交换
-            [ywj[i], ywj[i + 1]] = [ywj[i + 1], ywj[i]];
-            //如果元素包含子元素，将子元素倒序排列
-            let dom = $(ywj[i]).children().get().reverse();
-            //将元素清空，并放入已倒序的元素
-            $(ywj[i]).empty().append(dom)
-        }
+        // for (let i = 0; i < ywj.length; i += 2) {
+        //     //将每组奇偶元素交换
+        //     [ywj[i], ywj[i + 1]] = [ywj[i + 1], ywj[i]];
+        //     //如果元素包含子元素，将子元素倒序排列
+        //     let dom = $(ywj[i]).children().get().reverse();
+        //     //将元素清空，并放入已倒序的元素
+        //     $(ywj[i]).empty().append(dom)
+        // }
         //点击切换显示不同元素内容
         $("#spbtn span:not(.cur)").click(function () {
             $(this).addClass('cur').siblings().removeClass();
@@ -120,7 +120,7 @@
                 case 1:
                     $.each(ywj, function (i, item) {
                         //从前面依次插入
-                        fragment.prepend(item)
+                        fragment.append(item)
                     })
                     break;
             }
