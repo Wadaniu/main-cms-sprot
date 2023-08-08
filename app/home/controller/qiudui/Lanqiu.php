@@ -49,7 +49,7 @@ class Lanqiu extends BaseController
 
         //直播数据
         $matchModel = new BasketballMatch();
-        $doneData = $matchModel->getByTeam($teamid,[['status_id','IN',[10]]],'match_time ASC',self::MainLimit);
+        $doneData = $matchModel->getByTeam($teamid,[['status_id','IN',[10]]],'match_time DESC',self::MainLimit);
         if(!$doneData){
             $basketballComp = getBasketballHotComp();
             $hotBasketballCompId = array_column($basketballComp,'id');
