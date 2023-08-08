@@ -511,7 +511,7 @@ class FootballMatch extends Model
             return $data;
         }
 
-        $query = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time')
+        $query = self::field('id,status_id,competition_id,home_team_id,away_team_id,match_time,home_scores,away_scores')
             ->whereRAW("home_team_id = :hid OR away_team_id = :aid",['hid'=>$id,'aid'=>$id]);
 
         if (!empty($where)){
@@ -541,6 +541,8 @@ class FootballMatch extends Model
                     $info['short_name_zh'] : (isset($info['name_zh']) && !empty($info['name_zh']) ? $info['name_zh'] : '');
                 $item->away_team_logo = $info["logo"]??"";
                 $item->sphere_type="zuqiu";
+                $item->home_scores = json_decode($item->home_scores);
+                $item->away_scores = json_decode($item->away_scores);
         })->toArray();
 
         Cache::store('common_redis')->set($key,$data,120);
