@@ -95,6 +95,18 @@
         let ywj = $(".play-list").children();
         //根据下标将不符合条件的元素从全部元素中删除另存
         let wks = ywj.splice(index + 1);
+
+        let spdom = $("<dl class=list-cont></dl>")
+        $.each($(ywj[1]).children(), function (i, item) {
+            if (!$(item).hasClass('over')) {
+                $(spdom).append(item)
+            }
+        })
+        if ($(spdom).children().length) {
+            wks.unshift(spdom[0])
+            wks.unshift(ywj[0])
+        }
+
         //对删除剩余的元素循环处理，每次递增2
         // for (let i = 0; i < ywj.length; i += 2) {
         //     //将每组奇偶元素交换
