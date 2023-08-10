@@ -50,6 +50,12 @@ Route::get('/jifen-zuqiu/:compname?', CommonSpace.'\jifen\Zuqiu@index')->name('/
 
 Route::get('/Sitemap/createSitemap', CommonSpace.'\Sitemap@createSitemap')->name('/Sitemap/createSitemap/');
 
+
+
+//球赛预测
+Route::get('/yuce-zuqiu/:aid?',CommonSpace.'\yuce\Zuqiu@index')->name('/yuce-zuqiu');
+Route::get('/yuce-lanqiu/:aid?',CommonSpace.'\yuce\Lanqiu@index')->name('/yuce-lanqiu');
+
 //Route::get('/:id?', 'index/index')->name('/');
 Route::miss(function () {
     throw new \think\exception\HttpException(404, '找不到页面');
