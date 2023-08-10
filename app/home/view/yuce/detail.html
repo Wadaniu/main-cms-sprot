@@ -14,13 +14,13 @@
                     <p class="name"><a href="/qiudui-{$ball}/{$info.home_team_id}" target="_blank">{$info.home.name_zh??''}</a>
                     </p>
                 </div>
-                <div class="bf"></div>
+                <div class="bf">{$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}</div>
                 <div class="info">
-                    <p>{$info.match_time|date='Y-m-d H:i'}</p>
-                    <p class="zt"></p>
-                    <p></p>
+                    <p>{$analysis.info.match_time|date='Y-m-d H:i'}</p>
+                    <p class="zt">{$analysis.info.status_text}</p>
+                    <p>{$analysis.info.competition_text}</p>
                 </div>
-                <div class="bf"></div>
+                <div class="bf">{$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}</div>
                 <div class="team">
                     <p class="team-logo"><a href="/qiudui-{$ball}/{$info.away_team_id}" target="_blank"><img
                             src="{$info.away.logo??''}"></a></p>
