@@ -1,0 +1,61 @@
+{extend name="common/base"/}
+{block name="style"}
+{/block}
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='info' /}
+<?php $islanqiu=isset($players) ?>
+<div class="playbg">
+    <div class="play match-info">
+        <div class="team">
+            <p class="team-logo"><a href="/qiudui-{$ball}/{$info.home_team_id}" target="_blank"><img
+                    src="{$info.home.logo??''}"></a></p>
+            <p class="name"><a href="/qiudui-{$ball}/{$info.home_team_id}" target="_blank">{$info.home.name_zh??''}</a>
+            </p>
+        </div>
+        <div class="bf"></div>
+        <div class="info">
+            <p>{$info.match_time|date='Y-m-d H:i'}</p>
+            <p class="zt"></p>
+            <p></p>
+        </div>
+        <div class="bf"></div>
+        <div class="team">
+            <p class="team-logo"><a href="/qiudui-{$ball}/{$info.away_team_id}" target="_blank"><img
+                    src="{$info.away.logo??''}"></a></p>
+            <p class="name"><a href="/qiudui-{$ball}/{$info.away_team_id}" target="_blank">{$info.away.name_zh??''}</a>
+            </p>
+        </div>
+    </div>
+    <div class="live-link">
+
+    </div>
+</div>
+<div class="container">
+    <div class="left-main">
+        <div class="main-model">
+            {$info.forecast}这个是预测内容
+        </div>
+    </div>
+    <div class="right-main">
+        {include file="assembly/zhibo" num="8"/}
+    </div>
+</div>
+{/block}
+<!-- /主体 -->
+<!-- 脚本 -->
+{block name="script"}
+<script>
+    $(".type-tabs p").click(function () {
+        let index = $(this).index();
+        $(this).addClass("cur").siblings().removeClass();
+        $(".type-cont").hide().eq(index).show();
+    })
+    $(".name-tab li").click(function () {
+        let index = $(this).index();
+        $(this).addClass("cur").siblings().removeClass();
+        $(".type-cont .name-cont").slideUp().eq(index).slideDown();
+    })
+</script>
+{/block}
+<!-- /脚本 -->

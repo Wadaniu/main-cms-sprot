@@ -1,0 +1,70 @@
+{extend name="common/base"/}
+{block name="style"}
+{/block}
+<!-- 主体 -->
+{block name="body"}
+{include file="common/header" nav='info' /}
+<div class="container">
+    <div class="left-main">
+        <div class="main-model">
+            <div class="title">
+                <p class="name"><i class="iconfont icon-zixun"></i><span class="prefix">资讯</span></p>
+                <div class="tool">
+                    {include file="assembly/typeselect"/}
+                </div>
+            </div>
+            <dl class="news-list nodata">
+                {foreach $list.data as $l}
+                <dd>
+                    <a href="/yuce-{$ball}/{$l.id}.html" target="_blank">
+                        <img src="{$l.home.logo??''}">
+                        <img src="{$l.away.logo??''}">
+                    </a>
+                    <div>
+                        <h4 title="{$l.title}"><a href="/yuce-{$ball}/{$l.id}.html">{$l.home.name_zh??''} vs{$l.away.name_zh??''}:预测分析,比分预测,在线直播,比赛结果</a><span>{$l.match_time}</span></h4>
+                        <p class="desc">
+                        </p>
+                        <p class="other">
+                            <span>
+                            </span>
+                        </p>
+                    </div>
+                </dd>
+                {/foreach}
+            </dl>
+            <div class="pages">
+                <div class="pages">
+                    <?php
+                    $cur=$list['current_page'];
+                    $total=ceil($list['total']/$list['per_page']);
+                    $start=$total>9&&$cur>5?($total-$cur<5?$total-8:$cur-4):1;
+                    $end=$total>9&&$cur>5?($cur+5>$total?$total+1:$cur+5):($total>9?10:$total+1);
+                    $cs=$curparam&&!strpos($curparam, '_')?$curparam.'/':'';
+                    if($total>1):
+                    ?>
+                    <a href="{$cur==1?'': get_ruleName().$cs.'index_'.($cur-1).'/'.get_params('keywords_id')}"><</a>
+                    {for start='$start' end='$end'}
+                    <a href="{$cur==$i?'#':get_ruleName().$cs.'index_'.($i).'/'.get_params('keywords_id')}">{$i}</a>
+                    {/for}
+                    <a href="{$cur==$total?'':get_ruleName().$cs.'index_'.($cur+1).'/'.get_params('keywords_id')}">></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-main">
+        {include file="assembly/zhibo"/}
+        {include file="assembly/luxiang"/}
+        {include file="assembly/jijin"/}
+        {include file="assembly/hotkey"/}
+    </div>
+</div>
+{/block}
+<!-- /主体 -->
+<!-- 脚本 -->
+{block name="script"}
+<script>
+
+</script>
+{/block}
+<!-- /脚本 -->

@@ -173,6 +173,47 @@ return [
         ]
     ],
 
+
+    //比赛预测
+    'yuce_lanqiu'      => [
+        'route_name'    => '篮球比赛预测',
+        'route_path'    =>  '/yuce-lanqiu/',
+        'keywords'      =>  [
+
+        ]
+    ],
+    'yuce_lanqiu_detail'=> [
+        'route_name'    => '篮球比赛预测详情',
+        'route_path'    =>  '/yuce-lanqiu/[:aid]',
+        'keywords'      =>  [
+            'match_time'=>"比赛时间",
+            "home_team_name"=>"主队",
+            "away_team_name"=>"客队",
+        ]
+    ],
+    'yuce_zuqiu'      => [
+        'route_name'    => '足球比赛预测',
+        'route_path'    =>  '/yuce-zuqiu/',
+        'keywords'      =>  [
+
+        ]
+    ],
+    'yuce_zuqiu_detail'=> [
+        'route_name'    => '足球比赛预测详情',
+        'route_path'    =>  '/yuce-zuqiu/[:aid]',
+        'keywords'      =>  [
+            'match_time'=>"比赛时间",
+            "home_team_name"=>"主队",
+            "away_team_name"=>"客队",
+        ]
+    ],
+
+
+
+
+
+
+
     'liansai'           => [
         'route_name'    => '联赛',
         'route_path'    =>  '',
