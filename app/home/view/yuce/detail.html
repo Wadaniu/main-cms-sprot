@@ -14,7 +14,7 @@
                 </div>
                 <div class="bf">
                     {if !empty($analysis.info.home_scores)}
-                        {$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}
+                        {$ball=='lanqiu'?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}
                     {/if}
                 </div>
                 <div class="info">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="bf">
                     {if !empty($analysis.info.home_scores)}
-                        {$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}
+                        {$ball=='lanqiu'?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}
                     {/if}
                 </div>
                 <div class="team">

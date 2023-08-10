@@ -82,7 +82,7 @@ class Lanqiu extends BaseController
         View::assign("info",$info);
         View::assign("comp",$comp);
         View::assign("analysis",$analysis);
-        View::assign("ball",'zuqiu');
+        View::assign("ball",'lanqiu');
     }
 
     protected function getMatchList($param)
