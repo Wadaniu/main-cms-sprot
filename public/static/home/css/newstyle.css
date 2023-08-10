@@ -836,6 +836,7 @@ i.iconfont {
     width: 850px;
     height: auto;
     margin-bottom: 20px;
+    object-fit: cover;
 }
 
 .laliga-info {
@@ -2054,4 +2055,42 @@ p.nodata {
     color: #ddd;
     font-size: 2em;
     background-color: #fbfbfb;
+}
+
+.zhibosp {
+    width: 100% !important;
+}
+
+.zhibosp .infoimg {
+    width: 100%;
+    height: 250px;
+}
+
+.zhibosp .play-list {
+    padding: 0 20px;
+}
+
+.zhibosp .list-cont .left {
+    display: flex;
+    width: 240px;
+    justify-content: space-between;
+}
+
+.zhibosp .list-cont .left .name {
+    padding-top: 0;
+}
+
+.zhibosp .list-cont .left .status {
+}
+
+.zhibosp .list-cont dd .center p {
+    width: 230px;
+}
+
+.zhibosp .list-cont dd .center .bf {
+    width: 50px;
+}
+
+.zhibosp .list-cont dd .center img {
+    margin: 0 12px;
 }

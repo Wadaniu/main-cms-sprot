@@ -49,10 +49,10 @@
             let spdom = $("<dl class=list-cont></dl>")
             $.each($(ywj[1]).children(), function (i, item) {
                 if (!$(item).hasClass('over')) {
-                    $(spdom).append(item)
+                    spdom.append(item)
                 }
             })
-            if ($(spdom).children().length) {
+            if (spdom.children().length) {
                 wks.unshift(spdom[0])
                 wks.unshift(ywj[0])
             }

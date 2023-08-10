@@ -5,7 +5,7 @@
 {block name="body"}
 {include file="common/header" nav='info' /}
 <div class="container">
-    <div class="left-main">
+    <div class="left-main zhibosp">
         <?php if(isset($comp)): ?>
         <div class="laliga-info">
             <div class="laliga-logo">
@@ -38,8 +38,8 @@
                         <div class="item-box">
                             <div class="left">
                                 <p class="time">{$team.match_time|date='H:i'}</p>
-                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a>
-                                </p>
+                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
+                                <p class="status">{$team.status_text}</p>
                             </div>
                             <div class="center">
                                 <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}"
@@ -48,7 +48,7 @@
                                     <img class="" src="{$team.home_team_logo}" alt="">
                                     <span class="bf">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span>
                                 </a>
-                                <span class="zt"><?php echo getzt($team['status_id'],3,$team['sphere_type']) ?></span>
+                                <span class="zt">VS</span>
                                 <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}"
                                    target="_blank">
                                     <span class="bf">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span>
@@ -68,12 +68,12 @@
             </div>
         </div>
     </div>
-    <div class="right-main">
-        {include file="assembly/zixun"/}
-        {include file="assembly/luxiang"/}
-        {include file="assembly/jijin"/}
-        {include file="assembly/hotkey"/}
-    </div>
+<!--    <div class="right-main">-->
+<!--        {include file="assembly/zixun"/}-->
+<!--        {include file="assembly/luxiang"/}-->
+<!--        {include file="assembly/jijin"/}-->
+<!--        {include file="assembly/hotkey"/}-->
+<!--    </div>-->
 </div>
 {/block}
 <!-- /主体 -->
@@ -99,10 +99,10 @@
         let spdom = $("<dl class=list-cont></dl>")
         $.each($(ywj[1]).children(), function (i, item) {
             if (!$(item).hasClass('over')) {
-                $(spdom).append(item)
+                spdom.append(item)
             }
         })
-        if ($(spdom).children().length) {
+        if (spdom.children().length) {
             wks.unshift(spdom[0])
             wks.unshift(ywj[0])
         }
