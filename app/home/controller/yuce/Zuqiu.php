@@ -11,6 +11,7 @@ use app\commonModel\FootballCompetition;
 use app\commonModel\Admin;
 use app\commonModel\ArticleKeywords;
 use app\commonModel\FootballMatch;
+use app\commonModel\FootballMatchInfo;
 
 class Zuqiu extends BaseController
 {
@@ -42,6 +43,28 @@ class Zuqiu extends BaseController
         if ($comp->isEmpty()) {
             throw new \think\exception\HttpException(404, '找不到页面');
         }
+        $FootballMatchInfoModel = new FootballMatchInfo();
+        $matchInfo = $FootballMatchInfoModel->getByMatchId($matchId);
+
+        $model = new FootballMatch();
+        $matchLive = $model->getMatchLive($matchId);
+
+        if ($matchLive->isEmpty()){
+            $matchLive['mobile_link'] = [];
+            $matchLive['pc_link'] = [];
+        }else{
+            $matchLive['mobile_link'] = json_decode($matchLive['mobile_link'],true);
+            $matchLive['pc_link'] = json_decode($matchLive['pc_link'],true);
+        }
+
+        //历史交锋
+        $analysis = [
+            'info'      =>  is_null($matchInfo['info']) ? [] : json_decode($matchInfo['info'],true),
+            'future'    =>  is_null($matchInfo['future']) ? [] : json_decode($matchInfo['future'],true),
+            'history'   =>  is_null($matchInfo['history']) ? [] : json_decode($matchInfo['history'],true),
+        ];
+        //队伍统计
+        $teamStats = is_null($matchInfo['team_stats']) ? [] : json_decode($matchInfo['team_stats'],true);
         $this->getTempPath('yuce_zuqiu_detail');
         $info = $comp->toArray();
         $comp = FootballCompetition::where("id",$info["competition_id"])->find()->toArray();
@@ -57,6 +80,11 @@ class Zuqiu extends BaseController
         View::assign("info",$info);
         View::assign("comp",$comp);
         View::assign("ball",'zuqiu');
+        View::assign("analysis",$analysis);
+        View::assign("teamStats",$teamStats);
+        View::assign("matchLive",$matchLive);
+        View::assign("comp",['id'=>$info['competition_id']]);
+
     }
 
     protected function getMatchList()
