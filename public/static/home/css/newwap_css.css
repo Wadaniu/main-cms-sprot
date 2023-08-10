@@ -350,7 +350,8 @@ i.iconfont {
     color: var(--main-color);
 }
 
-.switch .ywj { display: block;
+.switch .ywj {
+    display: block;
 
 }
 
@@ -358,7 +359,8 @@ i.iconfont {
     display: none;
 }
 
-.change .ywj {display: none;
+.change .ywj {
+    display: none;
 
 }
 
@@ -1112,6 +1114,7 @@ p.nodata {
     height: 1.26rem;
     background-color: #fff;
     border-radius: 50%;
+    overflow: hidden;
 }
 
 .match-info .team-logo img {
@@ -1578,4 +1581,82 @@ p.nodata {
     display: inline-block;
     margin-right: 0.2rem;
     vertical-align: -0.24rem;
+}
+
+.yuce-list li {
+    margin: 0 0.3rem;
+    padding: 0.3rem 0;
+}
+
+.yuce-list li:not(:first-child) {
+    border-top: 1px solid rgba(var(--main-r), var(--main-g), var(--main-b), .3);
+}
+
+.yuce-list li .tit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.4rem;
+}
+
+.yuce-list li .tit h4 {
+    font-size: 0.3rem;
+    width: 6rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.yuce-list li .tit span {
+    font-size: 0.24rem;
+    color: #999;
+}
+
+.yuce-list li .logovs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.yuce-list li .logovs p {
+    display: flex;
+    align-items: center;
+    font-size: 0.24rem;
+}
+
+.yuce-list li .logovs p:not(.vs) {
+    width: 46%;
+}
+
+.yuce-list li .logovs p:last-child {
+    justify-content: right;
+}
+
+.yuce-list li .logovs img {
+    width: 0.8rem;
+    height: 0.8rem;
+}
+
+.yuce-list li .logovs span {
+    padding: 0 0.2rem;
+}
+
+.yuce-content {
+    padding: 0.3rem;
+}
+
+.yuce-content h1 {
+    font-size: 0.36rem;
+    font-weight: normal;
+    line-height: 0.6rem;
+}
+
+.yuce-content .cont {
+    line-height: 0.54rem;
+    font-size: 0.3rem;
+    padding: 0.4rem 0;
+    overflow: hidden;
+}
+
+.yuce-content .match-info {
+    margin: -0.3rem -0.3rem 0.3rem;
 }

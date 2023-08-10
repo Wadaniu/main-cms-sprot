@@ -340,16 +340,18 @@ function wapnav($list)
 //获取移动端二级导航链接
 function subnav($name)
 {
-    $curname = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '-'));
+    $curname = $name == '资讯' ? '/zixun' : substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '-'));
     $typenae = ['zuqiu' => '足球', 'lanqiu' => '篮球'];
     $sublist = [];
     foreach ($typenae as $i => $item) {
         $sublist[] = [
             'title' => $item . $name,
             'link' => $curname . '-' . $i . '/',
-            'cur' => strpos($_SERVER['REQUEST_URI'], $i) ? true : false
+            'cur' => is_bool(strpos($_SERVER['REQUEST_URI'], $curname . '-' . $i)) ? false : true
         ];
     }
+
+    //var_dump();die;
     return $sublist;
 }
 
@@ -687,9 +689,9 @@ function getMatchVedio($where = [])
 /**
  * 获取集锦、录像详情
  * */
-function getMatchVedioById($matchId,$com)
+function getMatchVedioById($matchId, $com)
 {
-    if(!is_numeric($matchId)){
+    if (!is_numeric($matchId)) {
         throw new \think\exception\HttpException(404, '找不到页面');
     }
     $model = new \app\commonModel\MatchVedio();
@@ -704,7 +706,7 @@ function getMatchVedioById($matchId,$com)
     } else {
         $match = (new \app\commonModel\FootballMatch())->getMatchInfo("id=" . $matchLive['match_id'], [], 1);
     }
-    if($match[0]['comp_py']!=$com){
+    if ($match[0]['comp_py'] != $com) {
         throw new \think\exception\HttpException(404, '找不到页面');
     }
 
@@ -739,20 +741,21 @@ function getMatchVedioById($matchId,$com)
  * $matchid 比赛ID
  * $video_type 0足球，1篮球
  * */
-function getLxAndJjByMatchId($matchid,$video_type){
+function getLxAndJjByMatchId($matchid, $video_type)
+{
     $list = Db::connect('compDataDb')->table("fb_match_vedio")->alias('a')->field("a.*,b.competition_id");
     if ($video_type == '0') {
-        $list = $list->leftJoin("fb_football_match b", "a.match_id=b.id")->where("match_id",$matchid)->where("video_type", $video_type);
+        $list = $list->leftJoin("fb_football_match b", "a.match_id=b.id")->where("match_id", $matchid)->where("video_type", $video_type);
     } else if ($video_type == '1') {
-        $list = $list->leftJoin("fb_basketball_match b", "a.match_id=b.id")->where("match_id",$matchid)->where("video_type", $video_type);
+        $list = $list->leftJoin("fb_basketball_match b", "a.match_id=b.id")->where("match_id", $matchid)->where("video_type", $video_type);
     }
 
 
     $list->order("a.id desc");
     $data = $list->select()->toArray();
-    if($video_type==0){
+    if ($video_type == 0) {
         $com = (new \app\commonModel\FootballCompetition());
-    }else{
+    } else {
         $com = (new \app\commonModel\BasketballCompetition());
     }
     foreach ($data as $k => $v) {

@@ -1,5 +1,5 @@
 <?php $type=typeselect(); $curparam=get_params('compname'); if(count($type)>0): ?>
-<div class="category" style="<?php if(strpos($_SERVER['REQUEST_URI'], 'zixun')||strpos($_SERVER['REQUEST_URI'], 'search')) echo 'display:none'; ?>">
+<div class="category" style="<?php if(strpos($_SERVER['REQUEST_URI'], 'zixun')||strpos($_SERVER['REQUEST_URI'], 'yuce')||strpos($_SERVER['REQUEST_URI'], 'search')) echo 'display:none'; ?>">
     {volist name="type" id="item" length='10'}
     <a href="{$item.src}" data-link="{$item.py}">{$item.title}</a>
     {/volist}
