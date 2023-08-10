@@ -2094,3 +2094,101 @@ p.nodata {
 .zhibosp .list-cont dd .center img {
     margin: 0 12px;
 }
+
+.yuce-list dd {
+    margin: 0 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.yuce-list dd .tit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+
+.yuce-list dd .tit h4 {
+    font-size: 17px;
+    width: 640px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.yuce-list dd .tit span {
+    font-size: 13px;
+    color: #999;
+}
+
+.yuce-list dd .logovs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.yuce-list dd .logovs p {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.yuce-list dd .logovs p:not(.vs) {
+    width: 46%;
+}
+
+.yuce-list dd .logovs p:last-child {
+    justify-content: right;
+}
+
+.yuce-list dd .logovs img {
+    width: 50px;
+    height: 50px;
+}
+
+.yuce-list dd .logovs span {
+    padding: 0 20px;
+}
+
+.yuce-content {
+    padding: 30px;
+}
+
+.yuce-content h1 {
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 38px;
+}
+
+.yuce-content .cont {
+    line-height: 30px;
+    font-size: 16px;
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+.yuce-content .match-info {
+    margin: -30px -30px 30px;
+    height: 200px;
+    padding-bottom: 0;
+    font-size: 16px;
+}
+
+.yuce-content .match-info .team {
+    width: 250px;
+}
+
+.yuce-content .match-info .bf {
+    padding: 0 20px;
+    font-size: 34px;
+}
+.yuce-content .match-info .info {
+    width: 150px;
+}
+.yuce-content .match-info .team-logo {
+    width: 90px;
+    height: 90px;
+}
+
+.yuce-content .match-info .name {
+    font-size: 20px;
+}
