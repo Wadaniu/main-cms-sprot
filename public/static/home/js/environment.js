@@ -19,10 +19,10 @@ $(function () {
     console.log(logoimg)
     $("img").each(function (i, item) {
         if (!$(item).attr('src')) {
-            $(item).attr('src', logoimg).css('background-color','var(--main-color)')
+            $(item).attr('src', logoimg).css({'background-color': 'var(--main-color)','object-fit': 'contain'})
         }
         $(item).error(function () {
-            $(this).attr('src', logoimg).css('background-color','var(--main-color)')
+            $(this).attr('src', logoimg).css({'background-color': 'var(--main-color)','object-fit': 'contain'})
         })
     })
 

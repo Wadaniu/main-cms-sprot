@@ -7,7 +7,32 @@
 <div class="container">
     <div class="left-main">
         <div class="yuce-content">
-
+            <dl class="list-cont">
+                <dd class="<?php echo getzt($info['status_id'],2,$ball) ?>">
+                    <div class="item-box">
+                        <div class="left">
+                            <p class="time">{$info.match_time|date='m-d H:i'}</p>
+                            <p class="name"><a href="/live-{$ball}/{$comp.short_name_py}" target="_blank">{$analysis.info.competition_text??''}</a></p>
+                        </div>
+                        <div class="center">
+                            <a class="left-name" href="/qiudui-{$ball}/{$info.home_team_id}" target="_blank">
+                                <p>{$info.home.name_zh??''}</p>
+                                <img src="{$info.home.logo??''}">
+                                <span class="bf">{$ball=='lanqiu'?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}</span>
+                            </a>
+                            <span class="zt"><?php echo getzt($info['status_id'],3,$ball) ?></span>
+                            <a class="right-name" href="/qiudui-{$ball}/{$info.away_team_id}" target="_blank">
+                                <span class="bf">{$ball=='lanqiu'?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}</span>
+                                <img src="{$info.away.logo??''}">
+                                <p>{$info.away.name_zh??''}</p>
+                            </a>
+                        </div>
+                        <div class="right">
+                            <a href="/live-{$ball}/{$comp.short_name_py}/{$info.id}.html" target="_blank"><i class="iconfont <?php echo getzt($info['status_id'],0,$ball) ?>"></i><span><?php echo getzt($info['status_id'],1,$ball) ?></span></a>
+                        </div>
+                    </div>
+                </dd>
+            </dl>
             <h1>{$info.home.name_zh??''}vs{$info.away.name_zh??''}：预测分析,比分预测,在线直播,比赛结果</h1>
             <div class="cont">
                 {$info.forecast|raw}

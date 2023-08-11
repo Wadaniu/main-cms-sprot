@@ -83,8 +83,7 @@ class Zuqiu extends BaseController
         View::assign("analysis",$analysis);
         View::assign("teamStats",$teamStats);
         View::assign("matchLive",$matchLive);
-        View::assign("comp",['id'=>$info['competition_id']]);
-        //var_dump($analysis);die;
+
     }
 
     protected function getMatchList()
@@ -123,5 +122,6 @@ class Zuqiu extends BaseController
         View::assign('param',$param);
         View::assign("ball",'zuqiu');
         $this->getTempPath('yuce_zuqiu');
+
     }
 }
