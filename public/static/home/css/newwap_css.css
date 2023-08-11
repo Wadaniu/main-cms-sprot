@@ -513,10 +513,10 @@ p.nodata {
 
 .list-cont .middle-container .btn {
     width: 20%;
-    border: 1px solid var(--main-color);
+    /*border: 1px solid var(--main-color);*/
     color: var(--main-color);
     padding: 0.14rem 0;
-    box-shadow: 0 2px 3px #0003;
+    /*box-shadow: 0 2px 3px #0003;*/
 }
 
 .collect .list {
@@ -722,8 +722,6 @@ p.nodata {
 .news-list .img img {
     width: 100%;
     height: 1.8rem;
-    object-fit: cover;
-
 }
 
 .news-list .tit {
@@ -807,7 +805,6 @@ p.nodata {
 .new-content .cont img {
     display: inline-block;
     margin: 0 auto;
-    object-fit: cover;
     max-width: 100% !important;
 }
 
