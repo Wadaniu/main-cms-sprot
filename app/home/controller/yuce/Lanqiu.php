@@ -106,6 +106,7 @@ class Lanqiu extends BaseController
         }
         $list = $model->getBasketballMatchList($where,["order"=>"match_time asc"])->toArray();
         $footballTeam = new \app\commonModel\BasketballTeam();
+        $comp = new BasketballCompetition();
         foreach ($list['data'] as $k=>$v){
             $list["data"][$k]['home'] = [];
             $list["data"][$k]['away'] = [];
@@ -114,6 +115,7 @@ class Lanqiu extends BaseController
             $list["data"][$k]['home'] = $home;
             $away = $footballTeam->getShortNameZhLogo($v["away_team_id"]);
             $list["data"][$k]['away'] = $away;
+            $list['data'][$k]['comp'] = $comp->getShortNameZh($v['competition_id']);
         }
         $this->getTdk('yuce_lanqiu',$this->tdk);
         View::assign("list",$list);
