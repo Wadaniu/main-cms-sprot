@@ -83,8 +83,6 @@ class Zuqiu extends BaseController
         View::assign("analysis",$analysis);
         View::assign("teamStats",$teamStats);
         View::assign("matchLive",$matchLive);
-
-
     }
 
     protected function getMatchList()
