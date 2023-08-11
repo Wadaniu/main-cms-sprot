@@ -122,5 +122,6 @@ class Lanqiu extends BaseController
         View::assign('param',$param);
         View::assign("ball",'lanqiu');
         $this->getTempPath('yuce_zuqiu');
+        //var_dump($list);die;
     }
 }

@@ -18,13 +18,14 @@
                 <dd>
                     <a href="/yuce-{$ball}/{$l.id}.html" target="_blank">
                         <div class="tit">
-                            <h4>{$l.home.name_zh??''}vs{$l.away.name_zh??''}：预测分析</h4>
-                            <span>{$l.match_time}</span>
+                            <h4>预测分析</h4>
+                            <span>{$l.forecast_time|date='Y-m-d H:i'}</span>
                         </div>
                         <div class="logovs">
-                            <p><img src="{$l.home.logo??''}"><span>{$l.home.name_zh??''}</span></p>
+                            <p class="name">{$l.comp.short_name_zh??$l.comp.name_zh}</p>
+                            <p class="team"><img src="{$l.home.logo??''}"><span>{$l.home.name_zh??''}</span></p>
                             <p class="vs">VS</p>
-                            <p><span>{$l.away.name_zh??''}</span><img src="{$l.away.logo??''}"></p>
+                            <p class="team"><span>{$l.away.name_zh??''}</span><img src="{$l.away.logo??''}"></p>
                         </div>
                     </a>
                 </dd>

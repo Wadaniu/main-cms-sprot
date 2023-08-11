@@ -9,13 +9,13 @@
             <li>
                 <a href="/yuce-{$ball}/{$l.id}.html">
                     <div class="tit">
-                        <h4>{$l.home.name_zh??''}vs{$l.away.name_zh??''}：预测分析</h4>
-                        <span>{$l.match_time|date='H:i'}</span>
+                        <h4>预测分析</h4>
+                        <span>{$l.forecast_time|date='m-d H:i'}</span>
                     </div>
                     <div class="logovs">
                         <p><img src="{$l.home.logo??''}"><span>{$l.home.name_zh??''}</span></p>
-                        <p class="vs">VS</p>
-                        <p><span>{$l.away.name_zh??''}</span><img src="{$l.away.logo??''}"></p>
+                        <p class="vs">VS<br />{$l.comp.short_name_zh??$l.comp.name_zh}</p>
+                        <p><img src="{$l.away.logo??''}"><span>{$l.away.name_zh??''}</span></p>
                     </div>
                 </a>
             </li>

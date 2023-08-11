@@ -2,31 +2,26 @@
 {block name="body"}
 <div class="container">
     <div class="yuce-content">
-        <div class="match-info">
-            <div class="team">
-                <p class="team-logo"><a href="/qiudui-{$ball}/{$info.home_team_id}" target="_blank"><img src="{$info.home.logo??''}"></a></p>
-                <p class="team-name"><a href="/qiudui-{$ball}/{$info.home_team_id}" target="_blank">{$info.home.name_zh??''}</a></p>
-            </div>
-            <div class="bf">
-                {if !empty($analysis.info.home_scores)}
-                {$ball=='lanqiu'?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}
-                {/if}
-            </div>
-            <div class="info">
-                <p>{$info.match_time|date='m-d H:i'}</p>
-                <p class="zt">{$analysis.info.status_text??''}</p>
-                <p>{$analysis.info.competition_text??''}</p>
-            </div>
-            <div class="bf">
-                {if !empty($analysis.info.home_scores)}
-                {$ball=='lanqiu'?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}
-                {/if}
-            </div>
-            <div class="team">
-                <p class="team-logo"><a href="/qiudui-{$ball}/{$info.away_team_id}" target="_blank"><img src="{$info.away.logo??''}"></a></p>
-                <p class="team-name"><a href="/qiudui-{$ball}/{$info.away_team_id}" target="_blank">{$info.away.name_zh??''}</a></p>
-            </div>
-        </div>
+        <dl class="list-cont">
+            <dd>
+                <a class="middle-container" href="/live-{$ball}/{$comp.short_name_py}/{$info.id}.html">
+                    <div class="team">
+                        <img src="{$info.home.logo??''}">
+                        <div class="name">{$info.home.name_zh??''}</div>
+                    </div>
+                    <div class="info">
+                        {$info.match_time|date='m-d H:i'}
+                        <div class="score">{$ball=='lanqiu'?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]} : {$ball=='lanqiu'?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}</div>
+                        {$analysis.info.competition_text??''}
+                    </div>
+                    <div class="team">
+                        <img src="{$info.away.logo??''}">
+                        <div class="name">{$info.away.name_zh??''}</div>
+                    </div>
+                    <div class="btn"><?php echo getzt($info['status_id'],1,$ball) ?></div>
+                </a>
+            </dd>
+        </dl>
         <h1>{$info.home.name_zh??''}vs{$info.away.name_zh??''}：预测分析,比分预测,在线直播,比赛结果</h1>
         <div class="cont">
             {$info.forecast|raw}

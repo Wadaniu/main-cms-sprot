@@ -47,7 +47,7 @@ class FootballMatch extends Model
 		$rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
 		$order = empty($param['order']) ? 'id desc' : $param['order'];
         $list = self::where($where)
-            ->field('id,season_id,competition_id,home_team_id,away_team_id,status_id,match_time,neutral,note,home_scores,away_scores,home_position,away_position,coverage,venue_id,referee_id,related_id,agg_score,round,environment,updated_at,comp,home,away,mobile_link,pc_link,title,cover,duration,forecast')
+            ->field('id,season_id,home_team_id,away_team_id,status_id,competition_id,forecast_time,match_time,neutral,note,home_scores,away_scores,home_position,away_position,coverage,venue_id,referee_id,related_id,agg_score,round,environment,updated_at,comp,home,away,mobile_link,pc_link,title,cover,duration,forecast')
             ->order($order)
             ->paginate($rows, false, ['query' => $param])
             ->each(function ($item, $key) {
