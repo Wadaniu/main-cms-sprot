@@ -7,8 +7,6 @@
 <div class="container">
     <div class="left-main">
         <div class="yuce-content">
-
-            <h1>{$info.match_time|date='Y-m-d'}{$info.home.name_zh??''}vs{$info.away.name_zh??''}：预测分析</h1>
             <dl class="list-cont">
                 <dd class="<?php echo getzt($info['status_id'],2,$ball) ?>">
                     <div class="item-box">
@@ -35,7 +33,7 @@
                     </div>
                 </dd>
             </dl>
-            <h1>{$info.home.name_zh??''}vs{$info.away.name_zh??''}：预测分析</h1>
+            <h1>{$info.match_time|date='Y-m-d'}{$info.home.name_zh??''}vs{$info.away.name_zh??''}：预测分析</h1>
             <div class="cont">
                 {$info.forecast|raw}
             </div>
