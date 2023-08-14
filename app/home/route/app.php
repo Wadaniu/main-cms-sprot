@@ -53,8 +53,8 @@ Route::get('/Sitemap/createSitemap', CommonSpace.'\Sitemap@createSitemap')->name
 
 
 //球赛预测
-Route::get('/yuce-zuqiu/:aid?',CommonSpace.'\yuce\Zuqiu@index')->name('/yuce-zuqiu');
-Route::get('/yuce-lanqiu/:aid?',CommonSpace.'\yuce\Lanqiu@index')->name('/yuce-lanqiu');
+Route::get('/yuce-zuqiu/:aid?',CommonSpace.'\yuce\Zuqiu@index')->name('/yuce-zuqiu/');
+Route::get('/yuce-lanqiu/:aid?',CommonSpace.'\yuce\Lanqiu@index')->name('/yuce-lanqiu/');
 
 //Route::get('/:id?', 'index/index')->name('/');
 Route::miss(function () {

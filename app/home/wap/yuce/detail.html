@@ -22,7 +22,7 @@
                 </a>
             </dd>
         </dl>
-        <h1>{$info.home.name_zh??''}vs{$info.away.name_zh??''}：预测分析,比分预测,在线直播,比赛结果</h1>
+        <h1>{$info.match_time|date='Y-m-d'}{$info.home.name_zh??''}vs{$info.away.name_zh??''}：预测分析</h1>
         <div class="cont">
             {$info.forecast|raw}
         </div>
