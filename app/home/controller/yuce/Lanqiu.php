@@ -117,6 +117,7 @@ class Lanqiu extends BaseController
             $list["data"][$k]['away'] = $away;
             $list['data'][$k]['comp'] = $comp->getShortNameZh($v['competition_id']);
         }
+        $list['current_page'] = $param['page'];
         $this->getTdk('yuce_lanqiu',$this->tdk);
         View::assign("list",$list);
         View::assign('param',$param);
