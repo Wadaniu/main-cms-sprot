@@ -18,11 +18,19 @@
                             <a class="left-name" href="/qiudui-{$ball}/{$info.home_team_id}" target="_blank">
                                 <p>{$info.home.name_zh??''}</p>
                                 <img src="{$info.home.logo??''}">
-                                <span class="bf">{$ball=='lanqiu'?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}</span>
+                                <span class="bf">
+                                    {if !empty($analysis.info)}
+                                        {$ball=='lanqiu'?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}
+                                    {/if}
+                                </span>
                             </a>
                             <span class="zt"><?php echo getzt($info['status_id'],3,$ball) ?></span>
                             <a class="right-name" href="/qiudui-{$ball}/{$info.away_team_id}" target="_blank">
-                                <span class="bf">{$ball=='lanqiu'?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}</span>
+                                <span class="bf">
+                                    {if !empty($analysis.info)}
+                                        {$ball=='lanqiu'?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}
+                                    {/if}
+                                </span>
                                 <img src="{$info.away.logo??''}">
                                 <p>{$info.away.name_zh??''}</p>
                             </a>
