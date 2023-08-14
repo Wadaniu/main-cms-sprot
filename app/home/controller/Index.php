@@ -101,9 +101,9 @@ class Index extends BaseController
         //处理tdk
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
-        //var_dump($res);die;
+
         View::assign('data',$res);
-        View::assign('zuqiuforcast',$list);
+        View::assign('zuqiuforcast',$list);//var_dump($list);die;
         View::assign('lanqiuforcast',$listLq);
         return View::fetch($this->tempPath);
     }

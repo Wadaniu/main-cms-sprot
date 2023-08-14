@@ -21,11 +21,9 @@
             </div>
             <div class="list">
                 <ul class="cur">
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    {foreach $zuqiuforcast.data as $l}
+                    <li><a href="/yuce-zuqiu/{$l.id}.html" target="_blank">{$l.home.name_zh??''}vs{$l.away.name_zh??''}：预测分析</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>
+                    {/foreach}
                 </ul>
                 <ul>
                     <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
@@ -57,11 +55,9 @@
             </div>
             <div class="list">
                 <ul class="cur">
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
-                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    {foreach $lanqiuforcast.data as $l}
+                    <li><a href="/yuce-lanqiu/{$l.id}.html" target="_blank">{$l.home.name_zh??''}vs{$l.away.name_zh??''}：预测分析</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>
+                    {/foreach}
                 </ul>
                 <ul>
                     <?php  $zuqiuLx = getLuxiangJijin(2,1);  ?>
