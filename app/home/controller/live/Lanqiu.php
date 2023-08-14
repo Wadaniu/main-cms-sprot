@@ -109,10 +109,7 @@ class Lanqiu extends BaseController
             //获取联赛id
             $comp = BasketballCompetition::getByPY($compName);
             //过滤联赛
-            $doneData = $basketballModel->getCompetitionListByDone($comp['id'],50);
             $data = $basketballModel->getCompetitionListInfo($comp['id'],50);
-
-            $data = array_merge($doneData,$data);
             //tdk关键字
             $this->tdk->short_name_zh = $comp['short_name_zh'];
             View::assign('comp',$comp);

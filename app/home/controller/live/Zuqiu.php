@@ -107,10 +107,7 @@ class Zuqiu extends BaseController
             //获取联赛id
             $comp = FootballCompetition::getByPY($compName);
             //过滤联赛
-            $doneData = $footballModel->getCompetitionListByDone($comp['id'],50);
             $data = $footballModel->getCompetitionListInfo($comp['id'],50);
-
-            $data = array_merge($doneData,$data);
             //tdk关键字
             $this->tdk->short_name_zh = $comp['short_name_zh'];
 
