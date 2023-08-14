@@ -10,6 +10,7 @@ use app\home\BaseController;
 use app\home\Tdk;
 use think\App;
 use think\facade\View;
+use app\commonModel\BasketballTeam;
 
 class Lanqiu extends BaseController
 {
@@ -48,7 +49,8 @@ class Lanqiu extends BaseController
         $this->getTempPath('live_lanqiu_detail');
         $basketballMatchInfoModel = new BasketballMatchInfo();
         $matchInfo = $basketballMatchInfoModel->getByMatchId($matchId);
-        if ($matchInfo->isEmpty() || empty($matchInfo['info'])){
+        $match = (new BasketballMatch())->where("id",$matchId)->findOrEmpty();
+        if ($matchInfo->isEmpty() && $match->isEmpty()){
             abort(404,'参数错误');
         }
 
@@ -73,6 +75,11 @@ class Lanqiu extends BaseController
         //队伍统计
         $players = is_null($matchInfo['players']) ? [] : json_decode($matchInfo['players'],true);
 
+        $teamModel = new BasketballTeam();
+        $match['home'] = $teamModel->getShortNameZhLogo($match['home_team_id']);
+        $match['away'] = $teamModel->getShortNameZhLogo($match['away_team_id']);
+        $match['comp'] = (new BasketballCompetition())->getShortNameZh($match['competition_id']);
+
         //处理tdk关键字
         $this->tdk->home_team_name = $analysis['info']['home_team_text'] ?? '';
         $this->tdk->away_team_name = $analysis['info']['away_team_text'] ?? '';
@@ -85,7 +92,8 @@ class Lanqiu extends BaseController
         View::assign("analysis",$analysis);
         View::assign("players",$players);
         View::assign("matchLive",$matchLive);
-        View::assign("comp",['id'=>$analysis['info']['competition_id']]);
+        View::assign("match",$match);
+        View::assign("comp",['id'=>$match['competition_id']]);
     }
 
     protected function getMatchList(string $compName)
