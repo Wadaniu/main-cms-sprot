@@ -16,7 +16,6 @@ $(function () {
 
     //给未正确加载的图片加上默认图片
     let logoimg = $("h1.logo img").attr("src");
-    console.log(logoimg)
     $("img").each(function (i, item) {
         if (!$(item).attr('src')) {
             $(item).attr('src', logoimg).css({'background-color': 'var(--main-color)','object-fit': 'contain'})

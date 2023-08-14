@@ -17,10 +17,17 @@
         <div class="main-model collect">
             <div class="title">
                 <p class="name"><i class="iconfont icon-zuqiu"></i>足球</p>
-                <div class="tool"><p><a class="cur">录像</a><a>集锦</a><a>资讯</a></p></div>
+                <div class="tool"><p><a class="cur">预测</a><a>录像</a><a>集锦</a><a>资讯</a></p></div>
             </div>
             <div class="list">
                 <ul class="cur">
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                </ul>
+                <ul>
                     <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
                     {foreach $zuqiuLx.data as $row}
                     <li><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html"
@@ -46,10 +53,17 @@
         <div class="main-model collect">
             <div class="title">
                 <p class="name"><i class="iconfont icon-lanqiu"></i>篮球</p>
-                <div class="tool"><p><a class="cur">录像</a><a>集锦</a><a>资讯</a></p></div>
+                <div class="tool"><p><a class="cur">预测</a><a>录像</a><a>集锦</a><a>资讯</a></p></div>
             </div>
             <div class="list">
                 <ul class="cur">
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                    <li><a href="" target="_blank">0000000000000000</a><span>0000-00-00</span></li>
+                </ul>
+                <ul>
                     <?php  $zuqiuLx = getLuxiangJijin(2,1);  ?>
                     {foreach $zuqiuLx.data as $row}
                     <li><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html"
@@ -106,23 +120,27 @@
                         <div class="item-box">
                             <div class="left">
                                 <p class="time">{$team.match_time|date='H:i'}</p>
-                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
+                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a>
+                                </p>
                             </div>
                             <div class="center">
-                                <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}" target="_blank">
+                                <a class="left-name" href="/qiudui-{$team.sphere_type}/{$team.home_team_id}"
+                                   target="_blank">
                                     <p>{$team.home_team_text}</p>
                                     <img class="" src="{$team.home_team_logo}" alt="">
                                     <span class="bf">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span>
                                 </a>
                                 <span class="zt"><?php echo getzt($team['status_id'],3,$team['sphere_type']) ?></span>
-                                <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}" target="_blank">
+                                <a class="right-name" href="/qiudui-{$team.sphere_type}/{$team.away_team_id}"
+                                   target="_blank">
                                     <span class="bf">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span>
                                     <img class="" src="{$team.away_team_logo}" alt="">
                                     <p>{$team.away_team_text}</p>
                                 </a>
                             </div>
                             <div class="right">
-                                <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html" target="_blank"><i class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
+                                <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html" target="_blank"><i
+                                        class="iconfont <?php echo getzt($team['status_id'],0,$team['sphere_type']) ?>"></i><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span></a>
                             </div>
                         </div>
                     </dd>
