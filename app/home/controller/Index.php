@@ -62,11 +62,49 @@ class Index extends BaseController
             $res[date('Y-m-d',$item['match_time'])][] = $item;
         }
 
+
+        /*足球预测*/
+        $where = [
+            ["match_time",">=",time()],
+            ["forecast","NOT NULL","NOT NULL"]
+        ];
+        $model = (new FootballMatch());
+        $list = $model->getFootballMatchList($where,["order"=>"match_time asc","limit"=>5])->toArray();
+        $footballTeam = new \app\commonModel\FootballTeam();
+        $comp = new \app\commonModel\FootballCompetition();
+        foreach ($list['data'] as $k=>$v){
+            $list["data"][$k]['home'] = [];
+            $list["data"][$k]['away'] = [];
+            $home = $footballTeam->getShortNameZhLogo($v["home_team_id"]);
+            $list["data"][$k]['home'] = $home;
+            $away = $footballTeam->getShortNameZhLogo($v["away_team_id"]);
+            $list["data"][$k]['away'] = $away;
+            $list['data'][$k]['comp'] = $comp->getShortNameZh($v['competition_id']);
+        }
+
+
+        /*蓝球预测*/
+        $model = (new BasketballMatch());
+        $listLq = $model->getBasketballMatchList($where,["order"=>"match_time asc","limit"=>5])->toArray();
+        $footballTeam = new \app\commonModel\BasketballTeam();
+        $comp = new \app\commonModel\BasketballCompetition();
+        foreach ($listLq['data'] as $k=>$v){
+            $listLq["data"][$k]['home'] = [];
+            $listLq["data"][$k]['away'] = [];
+            $home = $footballTeam->getShortNameZhLogo($v["home_team_id"]);
+            $listLq["data"][$k]['home'] = $home;
+            $away = $footballTeam->getShortNameZhLogo($v["away_team_id"]);
+            $listLq["data"][$k]['away'] = $away;
+            $listLq['data'][$k]['comp'] = $comp->getShortNameZh($v['competition_id']);
+        }
+
         //处理tdk
         $tdk = new Tdk();
         $this->getTdk(self::RouteTag,$tdk);
         //var_dump($res);die;
         View::assign('data',$res);
+        View::assign('zuqiuforcast',$list);
+        View::assign('lanqiuforcast',$listLq);
         return View::fetch($this->tempPath);
     }
 
