@@ -83,7 +83,7 @@ class Zuqiu extends BaseController
         $this->tdk->home_team_name = $analysis['info']['home_team_text'] ?? '';
         $this->tdk->away_team_name = $analysis['info']['away_team_text'] ?? '';
         $this->tdk->match_time = $analysis['info']['match_time'] ?? 0;
-        $this->tdk->short_name_zh = $analysis['info']['competition_text'] ?? '';
+        $this->tdk->short_name_zh = $match['comp']['short_name_zh'] ?? '';
 
         $this->getTdk('live_zuqiu_detail',$this->tdk);
         $matchLive['ball'] = 'zuqiu';
