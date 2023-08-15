@@ -22,7 +22,7 @@
             <div class="list">
                 <ul class="cur">
                     {foreach $zuqiuforcast.data as $l}
-                    <li><a href="/yuce-zuqiu/{$l.id}.html" target="_blank">{$l.home.name_zh??''}vs{$l.away.name_zh??''}：预测分析</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>
+                    <li><a href="/yuce-zuqiu/{$l.id}.html" target="_blank">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>
                     {/foreach}
                 </ul>
                 <ul>
@@ -56,7 +56,7 @@
             <div class="list">
                 <ul class="cur">
                     {foreach $lanqiuforcast.data as $l}
-                    <li><a href="/yuce-lanqiu/{$l.id}.html" target="_blank">{$l.home.name_zh??''}vs{$l.away.name_zh??''}：预测分析</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>
+                    <li><a href="/yuce-lanqiu/{$l.id}.html" target="_blank">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>
                     {/foreach}
                 </ul>
                 <ul>

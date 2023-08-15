@@ -1598,11 +1598,17 @@ p.nodata {
 }
 
 .yuce-list li .tit h4 {
-    font-size: 0.5rem;
+    font-size: 0.4rem;
     margin: 0 auto;
 }
 
-.yuce-list li .tit span {
+.yuce-list li .tit span:first-child {
+    font-size: 0.24rem;
+    position: absolute;
+    left: 0;
+}
+
+.yuce-list li .tit span:last-child {
     font-size: 0.24rem;
     color: #999;
     position: absolute;

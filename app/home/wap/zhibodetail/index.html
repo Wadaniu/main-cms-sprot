@@ -51,6 +51,9 @@
             <p>集锦/录像</p>
         </div>
         <div class="type-cont">
+            {if !empty($match.forecast)}
+            <p style="padding-bottom: 0.6rem;font-size: 0.3rem;line-height: 0.54rem;">【赛事分析】：<a href="/yuce-{$matchLive.ball}/{:get_params('matchid')}.html">{$match.match_time|date='m-d'}{$match.home.name_zh}vs{$match.away.name_zh}直播（赛前预测分析）</a></p>
+            {/if}
             <ul class="name-tab">
                 <li class="cur">{$match.home.name_zh}</li>
                 <li>{$match.away.name_zh}</li>
@@ -134,9 +137,6 @@
         </div>
         <div class="type-cont">
             <ul class="playtxt">
-                {if !empty($match.forecast)}
-                <li>【赛事预测】：<a href="/yuce-{$matchLive.ball}/{:get_params('matchid')}.html">{$match.home.name_zh}vs{$match.away.name_zh}：预测分析,比分预测,在线直播,比赛结果</a></li>
-                {/if}
                 <li>【赛事名称】：{$match.comp.short_name_zh}</li>
                 <li>【比赛队伍】：{$match.home.name_zh} vs {$match.away.name_zh}</li>
                 <li>【比赛时间】：{$match.match_time|date='Y-m-d H:i'}</li>
