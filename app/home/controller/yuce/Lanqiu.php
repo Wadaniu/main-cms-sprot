@@ -97,20 +97,12 @@ class Lanqiu extends BaseController
             ["match_time",">=",time()],
             ["forecast","NOT NULL","NOT NULL"]
         ];
-        if(isset($param['compname']) && $param['compname']){
-            $competition = BasketballCompetition::where("short_name_py",$param['compname'])->find();
-            if($competition){
-                $where[] = ["competition_id","in",[$competition->id]];
-            }
-            View::assign('comp',$competition);
-        }
         $list = $model->getBasketballMatchList($where,["order"=>"match_time asc"])->toArray();
         $footballTeam = new \app\commonModel\BasketballTeam();
         $comp = new BasketballCompetition();
         foreach ($list['data'] as $k=>$v){
             $list["data"][$k]['home'] = [];
             $list["data"][$k]['away'] = [];
-            $str = "主队vs客队:预测分析,比分预测,在线直播,比赛结果";
             $home = $footballTeam->getShortNameZhLogo($v["home_team_id"]);
             $list["data"][$k]['home'] = $home;
             $away = $footballTeam->getShortNameZhLogo($v["away_team_id"]);
