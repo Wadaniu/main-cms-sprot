@@ -84,7 +84,7 @@ class Lanqiu extends BaseController
         $this->tdk->home_team_name = $match['home']['name_zh'] ?? '';
         $this->tdk->away_team_name = $match['away']['name_zh'] ?? '';
         $this->tdk->match_time =  $match['match_time'];
-        $this->tdk->short_name_zh = $match['comp']['name_zh'] ?? '';
+        $this->tdk->short_name_zh = $match['comp']['short_name_zh'] ?? '';
 
         $this->getTdk('live_lanqiu_detail',$this->tdk);
         $matchLive['ball'] = 'lanqiu';
