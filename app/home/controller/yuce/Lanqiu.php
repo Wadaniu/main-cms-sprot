@@ -88,16 +88,17 @@ class Lanqiu extends BaseController
     protected function getMatchList($param)
     {
         $param = $this->parmas;
-
+        $param['order'] = "match_time asc";
         $param['page'] = isset($param['page'])?$param['page']:1;
         $param['limit'] = 10;
+
         $this->tdk->short_name_zh = '篮球';
         $model = (new BasketballMatch());
         $where = [
             ["match_time",">=",time()],
             ["forecast","NOT NULL","NOT NULL"]
         ];
-        $list = $model->getBasketballMatchList($where,["order"=>"match_time asc"])->toArray();
+        $list = $model->getBasketballMatchList2($where,$param);
         $footballTeam = new \app\commonModel\BasketballTeam();
         $comp = new BasketballCompetition();
         foreach ($list['data'] as $k=>$v){

@@ -90,6 +90,7 @@ class Zuqiu extends BaseController
     {
         $param = $this->parmas;
 
+        $param['order'] = "match_time asc";
         $param['page'] = isset($param['page'])?$param['page']:1;
         $param['limit'] = 10;
         $model = (new FootballMatch());
@@ -97,7 +98,8 @@ class Zuqiu extends BaseController
             ["match_time",">=",time()],
             ["forecast","NOT NULL","NOT NULL"]
         ];
-        $list = $model->getFootballMatchList($where,["order"=>"match_time asc"])->toArray();
+        $list = $model->getFootballMatchList2($where,$param);
+
         $footballTeam = new \app\commonModel\FootballTeam();
         $comp = new FootballCompetition();
         foreach ($list['data'] as $k=>$v){
