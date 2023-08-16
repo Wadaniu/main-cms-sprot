@@ -75,7 +75,7 @@ class Lanqiu extends BaseController
         $away = $footballTeam->getShortNameZhLogo($info["away_team_id"]);
         $this->tdk->home_team_name = $home['name_zh']??'';
         $this->tdk->away_team_name = $away['name_zh']??'';
-        $this->tdk->match_time = date("Y-m-d H:i");
+        $this->tdk->match_time = $info['match_time'];
         $info['home'] = $home;
         $info['away'] = $away;
         $this->getTdk('yuce_zuqiu_detail',$this->tdk);
