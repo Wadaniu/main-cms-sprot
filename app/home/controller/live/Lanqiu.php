@@ -49,14 +49,13 @@ class Lanqiu extends BaseController
         $this->getTempPath('live_lanqiu_detail');
         $basketballMatchInfoModel = new BasketballMatchInfo();
         $matchInfo = $basketballMatchInfoModel->getByMatchId($matchId);
-        $match = (new BasketballMatch())->where("id",$matchId)->findOrEmpty();
-        if ($matchInfo->isEmpty() && $match->isEmpty()){
-            abort(404,'参数错误');
-        }
-
         //直播
         $model = new BasketballMatch();
-        $matchLive = $model->getMatchLive($matchId);
+        $matchLive = $model->findOrEmpty($matchId);
+
+        if ($matchInfo->isEmpty() && $matchLive->isEmpty()){
+            abort(404,'参数错误');
+        }
 
         if ($matchLive->isEmpty()){
             $matchLive['mobile_link'] = [];
@@ -66,6 +65,7 @@ class Lanqiu extends BaseController
             $matchLive['pc_link'] = json_decode($matchLive['pc_link'],true);
         }
 
+        $matchLive = $matchLive->toArray();
         //历史交锋
         $analysis = [
             'info'      =>  is_null($matchInfo['info']) ? [] : json_decode($matchInfo['info'],true),
@@ -76,15 +76,18 @@ class Lanqiu extends BaseController
         $players = is_null($matchInfo['players']) ? [] : json_decode($matchInfo['players'],true);
 
         $teamModel = new BasketballTeam();
-        $match['home'] = $teamModel->getShortNameZhLogo($match['home_team_id']);
-        $match['away'] = $teamModel->getShortNameZhLogo($match['away_team_id']);
-        $match['comp'] = (new BasketballCompetition())->getShortNameZh($match['competition_id']);
+        $matchLive['home'] = $teamModel->getShortNameZhLogo($matchLive['home_team_id']);
+        $matchLive['away'] = $teamModel->getShortNameZhLogo($matchLive['away_team_id']);
+        $matchLive['comp'] = (new BasketballCompetition())->getShortNameZh($matchLive['competition_id']);
+        $matchLive['home_scores'] = json_decode($matchLive['home_scores']);
+        $matchLive['away_scores'] = json_decode($matchLive['away_scores']);
+
 
         //处理tdk关键字
-        $this->tdk->home_team_name = $analysis['info']['home_team_text'] ?? '';
-        $this->tdk->away_team_name = $analysis['info']['away_team_text'] ?? '';
-        $this->tdk->match_time = $analysis['info']['match_time'] ?? 0;
-        $this->tdk->short_name_zh = $match['comp']['short_name_zh'] ?? '';
+        $this->tdk->home_team_name = $matchLive['home']['name_zh'] ?? '';
+        $this->tdk->away_team_name = $matchLive['away']['name_zh'] ?? '';
+        $this->tdk->match_time =  $matchLive['match_time'];
+        $this->tdk->short_name_zh = $matchLive['comp']['short_name_zh'] ?? '';
 
         $this->getTdk('live_lanqiu_detail',$this->tdk);
         $matchLive['ball'] = 'lanqiu';
@@ -92,8 +95,8 @@ class Lanqiu extends BaseController
         View::assign("analysis",$analysis);
         View::assign("players",$players);
         View::assign("matchLive",$matchLive);
-        View::assign("match",$match);
-        View::assign("comp",['id'=>$match['competition_id']]);
+        View::assign("match",$matchLive);
+        View::assign("comp",['id'=>$matchLive['competition_id']]);
     }
 
     protected function getMatchList(string $compName)
