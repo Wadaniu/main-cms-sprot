@@ -14,21 +14,17 @@
             </p>
         </div>
         <div class="bf">
-            {if !empty($analysis.info)}
-            {$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]}
-            {/if}
+            {$islanqiu?getScore($match.home_scores):$match.home_scores[0]}
         </div>
         <div class="info">
             <p>{$match.match_time|date='Y-m-d H:i'}</p>
-            {if !empty($analysis.info)}
-            <p class="zt">{$analysis.info.status_text}</p>
-            <p>{$analysis.info.competition_text}</p>
-            {/if}
+            <p class="zt">
+                <?php echo $match['ball']=='lanqiu'?app\commonModel\BasketballMatch::$STATUSID[$match['status_id']]:app\commonModel\FootballMatch::$STATUSID[$match['status_id']];?>
+            </p>
+            <p>{$match.comp.short_name_zh}</p>
         </div>
         <div class="bf">
-            {if !empty($analysis.info)}
             {$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]}
-            {/if}
         </div>
         <div class="team">
             <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$match.away_team_id}" target="_blank"><img
