@@ -226,7 +226,7 @@ class FootballMatch extends Model
             $key .= json_encode($where);
         }
         $key .= $limit.$order;
-        $data = Cache::store('common_redis')->get($key);
+        $data = Cache::get($key);
         if(!empty($data)){
             return $data;
         }
@@ -272,7 +272,7 @@ class FootballMatch extends Model
                 $item->away_scores = json_decode($item->away_scores);
             })->toArray();
 
-        Cache::store('common_redis')->set($key,$data,120);
+        Cache::set($key,$data,120);
         return $data;
     }
 
@@ -509,7 +509,7 @@ class FootballMatch extends Model
         if(!empty($where)){
             $key .= json_encode($where);
         }
-        $data = Cache::store('common_redis')->get($key);
+        $data = Cache::get($key);
         if(!empty($data)){
             return $data;
         }
@@ -548,7 +548,7 @@ class FootballMatch extends Model
                 $item->away_scores = json_decode($item->away_scores);
         })->toArray();
 
-        Cache::store('common_redis')->set($key,$data,120);
+        Cache::set($key,$data,120);
         return $data;
     }
 
