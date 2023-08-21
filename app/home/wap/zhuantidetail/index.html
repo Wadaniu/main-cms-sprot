@@ -27,7 +27,7 @@
             </ul>
         </div>
         <div class="title">
-            <p class="tit"><i class="iconfont icon-jianjie"></i><span>球队简介</span>
+            <p class="tit"><i class="iconfont icon-jianjie"></i><span><?php echo strpos(get_ruleName(), 'liansai') ? '联赛' : '球队' ?>简介</span>
             </p>
         </div>
         <div class="info">{$data_info.intro}</div>
