@@ -314,7 +314,7 @@ class FootballTeam extends Model
 
     public function getHotData($limit = 0){
         $key = self::$HOT_DATA;
-        $data = Cache::store('common_redis')->get($key);
+        $data = Cache::get($key);
         if(!empty($data)){
             if ($limit > 0){
                 $data = array_slice($data,0,$limit);
@@ -330,7 +330,7 @@ class FootballTeam extends Model
             $item['sphere_type'] = 'zuqiu';
         }
         array_multisort(array_column($data,'sort'),SORT_DESC,$data);
-        Cache::store('common_redis')->set($key,$data);
+        Cache::set($key,$data);
 
         if ($limit > 0){
             $data = array_slice($data,0,$limit);

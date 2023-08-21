@@ -73,7 +73,7 @@ class Zuqiu extends BaseController
         $away = $footballTeam->getShortNameZhLogo($info["away_team_id"]);
         $this->tdk->home_team_name = $home['name_zh']??'';
         $this->tdk->away_team_name = $away['name_zh']??'';
-        $this->tdk->match_time = date("Y-m-d H:i");
+        $this->tdk->match_time = $info['match_time'];
         $info['home'] = $home;
         $info['away'] = $away;
         $this->getTdk('yuce_zuqiu_detail',$this->tdk);
@@ -90,6 +90,7 @@ class Zuqiu extends BaseController
     {
         $param = $this->parmas;
 
+        $param['order'] = "match_time asc";
         $param['page'] = isset($param['page'])?$param['page']:1;
         $param['limit'] = 10;
         $model = (new FootballMatch());
@@ -97,7 +98,8 @@ class Zuqiu extends BaseController
             ["match_time",">=",time()],
             ["forecast","NOT NULL","NOT NULL"]
         ];
-        $list = $model->getFootballMatchList($where,["order"=>"match_time asc"])->toArray();
+        $list = $model->getFootballMatchList2($where,$param);
+
         $footballTeam = new \app\commonModel\FootballTeam();
         $comp = new FootballCompetition();
         foreach ($list['data'] as $k=>$v){

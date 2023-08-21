@@ -69,6 +69,35 @@ class FootballMatch extends Model
 		return $list;
     }
 
+
+    public function getFootballMatchList2($where, $param)
+    {
+        $rows = empty($param['limit']) ? get_config('app . page_size') : $param['limit'];
+        $order = empty($param['order']) ? 'id desc' : $param['order'];
+        $query = self::where($where);
+        $data = $query
+            ->field('id,season_id,home_team_id,away_team_id,status_id,competition_id,forecast_time,match_time,neutral,note,home_scores,away_scores,home_position,away_position,coverage,venue_id,referee_id,related_id,agg_score,round,environment,updated_at,comp,home,away,mobile_link,pc_link,title,cover,duration,forecast')
+            ->order($order)
+            ->limit($param['page']*$rows-$rows,$rows)
+            ->select()
+        ;
+
+
+
+        return [
+            'total'=>$query->count(),
+            'per_page'=>$rows,
+            'current_page'=>$param['page'],
+            'data'=>$data
+            ];
+    }
+
+
+
+
+
+
+
     /**
     * 添加数据
     * @param $param
@@ -226,7 +255,7 @@ class FootballMatch extends Model
             $key .= json_encode($where);
         }
         $key .= $limit.$order;
-        $data = Cache::store('common_redis')->get($key);
+        $data = Cache::get($key);
         if(!empty($data)){
             return $data;
         }
@@ -272,7 +301,7 @@ class FootballMatch extends Model
                 $item->away_scores = json_decode($item->away_scores);
             })->toArray();
 
-        Cache::store('common_redis')->set($key,$data,120);
+        Cache::set($key,$data,120);
         return $data;
     }
 
@@ -509,7 +538,7 @@ class FootballMatch extends Model
         if(!empty($where)){
             $key .= json_encode($where);
         }
-        $data = Cache::store('common_redis')->get($key);
+        $data = Cache::get($key);
         if(!empty($data)){
             return $data;
         }
@@ -548,7 +577,7 @@ class FootballMatch extends Model
                 $item->away_scores = json_decode($item->away_scores);
         })->toArray();
 
-        Cache::store('common_redis')->set($key,$data,120);
+        Cache::set($key,$data,120);
         return $data;
     }
 
