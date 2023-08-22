@@ -28,26 +28,22 @@
     <div class="play match-info">
         <div class="team">
             <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$match.home_team_id}" target="_blank"><img
-                    src="{$match.home.logo}"></a></p>
-            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$match.home_team_id}" target="_blank">{$match.home.name_zh}</a>
-                {if !empty($analysis.info)}<span>({$islanqiu?getScore($analysis.info.home_scores):$analysis.info.home_scores[0]})</span>{/if}
-                {if empty($analysis.info)}<span>(0)</span>{/if}
+                    src="{$match.home.logo??''}"></a></p>
+            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$match.home_team_id}" target="_blank">{$match.home.name_zh??''}</a>
+                <span>({$islanqiu?getScore($match.home_scores):$match.home_scores[0]})</span>
             </p>
         </div>
         <div class="info">
-            {if !empty($analysis.info)}
-                <p>{$analysis.info.status_text}</p>
-            {/if}
-            <p class="type">{$match.comp.short_name_zh}</p>
+            <p><?php echo $match['ball']=='lanqiu'?app\commonModel\BasketballMatch::$STATUSID[$match['status_id']]:app\commonModel\FootballMatch::$STATUSID[$match['status_id']];?></p>
+            <p class="type">{$match.comp.short_name_zh??''}</p>
             <p>{$match.match_time|date='Y-m-d H:i'}</p>
         </div>
 
         <div class="team">
             <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$match.away_team_id}" target="_blank"><img
-                    src="{$match.away.logo}"></a></p>
-            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$match.away_team_id}" target="_blank">{$match.away.name_zh}</a>
-                {if !empty($analysis.info)}<span>({$islanqiu?getScore($analysis.info.away_scores):$analysis.info.away_scores[0]})</span>{/if}
-                {if empty($analysis.info)}<span>(0)</span>{/if}
+                    src="{$match.away.logo??''}"></a></p>
+            <p class="name"><a href="/qiudui-{$matchLive.ball}/{$match.away_team_id}" target="_blank">{$match.away.name_zh??''}</a>
+                <span>({$islanqiu?getScore($match.away_scores):$match.away_scores[0]})</span>
             </p>
         </div>
     </div>
@@ -76,8 +72,8 @@
             </div>
             <div class="type-cont">
                 <ul class="name-tab">
-                    <li class="cur">{$match.home.name_zh}</li>
-                    <li>{$match.away.name_zh}</li>
+                    <li class="cur">{$match.home.name_zh??''}</li>
+                    <li>{$match.away.name_zh??''}</li>
                 </ul>
                 <div class="name-cont">
                     <ul>
@@ -158,19 +154,19 @@
             </div>
             <div class="type-cont">
                 <ul class="playtxt">
-                    <li>【赛事名称】：{$match.comp.short_name_zh}</li>
-                    <li>【比赛队伍】：{$match.home.name_zh} vs {$match.away.name_zh}</li>
+                    <li>【赛事名称】：{$match.comp.short_name_zh??''}</li>
+                    <li>【比赛队伍】：{$match.home.name_zh??''} vs {$match.away.name_zh??''}</li>
                     <li>【比赛时间】：{$match.match_time|date='Y-m-d H:i'}</li>
                     <li>
-                        【赛事信息】：本场包含了{$match.home.name_zh} vs {$match.away.name_zh}直播信息,{$web_name}直播将对本场进行免费视频直播。
+                        【赛事信息】：本场包含了{$match.home.name_zh??''} vs {$match.away.name_zh??''}直播信息,{$web_name}直播将对本场进行免费视频直播。
                     </li>
                     <li>
-                        {$web_name}直播为您提供{$match.home.name_zh}对阵{$match.away.name_zh}高清【无插件】直播地址，{$match.home.name_zh}直播和{$match.away.name_zh}直播信号将在开赛前实时更新，
+                        {$web_name}直播为您提供{$match.home.name_zh??''}对阵{$match.away.name_zh??''}高清【无插件】直播地址，{$match.home.name_zh??''}直播和{$match.away.name_zh??''}直播信号将在开赛前实时更新，
                         所有直播信号均为全网收集和网友提供，本站并不生产直播信号，只是体育爱好者的搬运工。
                     </li>
-                    <li>【比赛标签】：<a href="/liansai-{$matchLive.ball}/{$match.competition_id}">{$match.comp.short_name_zh}</a>
-                        <a href="/qiudui-{$matchLive.ball}/{$match.home_team_id}">{$match.home.name_zh}</a>
-                        <a href="/qiudui-{$matchLive.ball}/{$match.away_team_id}">{$match.away.name_zh}</a>
+                    <li>【比赛标签】：<a href="/liansai-{$matchLive.ball}/{$match.competition_id}">{$match.comp.short_name_zh??''}</a>
+                        <a href="/qiudui-{$matchLive.ball}/{$match.home_team_id}">{$match.home.name_zh??''}</a>
+                        <a href="/qiudui-{$matchLive.ball}/{$match.away_team_id}">{$match.away.name_zh??''}</a>
                     </li>
                 </ul>
             </div>
