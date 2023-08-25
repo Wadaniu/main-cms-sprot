@@ -55,7 +55,15 @@ class Index extends BaseController
                 unset($basketballData[$k]);
             }
         }
-     $matchData = array_merge($footballData,$footballDone,$basketballData,$basketballDone);
+     //$matchData = array_merge($footballData,$footballDone,$basketballData,$basketballDone);
+
+        $future = array_merge($basketballData,$footballData);
+        array_multisort(array_column($future,'match_time'),SORT_ASC,$future);
+
+        $done = array_merge($footballDone,$basketballDone);
+        array_multisort(array_column($done,'match_time'),SORT_DESC,$done);
+
+        $matchData = array_merge($future,$done);
 
         $res = [];
         foreach ($matchData as $item){
