@@ -237,6 +237,25 @@ class Sitemap
                         $sitemap->addItem($route['name'].$comp['short_name_py'], '0.8', 'daily', date('Y-m-d H:i:s'));
                     }
                     break;
+                case '/yuce-lanqiu/':
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+                    $basketballMatchForcastIds = $basketballMatchModel->where("match_time",">",time())->where("forecast",'not null')->limit(1000)->column("id");
+                    if(!empty($basketballMatchForcastIds)){
+                        foreach ($basketballMatchForcastIds as $id){
+                            $sitemap->addItem($route['name'].$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
+                        }
+                    }
+                    break;
+                case '/yuce-zuqiu/':
+                    $sitemap->addItem($route['name'], '0.8', 'daily', date('Y-m-d H:i:s'));
+                    $basketballMatchForcastIds = $footballMatchModel->where("match_time",">",time())->where("forecast",'not null')->limit(1000)->column("id");
+                    if(!empty($basketballMatchForcastIds)){
+                        foreach ($basketballMatchForcastIds as $id){
+                            $sitemap->addItem($route['name'].$id.'.html', '0.6', 'daily', date('Y-m-d H:i:s'));
+                        }
+                    }
+                    break;
+
             }
         }
 
