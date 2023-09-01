@@ -313,15 +313,16 @@ function hotlive($src, $name = ''): array
     $hottype = array_merge(getFootballHotComp(), getBasketballHotComp());
     //排序
     array_multisort(array_column($hottype, 'sort'), SORT_DESC, $hottype);
+
     foreach ($hottype as $type) {
         $typelist[] = [
             'id' => $type['id'],
             'type' => $type['sphere_type'],
             'title' => $type['short_name_zh'] . $name,
+            'py' => '/' . $type['short_name_py'],
             'src' => '/' . $src . '-' . $type['sphere_type'] . '/' . $type['short_name_py']
         ];
     }
-
     return $typelist;
 }
 

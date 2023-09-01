@@ -1,9 +1,9 @@
 <div class="model">
     <div class="title">
-        <p class="tit"><i class="iconfont icon-zixun"></i><span>相关资讯</span></p>
+        <span class="txt">相关资讯</span>
     </div>
-    <div class="lists">
-        <ul class="nodata">
+    <div class="collect">
+        <ul class="cur nodata">
             {foreach $article.data as $i=>$item}
             <li><a href="/zixun-{$item.cate_id=='1'?'zuqiu':'lanqiu'}/{$item.id}.html" title="{$item.title}" >{$item.title}</a></li>
             {/foreach}

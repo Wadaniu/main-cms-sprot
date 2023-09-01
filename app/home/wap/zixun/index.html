@@ -1,6 +1,7 @@
 {extend name="common/base"/}
 {block name="body"}
 <div class="container">
+    {include file="assembly/crumbs"/}
     <div class="model">
         {include file="assembly/subnav" subnav="subnav('资讯')"/}
         {include file="assembly/typeselect"/}
@@ -15,7 +16,7 @@
                         <h4 title="{$l.title}">{$l.title}</h4>
                         <p class="other">
                             <span>浏览：{$l.read}</span>
-                            <span>时间：{$l.create_time}</span>
+                            <span>时间：{$l.create_time|date='Y-m-d'}</span>
                         </p>
                     </div>
                 </a>
@@ -38,5 +39,7 @@
 </div>
 {/block}
 {block name="script"}
-
+<script>
+    $('.hotnav').remove()
+</script>
 {/block}

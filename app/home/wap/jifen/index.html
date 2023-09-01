@@ -2,17 +2,13 @@
 {block name="body"}
 <?php $iszuqiu=strpos($_SERVER['REQUEST_URI'], 'zuqiu')?true:false; $typelist=$iszuqiu ? getFootballHotComp() : getBasketballHotComp(); ?>
 <div class="container">
+    {include file="assembly/crumbs"/}
     <div class="model">
         {include file="assembly/subnav" subnav="subnav('积分')"/}
-        <div class="category">
-            {volist name="typelist" id="item" length='20'}
-            <a data-link="/{$item.short_name_py}" href="/jifen-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>
-            {/volist}
-        </div>
         <div class="jifen-list nodata">
             <?php $typename=$iszuqiu?'zuqiu':'lanqiu'; if($iszuqiu&&$data): ?>
             <ul class="data-list zuqiu">
-                <li class="head">
+                <li class="hd">
                     <span>球队</span>
                     <span>场次</span>
                     <span>胜/平/负</span>
@@ -35,7 +31,7 @@
             </ul>
             <?php elseif(!$iszuqiu&&$data): ?>
             <ul class="data-list lanqiu">
-                <li class="head">
+                <li class="hd">
                     <span>球队</span>
                     <span>场次</span>
                     <span>胜/负</span>
@@ -63,16 +59,10 @@
 {/block}
 {block name="script"}
 <script>
+    $('.hotnav a').eq(0).remove();
     let linkname = cururl.split('/')[2];
-    if (linkname) {
-        $(".category a").each(function (i, item) {
-            let thelink = $(item).data('link');
-            if ('/' + linkname == thelink) {
-                $(item).addClass('cur');
-            }
-        })
-    } else {
-        $(".category a:first-child").addClass('cur');
+    if (!linkname) {
+        $('.hotnav a').eq(0).addClass('cur');
     }
 </script>
 {/block}

@@ -1,8 +1,10 @@
 <?php $copmid=strpos($_SERVER['REQUEST_URI'], 'liansai') ? $data_info['id'] : 0; $type=$copmid?(strpos($_SERVER['REQUEST_URI'], 'lanqiu') ? 'lanqiu' : 'zuqiu'):''; $limit=$copmid?0:10; $qddata=getHotTeam($limit,$type,$copmid);?>
 <div class="model">
-    <div class="title">
-        <p class="tit"><i class="iconfont icon-duiwu"></i><span>球队</span></p>
-        <p class="more"><a href="/qiudui-zuqiu/">更多</a></p>
+    <div class="title sp">
+        <span class="txt">球队</span>
+        <div class="tool">
+            <a class="more" href="/qiudui-zuqiu/">更多</a>
+        </div>
     </div>
     <div class="team-type">
         {foreach $qddata as $i=>$item}

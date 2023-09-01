@@ -1,8 +1,9 @@
 {extend name="common/base"/}
 {block name="body"}
 <div class="container">
+    {include file="assembly/crumbs"/}
     <div class="new-content">
-        <h1>{$info.title}<p><span>作者：{$web_name}</span><span>{$info.create_time}</span></p></h1>
+        <h1><span class="tit">{$info.title}</span><p><span>作者：{$web_name}</span><span>{$info.create_time}</span></p></h1>
         <div class="cont">
             {$info.content|raw}
         </div>
@@ -20,5 +21,7 @@
 </div>
 {/block}
 {block name="script"}
-
+<script>
+    $('.hotnav').remove()
+</script>
 {/block}

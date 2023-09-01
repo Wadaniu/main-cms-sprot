@@ -221,6 +221,21 @@ i.iconfont {
     color: #fff;
 }
 
+.crumbs {
+    padding-top: 20px;
+    width: 1200px;
+    margin: 0 auto;
+    color: #999;
+}
+
+.crumbs span {
+    padding: 0 10px;
+}
+
+.crumbs a.cur {
+    color: var(--main-color);
+}
+
 .subnav {
     width: 1200px;
     margin: 20px auto 0;
@@ -1201,6 +1216,7 @@ i.iconfont {
 .playbg {
     --direc: 0deg;
     padding: 30px 0;
+    margin-top: 20px;
     background: #000 conic-gradient(from var(--direc), rgba(calc(255 - var(--main-r)), calc(255 - var(--main-g)), calc(255 - var(--main-b)), 0.3), rgba(var(--main-r), var(--main-g), var(--main-b), 0.3), rgba(calc(255 - var(--main-r)), calc(255 - var(--main-g)), calc(255 - var(--main-b)), 0.3));
     animation: spin 5s linear infinite;
 }
@@ -1647,6 +1663,7 @@ i.iconfont {
 }
 
 .zhuanti {
+    margin-top: 20px;
 }
 
 .ztbg {

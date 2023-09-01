@@ -1,34 +1,22 @@
 {extend name="common/base"/}
 {block name="body"}
 <div class="container">
+    {include file="assembly/crumbs"/}
     <div class="model">
         {include file="assembly/subnav" subnav="subnav('直播')"/}
-        {include file="assembly/typeselect"/}
         <div class="play-list">
             {foreach $data as $key=>$item}
             <p class="play-date">{$key}</p>
             <dl class="list-cont">
                 {foreach $item as $i=>$team}
                 <dd class="<?php echo getzt($team['status_id'],2,$team['sphere_type']) ?>">
-                    <a class="middle-container" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
-                        <div class="team">
-                            <img src="{$team.home_team_logo}">
-                            <div class="name">{$team.home_team_text}</div>
-                        </div>
-                        <div class="info">
-                            {$team.match_time|date='H:i'}
-                            <div class="score">
-                                {$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)} :
-                                {$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}
-                            </div>
-                            {$team.competition_text}
-                        </div>
-                        <div class="team">
-                            <img src="{$team.away_team_logo}">
-                            <div class="name">{$team.away_team_text}</div>
-                        </div>
-                        <div class="btn"><span><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></span>
-                        </div>
+                    <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
+                        <span class="type-name">{$team.competition_text}</span>
+                        <ul>
+                            <li><span class="time">{$team.match_time|date='H:i'}</span><span class="team"><img src="{$team.home_team_logo}">{$team.home_team_text}</span><span class="scores">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span></li>
+                            <li><span class="zt">{$team.status_text}</span><span class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</span><span class="scores">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span></li>
+                        </ul>
+                        <p class="zttxt"><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></p>
                     </a>
                 </dd>
                 {/foreach}
@@ -41,7 +29,7 @@
 {block name="script"}
 <script>
     $(function () {
-        if ($(".switch").length > 0) {
+        if ($(".tool").length > 0) {
             let index = $(".play-list .over").last().parent().index();
             let ywj = $(".play-list").children();
             let wks = ywj.splice(index + 1);
@@ -63,10 +51,10 @@
             //     $(ywj[i]).empty().append(dom)
             // }
 
-            $(".switch").click(function () {
-                $(this).toggleClass('change');
+            $(".tool a").click(function () {
                 $(".play-list").empty();
-                let index = $(".change").length > 0 ? 0 : 1;
+                $(this).addClass('cur').siblings().removeClass('cur');
+                let index = $(this).index();
                 let fragment = document.createDocumentFragment();
                 switch (index) {
                     case 0:
@@ -82,10 +70,10 @@
                 }
                 $(".play-list").append(fragment);
                 if ($(".play-list").children().length == 0) {
-                    $(".play-list").append(`<p class=nodata>近期暂无${$(".category .cur").text()}直播</p>`)
+                    $(".play-list").append(`<p class=nodata>近期暂无${$(".hotnav .cur").text()}直播</p>`)
                 }
             })
-            $(".switch").trigger('click');
+            $(".tool a").eq(0).trigger('click');
         }
     })
 </script>

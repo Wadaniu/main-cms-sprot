@@ -2,6 +2,7 @@
 {block name="body"}
 <?php $typesrc=strpos($_SERVER['REQUEST_URI'], 'liansai') ? 'liansai' : 'qiudui'; $linkname=get_ruleName(); ?>
 <div class="container">
+    {include file="assembly/crumbs"/}
     <div class="zhuanti">
         <div class="ztbg">
             <div class="zt-title">
@@ -37,5 +38,7 @@
 </div>
 {/block}
 {block name="script"}
-
+<script>
+    $('.hotnav').remove()
+</script>
 {/block}

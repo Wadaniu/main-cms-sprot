@@ -11,7 +11,7 @@
         </h1>
         <nav class="nav">
             <ul>
-                {foreach $COMMON_NAV as $item}
+                {volist name="COMMON_NAV" id="item"}
                 <?php $childlink = isset($item['list'])&&is_array($item['list'])&&count($item['list'])>0; ?>
                 <li><a {$childlink?'':'href='.url($item.src . $item.param)}>{$item.title}<i
                         class="iconfont icon-xia"></i></a>
@@ -23,7 +23,7 @@
                     </div>
                     <?php endif; ?>
                 </li>
-                {/foreach}
+                {/volist}
             </ul>
         </nav>
         <div class="search">
@@ -34,6 +34,7 @@
         </div>
     </div>
 </div>
+{include file="assembly/crumbs"/}
 <script>
     let curlink = location.pathname;
     $(".nav a").each(function (i, item) {

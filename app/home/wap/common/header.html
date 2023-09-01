@@ -8,37 +8,57 @@
                  title="{:get_system_config('web','admin_title')}">
         </a>
     </h1>
-    <div class="search" id="search">
-        <input type="text" placeholder="联赛搜索"/><button><i class="iconfont icon-sousuo"></i></button>
+    <?php $type=$_SERVER['REQUEST_URI']=='/'?hotlive('live',''):typeselect(); $curparam=get_params('compname'); if(count($type)>
+    0):?>
+    <div class="hotnav">
+        {volist name="type" id="item" length='10'}
+        <a href="{$item.src}" data-link="{$item.py}">{$item.title}</a>
+        {/volist}
+        <?php if($_SERVER['REQUEST_URI']=='/'):?>
+        <span class="showsel">更多</span>
+        <?php endif; ?>
     </div>
-    <nav class="nav">
-        <ul>
-            {foreach $COMMON_NAV as $item}
-            <?php $childlink = isset($item['list'])&&is_array($item['list'])&&count($item['list'])>0; ?>
-            <li><a data-tag="{$item.route_tag}-" href={$childlink?url(wapnav($item.list)):url($item.src . $item.param)}>{$item.title}</a>
-            </li>
-            {/foreach}
-        </ul>
-    </nav>
+    <?php endif; ?>
 </div>
-
+<?php $icons = ['shouyefill','zhibo','luxiang','jijin','zixun','jifen']; ?>
+<nav class="navigation">
+    <ul>
+        {volist name="COMMON_NAV" id="item"}
+        <?php $childlink = isset($item['list'])&&is_array($item['list'])&&count($item['list'])>0; ?>
+        <li class="list">
+            <a data-tag="{$item.route_tag}-" href={$childlink?url(wapnav($item.list)):url($item.src . $item.param)}>
+						<span class="icon">
+							<i class="iconfont icon-{$icons[$i-1]}"></i>
+						</span>
+                <span class="text">{$item.title}</span>
+            </a>
+        </li>
+        {/volist}
+        <div class="indicator"></div>
+    </ul>
+</nav>
 <script>
     let cururl = location.pathname;
-    let navs = $("nav.nav a");
+    let navs = $("nav.navigation a");
     if (cururl == '/') {
-        navs.eq(0).parent().addClass('cur')
+        navs.eq(0).parent().addClass('active')
     } else {
         navs.each(function (i, item) {
             if (i != 0 && cururl.indexOf($(item).data('tag')) > -1) {
-                $(item).parent().addClass('cur')
+                $(item).parent().addClass('active')
             }
         })
-    }
 
-    $("#search button").click(function () {
-        let txt = $.trim($("#search input").val());
-        if (txt != "") {
-            location.href = `${location.origin}/liansai-search/index_1/${txt}`
+        let linkname = cururl.split('/')[2];
+        if (linkname && linkname.indexOf('_') == -1) {
+            $(".hotnav a").each(function (i, item) {
+                let thelink = $(item).data('link');
+                if ('/' + linkname == thelink) {
+                    $(item).addClass('cur');
+                }
+            })
+        } else {
+            $(".hotnav a:first-child").addClass('cur');
         }
-    })
+    }
 </script>

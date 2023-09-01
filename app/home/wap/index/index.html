@@ -1,63 +1,41 @@
 {extend name="common/base"/}
 {block name="body"}
-<?php $type=hotlive('live','直播'); ?>
-<div class="subnav">
+<div class="moresel">
     <ul>
-        {volist name="type" id="item" length='4'}
-        <li><a href="{$item.src}">{$item.title}</a></li>
-        {/volist}
-        <li class="btn"><span><i class="iconfont icon-xia"></i></span></li>
-        {volist name="type" id="item" offset='5' length='6'}
-        <li><a href="{$item.src}">{$item.title}</a></li>
-        {/volist}
+        <li>
+            <?php $zuqiu=getFootballHotComp(); ?>
+            足球：{foreach $zuqiu as $item}<a href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
+        </li>
+        <li><?php $lanqiu=getBasketballHotComp(); ?>
+            篮球：{foreach $lanqiu as $item}<a href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
     </ul>
+    <p class="close"><i class="iconfont icon-close"></i></p>
 </div>
 <div class="container">
     <div class="model live-list">
         <div class="title">
-            <div class="tit"><i class="iconfont icon-zhibo"></i><span>热门直播</span></div>
-            <div class="right-btn showsel"><i class="iconfont icon-shaixuan"></i><span>筛选</span></div>
-        </div>
-        <div class="moresel">
-            <ul>
-                <li>
-                    <?php $zuqiu=getFootballHotComp(); ?>
-                    足球：{foreach $zuqiu as $item}<a href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
-                </li>
-                <li><?php $lanqiu=getBasketballHotComp(); ?>
-                    篮球：{foreach $lanqiu as $item}<a href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
-            </ul>
-            <p class="close"><i class="iconfont icon-close"></i></p>
-        </div>
-        <div class="category">
-            <a>全部</a>
-            <a>直播中</a>
-            <a>未开赛</a>
-            <a>已完结</a>
+            <span class="txt">热门直播</span>
+            <div class="tool">
+                <a class="cur">全部</a>
+                <a>直播中</a>
+                <a>未开赛</a>
+                <a>已完结</a>
+            </div>
         </div>
         <div class="play-list nodata">
             {foreach $data as $key=>$item}
-            <p class="play-date">{$key}</p>
             <?php $formatdata=formatList($item);?>
             {foreach $formatdata as $key=>$category}
             <dl class="list-cont sp">
                 {foreach $category as $i=>$team}
                 <dd>
-                    <a class="middle-container" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
-                        <div class="team">
-                            <img src="{$team.home_team_logo}">
-                            <div class="name">{$team.home_team_text}</div>
-                        </div>
-                        <div class="info">
-                            {$team.match_time|date='H:i'}
-                            <div class="score">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)} : {$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</div>
-                            {$team.competition_text}
-                        </div>
-                        <div class="team">
-                            <img src="{$team.away_team_logo}">
-                            <div class="name">{$team.away_team_text}</div>
-                        </div>
-                        <div class="btn"><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></div>
+                    <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
+                        <span class="type-name">{$team.competition_text}</span>
+                        <ul>
+                            <li><span class="time">{$team.match_time|date='H:i'}</span><span class="team"><img src="{$team.home_team_logo}">{$team.home_team_text}</span><span class="scores">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span></li>
+                            <li><span class="zt">{$team.status_text}</span><span class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</span><span class="scores">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span></li>
+                        </ul>
+                        <p class="zttxt"><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></p>
                     </a>
                 </dd>
                 {/foreach}
@@ -67,34 +45,35 @@
         </div>
     </div>
     <div class="model collect">
-        <div class="title">
-            <div class="tit"><i class="iconfont icon-zuqiu"></i><span>足球</span></div>
-        </div>
-        <div class="category">
-            <a class="cur">预测</a>
-            <a class="">录像</a>
-            <a class="">集锦</a>
-            <a class="">资讯</a>
+        <div class="title sp">
+            <span class="txt">足球资讯</span>
+            <div class="tool">
+                <a class="more" href="/zixun-zuqiu/">更多</a>
+<!--                <a class="cur">预测</a>-->
+<!--                <a>录像</a>-->
+<!--                <a>集锦</a>-->
+<!--                <a>资讯</a>-->
+            </div>
         </div>
         <div class="list">
+<!--            <ul>-->
+<!--                {foreach $zuqiuforcast.data as $l}-->
+<!--                <li><a href="/yuce-zuqiu/{$l.id}.html">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a></li>-->
+<!--                {/foreach}-->
+<!--            </ul>-->
+<!--            <ul>-->
+<!--                <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>-->
+<!--                {foreach $zuqiuLx.data as $row}-->
+<!--                <li><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>-->
+<!--                {/foreach}-->
+<!--            </ul>-->
+<!--            <ul>-->
+<!--                <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>-->
+<!--                {foreach $zuqiuJj.data as $row}-->
+<!--                <li><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>-->
+<!--                {/foreach}-->
+<!--            </ul>-->
             <ul class="cur">
-                {foreach $zuqiuforcast.data as $l}
-                <li><a href="/yuce-zuqiu/{$l.id}.html">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a></li>
-                {/foreach}
-            </ul>
-            <ul>
-                <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
-                {foreach $zuqiuLx.data as $row}
-                <li><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>
-                {/foreach}
-            </ul>
-            <ul>
-                <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>
-                {foreach $zuqiuJj.data as $row}
-                <li><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>
-                {/foreach}
-            </ul>
-            <ul>
                 <?php  $zuqiuZx = getZiXun(1);  ?>
                 {foreach $zuqiuZx as $row}
                 <li><a href="/zixun-zuqiu/{$row.id}.html">{$row.title}</a></li>
@@ -103,34 +82,35 @@
         </div>
     </div>
     <div class="model collect">
-        <div class="title">
-            <div class="tit"><i class="iconfont icon-lanqiu"></i><span>篮球</span></div>
-        </div>
-        <div class="category">
-            <a class="cur">预测</a>
-            <a class="">录像</a>
-            <a class="">集锦</a>
-            <a class="">资讯</a>
+        <div class="title sp">
+            <span class="txt">篮球资讯</span>
+            <div class="tool">
+                <a class="more" href="/zixun-lanqiu/">更多</a>
+<!--                <a class="cur">预测</a>-->
+<!--                <a>录像</a>-->
+<!--                <a>集锦</a>-->
+<!--                <a>资讯</a>-->
+            </div>
         </div>
         <div class="list">
+<!--            <ul >-->
+<!--                {foreach $lanqiuforcast.data as $l}-->
+<!--                <li><a href="/yuce-lanqiu/{$l.id}.html">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a></li>-->
+<!--                {/foreach}-->
+<!--            </ul>-->
+<!--            <ul>-->
+<!--                <?php  $zuqiuLx = getLuxiangJijin(2,1);  ?>-->
+<!--                {foreach $zuqiuLx.data as $row}-->
+<!--                <li><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>-->
+<!--                {/foreach}-->
+<!--            </ul>-->
+<!--            <ul>-->
+<!--                <?php  $zuqiuJj = getLuxiangJijin(1,1);  ?>-->
+<!--                {foreach $zuqiuJj.data as $row}-->
+<!--                <li><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>-->
+<!--                {/foreach}-->
+<!--            </ul>-->
             <ul class="cur">
-                {foreach $lanqiuforcast.data as $l}
-                <li><a href="/yuce-lanqiu/{$l.id}.html">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a></li>
-                {/foreach}
-            </ul>
-            <ul>
-                <?php  $zuqiuLx = getLuxiangJijin(2,1);  ?>
-                {foreach $zuqiuLx.data as $row}
-                <li><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>
-                {/foreach}
-            </ul>
-            <ul>
-                <?php  $zuqiuJj = getLuxiangJijin(1,1);  ?>
-                {foreach $zuqiuJj.data as $row}
-                <li><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}.html">{$row.title}</a></li>
-                {/foreach}
-            </ul>
-            <ul>
                 <?php  $zuqiuZx = getZiXun(2);  ?>
                 {foreach $zuqiuZx as $row}
                 <li><a href="/zixun-lanqiu/{$row.id}.html">{$row.title}</a></li>
@@ -145,24 +125,20 @@
 {/block}
 {block name="script"}
 <script>
-    $(".btn").click(function () {
-        $(this).parent().toggleClass("open");
-    });
     $(".showsel").click(function () {
         $(".moresel").fadeIn(300);
-        $("body").css("overflow","hidden");
+        $("body").css("overflow", "hidden");
     });
     $(".moresel .close").click(function () {
         $(".moresel").fadeOut(300);
-        $("body").css("overflow","");
+        $("body").css("overflow", "");
     });
-    $(".collect .category a").click(function () {
+    $(".collect .tool a").click(function () {
         $(this).addClass('cur').siblings().removeClass('cur');
         let parents = $(this).parents('.collect');
         $(parents).find("ul").removeClass('cur').eq($(this).index()).addClass('cur')
     })
-
-    $(".live-list .category a").click(function () {
+    $(".live-list .tool a").click(function () {
         $(this).addClass('cur').siblings().removeClass();
         switch ($(this).index()) {
             case 0:
@@ -190,7 +166,7 @@
         if ($(item).children().length == 0) {
             $(item).append(`<p class='nodata sp'>暂无相关数据</p>`)
         }
-        $(".live-list .category a").eq(0).trigger('click')
+        $(".live-list .tool a").eq(0).trigger('click')
     })
 </script>
 {/block}

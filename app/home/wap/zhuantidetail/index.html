@@ -1,7 +1,8 @@
 {extend name="common/base"/}
 {block name="body"}
 <div class="container">
-    <div class="model specific">
+    {include file="assembly/crumbs"/}
+    <div class="specific">
         <div class="ztbg">
             <div class="logo">
                 <img src="{$data_info.logo}"/>
@@ -26,19 +27,20 @@
                 {/if}
             </ul>
         </div>
-        <div class="title">
-            <p class="tit"><i class="iconfont icon-jianjie"></i><span><?php echo strpos(get_ruleName(), 'liansai') ? '联赛' : '球队' ?>简介</span>
-            </p>
-        </div>
-        <div class="info">{$data_info.intro}</div>
     </div>
     <div class="model">
         <div class="title">
-            <p class="tit"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
+            <span class="txt"><?php echo strpos(get_ruleName(), 'liansai') ? '联赛' : '球队' ?>简介</span>
         </div>
-        <div class="category">
-            <a>未开赛</a>
-            <a>已完结</a>
+        <div class="specific-info">{$data_info.intro}</div>
+    </div>
+    <div class="model">
+        <div class="title sp">
+            <span class="txt">直播</span>
+            <div class="tool">
+                <a>未开赛</a>
+                <a>已完成</a>
+            </div>
         </div>
         <div class="play-list">
             <?php $formatdata=formatList($data);?>
@@ -46,24 +48,13 @@
             <dl class="list-cont sp">
                 {foreach $category as $i=>$team}
                 <dd>
-                    <a class="middle-container" href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
-                        <div class="team">
-                            <img src="{$team.home_team_logo}">
-                            <div class="name">{$team.home_team_text}</div>
-                        </div>
-                        <div class="info">
-                            {$team.match_time|date='m-d H:i'}
-                            <div class="score">
-                                {$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)} :
-                                {$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}
-                            </div>
-                            {$team.competition_text}
-                        </div>
-                        <div class="team">
-                            <img src="{$team.away_team_logo}">
-                            <div class="name">{$team.away_team_text}</div>
-                        </div>
-                        <div class="btn"><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></div>
+                    <a href="/live-{$team.sphere_type}/{$team.comp_py}/{$team.id}.html">
+                        <span class="type-name">{$team.competition_text}</span>
+                        <ul>
+                            <li><span class="time">{$team.match_time|date='m-d H:i'}</span><span class="team"><img src="{$team.home_team_logo}">{$team.home_team_text}</span><span class="scores">{$team.sphere_type=='zuqiu'?$team.home_scores[0]:getScore($team.home_scores)}</span></li>
+                            <li><span class="zt">{$team.status_text}</span><span class="team"><img src="{$team.away_team_logo}">{$team.away_team_text}</span><span class="scores">{$team.sphere_type=='zuqiu'?$team.away_scores[0]:getScore($team.away_scores)}</span></li>
+                        </ul>
+                        <p class="zttxt"><?php echo getzt($team['status_id'],1,$team['sphere_type']) ?></p>
                     </a>
                 </dd>
                 {/foreach}
@@ -71,36 +62,14 @@
             {/foreach}
         </div>
     </div>
-    <div class="model">
-        <div class="title">
-            <div class="tit"><i class="iconfont icon-luxiang"></i><span>录像</span></div>
-        </div>
-        <dl class="list-back nodata">
-            {foreach $luxiang as $i=>$item}
-            <dd>
-                <a href="/luxiang-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html">{$item.title}</a>
-            </dd>
-            {/foreach}
-        </dl>
-    </div>
-    <div class="model">
-        <div class="title">
-            <div class="tit"><i class="iconfont icon-jijin"></i><span>集锦</span></div>
-        </div>
-        <dl class="list-back nodata">
-            {foreach $jijin as $i=>$item}
-            <dd>
-                <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html">{$item.title}</a>
-            </dd>
-            {/foreach}
-        </dl>
-    </div>
     {include file="assembly/newtxt"/}
 </div>
 {/block}
 {block name="script"}
 <script>
-    $(".category a").click(function () {
+    $('.hotnav').remove()
+
+    $(".tool a").click(function () {
         $(this).addClass('cur').siblings().removeClass();
         switch ($(this).index()) {
             case 0:
@@ -122,7 +91,7 @@
         if ($(item).children().length == 0) {
             $(item).append(`<p class='nodata sp'>暂无相关数据</p>`)
         }
-        $(".category a").eq(0).trigger('click')
+        $(".tool a").eq(0).trigger('click')
     })
 </script>
 {/block}

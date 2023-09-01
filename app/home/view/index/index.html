@@ -17,29 +17,29 @@
         <div class="main-model collect">
             <div class="title">
                 <p class="name"><i class="iconfont icon-zuqiu"></i>足球</p>
-                <div class="tool"><p><a class="cur">预测</a><a>录像</a><a>集锦</a><a>资讯</a></p></div>
+                <div class="tool"><p><!--<a class="cur">预测</a><a>录像</a><a>集锦</a><a>资讯</a>--><a target="_blank" href="/zixun-zuqiu/">更多</a></p></div>
             </div>
             <div class="list">
+<!--                <ul>-->
+<!--                    {foreach $zuqiuforcast.data as $l}-->
+<!--                    <li><a href="/yuce-zuqiu/{$l.id}.html" target="_blank">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>-->
+<!--                    {/foreach}-->
+<!--                </ul>-->
+<!--                <ul>-->
+<!--                    <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>-->
+<!--                    {foreach $zuqiuLx.data as $row}-->
+<!--                    <li><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html"-->
+<!--                           target="_blank">{$row.title}</a><span>{$row.created_at}</span></li>-->
+<!--                    {/foreach}-->
+<!--                </ul>-->
+<!--                <ul>-->
+<!--                    <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>-->
+<!--                    {foreach $zuqiuJj.data as $row}-->
+<!--                    <li><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}.html"-->
+<!--                           target="_blank">{$row.title}</a><span>{$row.created_at}</span></li>-->
+<!--                    {/foreach}-->
+<!--                </ul>-->
                 <ul class="cur">
-                    {foreach $zuqiuforcast.data as $l}
-                    <li><a href="/yuce-zuqiu/{$l.id}.html" target="_blank">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>
-                    {/foreach}
-                </ul>
-                <ul>
-                    <?php  $zuqiuLx = getLuxiangJijin(2,0);  ?>
-                    {foreach $zuqiuLx.data as $row}
-                    <li><a href="/luxiang-zuqiu/{$row.short_name_py}/{$row.id}.html"
-                           target="_blank">{$row.title}</a><span>{$row.created_at}</span></li>
-                    {/foreach}
-                </ul>
-                <ul>
-                    <?php  $zuqiuJj = getLuxiangJijin(1,0);  ?>
-                    {foreach $zuqiuJj.data as $row}
-                    <li><a href="/jijin-zuqiu/{$row.short_name_py}/{$row.id}.html"
-                           target="_blank">{$row.title}</a><span>{$row.created_at}</span></li>
-                    {/foreach}
-                </ul>
-                <ul>
                     <?php  $zuqiuZx = getZiXun(1);  ?>
                     {foreach $zuqiuZx as $row}
                     <li><a href="/zixun-zuqiu/{$row.id}.html"
@@ -51,29 +51,29 @@
         <div class="main-model collect">
             <div class="title">
                 <p class="name"><i class="iconfont icon-lanqiu"></i>篮球</p>
-                <div class="tool"><p><a class="cur">预测</a><a>录像</a><a>集锦</a><a>资讯</a></p></div>
+                <div class="tool"><p><!--<a class="cur">预测</a><a>录像</a><a>集锦</a><a>资讯</a>--><a target="_blank" href="/zixun-lanqiu/">更多</a></p></div>
             </div>
             <div class="list">
+<!--                <ul class="cur">-->
+<!--                    {foreach $lanqiuforcast.data as $l}-->
+<!--                    <li><a href="/yuce-lanqiu/{$l.id}.html" target="_blank">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>-->
+<!--                    {/foreach}-->
+<!--                </ul>-->
+<!--                <ul>-->
+<!--                    <?php  $zuqiuLx = getLuxiangJijin(2,1);  ?>-->
+<!--                    {foreach $zuqiuLx.data as $row}-->
+<!--                    <li><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html"-->
+<!--                           target="_blank">{$row.title}</a><span>{$row.created_at}</span></li>-->
+<!--                    {/foreach}-->
+<!--                </ul>-->
+<!--                <ul>-->
+<!--                    <?php  $zuqiuJj = getLuxiangJijin(1,1);  ?>-->
+<!--                    {foreach $zuqiuJj.data as $row}-->
+<!--                    <li><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}.html"-->
+<!--                           target="_blank">{$row.title}</a><span>{$row.created_at}</span></li>-->
+<!--                    {/foreach}-->
+<!--                </ul>-->
                 <ul class="cur">
-                    {foreach $lanqiuforcast.data as $l}
-                    <li><a href="/yuce-lanqiu/{$l.id}.html" target="_blank">{$l.match_time|date='m-d'}{$l.home.name_zh??''}vs{$l.away.name_zh??''}直播（赛前预测分析）</a><span>{$l.forecast_time|date='Y-m-d H:i:s'}</span></li>
-                    {/foreach}
-                </ul>
-                <ul>
-                    <?php  $zuqiuLx = getLuxiangJijin(2,1);  ?>
-                    {foreach $zuqiuLx.data as $row}
-                    <li><a href="/luxiang-lanqiu/{$row.short_name_py}/{$row.id}.html"
-                           target="_blank">{$row.title}</a><span>{$row.created_at}</span></li>
-                    {/foreach}
-                </ul>
-                <ul>
-                    <?php  $zuqiuJj = getLuxiangJijin(1,1);  ?>
-                    {foreach $zuqiuJj.data as $row}
-                    <li><a href="/jijin-lanqiu/{$row.short_name_py}/{$row.id}.html"
-                           target="_blank">{$row.title}</a><span>{$row.created_at}</span></li>
-                    {/foreach}
-                </ul>
-                <ul>
                     <?php  $zuqiuZx = getZiXun(2);  ?>
                     {foreach $zuqiuZx as $row}
                     <li><a href="/zixun-lanqiu/{$row.id}.html"

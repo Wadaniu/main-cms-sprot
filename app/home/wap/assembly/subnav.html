@@ -1,13 +1,17 @@
 <div class="title sp">
+    <span class="txt">
     {foreach :[subnav] as $item}
     <a href="{$item.link}" class="{$item.cur?'cur':''}">{$item.title}</a>
     {/foreach}
-    <?php if(strpos(get_ruleName(), 'zixun') || strpos(get_ruleName(), 'yuce')): ?>
-    <a href="/yuce-zuqiu/" class="{:is_bool(strpos($_SERVER['REQUEST_URI'], '/yuce-zuqiu'))?'':'cur'}">足球预测</a>
-    <a href="/yuce-lanqiu/" class="{:is_bool(strpos($_SERVER['REQUEST_URI'], '/yuce-lanqiu'))?'':'cur'}">篮球预测</a>
-    <?php endif; ?>
+<!--    <?php if(strpos(get_ruleName(), 'zixun') || strpos(get_ruleName(), 'yuce')): ?>-->
+<!--    <a href="/yuce-zuqiu/" class="{:is_bool(strpos($_SERVER['REQUEST_URI'], '/yuce-zuqiu'))?'':'cur'}">足球预测</a>-->
+<!--    <a href="/yuce-lanqiu/" class="{:is_bool(strpos($_SERVER['REQUEST_URI'], '/yuce-lanqiu'))?'':'cur'}">篮球预测</a>-->
+<!--    <?php endif; ?>-->
+    </span>
     <?php if(strpos(get_ruleName(), 'live') && !empty(get_params()['compname'])): ?>
-    <p class="switch"><span class="switch-checked"><span class="switch-btn"></span></span><span class="txt wks">未开赛</span><span
-            class="txt ywj">已完结</span></p>
+    <div class="tool">
+        <a>未开赛</a>
+        <a>已完成</a>
+    </div>
     <?php endif; ?>
 </div>

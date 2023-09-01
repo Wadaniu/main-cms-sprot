@@ -1,0 +1,32 @@
+<?php if(!strpos(get_ruleName(), 'search')): ?>
+<div class="crumbs"><a href="/">首页</a></div>
+<?php endif; ?>
+<script>
+    $(function () {
+        let linkroute = cururl.split('/').filter(Boolean)
+        let crumbs = [];
+        if (linkroute.length > 0) {
+            let titles = [$('.active .text').text(), $('.zt-title span').text(), $('.txt').eq(0).text().substr(0,2)].filter(Boolean)
+            crumbs.push({
+                title: (linkroute[0].indexOf('zuqiu') > 0 ? '足球' : '篮球') + titles[0],
+                link: `/${linkroute[0]}/`
+            })
+        }
+        if (linkroute.length > 1) {
+            let titles = [$('.specific .name').text(), $('.type-name').eq(0).text(), $('.info p:last-child').text(), $('span.tit').text(), $('.hotnav a.cur').text()].filter(Boolean)
+            crumbs.push({
+                title: titles[0],
+                link: `/${linkroute[0]}/${linkroute[1]}`
+            })
+        }
+        if (linkroute.length > 2) {
+            crumbs.push({
+                title: $('.active .text').text() + '详情',
+                link: `/${linkroute[0]}/${linkroute[1]}/${linkroute[2]}`
+            })
+        }
+        $.each(crumbs, function (i, item) {
+            $(".crumbs").append(`<span>></span><a href="${item.link}" class="${i + 1 == crumbs.length ? 'cur' : ''}">${item.title}</a>`)
+        })
+    })
+</script>

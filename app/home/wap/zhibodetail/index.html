@@ -2,6 +2,7 @@
 {block name="body"}
 <?php $islanqiu=isset($players) ?>
 <div class="container">
+    {include file="assembly/crumbs"/}
     <div class="match-info">
         <div class="team">
             <p class="team-logo"><a href="/qiudui-{$matchLive.ball}/{$match.home_team_id}"><img src="{$match.home.logo}"></a></p>
@@ -36,9 +37,9 @@
             <?php endif; ?>
         </div>
     </div>
-    <div class="model">
+    <div class="match-cont">
         <div class="type-tabs">
-            <p class="cur">交锋/战绩</p>
+            <p class="cur">赛前预测</p>
             <p>赛事信息</p>
             <p>球队</p>
             <?php if($islanqiu): ?>
@@ -46,90 +47,10 @@
             <?php endif; ?>
             <p>集锦/录像</p>
         </div>
-        <div class="type-cont">
+        <div class="type-cont nodata">
             {if !empty($match.forecast)}
-            <p style="padding-bottom: 0.6rem;font-size: 0.3rem;line-height: 0.54rem;">【赛事分析】：<a href="/yuce-{$matchLive.ball}/{:get_params('matchid')}.html">{$match.match_time|date='m-d'}{$match.home.name_zh}vs{$match.away.name_zh}直播（赛前预测分析）</a></p>
+            <div>{$match.forecast|raw}</div>
             {/if}
-            <ul class="name-tab">
-                <li class="cur">{$match.home.name_zh}</li>
-                <li>{$match.away.name_zh}</li>
-            </ul>
-            <div class="name-cont">
-                <ul>
-                    <li class=header>
-                        <span>交锋历史</span><span>赛事</span><span>主队</span><span>比分</span><span>客队</span>
-                    </li>
-                    {if !empty($analysis.history)}
-                        {foreach $analysis.history.vs as $key=>$item}
-                        <li>
-                            <span>{$item.match_time|date='m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$islanqiu?getScore($item.home_scores):$item.home_scores[0]} : {$islanqiu?getScore($item.away_scores):$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
-                        </li>
-                        {/foreach}
-                    {/if}
-                </ul>
-                <ul>
-                    <li class=header>
-                        <span>主队近期战绩</span><span>赛事</span><span>主队</span><span>比分</span><span>客队</span>
-                    </li>
-                    {if !empty($analysis.history)}
-                        {foreach $analysis.history.home as $key=>$item}
-                        <li>
-                            <span>{$item.match_time|date='m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$islanqiu?getScore($item.home_scores):$item.home_scores[0]} : {$islanqiu?getScore($item.away_scores):$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
-                        </li>
-                        {/foreach}
-                    {/if}
-                </ul>
-                <ul>
-                    <li class=header>
-                        <span>主队未来赛程</span><span>赛事</span><span>主队</span><span>比分</span><span>客队</span>
-                    </li>
-                    {if !empty($analysis.future)}
-                        {foreach $analysis.future.home as $key=>$item}
-                        <li>
-                            <span>{$item.match_time|date='m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$islanqiu?getScore($item.home_scores):$item.home_scores[0]} : {$islanqiu?getScore($item.away_scores):$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
-                        </li>
-                        {/foreach}
-                    {/if}
-                </ul>
-            </div>
-            <div class="name-cont">
-                <ul>
-                    <li class=header>
-                        <span>交锋历史</span><span>赛事</span><span>主队</span><span>比分</span><span>客队</span>
-                    </li>
-                    {if !empty($analysis.history)}
-                        {foreach $analysis.history.vs as $key=>$item}
-                        <li>
-                            <span>{$item.match_time|date='m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$islanqiu?getScore($item.home_scores):$item.home_scores[0]} : {$islanqiu?getScore($item.away_scores):$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
-                        </li>
-                        {/foreach}
-                    {/if}
-                </ul>
-                <ul>
-                    <li class=header>
-                        <span>客队近期战绩</span><span>赛事</span><span>主队</span><span>比分</span><span>客队</span>
-                    </li>
-                    {if !empty($analysis.history)}
-                        {foreach $analysis.history.away as $key=>$item}
-                        <li>
-                            <span>{$item.match_time|date='m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$islanqiu?getScore($item.home_scores):$item.home_scores[0]} : {$islanqiu?getScore($item.away_scores):$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
-                        </li>
-                        {/foreach}
-                    {/if}
-                </ul>
-                <ul>
-                    <li class=header>
-                        <span>客队未来赛程</span><span>赛事</span><span>主队</span><span>比分结果</span><span>客队</span>
-                    </li>
-                    {if !empty($analysis.future)}
-                        {foreach $analysis.future.away as $key=>$item}
-                        <li>
-                            <span>{$item.match_time|date='m-d H:i'}</span><span>{$item.competition_text}</span><span>{$item.home_team_text}</span><span>{$islanqiu?getScore($item.home_scores):$item.home_scores[0]} : {$islanqiu?getScore($item.away_scores):$item.away_scores[0]}</span><span>{$item.away_team_text}</span>
-                        </li>
-                        {/foreach}
-                    {/if}
-                </ul>
-            </div>
         </div>
         <div class="type-cont">
             <ul class="playtxt">
@@ -149,7 +70,7 @@
                 </li>
             </ul>
         </div>
-        <div class="type-cont nodata">
+        <div class="type-cont nodata" style="padding: 0.3rem 0">
             <?php $keylist=$islanqiu?["mingzhong","toulan","sanzhong","santou","fazhong","fatou","gongban","fangban","lanban","zhugong","qiang","gaimao","shiwu","fangui","bifen"]:["ball_possession","shots","shots_on_target","passes","passes_accuracy","freekicks","corner_kicks","offsides","fouls","yellow_cards","red_cards","yellow2red_cards","goals_against","tackles","interceptions"];
 				    $namelist=$islanqiu?["命中次数","投篮次数","三分命中","三分投篮","罚球命中","罚球投篮","进攻篮板","防守篮板","总篮板","助攻数","抢断数","盖帽数","失误","个人犯规","比分"]:["控球率","射门","射正","传球","传球成功","任意球","角球","越位","角球","犯规","黄牌","红牌","两黄变红","失球","抢断","拦截"];
 						$teamStats=$islanqiu?(count($players)>0?getteamStats($keylist,$players[2],$players[3],$analysis['info']):[]):$teamStats;
