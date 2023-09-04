@@ -39,6 +39,13 @@
 {/block}
 {block name="script"}
 <script>
-    $('.hotnav').remove()
+    $('.head').append(`<div class="search" id="search"><input type="text" placeholder="输入关键字"/><button><i class="iconfont icon-sousuo"></i></button></div>`).find('.hotnav').remove();
+    let name = location.href.indexOf('liansai') > 0 ? 'liansai-search' : 'qiudui-search';
+    $("#search button").click(function () {
+        let txt = $.trim($("#search input").val());
+        if (txt != "") {
+            location.href = `${location.origin}/${name}/index_1/${txt}`
+        }
+    })
 </script>
 {/block}

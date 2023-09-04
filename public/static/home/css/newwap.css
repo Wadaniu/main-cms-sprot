@@ -74,6 +74,7 @@ p.nodata {
 
 .head {
     position: fixed;
+    align-items: center;
     width: 100%;
     top: 0;
     display: flex;
@@ -94,6 +95,40 @@ p.nodata {
     width: auto;
     height: 0.5rem;
     opacity: 0;
+}
+
+.head .search {
+    margin-left: auto;
+    font-size: 0;
+    border-radius: 0.3rem;
+    background-color: #fff;
+    margin-right: 0.2rem;
+}
+
+.head .search input {
+    height: 0.6rem;
+    width: 1.6rem;
+    color: var(--main-color);
+    font-size: 0.24rem;
+    padding: 0 0.2rem 0 0.32rem;
+    background-color: transparent;
+    border: none;
+    vertical-align: bottom;
+}
+
+.head .search input::-webkit-input-placeholder {
+    color: rgba(var(--main-r), var(--main-g), var(--main-b), .7) !important;
+}
+
+.head .search button {
+    cursor: pointer;
+    height: 0.6rem;
+    width: 0.8rem;
+    background-color: transparent;
+}
+
+.head .search button i.iconfont {
+    color: var(--main-color);
 }
 
 .navigation {

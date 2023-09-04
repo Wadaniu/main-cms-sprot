@@ -20,7 +20,7 @@
     </div>
     <?php endif; ?>
 </div>
-<?php $icons = ['shouyefill','zhibo','luxiang','jijin','zixun','jifen']; ?>
+<?php $icons = [1=>'shouyefill',26=>'zhibo',32=>'luxiang',20=>'jijin',31=>'zixun',49=>'jiangbei',50=>'duiwu',51=>'jifen']; ?>
 <nav class="navigation">
     <ul>
         {volist name="COMMON_NAV" id="item"}
@@ -28,7 +28,7 @@
         <li class="list">
             <a data-tag="{$item.route_tag}-" href={$childlink?url(wapnav($item.list)):url($item.src . $item.param)}>
 						<span class="icon">
-							<i class="iconfont icon-{$icons[$i-1]}"></i>
+							<i class="iconfont icon-{$icons[$key]}"></i>
 						</span>
                 <span class="text">{$item.title}</span>
             </a>
