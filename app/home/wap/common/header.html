@@ -8,8 +8,7 @@
                  title="{:get_system_config('web','admin_title')}">
         </a>
     </h1>
-    <?php $type=$_SERVER['REQUEST_URI']=='/'?hotlive('live',''):typeselect(); $curparam=get_params('compname'); if(count($type)>
-    0):?>
+    <?php $type=$_SERVER['REQUEST_URI']=='/'?hotlive('live',''):typeselect();$curparam=get_params('compname');if(count($type)>0):?>
     <div class="hotnav">
         {volist name="type" id="item" length='10'}
         <a href="{$item.src}" data-link="{$item.py}">{$item.title}</a>

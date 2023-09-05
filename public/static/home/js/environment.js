@@ -56,7 +56,7 @@ $(function () {
     $(".nodata:not(.sp)").each(function (i, item) {
         if ($(item).children().length == 0) {
             let txt = $(item).parents('.model').find('.tit').text();
-            let dom = txt ? `<p class=nodata>近期暂无${txt}</p>` : '<p class=nodata>暂无相关数据</p>';
+            let dom = txt ? `<p class='nodata sp'>近期暂无${txt}</p>` : `<p class='nodata sp'>暂无相关数据</p>`;
             $(item).append(dom)
         }
     })

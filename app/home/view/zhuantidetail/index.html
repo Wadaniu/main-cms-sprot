@@ -135,11 +135,14 @@
         $(this).addClass('cur').siblings().removeClass();
         switch ($(this).index()) {
             case 0:
+                let nodata = false;
                 $(".list-cont").removeClass('cur')
                 if ($(".list-cont").eq(1).find('.nodata').length == 0) {
                     $(".list-cont").eq(1).addClass('cur')
+                }else{
+                    nodata = true;
                 }
-                if ($(".list-cont").eq(2).find('.nodata').length == 0) {
+                if ($(".list-cont").eq(2).find('.nodata').length == 0||nodata) {
                     $(".list-cont").eq(2).addClass('cur')
                 }
                 break;

@@ -439,7 +439,7 @@ p.nodata {
     text-align: center;
 }
 
-.play-list .list-cont dd {
+.play-list .list-cont dd, *:has(>.nodata.sp) {
     background-color: #fff;
     border-radius: 5px;
     overflow: hidden;
