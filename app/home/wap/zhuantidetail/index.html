@@ -36,7 +36,7 @@
     </div>
     <div class="model">
         <div class="title sp">
-            <span class="txt">{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}直播赛程</span>
+            <span class="txt"></span>
             <div class="tool">
                 <a>未开赛</a>
                 <a>已完成</a>
@@ -96,5 +96,16 @@
         }
         $(".tool a").eq(0).trigger('click')
     })
+
+    let allname = true;
+    let curname = $(".intro .name").text();
+    $(".type-name").each(function (i,item) {
+        if($(item).text()!=curname){
+            allname = false;
+            return false
+        }
+    })
+    $(".title.sp .txt").text(allname?`${curname}直播赛程`:'热门直播赛程')
+
 </script>
 {/block}
