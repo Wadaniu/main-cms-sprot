@@ -13,11 +13,21 @@
         {volist name="type" id="item" length='10'}
         <a href="{$item.src}" data-link="{$item.py}">{$item.title}</a>
         {/volist}
-        <?php if($_SERVER['REQUEST_URI']=='/'):?>
+
         <span class="showsel">更多</span>
-        <?php endif; ?>
+
     </div>
     <?php endif; ?>
+</div>
+<div class="moresel">
+    <ul>
+        <?php $prefix = strpos(get_ruleName(), 'jifen')?'jifen':'live'; $zuqiu=getFootballHotComp(); if(get_ruleName()=='/'||strpos(get_ruleName(), 'zuqiu')): ?>
+        <li>足球：{foreach $zuqiu as $item}<a href="/{$prefix}-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}</li>
+        <?php endif; $lanqiu=getBasketballHotComp(); if(get_ruleName()=='/'||strpos(get_ruleName(), 'lanqiu')): ?>
+        <li>篮球：{foreach $lanqiu as $item}<a href="/{$prefix}-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}</li>
+        <?php endif; ?>
+    </ul>
+    <p class="close"><i class="iconfont icon-close"></i></p>
 </div>
 <?php $icons = [1=>'shouyefill',26=>'zhibo',32=>'luxiang',20=>'jijin',31=>'zixun',49=>'jiangbei',50=>'duiwu',51=>'jifen']; ?>
 <nav class="navigation">
@@ -56,8 +66,22 @@
                     $(item).addClass('cur');
                 }
             })
+            $(".moresel a").each(function (i, item) {
+                let thelink = $(item).attr('href');
+                if (thelink.indexOf(linkname)>0) {
+                    $(item).addClass('cur');
+                }
+            })
         } else {
             $(".hotnav a:first-child").addClass('cur');
         }
     }
+    $(".showsel").click(function () {
+        $(".moresel").fadeIn(300);
+        $("body").css("overflow", "hidden");
+    });
+    $(".moresel .close").click(function () {
+        $(".moresel").fadeOut(300);
+        $("body").css("overflow", "");
+    });
 </script>

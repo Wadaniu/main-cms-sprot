@@ -8,7 +8,7 @@
     <div class="left-main">
         <div class="main-model">
             <div class="title">
-                <p class="name"><i class="iconfont icon-zhibo"></i><span>直播</span></p>
+                <p class="name"><i class="iconfont icon-zhibo"></i><span></span></p>
                 <div class="tool">
                     <p><a>未开赛</a><a>已完结</a></p>
                 </div>
@@ -53,7 +53,7 @@
         </div>
         <div class="main-model">
             <div class="title">
-                <p class="name"><i class="iconfont icon-luxiang"></i>录像</p>
+                <p class="name"><i class="iconfont icon-luxiang"></i>{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}录像</p>
                 <div class="tool">
                     <p></p>
                 </div>
@@ -72,7 +72,7 @@
         </div>
         <div class="main-model">
             <div class="title">
-                <p class="name"><i class="iconfont icon-jijin"></i>集锦</p>
+                <p class="name"><i class="iconfont icon-jijin"></i>{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}集锦</p>
                 <div class="tool">
                     <p></p>
                 </div>
@@ -158,6 +158,16 @@
         }
         $(".tool a").eq(0).trigger('click')
     })
+
+    let allname = true;
+    let curname = $(".intro .name").text();
+    $(".item-box .name a").each(function (i,item) {
+        if($(item).text()!=curname){
+            allname = false;
+            return false
+        }
+    })
+    $(".title:first-child span").text(allname?`${curname}直播赛程`:'热门直播赛程')
 </script>
 {/block}
 <!-- /脚本 -->

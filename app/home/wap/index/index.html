@@ -1,16 +1,5 @@
 {extend name="common/base"/}
 {block name="body"}
-<div class="moresel">
-    <ul>
-        <li>
-            <?php $zuqiu=getFootballHotComp(); ?>
-            足球：{foreach $zuqiu as $item}<a href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
-        </li>
-        <li><?php $lanqiu=getBasketballHotComp(); ?>
-            篮球：{foreach $lanqiu as $item}<a href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
-    </ul>
-    <p class="close"><i class="iconfont icon-close"></i></p>
-</div>
 <div class="container">
     <div class="model live-list">
         <div class="title">
@@ -125,14 +114,6 @@
 {/block}
 {block name="script"}
 <script>
-    $(".showsel").click(function () {
-        $(".moresel").fadeIn(300);
-        $("body").css("overflow", "hidden");
-    });
-    $(".moresel .close").click(function () {
-        $(".moresel").fadeOut(300);
-        $("body").css("overflow", "");
-    });
     $(".collect .tool a").click(function () {
         $(this).addClass('cur').siblings().removeClass('cur');
         let parents = $(this).parents('.collect');

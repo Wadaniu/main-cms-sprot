@@ -13,7 +13,7 @@
             })
         }
         if (linkroute.length > 1) {
-            let titles = [$('.specific .intro .name').text(), $('.play-list p.name').eq(0).text(), $('.info p:last-child').text(), $('.new-content h1').text(), $('.jifen-tab a.cur').text()].filter(Boolean)
+            let titles = [$('.specific .intro .name').text(), $('.play-list p.name').eq(0).text(), $('.info p:last-child').text(), $('.new-content h1').text(), $('.jifen-tab a.cur').text(),$(".pages a[href='#']").text()].filter(Boolean)
             crumbs.push({
                 title: titles[0],
                 link: `/${linkroute[0]}/${linkroute[1]}`

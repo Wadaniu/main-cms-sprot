@@ -20,7 +20,7 @@
             <?php $type=hotlive('liansai'); ?>
             热门联赛：{volist name="type" id="item" length='40'}<a href="/liansai-{$item.type}/{$item.id}" target="_blank">{$item.title}</a>{/volist}
             <?php else: ?>
-            <?php $type=getHotTeam(); ?>
+            <?php $type=getHotTeam(40); ?>
             热门球队：{volist name="type" id="item" length='40'}<a href="/qiudui-{$item.sphere_type}/{$item.id}" target="_blank">{:empty($item.short_name_zh)?$item.name_zh:$item.short_name_zh}</a>{/volist}
             <?php endif; ?>
         </div>

@@ -287,12 +287,26 @@ function findIndex($str, $target, $num): int
     return $index;
 }
 
+function iswap(): bool
+{
+    $browser = isset($_SERVER['HTTP_USER_AGENT']) ? trim($_SERVER['HTTP_USER_AGENT']) : "";
+    if (preg_match("/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i", $browser)) {
+        $wap = true;
+    } else {
+        $wap = false;
+    }
+    return $wap;
+}
+
 //热门分类选择
 function typeselect(): array
 {
     $cururl = $_SERVER['REQUEST_URI'];//获取当前浏览器patch地址
     $alllink = count(get_params()) ? substr($cururl, 0, findIndex($cururl, '/', 2) + 1) : $cururl;//截取patch中的主路径
-    if ($alllink == '/zixun/') return [];//特殊情况处理
+    if (iswap() && strpos(get_ruleName(), 'zixun')) {
+        $alllink = str_replace("zixun", "live", $alllink);
+    }
+    //var_dump(get_ruleName());die;
     $typelist[] = ['title' => '全部', 'py' => '/all', 'src' => $alllink];//默认全部分类信息
     $typedata = strpos($alllink, 'zuqiu') ? getFootballHotComp() : getBasketballHotComp();//根据类别获取不同分类
     foreach ($typedata as $item) {
@@ -323,6 +337,7 @@ function hotlive($src, $name = ''): array
             'src' => '/' . $src . '-' . $type['sphere_type'] . '/' . $type['short_name_py']
         ];
     }
+
     return $typelist;
 }
 

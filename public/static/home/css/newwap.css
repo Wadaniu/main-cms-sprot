@@ -16,6 +16,10 @@ a {
     color: #444;
 }
 
+::-webkit-scrollbar {
+    display: none
+}
+
 a:hover {
     color: var(--main-color);
 }
@@ -711,6 +715,10 @@ p.nodata {
     box-shadow: 0 0.04rem 0.2rem rgba(0, 0, 0, 0.1);
 }
 
+.match-cont *:has(>.nodata.sp) {
+    box-shadow: revert;
+}
+
 .type-tabs {
     height: 0.9rem;
     display: flex;
@@ -735,6 +743,7 @@ p.nodata {
 .type-cont {
     display: none;
     padding: 0.3rem;
+    overflow: hidden;
 }
 
 .type-cont:nth-child(2) {

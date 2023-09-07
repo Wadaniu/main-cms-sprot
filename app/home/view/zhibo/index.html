@@ -27,6 +27,16 @@
                     <p id="spbtn" class="spbtn"><span>未开赛</span><span>已完结</span><i></i></p>
                     <?php endif; ?>
                     {include file="assembly/typeselect"/}
+                    <div class="right-btn"><span>筛选</span>
+                        <div class="moresel">
+                            <ul>
+                                <li>
+                                    <?php $mlist=strpos(get_ruleName(), 'zuqiu')?getFootballHotComp():getBasketballHotComp(); ?>
+                                    <?php echo strpos(get_ruleName(), 'zuqiu')?'足球':'篮球'; ?>：{foreach $mlist as $item}<a target="_blank" href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="play-list">
