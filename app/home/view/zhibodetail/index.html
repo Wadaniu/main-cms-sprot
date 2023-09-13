@@ -49,18 +49,13 @@
     <div class="left-main">
         <div class="main-model">
             <div class="type-tabs">
-                <p class="cur">赛前预测</p>
-                <p>赛事信息</p>
+                <p class="cur">赛事信息</p>
+                <p>赛前预测</p>
                 <p>球队</p>
                 <?php if($islanqiu): ?>
                 <p>球员</p>
                 <?php endif; ?>
                 <p>集锦/录像</p>
-            </div>
-            <div class="type-cont nodata">
-                {if !empty($match.forecast)}
-                <div>{$match.forecast|raw}</div>
-                {/if}
             </div>
             <div class="type-cont">
                 <ul class="playtxt">
@@ -80,6 +75,11 @@
                         <a href="/qiudui-{$matchLive.ball}/{$match.away_team_id}">{$match.away.name_zh??''}</a>
                     </li>
                 </ul>
+            </div>
+            <div class="type-cont nodata">
+                {if !empty($match.forecast)}
+                <div>{$match.forecast|raw}</div>
+                {/if}
             </div>
             <div class="type-cont nodata">
                 <?php $keylist=$islanqiu?["mingzhong","toulan","sanzhong","santou","fazhong","fatou","gongban","fangban","lanban","zhugong","qiang","gaimao","shiwu","fangui","bifen"]:["ball_possession","shots","shots_on_target","passes","passes_accuracy","freekicks","corner_kicks","offsides","fouls","yellow_cards","red_cards","yellow2red_cards","goals_against","tackles","interceptions"];

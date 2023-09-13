@@ -41,7 +41,7 @@ $(function () {
     } else {
         prefix = curname;
     }
-    $(".prefix").each(function (i, item) {
+    $(".prefix:not(.sp)").each(function (i, item) {
         let otitle = $(item).text()
         $(item).text(prefix + otitle)
     })

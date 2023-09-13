@@ -77,7 +77,7 @@ class Zuqiu extends BaseController
 
         $this->tdk->short_name_zh =  empty($comp->short_name_zh) ? ($comp->name_zh ?? '') : $comp->short_name_zh;
         $this->getTdk('liansai_zuqiu_detail',$this->tdk);
-        //var_dump($luxiang);die;
+        //var_dump($comp);die;
         View::assign('data',$matchList);
         View::assign('luxiang',$luxiang);
         View::assign('jijin',$jijin);

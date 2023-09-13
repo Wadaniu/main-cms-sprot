@@ -21,7 +21,7 @@
         <?php endif; ?>
         <div class="main-model">
             <div class="title">
-                <p class="name"><i class="iconfont icon-zhibo"></i><span class="prefix">直播</span></p>
+                <p class="name"><i class="iconfont icon-zhibo"></i><span class="prefix sp"></span></p>
                 <div class="tool">
                     <?php if(isset($comp)): ?>
                     <p id="spbtn" class="spbtn"><span>未开赛</span><span>已完结</span><i></i></p>
@@ -32,7 +32,8 @@
                             <ul>
                                 <li>
                                     <?php $mlist=strpos(get_ruleName(), 'zuqiu')?getFootballHotComp():getBasketballHotComp(); ?>
-                                    <?php echo strpos(get_ruleName(), 'zuqiu')?'足球':'篮球'; ?>：{foreach $mlist as $item}<a target="_blank" href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
+                                    <?php echo strpos(get_ruleName(), 'zuqiu')?'足球':'篮球'; ?>：{foreach $mlist as
+                                    $item}<a target="_blank" href="/live-{$item.sphere_type}/{$item.short_name_py}">{$item.short_name_zh}</a>{/foreach}
                                 </li>
                             </ul>
                         </div>
@@ -48,7 +49,8 @@
                         <div class="item-box">
                             <div class="left">
                                 <p class="time">{$team.match_time|date='H:i'}</p>
-                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a></p>
+                                <p class="name"><a href="/live-{$team.sphere_type}/{$team.comp_py}" target="_blank">{$team.competition_text}</a>
+                                </p>
                                 <p class="status">{$team.status_text}</p>
                             </div>
                             <div class="center">
@@ -78,12 +80,12 @@
             </div>
         </div>
     </div>
-<!--    <div class="right-main">-->
-<!--        {include file="assembly/zixun"/}-->
-<!--        {include file="assembly/luxiang"/}-->
-<!--        {include file="assembly/jijin"/}-->
-<!--        {include file="assembly/hotkey"/}-->
-<!--    </div>-->
+    <!--    <div class="right-main">-->
+    <!--        {include file="assembly/zixun"/}-->
+    <!--        {include file="assembly/luxiang"/}-->
+    <!--        {include file="assembly/jijin"/}-->
+    <!--        {include file="assembly/hotkey"/}-->
+    <!--    </div>-->
 </div>
 {/block}
 <!-- /主体 -->
@@ -93,6 +95,7 @@
     $(function () {
         let curitem = $(".category .cur");
         let btn = $("#spbtn");
+        $(".prefix").text(`${$(".crumbs a:last-child").text()}${curitem.text() == '全部' ? '' : '直播'}`);
         if (curitem.length > 0) {
             btn.css("left", curitem.position().left + (curitem.outerWidth() - btn.outerWidth()) / 2 + "px");
         } else {
@@ -148,12 +151,11 @@
             }
             $(".play-list").append(fragment);
             if ($(".play-list").children().length == 0) {
-                $(".play-list").append(`<p class=nodata>近期暂无${curitem.text()}直播</p>`)
+                $(".play-list").append(`<p class=nodata>近期暂无${$(".crumbs a:last-child").text()}直播</p>`)
             }
         });
         //模拟第一次点击
         $("#spbtn span").eq(0).trigger('click');
-
         // let num1=1;
         // let num2=2;
         // num2 = num1 + (num1 = num2) - num2

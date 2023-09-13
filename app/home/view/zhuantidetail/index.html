@@ -8,7 +8,7 @@
     <div class="left-main">
         <div class="main-model">
             <div class="title">
-                <p class="name"><i class="iconfont icon-zhibo"></i><span></span></p>
+                <p class="name"><i class="iconfont icon-zhibo"></i><span class="zbname"></span></p>
                 <div class="tool">
                     <p><a>未开赛</a><a>已完结</a></p>
                 </div>
@@ -53,14 +53,14 @@
         </div>
         <div class="main-model">
             <div class="title">
-                <p class="name"><i class="iconfont icon-luxiang"></i>{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}录像</p>
+                <p class="name"><i class="iconfont icon-luxiang"></i><span class="lxname">录像</span></p>
                 <div class="tool">
                     <p></p>
                 </div>
             </div>
             <dl class="list-back nodata">
                 {foreach $luxiang as $i=>$item}
-                <dd>
+                <dd data-py="{$item.short_name_py}">
                     <p class="back-cont">
                         <a href="/luxiang-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html"
                            target="_blank"><span></span>{$item.title}</a>
@@ -72,14 +72,14 @@
         </div>
         <div class="main-model">
             <div class="title">
-                <p class="name"><i class="iconfont icon-jijin"></i>{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}集锦</p>
+                <p class="name"><i class="iconfont icon-jijin"></i><span class="jjname">集锦</span></p>
                 <div class="tool">
                     <p></p>
                 </div>
             </div>
             <dl class="list-back nodata">
                 {foreach $jijin as $i=>$item}
-                <dd>
+                <dd data-py="{$item.short_name_py}">
                     <p class="back-cont">
                         <a href="/jijin-{$item.sphere_type}/{$item.short_name_py}/{$item.id}.html"
                            target="_blank"><span></span>{$item.title}</a>
@@ -97,7 +97,7 @@
                 <img src="{$data_info.logo}"/>
             </div>
             <div class="intro">
-                <p class="name">{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}</p>
+                <p class="name" data-py="{$data_info.short_name_py}">{:empty($data_info.short_name_zh)?$data_info.name_zh:$data_info.short_name_zh}</p>
                 <ul>
                     <li>英文名称：{$data_info.name_en}</li>
                     {if $data_info.type=='team'}
@@ -139,10 +139,10 @@
                 $(".list-cont").removeClass('cur')
                 if ($(".list-cont").eq(1).find('.nodata').length == 0) {
                     $(".list-cont").eq(1).addClass('cur')
-                }else{
+                } else {
                     nodata = true;
                 }
-                if ($(".list-cont").eq(2).find('.nodata').length == 0||nodata) {
+                if ($(".list-cont").eq(2).find('.nodata').length == 0 || nodata) {
                     $(".list-cont").eq(2).addClass('cur')
                 }
                 break;
@@ -159,15 +159,21 @@
         $(".tool a").eq(0).trigger('click')
     })
 
-    let allname = true;
+    let allname = false;
     let curname = $(".intro .name").text();
-    $(".item-box .name a").each(function (i,item) {
-        if($(item).text()!=curname){
-            allname = false;
+    let sources = curlink.indexOf('liansai') > 0 ? $(".cur .name a") : $(".cur .center p");
+    sources.each(function (i, item) {
+        if ($(item).text() == curname) {
+            allname = true;
             return false
         }
     })
-    $(".title:first-child span").text(allname?`${curname}直播赛程`:'热门直播赛程')
+    $("span.zbname").text(allname ? `${curname}直播赛程` : '热门直播赛程')
+    $(".list-back").each(function (i, item) {
+        let dom = i == 0 ? $("span.lxname") : $("span.jjname");
+        let pyzt = $(item).find('dd').eq(0).data('py') == $(".intro .name").data('py');
+        dom.text(pyzt ? `${curname}${dom.text()}` : `热门${dom.text()}`)
+    })
 </script>
 {/block}
 <!-- /脚本 -->
